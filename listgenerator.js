@@ -43,16 +43,6 @@ function listTournament(tournament){
 
 }
 
-function loadTourment(data){
-    //for å gå videre i tab systemet
-    document.getElementById('tabtoturnering').click();
-    console.log(data);
-}
-
-
-
-
-
 function listSports(tournament){
     const list = document.getElementById("sportlist");
     const elementlibrary = document.getElementById("elementlibrary");
