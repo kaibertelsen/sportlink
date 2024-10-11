@@ -53,7 +53,7 @@ function listSports(tournament){
     for (let item of sports) {
         // Lag en kopi av elementet
         const rowelement = nodeelement.cloneNode(true);
-        rowelement.dataset.id = "fi"+item.sport[0];
+        rowelement.id = "fi"+item.sport[0];
 
         rowelement.onclick = function() {
             filterSporttype(item);
