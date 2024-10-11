@@ -82,7 +82,7 @@ function listSports(tournament){
 function filterSporttype(item){
     const list = document.getElementById("sportlist");
     let typesport = item.sport[0];
-
+    let allElements =  list.children;
     // Gå gjennom alle elementene og logg dem til konsollen
     allElements.forEach(element => {
        if(element.dataset?.sport && element.dataset.sport == typesport){
