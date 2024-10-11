@@ -39,12 +39,12 @@ function listTournament(tournament){
         iconelement.src = item.icon;
 
         const iconsportelement = rowelement.querySelector(".sporticon");
-        iconsportelement.src = item.sporticon;
+        iconsportelement.src = item.sporticon[0];
         
         const statuslableelement = rowelement.querySelector(".sattuslable");
         statuslableelement.textContent = "Spilles ikke";
         
         list.appendChild(rowelement);
       }
-      
+
 }
