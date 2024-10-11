@@ -114,9 +114,9 @@ function findeunicSport(Array){
     }
     });
         uniqueSportsArray.unshift({
-            sport: "",
-            sportname: "Alle",
-            sporticon: ""});
+            sport: [""],
+            sportname: ["Alle"],
+            sporticon: [""]});
 
     return uniqueSportsArray;
 }
