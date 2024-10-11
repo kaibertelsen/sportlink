@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function getTournament(klientid) {
     var body = airtablebodylistAND({klientid:klientid});
-    Getlistairtable(baseId,"tbloP9XOP0eWMT9XH",body,"getTournamentresponse");
+    Getlistairtable(baseId,"tblGhVlhWETNvhrWN",body,"getTournamentresponse");
 }
 
 function getTournamentresponse(data){
