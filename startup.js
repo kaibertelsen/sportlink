@@ -33,7 +33,7 @@ function listTournament(tournament){
         nameelement.textContent = item.name;
 
         const dateelement = rowelement.querySelector(".datename");
-        dateelement.textContent = item.startdate;
+        dateelement.textContent = formatDate(item.startdate);
 
         const iconelement = rowelement.querySelector(".turnicon");
         iconelement.removeAttribute('srcset');
@@ -44,7 +44,11 @@ function listTournament(tournament){
         iconsportelement.src = item.sporticon[0];
         
         const statuslableelement = rowelement.querySelector(".sattuslable");
-        statuslableelement.textContent = "Spilles ikke";
+        if(isDatePassed(item.startdate)){
+        statuslableelement.textContent = "Spilles nå!";
+        }else{
+        statuslableelement.textContent = statusDatetoplay(item.startdate);
+        }
         
         list.appendChild(rowelement);
       }
