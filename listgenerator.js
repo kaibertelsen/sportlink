@@ -80,7 +80,7 @@ function listSports(tournament){
 
 
 function filterSporttype(item){
-    const list = document.getElementById("sportlist");
+    const list = document.getElementById("maintournamentlist");
     let typesport = item.sport[0];
     let allElements =  list.children;
     // Gå gjennom alle elementene og logg dem til konsollen
