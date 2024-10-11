@@ -94,8 +94,8 @@ function filterSporttype(item){
      const thisfilterbutton = document.getElementById(buttonid);
 
      if(thisfilterbutton){
-        thisfilterbutton.style.backgroundColor = "#192219";
-        thisfilterbutton.style.borderColor = "#61de6e";
+      //  thisfilterbutton.style.backgroundColor = "#192219";
+       // thisfilterbutton.style.borderColor = "#61de6e";
      }
 
     const list = document.getElementById("maintournamentlist");
