@@ -55,5 +55,5 @@ function formatDate(dateString) {
         let dateB = new Date(b[key]);
         return dateA - dateB; // Sorterer i stigende rekkefølge
         });
-    return eventsArray
+    return Array
     }
