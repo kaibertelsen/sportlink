@@ -64,7 +64,7 @@ function listSports(tournament){
         
         const iconsportelement = rowelement.querySelector(".sporticon");
         iconsportelement.removeAttribute('srcset');
-        if(item.sporticon){
+        if(item.sporticon != ""){
         iconsportelement.src = item.sporticon;
         }else{
             iconsportelement.remove(); 
