@@ -11,8 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function getTournament(klientid) {
-    var id = "["+klientid+"]";
-    var body = airtablebodylistAND({klient:id});
+    var body = airtablebodylistAND({klientid:klientid});
     Getlistairtable(baseId,"tbloP9XOP0eWMT9XH",body,"getTournamentresponse");
 }
 
