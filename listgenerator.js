@@ -6,7 +6,11 @@ function listTournament(tournament){
     for (let item of tournament) {
         // Lag en kopi av elementet
         const rowelement = nodeelement.cloneNode(true);
-        
+
+        rowelement.onclick = function() {
+            loadTourment(item);
+        }
+
         const nameelement = rowelement.querySelector(".turnname");
         nameelement.textContent = item.name;
 
@@ -38,6 +42,15 @@ function listTournament(tournament){
       }
 
 }
+
+function loadTourment(data){
+    //for å gå videre i tab systemet
+    document.getElementById('tabtoturnering').click();
+    console.log(data);
+}
+
+
+
 
 
 function listSports(tournament){
