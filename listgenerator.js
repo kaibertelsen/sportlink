@@ -48,6 +48,7 @@ function listSports(tournament){
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.turnfilterbutton');
     let sports = findeunicSport(tournament);
+    
 
     for (let item of sports) {
         // Lag en kopi av elementet
@@ -59,7 +60,12 @@ function listSports(tournament){
         
         const iconsportelement = rowelement.querySelector(".sporticon");
         iconsportelement.removeAttribute('srcset');
+        if(item.sporticon){
         iconsportelement.src = item.sporticon;
+        }else{
+            iconsportelement.remove(); 
+        }
+        
 
         list.appendChild(rowelement);
     }
@@ -87,5 +93,10 @@ function findeunicSport(Array){
         });
     }
     });
+        uniqueSportsArray.unshift({
+            sport: "",
+            sportname: "Alle",
+            sporticon: ""});
+
     return uniqueSportsArray;
 }
