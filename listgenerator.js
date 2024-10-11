@@ -83,7 +83,7 @@ function filterSporttype(item){
 
      const buttonlist = document.getElementById("sportlist");
      let allButtons =  buttonlist.children;
-     allElements.forEach(element => {
+     allButtons.forEach(element => {
         //sett standard verdien
         element.style.color = "#1d1d1d";
         element.style.borderColor = "transparent";
