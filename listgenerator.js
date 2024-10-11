@@ -50,7 +50,7 @@ function listSports(tournament){
         // Lag en kopi av elementet
         const rowelement = nodeelement.cloneNode(true);
         rowelement.dataset.id = item.sport;
-        
+
         const nameelement = rowelement.querySelector(".sportlable");
         nameelement.textContent = item.sportname;
         
@@ -84,5 +84,5 @@ function findeunicSport(Array){
         });
     }
     });
-    return Array;
+    return uniqueSportsArray;
 }
