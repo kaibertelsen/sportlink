@@ -36,9 +36,11 @@ function listTournament(tournament){
         dateelement.textContent = item.startdate;
 
         const iconelement = rowelement.querySelector(".turnicon");
+        iconelement.removeAttribute('srcset');
         iconelement.src = item.icon;
 
         const iconsportelement = rowelement.querySelector(".sporticon");
+        iconsportelement.removeAttribute('srcset');
         iconsportelement.src = item.sporticon[0];
         
         const statuslableelement = rowelement.querySelector(".sattuslable");
