@@ -6,7 +6,7 @@ function listTournament(tournament){
     for (let item of tournament) {
         // Lag en kopi av elementet
         const rowelement = nodeelement.cloneNode(true);
-
+        rowelement.dataset.sport = item.sport[0];
         rowelement.onclick = function() {
             loadTourment(item);
         }
@@ -55,6 +55,10 @@ function listSports(tournament){
         const rowelement = nodeelement.cloneNode(true);
         rowelement.dataset.id = item.sport;
 
+        rowelement.onclick = function() {
+            filterSporttype(item);
+        }
+
         const nameelement = rowelement.querySelector(".sportlable");
         nameelement.textContent = item.sportname;
         
@@ -74,6 +78,22 @@ function listSports(tournament){
 
 }
 
+
+function filterSporttype(item){
+    const list = document.getElementById("sportlist");
+    let typesport = item.sport[0];
+
+    // Gå gjennom alle elementene og logg dem til konsollen
+    allElements.forEach(element => {
+       if(element.dataset?.sport && element.dataset.sport == typesport){
+        element.style.display = "grid";
+       }else if(typesport == ""){
+       element.style.display = "grid";
+       }else{
+        element.style.display = "none";
+       }
+  });
+}
 
 function findeunicSport(Array){
     // Ny array for unike sportsverdier
