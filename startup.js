@@ -17,7 +17,8 @@ function getTournament(klientid) {
 
 function getTournamentresponse(data){
     tournament = rawdatacleaner(data);
-    listTournament(tournament);
+    //sorter på dato
+    listTournament(sortDateArray(tournament,"startdate"));
 }
 
 function listTournament(tournament){

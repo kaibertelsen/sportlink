@@ -49,3 +49,11 @@ function formatDate(dateString) {
     }
   }
   
+  function sortDateArray(Array,key){
+        Array.sort((a, b) => {
+        let dateA = new Date(a[key]);
+        let dateB = new Date(b[key]);
+        return dateA - dateB; // Sorterer i stigende rekkefølge
+        });
+    return eventsArray
+    }
