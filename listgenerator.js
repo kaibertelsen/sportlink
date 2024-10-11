@@ -53,7 +53,7 @@ function listSports(tournament){
     for (let item of sports) {
         // Lag en kopi av elementet
         const rowelement = nodeelement.cloneNode(true);
-        rowelement.dataset.id = item.sport;
+        rowelement.dataset.id = "fi"+item.sport[0];
 
         rowelement.onclick = function() {
             filterSporttype(item);
@@ -80,6 +80,21 @@ function listSports(tournament){
 
 
 function filterSporttype(item){
+
+     const buttonlist = document.getElementById("sportlist");
+     let allButtons =  buttonlist.children;
+     allElements.forEach(element => {
+        //sett standard verdien
+        element.style.color = "#1d1d1d";
+        element.style.borderColor = "transparent";
+     });
+     const thisfilterbutton = document.getElementById("fi"+item.sport[0]);
+
+     if(thisfilterbutton){
+        thisfilterbutton.style.color = "#192219";
+        thisfilterbutton.style.borderColor = "#61de6e";
+     }
+
     const list = document.getElementById("maintournamentlist");
     let typesport = item.sport[0];
     let allElements =  list.children;
