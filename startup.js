@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Kjør funksjonen når HTML er ferdig lastet
-    dinFunksjon();
+    //hente alle turneringer fra server
+    getTournament(klientid);
 });
 
-function dinFunksjon() {
+function getTournament(klientid) {
     // Kode for funksjonen din
-    console.log("Funksjonen kjører når DOM er lastet.");
+    
 }
 
