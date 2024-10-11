@@ -45,7 +45,7 @@ function formatDate(dateString) {
       let daysRemaining = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Antall hele dager
       let hoursRemaining = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Timer etter de hele dagene
   
-      return `${daysRemaining} dager og ${hoursRemaining} timer igjen`;
+      return `${daysRemaining} d ${hoursRemaining} t igjen`;
     }
   }
   
