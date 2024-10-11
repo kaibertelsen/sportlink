@@ -17,47 +17,8 @@ function getTournament(klientid) {
 
 function getTournamentresponse(data){
     tournament = rawdatacleaner(data);
+    //lag filter
+    listSports(tournament);
     //sorter på dato
     listTournament(sortDateArray(tournament,"startdate"));
-}
-
-function listTournament(tournament){
-    const list = document.getElementById("maintournamentlist");
-    const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector('.turneringholder');
-
-    for (let item of tournament) {
-        // Lag en kopi av elementet
-        const rowelement = nodeelement.cloneNode(true);
-        
-        const nameelement = rowelement.querySelector(".turnname");
-        nameelement.textContent = item.name;
-
-        const dateelement = rowelement.querySelector(".datename");
-        dateelement.textContent = formatDate(item.startdate);
-
-        const iconelement = rowelement.querySelector(".turnicon");
-        iconelement.removeAttribute('srcset');
-        iconelement.src = item.icon;
-
-        const iconsportelement = rowelement.querySelector(".sporticon");
-        iconsportelement.removeAttribute('srcset');
-        iconsportelement.src = item.sporticon[0];
-        
-        const statuslableelement = rowelement.querySelector(".sattuslable");
-        if(isDatePassed(item.startdate)){
-                if(item?.enddate && isDatePassed(item.enddate)){
-                    statuslableelement.textContent = "Er avsluttet!";
-                    statuslableelement.style.color = "#818181";
-                }else{
-                    statuslableelement.textContent = "Spilles nå!";
-                    statuslableelement.style.color = "#60df6e";
-                }
-        }else{
-        statuslableelement.textContent = statusDatetoplay(item.startdate);
-        }
-        
-        list.appendChild(rowelement);
-      }
-
 }
