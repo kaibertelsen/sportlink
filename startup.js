@@ -3,8 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     MemberStack.onReady.then(function(member) {
         if (member.loggedIn){
         //hente alle turneringer fra server
-        console.log(member);
-        //getTournament(klientid);
+        getTournament(member.klient);
         }
     }
     );
