@@ -88,7 +88,8 @@ function filterSporttype(item){
         element.style.backgroundColor = "#1d1d1d";
         element.style.borderColor = "transparent";
      });
-     const thisfilterbutton = document.getElementById("fi"+item.sport[0]);
+     let buttonid = "fi"+item.sport[0];
+     const thisfilterbutton = document.getElementById(buttonid);
 
      if(thisfilterbutton){
         thisfilterbutton.style.backgroundColor = "#192219";
