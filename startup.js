@@ -1,6 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
-    //hente alle turneringer fra server
-    getTournament(klientid);
+
+    MemberStack.onReady.then(function(member) {
+        if (member.loggedIn){
+        //hente alle turneringer fra server
+        console.log(member);
+        //getTournament(klientid);
+        }
+    }
+    );
+
 });
 
 function getTournament(klientid) {
