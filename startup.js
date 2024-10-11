@@ -46,8 +46,13 @@ function listTournament(tournament){
         
         const statuslableelement = rowelement.querySelector(".sattuslable");
         if(isDatePassed(item.startdate)){
-        statuslableelement.textContent = "Spilles nå!";
-        statuslableelement.style.color = "#60df6e";
+                if(item?.enddate && isDatePassed(item.enddate)){
+                    statuslableelement.textContent = "Er avsluttet!";
+                    statuslableelement.style.color = "#818181";
+                }else{
+                    statuslableelement.textContent = "Spilles nå!";
+                    statuslableelement.style.color = "#60df6e";
+                }
         }else{
         statuslableelement.textContent = statusDatetoplay(item.startdate);
         }
