@@ -18,10 +18,10 @@ function loadTourmentHeader(data){
     icon.removeAttribute('srcset');
     icon.src = data.icon;
 
-    const name = rowelement.querySelector(".tourmentlable");
+    const name = headerholder.querySelector(".tourmentlable");
     name.textContent = data.name;
     
-    const date = rowelement.querySelector(".datename");
+    const date = headerholder.querySelector(".datename");
     date.textContent = formatDate(data.startdate);
     
 }
