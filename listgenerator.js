@@ -85,13 +85,13 @@ function filterSporttype(item){
      let allButtons =  buttonlist.children;
      allButtons.forEach(element => {
         //sett standard verdien
-        element.style.color = "#1d1d1d";
+        element.style.backgroundColor = "#1d1d1d";
         element.style.borderColor = "transparent";
      });
      const thisfilterbutton = document.getElementById("fi"+item.sport[0]);
 
      if(thisfilterbutton){
-        thisfilterbutton.style.color = "#192219";
+        thisfilterbutton.style.backgroundColor = "#192219";
         thisfilterbutton.style.borderColor = "#61de6e";
      }
 
