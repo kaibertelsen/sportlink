@@ -3,13 +3,31 @@ function listmatch(data,grouptype){
 //sorter på time feltet
 let matchs = sortDateArray(data,"time");
 
-let listarray = [];
+let grouparray = [];
     if(grouptype == "dato"){
-        listarray = groupArraybyDate(matchs)
+        grouparray = groupArraybyDate(matchs)
     }
 
-console.log(listarray);
+    const list = document.getElementById("matchlistholder");
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector('.groupholder');
+
+    for (let item of grouparray) {
+        // Lag en kopi av elementet
+        const rowelement = nodeelement.cloneNode(true);
+        rowelement.onclick = function() {
+            //loadTourment(item);
+        }
+
+        const nameelement = rowelement.querySelector(".groupheadername");
+        nameelement.textContent = formatDateToNorwegian(item.date);
+
+    }
 }
+
+
+
+
 
 
 function groupArraybyDate(matchs){

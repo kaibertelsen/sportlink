@@ -57,3 +57,20 @@ function formatDate(dateString) {
         });
     return Array
     }
+
+    function formatDateToNorwegian(dateString) {
+        const date = new Date(dateString);
+    
+        // Mapping av ukedager og måneder på norsk
+        const weekdays = ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"];
+        const months = ["jan", "feb", "mars", "apr", "mai", "juni", "juli", "aug", "sep", "okt", "nov", "des"];
+    
+        // Hent ukedag, dag, måned og år
+        const dayOfWeek = weekdays[date.getDay()]; // F.eks. "Mandag"
+        const day = date.getDate(); // F.eks. 14
+        const month = months[date.getMonth()]; // F.eks. "okt"
+        const year = date.getFullYear(); // F.eks. 2024
+    
+        // Returner i ønsket format
+        return `${dayOfWeek} ${day}.${month}. ${year}`;
+    }
