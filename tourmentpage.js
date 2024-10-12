@@ -3,7 +3,8 @@ function loadTourment(data){
     document.getElementById('tabtoturnering').click();
 
     loadTourmentHeader(data);
-    listDivision(data)
+    listDivision(data);
+    getMatch(data);
     console.log(data);
 }
 
@@ -65,4 +66,19 @@ function makeDivisionArray(tournament){
     }
   
     return divisionArray;
+}
+
+function getMatch(data){
+    var body = airtablebodylistAND({tournamentid:data.airtable,archived:0});
+    Getlistairtable(baseId,"tblrHBFa60aIdqkUu",body,"tournamentresponse");
+}
+
+
+
+
+function tournamentresponse(data,id){
+    match = rawdatacleaner(data);
+
+    console.log(data);
+
 }
