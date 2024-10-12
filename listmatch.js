@@ -9,6 +9,7 @@ let grouparray = [];
     }
 
     const list = document.getElementById("matchlistholder");
+    list.replaceChildren();
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.groupholder');
 
@@ -21,7 +22,7 @@ let grouparray = [];
 
         const nameelement = rowelement.querySelector(".groupheadername");
         nameelement.textContent = formatDateToNorwegian(item.date);
-
+        list.appendChild(rowelement);
     }
 }
 
