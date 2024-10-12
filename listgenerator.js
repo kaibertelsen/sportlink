@@ -125,9 +125,9 @@ function findeunicSport(Array){
     // Hvis det ikke finnes, legg det til
     if (!exists) {
         uniqueSportsArray.push({
-        sport: event.sport,
-        sportname: event.sportname,
-        sporticon: event.sporticon
+        sport: event.sport[0],
+        sportname: event.sportname[0],
+        sporticon: event.sporticon[0]
         });
     }
     });
