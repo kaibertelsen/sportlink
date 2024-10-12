@@ -33,8 +33,20 @@ let grouparray = [];
             const team1name = matchelement.querySelector(".team1");
             team1name.textContent = match.team1name;
 
+            const logoteam1 = matchelement.querySelector(".logoteam1");
+            logoteam1.removeAttribute('srcset');
+            logoteam1.src = match.team1clublogo[0];
+
+            const timelable = matchelement.querySelector(".timelable");
+            timelable.textContent = formatdatetoTime(match.time);
+            //stilling om kampen er spilt
+
             const team2name = matchelement.querySelector(".team2");
-            team1name.textContent = match.team2name;
+            team2name.textContent = match.team2name;
+
+            const logoteam2 = matchelement.querySelector(".logoteam2");
+            logoteam2.removeAttribute('srcset');
+            logoteam2.src = match.team2clublogo[0];
             contentholder.appendChild(matchelement);
         }
 

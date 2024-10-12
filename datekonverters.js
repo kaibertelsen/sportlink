@@ -74,3 +74,20 @@ function formatDate(dateString) {
         // Returner i ønsket format
         return `${dayOfWeek} ${day}.${month}. ${year}`;
     }
+
+
+    function formatdatetoTime(dateString) {
+        const date = new Date(dateString);
+    
+        // Hent timen og minuttene fra datoen
+        let hours = date.getUTCHours();  // Bruk UTC-tid
+        let minutes = date.getUTCMinutes();
+    
+        // Legg til en ledende null hvis timer eller minutter er ensifrede
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+    
+        // Returner formatert tid
+        return `${hours}:${minutes}`;
+    }
+    
