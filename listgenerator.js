@@ -131,6 +131,8 @@ function findeunicSport(Array){
         });
     }
     });
+
+    uniqueSportsArray = sortArrayABC(uniqueSportsArray,"sportname")
         uniqueSportsArray.unshift({
             sport: [""],
             sportname: ["Alle"],
