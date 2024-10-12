@@ -58,10 +58,11 @@ function makeDivisionArray(tournament){
             divisionArray.push({name:tournament.divisionname[i],airtable:tournament.division[i]});
         }
         divisionArray = sortArrayABC(divisionArray,"name");
+        divisionArray.unshift({
+            name: "Alle",
+            airtable: ""
+        });
     }
-    divisionArray.unshift({
-        name: "Alle",
-        airtable: ""
-    });
+  
     return divisionArray;
 }
