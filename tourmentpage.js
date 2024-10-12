@@ -25,6 +25,7 @@ function loadTourmentHeader(data){
 
 function listDivision(tournament){
     const list = document.getElementById("divisionholder");
+    list.replaceChildren();
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.divisionbutton');
  
