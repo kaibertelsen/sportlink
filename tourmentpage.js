@@ -69,6 +69,9 @@ function filterDevisiontype(item){
      thisfilterbutton.style.borderColor = "#61de6e";
     }
 
+    if(item.airtable == ""){
+     listmatch(match,"dato");   
+    }else{
     //lage en ny array av match
      let filterArray = [];
     for (let thismatch of match) {
@@ -76,8 +79,8 @@ function filterDevisiontype(item){
             filterArray.push(thismatch);
         }
     }
-
     listmatch(filterArray,"dato");
+    }
    
 }
 
