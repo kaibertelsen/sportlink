@@ -3,7 +3,7 @@ function loadTourment(data){
     document.getElementById('tabtoturnering').click();
 
     loadTourmentHeader(data);
-    listDivision(tournament)
+    listDivision(data)
     console.log(data);
 }
 
