@@ -120,7 +120,7 @@ function findeunicSport(Array){
     // Funksjon for å finne unike sport, sportname og sporticon
     Array.forEach(event => {
     // Sjekk om sport allerede finnes i den nye arrayen
-    let exists = uniqueSportsArray.some(sportObj => sportObj.sport[0] === event.sport[0]);
+    let exists = uniqueSportsArray.some(sportObj => sportObj.sport === event.sport[0]);
 
     // Hvis det ikke finnes, legg det til
     if (!exists) {
