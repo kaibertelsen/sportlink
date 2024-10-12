@@ -3,10 +3,7 @@ function loadTourment(data){
     document.getElementById('tabtoturnering').click();
 
     loadTourmentHeader(data);
-
-
-
-
+    listDivision(tournament)
     console.log(data);
 }
 
@@ -24,4 +21,46 @@ function loadTourmentHeader(data){
     const date = headerholder.querySelector(".datename");
     date.textContent = formatDate(data.startdate);
     
+}
+
+function listDivision(tournament){
+    const list = document.getElementById("divisionholder");
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector('.divisionbutton');
+ 
+    let divisionArray = makeDivisionArray(tournament);
+    
+    for (let item of divisionArray) {
+        // Lag en kopi av elementet
+        const rowelement = nodeelement.cloneNode(true);
+        rowelement.id = "di"+item.airtable;
+
+        rowelement.onclick = function() {
+            //filterSporttype(item);
+        }
+        rowelement.textContent = item.name;
+        
+        if (item === divisionArray[0]) {
+            rowelement.style.backgroundColor = "#192219";
+            rowelement.style.borderColor = "#61de6e";
+        }
+        list.appendChild(rowelement);
+    }
+}
+
+
+function makeDivisionArray(tournament){
+    let divisionArray = [];
+    if(tournament?.division){
+        //har division
+        for(var i = 0;i<tournament.division.length;i++){
+            divisionArray.push({name:tournament.divisionname[i],airtable:tournament.division[i]});
+        }
+        divisionArray = sortArrayABC(divisionArray,"name");
+    }
+    divisionArray.unshift({
+        name: "Alle",
+        airtable: ""
+    });
+    return divisionArray;
 }
