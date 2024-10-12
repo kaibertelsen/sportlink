@@ -70,13 +70,13 @@ function makeDivisionArray(tournament){
 
 function getMatch(data){
     var body = airtablebodylistAND({tournamentid:data.airtable,archived:0});
-    Getlistairtable(baseId,"tblrHBFa60aIdqkUu",body,"tournamentresponse");
+    Getlistairtable(baseId,"tblrHBFa60aIdqkUu",body,"getMatchresponse");
 }
 
 
 
 
-function tournamentresponse(data,id){
+function getMatchresponse(data,id){
     match = rawdatacleaner(data);
 
     console.log(data);
