@@ -70,6 +70,13 @@ function listSports(tournament){
             iconsportelement.remove(); 
         }
         
+        if (item === sports[0]) {
+            rowelement.style.backgroundColor = "#192219";
+            rowelement.style.borderColor = "#61de6e";
+        }
+
+
+
 
         list.appendChild(rowelement);
     }
