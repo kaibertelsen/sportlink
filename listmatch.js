@@ -27,9 +27,12 @@ let grouparray = [];
         contentholder.replaceChildren();
         const nodematchholder = elementlibrary.querySelector('.matchholder');
 
+        let rownr = 0;
         for (let match of item.matches){
             const matchelement = nodematchholder.cloneNode(true);
-
+            if(rownr>0){
+                matchelement.classList.remove("n1");
+            }
             const team1name = matchelement.querySelector(".team1");
             team1name.textContent = match.team1name;
 
@@ -47,7 +50,10 @@ let grouparray = [];
             const logoteam2 = matchelement.querySelector(".logoteam2");
             logoteam2.removeAttribute('srcset');
             logoteam2.src = match.team2clublogo[0];
+
             contentholder.appendChild(matchelement);
+
+            rownr ++
         }
 
         list.appendChild(rowelement);
