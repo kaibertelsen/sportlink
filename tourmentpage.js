@@ -78,7 +78,5 @@ function getMatch(data){
 
 function getMatchresponse(data,id){
     match = rawdatacleaner(data);
-
-    console.log(data);
-
+    listmatch(match,"dato");
 }
