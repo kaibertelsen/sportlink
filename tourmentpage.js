@@ -38,7 +38,7 @@ function listDivision(tournament){
         rowelement.id = "di"+item.airtable;
 
         rowelement.onclick = function() {
-            //filterSporttype(item);
+            filterDevisiontype(item);
         }
         rowelement.textContent = item.name;
         
@@ -49,6 +49,40 @@ function listDivision(tournament){
         list.appendChild(rowelement);
     }
 }
+
+function filterDevisiontype(item){
+
+    const buttonlist = document.getElementById("divisionholder");
+    let allButtons =  buttonlist.children;
+    
+    allButtons.forEach(element => {
+       //sett standard verdien
+       element.style.backgroundColor = "#1d1d1d";
+       element.style.borderColor = "transparent";
+    });
+    
+    let buttonid = "di"+item.airtable;
+    const thisfilterbutton = document.getElementById(buttonid);
+
+    if(thisfilterbutton){
+     thisfilterbutton.style.backgroundColor = "#192219";
+     thisfilterbutton.style.borderColor = "#61de6e";
+    }
+
+    //lage en ny array av match
+     let filterArray = [];
+    for (let thismatch of match) {
+        if(thismatch.division[0] == item.airtable){
+            filterArray.push(thismatch);
+        }
+    }
+
+    listmatch(filterArray,"dato");
+   
+}
+
+
+
 
 
 function makeDivisionArray(tournament){

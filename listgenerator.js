@@ -4,7 +4,6 @@ function listTournament(tournament){
     const nodeelement = elementlibrary.querySelector('.turneringholder');
 
     for (let item of tournament) {
-        // Lag en kopi av elementet
         const rowelement = nodeelement.cloneNode(true);
         rowelement.dataset.sport = item.sport[0];
         rowelement.onclick = function() {
