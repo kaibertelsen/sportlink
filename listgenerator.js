@@ -90,7 +90,7 @@ function filterSporttype(item){
         element.style.borderColor = "transparent";
      });
      
-     let buttonid = "fi"+item.sport[0];
+     let buttonid = "fi"+item.sport;
      const thisfilterbutton = document.getElementById(buttonid);
 
      if(thisfilterbutton){
@@ -99,7 +99,7 @@ function filterSporttype(item){
      }
 
     const list = document.getElementById("maintournamentlist");
-    let typesport = item.sport[0];
+    let typesport = item.sport;
     let allElements =  list.children;
     // Gå gjennom alle elementene og logg dem til konsollen
     allElements.forEach(element => {
@@ -134,9 +134,9 @@ function findeunicSport(Array){
 
     uniqueSportsArray = sortArrayABC(uniqueSportsArray,"sportname")
         uniqueSportsArray.unshift({
-            sport: [""],
-            sportname: ["Alle"],
-            sporticon: [""]});
+            sport: "",
+            sportname: "Alle",
+            sporticon: ""});
 
     return uniqueSportsArray;
 }
