@@ -3,11 +3,24 @@ function generatePointToTeams(data) {
         // Fotball
         console.log("Dette er fotballoppsett");
         let tabeldata = generateFotballPointToTeams(data);
-        console.log("Generert tabelldata:", tabeldata);
+
+        // Sorter tabeldata
+        tabeldata.sort((a, b) => {
+            if (b.points !== a.points) {
+                return b.points - a.points; // Sorter først etter poeng (høyeste først)
+            }
+            if (b.goalDifference !== a.goalDifference) {
+                return b.goalDifference - a.goalDifference; // Deretter etter målforskjell
+            }
+            return b.goalsFor - a.goalsFor; // Til slutt etter antall mål scoret
+        });
+
+        console.log("Sortert tabelldata:", tabeldata);
     } else {
         console.log("Dette er et oppsett som ikke er definert enda");
     }
 }
+
 
 function generateFotballPointToTeams(data) {
     // Initialiser poengstatistikk for hvert lag
