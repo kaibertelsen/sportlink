@@ -2,9 +2,8 @@ function generatePointToTeams(data) {
     if (activetournament.sport[0] === "recAEU6UjebhKfFBy") {
         // Fotball
         console.log("Dette er fotballoppsett");
-        let tabeldata =  generateFotballPointToTeams(data);
-        console.log (tabeldata);
-
+        let tabeldata = generateFotballPointToTeams(data);
+        console.log("Generert tabelldata:", tabeldata);
     } else {
         console.log("Dette er et oppsett som ikke er definert enda");
     }
@@ -27,6 +26,11 @@ function generateFotballPointToTeams(data) {
 
     // Oppdater poengstatistikk basert på kamper
     for (let match of matches) {
+        // Sjekk om kampen har blitt spilt
+        if (typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
+            continue; // Hopp over kamper som ikke er spilt
+        }
+
         let team1 = data.find(team => team.airtable === match.team1[0]);
         let team2 = data.find(team => team.airtable === match.team2[0]);
 
