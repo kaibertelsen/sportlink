@@ -110,7 +110,7 @@ function getMatch(data){
 }
 
 function getMatchresponse(data,id){
-    match = rawdatacleaner(data);
-    listmatch(match,"dato");
+    matches = rawdatacleaner(data);
+    listmatch(matches,"dato");
 }
 

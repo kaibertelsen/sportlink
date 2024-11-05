@@ -26,7 +26,7 @@ function generateFotballPointToTeams(data) {
     }
 
     // Oppdater poengstatistikk basert på kamper
-    for (let match of matchs) {
+    for (let match of matches) {
         let team1 = data.find(team => team.airtable === match.team1[0]);
         let team2 = data.find(team => team.airtable === match.team2[0]);
 
