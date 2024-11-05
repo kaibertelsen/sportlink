@@ -28,36 +28,36 @@ function listteams(data){
         for (let team of teamslist){
             const rowelement = nodeteamhholder.cloneNode(true);
          
-            const rangenr = matchelement.querySelector(".rangenr");
+            const rangenr = rowelement.querySelector(".rangenr");
             rangenr.textContent = i;
 
-            const logoteam = matchelement.querySelector(".clublogo");
+            const logoteam = rowelement.querySelector(".clublogo");
             logoteam.removeAttribute('srcset');
             logoteam.src = team.clublogo[0];
 
-            const teamname = matchelement.querySelector(".teamnamelable");
+            const teamname = rowelement.querySelector(".teamnamelable");
             teamname.textContent = team.name;
 
             //point
-            const played = matchelement.querySelector(".played");
+            const played = rowelement.querySelector(".played");
             played.textContent = team.points.played;
 
-            const won = matchelement.querySelector(".won");
+            const won = rowelement.querySelector(".won");
             won.textContent = team.points.won
 
-            const drawn = matchelement.querySelector(".drawn");
+            const drawn = rowelement.querySelector(".drawn");
             drawn.textContent = team.points.drawn
 
-            const lost = matchelement.querySelector(".lost");
+            const lost = rowelement.querySelector(".lost");
             lost.textContent = team.points.lost
 
-            const goalsfa = matchelement.querySelector(".goalsfa");
+            const goalsfa = rowelement.querySelector(".goalsfa");
             goalsfa.textContent = team.points.goalsFor+"-"+team.points.goalsAgainst;
 
-            const goaldifference = matchelement.querySelector(".goaldifference");
+            const goaldifference = rowelement.querySelector(".goaldifference");
             goaldifference.textContent = team.points.goalDifference
 
-            const points = matchelement.querySelector(".points");
+            const points = rowelement.querySelector(".points");
             points.textContent = team.points.points
 
             contentholder.appendChild(rowelement);
