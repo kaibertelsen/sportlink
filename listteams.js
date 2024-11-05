@@ -1,6 +1,20 @@
-function listtable(data,grouptype){
+function getTeams(tournamentid){
+    var body = airtablebodylistAND({tournamentid:tournamentid,archived:0});
+    Getlistairtable(baseId,"tbl3ta1WZBr6wKPSp",body,"getTeamresponse");
+}
 
-//sorter på time feltet
+function getTeamresponse(data){
+    teams = rawdatacleaner(data);
+    listteams(teams);
+}
+
+
+
+function listteams(data){
+console.log(data);
+//sorter på poeng,målforskjell osv.
+
+/*
 let matchs = sortDateArray(data,"time");
 
 let grouparray = [];
@@ -58,6 +72,7 @@ let grouparray = [];
 
         list.appendChild(rowelement);
     }
+    */
 }
 
 

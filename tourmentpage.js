@@ -2,6 +2,8 @@ function loadTourment(data){
     //for å gå videre i tab systemet
     document.getElementById('tabtoturnering').click();
 
+    tournamentid = data.airtable;
+
     loadTourmentHeader(data);
     listDivision(data);
     getMatch(data);
@@ -110,10 +112,8 @@ function getMatch(data){
     Getlistairtable(baseId,"tblrHBFa60aIdqkUu",body,"getMatchresponse");
 }
 
-
-
-
 function getMatchresponse(data,id){
     match = rawdatacleaner(data);
     listmatch(match,"dato");
 }
+
