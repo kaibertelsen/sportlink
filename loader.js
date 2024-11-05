@@ -16,7 +16,10 @@ const cdnScripts = [
     "https://kaibertelsen.github.io/sportlink/listmatch.js",
     "https://kaibertelsen.github.io/sportlink/tourmentpage.js",
     "https://kaibertelsen.github.io/sportlink/ruteresponse.js",
-    "https://kaibertelsen.github.io/sportlink/datekonverters.js"
+    "https://kaibertelsen.github.io/sportlink/datekonverters.js",
+    "https://kaibertelsen.github.io/sportlink/listtable.js",
+    "https://kaibertelsen.github.io/sportlink/apicom.js",
+    "https://kaibertelsen.github.io/sportlink/globalvariabler.js"
 ];
 
 // Laste inn alle skriptene sekvensielt
