@@ -87,9 +87,6 @@ function filterDevisiontype(item){
 }
 
 
-
-
-
 function makeDivisionArray(tournament){
     let divisionArray = [];
     if(tournament?.division){

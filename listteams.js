@@ -1,4 +1,4 @@
-function getTeams(tournamentid){
+function getTeams(){
     var body = airtablebodylistAND({tournamentid:tournamentid,archived:0});
     Getlistairtable(baseId,"tbl3ta1WZBr6wKPSp",body,"getTeamresponse");
 }

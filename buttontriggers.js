@@ -12,7 +12,7 @@ document.getElementById('headermaillogo').onclick = function() {
 }
 
 document.getElementById('loadtablebutton').onclick = function() {
-    getTeams(tournamentid);
+    getTeams();
 }
 
 
