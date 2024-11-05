@@ -17,15 +17,15 @@ function listteams(data) {
     // Gruppér lagene etter divisjon og gruppe
     const teamsByDivisionAndGroup = teamslist.reduce((acc, team) => {
         const division = team.divisionname[0] || "Ukjent divisjon"; // Standardnavn hvis divisjon mangler
-        const group = team.group ? team.group[0] : "Uten gruppe"; // Standardnavn hvis gruppe mangler
+        const group = team.group ? team.group[0] : null; // Null hvis gruppe mangler
 
         if (!acc[division]) {
             acc[division] = {};
         }
-        if (!acc[division][group]) {
-            acc[division][group] = [];
+        if (!acc[division][group || "Uten gruppe"]) {
+            acc[division][group || "Uten gruppe"] = [];
         }
-        acc[division][group].push(team);
+        acc[division][group || "Uten gruppe"].push(team);
         return acc;
     }, {});
 
@@ -41,9 +41,9 @@ function listteams(data) {
             const copyelement = nodeelement.cloneNode(true);
             list.appendChild(copyelement);
 
-            // Sett divisjons- og gruppenavn
+            // Sett divisjons- og gruppenavn, kun divisjonsnavn om gruppe mangler
             const nameelement = copyelement.querySelector(".groupheadername");
-            nameelement.textContent = `${divisionName} - ${groupName}`;
+            nameelement.textContent = groupName === "Uten gruppe" ? divisionName : `${divisionName} - ${groupName}`;
 
             const contentholder = copyelement.querySelector(".rowholder");
             const nodeteamhholder = contentholder.querySelector('.resultrow');
@@ -94,4 +94,5 @@ function listteams(data) {
         }
     }
 }
+
 
