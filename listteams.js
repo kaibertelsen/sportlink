@@ -11,69 +11,62 @@ function getTeamresponse(data){
 
 
 function listteams(data){
-console.log(data);
-generatePointToTeams(data);
-//sorter på poeng,målforskjell osv.
 
-/*
-let matchs = sortDateArray(data,"time");
-
-let grouparray = [];
-    if(grouptype == "dato"){
-        grouparray = groupArraybyDate(matchs)
-    }
-
-    const list = document.getElementById("matchlistholder");
+    let teamslist = generatePointToTeams(data);
+    const list = document.getElementById("teamslistholder");
     list.replaceChildren();
     const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector('.groupholder');
+    const nodeelement = elementlibrary.querySelector('.tablegroupholder');
 
-    for (let item of grouparray) {
-        // Lag en kopi av elementet
-        const rowelement = nodeelement.cloneNode(true);
-        rowelement.onclick = function() {
-            //loadTourment(item);
-        }
-     
-        const nameelement = rowelement.querySelector(".groupheadername");
-        nameelement.textContent = formatDateToNorwegian(item.date);
+        const nameelement = nodeelement.querySelector(".groupheadername");
+        nameelement.textContent = "Test divensjon"
 
-        const contentholder = rowelement.querySelector(".contentholder");
+        const contentholder = rowelement.querySelector(".rowholder");
         contentholder.replaceChildren();
-        const nodematchholder = elementlibrary.querySelector('.matchholder');
+        const nodeteamhholder = elementlibrary.querySelector('.resultrow');
 
-        let rownr = 0;
-        for (let match of item.matches){
-            const matchelement = nodematchholder.cloneNode(true);
-            if(rownr>0){
-                matchelement.classList.remove("n1");
-            }
-            const team1name = matchelement.querySelector(".team1");
-            team1name.textContent = match.team1name;
+        
+        for (let team of teamslist){
+            const rowelement = nodeteamhholder.cloneNode(true);
+         
+            const rangenr = matchelement.querySelector(".rangenr");
+            rangenr.textContent = i;
 
-            const logoteam1 = matchelement.querySelector(".logoteam1");
-            logoteam1.removeAttribute('srcset');
-            logoteam1.src = match.team1clublogo[0];
+            const logoteam = matchelement.querySelector(".clublogo");
+            logoteam.removeAttribute('srcset');
+            logoteam.src = team.clublogo[0];
 
-            const timelable = matchelement.querySelector(".timelable");
-            timelable.textContent = formatdatetoTime(match.time);
-            //stilling om kampen er spilt
+            const teamname = matchelement.querySelector(".teamnamelable");
+            teamname.textContent = team.name;
 
-            const team2name = matchelement.querySelector(".team2");
-            team2name.textContent = match.team2name;
+            //point
+            const played = matchelement.querySelector(".played");
+            played.textContent = team.points.played;
 
-            const logoteam2 = matchelement.querySelector(".logoteam2");
-            logoteam2.removeAttribute('srcset');
-            logoteam2.src = match.team2clublogo[0];
+            const won = matchelement.querySelector(".won");
+            won.textContent = team.points.won
 
-            contentholder.appendChild(matchelement);
+            const drawn = matchelement.querySelector(".drawn");
+            drawn.textContent = team.points.drawn
 
-            rownr ++
+            const lost = matchelement.querySelector(".lost");
+            lost.textContent = team.points.lost
+
+            const goalsfa = matchelement.querySelector(".goalsfa");
+            goalsfa.textContent = team.points.goalsFor+"-"+team.points.goalsAgainst;
+
+            const goaldifference = matchelement.querySelector(".goaldifference");
+            goaldifference.textContent = team.points.goalDifference
+
+            const points = matchelement.querySelector(".points");
+            points.textContent = team.points.points
+
+            contentholder.appendChild(rowelement);
         }
 
-        list.appendChild(rowelement);
-    }
-    */
+        list.appendChild(nodeelement);
+    
+    
 }
 
 

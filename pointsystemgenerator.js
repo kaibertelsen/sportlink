@@ -16,6 +16,7 @@ function generatePointToTeams(data) {
         });
 
         console.log("Sortert tabelldata:", tabeldata);
+        return tabeldata;
     } else {
         console.log("Dette er et oppsett som ikke er definert enda");
     }
