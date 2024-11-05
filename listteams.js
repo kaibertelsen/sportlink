@@ -18,6 +18,8 @@ function listteams(data){
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.tablegroupholder');
     const copyelement = nodeelement.cloneNode(true);
+    list.appendChild(copyelement);
+    
         const nameelement = copyelement.querySelector(".groupheadername");
         nameelement.textContent = "Test divensjon"
 
