@@ -17,12 +17,11 @@ function listteams(data){
     list.replaceChildren();
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.tablegroupholder');
-
-        const nameelement = nodeelement.querySelector(".groupheadername");
+    const copyelement = nodeelement.cloneNode(true);
+        const nameelement = copyelement.querySelector(".groupheadername");
         nameelement.textContent = "Test divensjon"
 
-        const contentholder = rowelement.querySelector(".rowholder");
-        contentholder.replaceChildren();
+        const contentholder = copyelement.querySelector(".rowholder");
         const nodeteamhholder = elementlibrary.querySelector('.resultrow');
 
         
