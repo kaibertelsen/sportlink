@@ -1,5 +1,5 @@
 function getTeams(){
-    var body = airtablebodylistAND({tournamentid:tournamentid,archived:0});
+    var body = airtablebodylistAND({tournamentid:activetournament.airtable,archived:0});
     Getlistairtable(baseId,"tbl3ta1WZBr6wKPSp",body,"getTeamresponse");
 }
 
@@ -12,6 +12,7 @@ function getTeamresponse(data){
 
 function listteams(data){
 console.log(data);
+generatePointToTeams(data);
 //sorter på poeng,målforskjell osv.
 
 /*

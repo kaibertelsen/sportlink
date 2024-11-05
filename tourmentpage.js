@@ -2,7 +2,7 @@ function loadTourment(data){
     //for å gå videre i tab systemet
     document.getElementById('tabtoturnering').click();
 
-    tournamentid = data.airtable;
+    activetournament = data
 
     loadTourmentHeader(data);
     listDivision(data);
