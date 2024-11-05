@@ -32,7 +32,7 @@ function listteams(data){
             contentholder.appendChild(rowelement);
 
             const rangenr = rowelement.querySelector(".rangenr");
-            rangenr.textContent = i;
+            rangenr.textContent = range;
 
             const logoteam = rowelement.querySelector(".clublogo");
             logoteam.removeAttribute('srcset');
