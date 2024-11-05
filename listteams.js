@@ -10,66 +10,59 @@ function getTeamresponse(data){
 
 
 
-function listteams(data){
-
+function listteams(data) {
+    // Generer og sorter teamslist basert på poeng, målforskjell og mål scoret
     let teamslist = generatePointToTeams(data);
+    
     const list = document.getElementById("teamslistholder");
-    list.replaceChildren();
+    list.replaceChildren(); // Tømmer holderen for å unngå duplisering
+    
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.tablegroupholder');
     const copyelement = nodeelement.cloneNode(true);
     list.appendChild(copyelement);
 
-        const nameelement = copyelement.querySelector(".groupheadername");
-        nameelement.textContent = "Test divensjon"
+    // Sett divisjonsnavn
+    const nameelement = copyelement.querySelector(".groupheadername");
+    nameelement.textContent = "Test divisjon"; // Oppdater dette med riktig divisjonsnavn om nødvendig
 
-        const contentholder = copyelement.querySelector(".rowholder");
-        const nodeteamhholder = contentholder.querySelector('.resultrow');
+    const contentholder = copyelement.querySelector(".rowholder");
+    const nodeteamhholder = contentholder.querySelector('.resultrow');
 
-        let range = 1;
-        for (let team of teamslist){
-            const rowelement = nodeteamhholder.cloneNode(true);
-            contentholder.appendChild(rowelement);
+    let range = 1;
+    for (let team of teamslist) {
+        const rowelement = nodeteamhholder.cloneNode(true);
+        contentholder.appendChild(rowelement);
 
-            const rangenr = rowelement.querySelector(".rangenr");
-            rangenr.textContent = range;
+        // Rangering
+        const rangenr = rowelement.querySelector(".rangenr");
+        rangenr.textContent = range;
 
-            const logoteam = rowelement.querySelector(".clublogo");
-            logoteam.removeAttribute('srcset');
-            logoteam.src = team.clublogo[0];
+        // Laglogo
+        const logoteam = rowelement.querySelector(".clublogo");
+        logoteam.removeAttribute('srcset');
+        logoteam.src = team.clublogo[0];
 
-            const teamname = rowelement.querySelector(".teamnamelable");
-            teamname.textContent = team.name;
+        // Lagnavn
+        const teamname = rowelement.querySelector(".teamnamelable");
+        teamname.textContent = team.name;
 
-            //point
-            const played = rowelement.querySelector(".played");
-            played.textContent = team.points.played;
+        // Poengstatistikk
+        rowelement.querySelector(".played").textContent = team.points.played;
+        rowelement.querySelector(".won").textContent = team.points.won;
+        rowelement.querySelector(".drawn").textContent = team.points.drawn;
+        rowelement.querySelector(".lost").textContent = team.points.lost;
+        rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
+        rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
+        rowelement.querySelector(".points").textContent = team.points.points;
 
-            const won = rowelement.querySelector(".won");
-            won.textContent = team.points.won
+        range++;
+    }
 
-            const drawn = rowelement.querySelector(".drawn");
-            drawn.textContent = team.points.drawn
-
-            const lost = rowelement.querySelector(".lost");
-            lost.textContent = team.points.lost
-
-            const goalsfa = rowelement.querySelector(".goalsfa");
-            goalsfa.textContent = team.points.goalsFor+"-"+team.points.goalsAgainst;
-
-            const goaldifference = rowelement.querySelector(".goaldifference");
-            goaldifference.textContent = team.points.goalDifference
-
-            const points = rowelement.querySelector(".points");
-            points.textContent = team.points.points
-
-            range ++
-        }
-
-        list.appendChild(nodeelement);
-    
-    
+    // Fjern mal-elementet etter loop for å unngå ekstra, tom rad
+    nodeteamhholder.remove();
 }
+
 
 
 
