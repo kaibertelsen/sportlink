@@ -13,91 +13,85 @@ function getTeamresponse(data){
 function listteams(data) {
     // Generer og sorter teamslist basert på poeng, målforskjell og mål scoret
     let teamslist = generatePointToTeams(data);
-    
+
+    // Gruppér lagene etter divisjon og gruppe
+    const teamsByDivisionAndGroup = teamslist.reduce((acc, team) => {
+        const division = team.divisionname[0] || "Ukjent divisjon"; // Standardnavn hvis divisjon mangler
+        const group = team.group ? team.group[0] : "Uten gruppe"; // Standardnavn hvis gruppe mangler
+
+        if (!acc[division]) {
+            acc[division] = {};
+        }
+        if (!acc[division][group]) {
+            acc[division][group] = [];
+        }
+        acc[division][group].push(team);
+        return acc;
+    }, {});
+
     const list = document.getElementById("teamslistholder");
     list.replaceChildren(); // Tømmer holderen for å unngå duplisering
-    
+
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.tablegroupholder');
-    const copyelement = nodeelement.cloneNode(true);
-    list.appendChild(copyelement);
 
-    // Sett divisjonsnavn
-    const nameelement = copyelement.querySelector(".groupheadername");
-    nameelement.textContent = "Test divisjon"; // Oppdater dette med riktig divisjonsnavn om nødvendig
+    // Loop gjennom hver divisjon og gruppe, og opprett en `tablegroupholder` for hver
+    for (const [divisionName, groups] of Object.entries(teamsByDivisionAndGroup)) {
+        for (const [groupName, groupTeams] of Object.entries(groups)) {
+            const copyelement = nodeelement.cloneNode(true);
+            list.appendChild(copyelement);
 
-    const contentholder = copyelement.querySelector(".rowholder");
-    const nodeteamhholder = contentholder.querySelector('.resultrow');
+            // Sett divisjons- og gruppenavn
+            const nameelement = copyelement.querySelector(".groupheadername");
+            nameelement.textContent = `${divisionName} - ${groupName}`;
 
-    let range = 1;
-    for (let team of teamslist) {
-        const rowelement = nodeteamhholder.cloneNode(true);
-        contentholder.appendChild(rowelement);
+            const contentholder = copyelement.querySelector(".rowholder");
+            const nodeteamhholder = contentholder.querySelector('.resultrow');
 
-        // Rangering
-        const rangenr = rowelement.querySelector(".rangenr");
-        rangenr.textContent = range;
+            // Sorter lagene i gruppen basert på poeng, målforskjell og mål scoret
+            groupTeams.sort((a, b) => {
+                if (b.points.points !== a.points.points) {
+                    return b.points.points - a.points.points;
+                }
+                if (b.points.goalDifference !== a.points.goalDifference) {
+                    return b.points.goalDifference - a.points.goalDifference;
+                }
+                return b.points.goalsFor - a.points.goalsFor;
+            });
 
-        // Laglogo
-        const logoteam = rowelement.querySelector(".clublogo");
-        logoteam.removeAttribute('srcset');
-        logoteam.src = team.clublogo[0];
+            let range = 1;
+            for (let team of groupTeams) {
+                const rowelement = nodeteamhholder.cloneNode(true);
+                contentholder.appendChild(rowelement);
 
-        // Lagnavn
-        const teamname = rowelement.querySelector(".teamnamelable");
-        teamname.textContent = team.name;
+                // Rangering
+                const rangenr = rowelement.querySelector(".rangenr");
+                rangenr.textContent = range;
 
-        // Poengstatistikk
-        rowelement.querySelector(".played").textContent = team.points.played;
-        rowelement.querySelector(".won").textContent = team.points.won;
-        rowelement.querySelector(".drawn").textContent = team.points.drawn;
-        rowelement.querySelector(".lost").textContent = team.points.lost;
-        rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
-        rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
-        rowelement.querySelector(".points").textContent = team.points.points;
+                // Laglogo
+                const logoteam = rowelement.querySelector(".clublogo");
+                logoteam.removeAttribute('srcset');
+                logoteam.src = team.clublogo[0];
 
-        range++;
-    }
+                // Lagnavn
+                const teamname = rowelement.querySelector(".teamnamelable");
+                teamname.textContent = team.name;
 
-    // Fjern mal-elementet etter loop for å unngå ekstra, tom rad
-    nodeteamhholder.remove();
-}
+                // Poengstatistikk
+                rowelement.querySelector(".played").textContent = team.points.played;
+                rowelement.querySelector(".won").textContent = team.points.won;
+                rowelement.querySelector(".drawn").textContent = team.points.drawn;
+                rowelement.querySelector(".lost").textContent = team.points.lost;
+                rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
+                rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
+                rowelement.querySelector(".points").textContent = team.points.points;
 
-
-
-
-
-
-
-function groupArraybyDate(matchs){
-
-        // Initialiser en ny array for grupperte kamper
-        let grouparray = [];
-        // Bruk reduce for å gruppere kampene etter dato
-        let groupedByDate = matchs.reduce((groups, match) => {
-            // Hent kun datoen fra 'time'-feltet (uten klokkeslett)
-            let matchDate = new Date(match.time).toISOString().split('T')[0];
-
-            // Hvis datoen ikke finnes i grupperingsobjektet, opprett en ny array for den datoen
-            if (!groups[matchDate]) {
-                groups[matchDate] = [];
+                range++;
             }
 
-            // Legg til kampen i arrayen for den aktuelle datoen
-            groups[matchDate].push(match);
-
-            return groups;
-        }, {});
-
-        // Konverter objektet til en array med dato som nøkkel
-        grouparray = Object.keys(groupedByDate).map(date => {
-            return {
-                date: date,
-                matches: groupedByDate[date]
-            };
-        });
-    
-
-    return grouparray;
+            // Fjern mal-elementet etter å ha lagt til alle rader
+            nodeteamhholder.remove();
+        }
+    }
 }
 
