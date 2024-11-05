@@ -26,10 +26,11 @@ function listteams(data){
         const contentholder = copyelement.querySelector(".rowholder");
         const nodeteamhholder = contentholder.querySelector('.resultrow');
 
-        
+        let range = 1;
         for (let team of teamslist){
             const rowelement = nodeteamhholder.cloneNode(true);
-         
+            contentholder.appendChild(rowelement);
+
             const rangenr = rowelement.querySelector(".rangenr");
             rangenr.textContent = i;
 
@@ -62,7 +63,7 @@ function listteams(data){
             const points = rowelement.querySelector(".points");
             points.textContent = team.points.points
 
-            contentholder.appendChild(rowelement);
+            range ++
         }
 
         list.appendChild(nodeelement);
