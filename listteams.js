@@ -19,12 +19,12 @@ function listteams(data){
     const nodeelement = elementlibrary.querySelector('.tablegroupholder');
     const copyelement = nodeelement.cloneNode(true);
     list.appendChild(copyelement);
-    
+
         const nameelement = copyelement.querySelector(".groupheadername");
         nameelement.textContent = "Test divensjon"
 
         const contentholder = copyelement.querySelector(".rowholder");
-        const nodeteamhholder = elementlibrary.querySelector('.resultrow');
+        const nodeteamhholder = contentholder.querySelector('.resultrow');
 
         
         for (let team of teamslist){
