@@ -10,8 +10,8 @@ function loadScript(url) {
 
 // Liste over CDN-URL-er som skal lastes inn
 const cdnScripts = [
+    "https://kaibertelsen.github.io/sportlink/globalvariabler.js",
     "https://kaibertelsen.github.io/sportlink/apicom.js",
-    "https://kaibertelsen.github.io/sportlink/startup.js",
     "https://kaibertelsen.github.io/sportlink/listgenerator.js",
     "https://kaibertelsen.github.io/sportlink/globalfunctions.js",
     "https://kaibertelsen.github.io/sportlink/listmatch.js",
@@ -19,9 +19,8 @@ const cdnScripts = [
     "https://kaibertelsen.github.io/sportlink/ruteresponse.js",
     "https://kaibertelsen.github.io/sportlink/datekonverters.js",
     "https://kaibertelsen.github.io/sportlink/listteams.js",
-    "https://kaibertelsen.github.io/sportlink/apicom.js",
-    "https://kaibertelsen.github.io/sportlink/globalvariabler.js",
-    "https://kaibertelsen.github.io/sportlink/buttontriggers.js"
+    "https://kaibertelsen.github.io/sportlink/buttontriggers.js",
+    "https://kaibertelsen.github.io/sportlink/startup.js",
     
 ];
 
