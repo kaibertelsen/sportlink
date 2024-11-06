@@ -89,10 +89,11 @@ function listmatch(data, grouptype) {
 
                 vollyresults.innerHTML = ""; // Tøm tidligere resultater
 
-                Object.entries(goalsetData).forEach(([setNumber, setScores]) => {
+                Object.entries(goalsetData).forEach(([setKey, setScores]) => {
+                    const settNumber = setKey.replace("sett", ""); // Fjerner "sett" og henter nummeret
                     const settText = document.createElement("div");
                     settText.classList.add("setttextlable");
-                    settText.textContent = `${setNumber} ${setScores.team1}-${setScores.team2}`;
+                    settText.textContent = `${settNumber}. sett ${setScores.team1}-${setScores.team2}`;
                     vollyresults.appendChild(settText);
                 });
             }
@@ -102,10 +103,9 @@ function listmatch(data, grouptype) {
 
         // Fjern nodematchholder-malen etter bruk
         nodematchholder.remove();
-
-        
     }
 }
+
 
 
 function groupArraybyDate(matchs){
