@@ -90,14 +90,27 @@ function listmatch(data, grouptype) {
                 vollyresults.innerHTML = ""; // Tøm tidligere resultater
 
                 Object.entries(goalsetData).forEach(([setKey, setScores]) => {
-                    const settNumber = setKey.replace("sett", ""); // Fjerner "sett" og henter nummeret
+                    const settNumber = setKey.replace("sett", ""); // Henter nummeret uten "sett"
+                
                     const settText = document.createElement("div");
                     settText.classList.add("setttextlable");
-                    settText.textContent = `${settNumber}. ${setScores.team1}-${setScores.team2}`;
+                
+                    // Lag et bold-element for settnummeret
+                    const boldSetNumber = document.createElement("span");
+                    boldSetNumber.style.fontWeight = "bold";
+                    boldSetNumber.textContent = `${settNumber}. `;
+                
+                    // Legg til resten av teksten etter settnummeret
+                    const resultText = document.createTextNode(`${setScores.team1}-${setScores.team2}`);
+                
+                    // Kombiner bold settnummer og resultat
+                    settText.appendChild(boldSetNumber);
+                    settText.appendChild(resultText);
+                
                     vollyresults.appendChild(settText);
                 });
             } else {
-                if(vollyresults){vollyresults.style.display = "none"; // Skjul hvis data mangler}
+                if(vollyresults){vollyresults.style.display = "none"};
                 
             }
 
