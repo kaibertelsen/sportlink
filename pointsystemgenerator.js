@@ -138,8 +138,15 @@ function generateFotballPointToTeams(data) {
 }
 
 function generateVolleyballPointToTeams(data) {
+
+  
+
     // Initialiser poengstatistikk for hvert lag
     for (let team of data) {
+        if (typeof team !== "object" || team === null) {
+            console.error("Invalid team object:", team);
+            continue;
+        }
         team.points = {
             played: 0,
             won: 0,
