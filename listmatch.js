@@ -49,8 +49,11 @@ function listmatch(data, grouptype) {
 
         for (let match of item.matches) {
             const matchelement = nodematchholder.cloneNode(true);
+            contentholder.appendChild(matchelement);
+
             const team1name = matchelement.querySelector(".team1");
             team1name.textContent = match.team1name;
+            
             const logoteam1 = matchelement.querySelector(".logoteam1");
             logoteam1.src = match.team1clublogo[0];
 
