@@ -98,8 +98,12 @@ function listmatch(data, grouptype) {
                     // Lag et bold-element for settnummeret
                     const boldSetNumber = document.createElement("span");
                     boldSetNumber.style.fontWeight = "bold";
-                    boldSetNumber.style.backgroundColor = "transparent"; // Fjern bakgrunnsfargen
                     boldSetNumber.textContent = `${settNumber}. `;
+                
+                    // Hent original font-størrelse fra parent eller et standard element
+                    const computedStyle = getComputedStyle(settText); // Henter stil fra settText (kan også bruke en annen referanse)
+                    const originalFontSize = parseFloat(computedStyle.fontSize); // Hent skriftstørrelsen som tall
+                    boldSetNumber.style.fontSize = `${originalFontSize + 2}px`; // Legg til 2px for å gjøre den større
                 
                     // Legg til resten av teksten etter settnummeret
                     const resultText = document.createTextNode(`${setScores.team1}-${setScores.team2}`);
