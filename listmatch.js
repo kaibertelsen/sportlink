@@ -29,7 +29,7 @@ function listmatch(data, grouptype) {
     }
 
     const list = document.getElementById("matchlistholder");
-    list.replaceChildren(); // Tøm eksisterende innhold
+    list.replaceChildren(); // Tøm eksisterende innhold i hovedliste
 
     const elementlibrary = document.getElementById("elementlibrary");
     const isVolleyball = activetournament.sport[0] === "recSCesi2BGmCyivZ"; // Volleyball ID
@@ -42,10 +42,7 @@ function listmatch(data, grouptype) {
         const nameelement = rowelement.querySelector(".groupheadername");
         nameelement.textContent = formatDateToNorwegian(item.date);
 
-        list.appendChild(rowelement);
-
         const contentholder = rowelement.querySelector(".contentholder");
-        contentholder.replaceChildren();
         const nodematchholder = elementlibrary.querySelector('.matchholder');
 
         for (let match of item.matches) {
@@ -98,7 +95,10 @@ function listmatch(data, grouptype) {
             contentholder.appendChild(matchelement);
         }
 
-        
+        // Fjern nodematchholder-malen etter bruk
+        nodematchholder.remove();
+
+        list.appendChild(rowelement);
     }
 }
 
