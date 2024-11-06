@@ -42,6 +42,8 @@ function listmatch(data, grouptype) {
         const nameelement = rowelement.querySelector(".groupheadername");
         nameelement.textContent = formatDateToNorwegian(item.date);
 
+        list.appendChild(rowelement);
+
         const contentholder = rowelement.querySelector(".contentholder");
         contentholder.replaceChildren();
         const nodematchholder = elementlibrary.querySelector('.matchholder');
@@ -96,7 +98,7 @@ function listmatch(data, grouptype) {
             contentholder.appendChild(matchelement);
         }
 
-        list.appendChild(rowelement);
+        
     }
 }
 
