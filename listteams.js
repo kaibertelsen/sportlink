@@ -49,8 +49,7 @@ function listteams(data) {
     for (const [divisionName, groups] of Object.entries(teamsByDivisionAndGroup)) {
         for (const [groupName, groupTeams] of Object.entries(groups)) {
             const copyelement = nodeelement.cloneNode(true);
-            list.appendChild(copyelement);
-
+            
             // Sett divisjons- og gruppenavn, kun divisjonsnavn om gruppe mangler
             const nameelement = copyelement.querySelector(".groupheadername");
             nameelement.textContent = groupName === "Uten gruppe" ? divisionName : `${divisionName} - ${groupName}`;
@@ -109,6 +108,7 @@ function listteams(data) {
 
             // Fjern mal-elementet etter å ha lagt til alle rader
             nodeteamhholder.remove();
+            list.appendChild(copyelement);
         }
     }
 }
