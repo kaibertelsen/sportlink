@@ -40,12 +40,12 @@ function listmatch(data, grouptype) {
     for (let item of grouparray) {
         const rowelement = nodeelement.cloneNode(true);
         list.appendChild(rowelement);
-        
+
         const nameelement = rowelement.querySelector(".groupheadername");
         nameelement.textContent = formatDateToNorwegian(item.date);
 
         const contentholder = rowelement.querySelector(".contentholder");
-        const nodematchholder = elementlibrary.querySelector('.matchholder');
+        const nodematchholder = rowelement.querySelector('.matchholder');
 
         for (let match of item.matches) {
             const matchelement = nodematchholder.cloneNode(true);
