@@ -74,8 +74,8 @@ function listmatch(data, grouptype) {
             logoteam2.src = match.team2clublogo[0];
 
             // Hvis det er volleyball og kampen er spilt, legg til settresultater
+            const vollyresults = matchelement.querySelector(".vollyresults");
             if (isVolleyball && typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined" && match.goalsett) {
-                const vollyresults = matchelement.querySelector(".vollyresults");
                 vollyresults.style.display = "block"; // Gjør sett-resultatene synlige
 
                 // Legg til sett-informasjon
@@ -96,6 +96,8 @@ function listmatch(data, grouptype) {
                     settText.textContent = `${settNumber}. sett ${setScores.team1}-${setScores.team2}`;
                     vollyresults.appendChild(settText);
                 });
+            } else {
+                vollyresults.style.display = "none"; // Skjul hvis data mangler
             }
 
             contentholder.appendChild(matchelement);
@@ -105,6 +107,7 @@ function listmatch(data, grouptype) {
         nodematchholder.remove();
     }
 }
+
 
 
 
