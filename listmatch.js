@@ -39,6 +39,8 @@ function listmatch(data, grouptype) {
 
     for (let item of grouparray) {
         const rowelement = nodeelement.cloneNode(true);
+        list.appendChild(rowelement);
+        
         const nameelement = rowelement.querySelector(".groupheadername");
         nameelement.textContent = formatDateToNorwegian(item.date);
 
@@ -98,7 +100,7 @@ function listmatch(data, grouptype) {
         // Fjern nodematchholder-malen etter bruk
         nodematchholder.remove();
 
-        list.appendChild(rowelement);
+        
     }
 }
 
