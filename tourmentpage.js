@@ -65,6 +65,23 @@ function listDivision(tournament){
     }
 }
 
+function makeDivisionArray(tournament){
+    let divisionArray = [];
+    if(tournament?.division){
+        //har division
+        for(var i = 0;i<tournament.division.length;i++){
+            divisionArray.push({name:tournament.divisionname[i],airtable:tournament.division[i]});
+        }
+        divisionArray = sortArrayABC(divisionArray,"name");
+        divisionArray.unshift({
+            name: "Alle",
+            airtable: ""
+        });
+    }
+  
+    return divisionArray;
+}
+
 function filterDevisiontype(item, match, teams) {
     const buttonlist = document.getElementById("divisionholder");
     if (!buttonlist) return; // Sjekk at elementet eksisterer
@@ -106,23 +123,18 @@ function filterDevisiontype(item, match, teams) {
     }
 }
 
+// Funksjon som finner aktiv filterknapp og returnerer valgt divisjon
+function getActiveDivisionFilter() {
+    const buttonlist = document.getElementById("divisionholder");
+    if (!buttonlist) return ""; // Returner tom streng hvis elementet mangler
 
-function makeDivisionArray(tournament){
-    let divisionArray = [];
-    if(tournament?.division){
-        //har division
-        for(var i = 0;i<tournament.division.length;i++){
-            divisionArray.push({name:tournament.divisionname[i],airtable:tournament.division[i]});
+    // Finn den aktive knappen ved å sjekke stil eller andre indikatorer
+    let activeDivision = "";
+    Array.from(buttonlist.children).forEach(element => {
+        if (element.style.backgroundColor === "#192219") { // Sjekk aktiv stil
+            activeDivision = element.id.replace("di", ""); // Fjern "di" for å få airtable ID
         }
-        divisionArray = sortArrayABC(divisionArray,"name");
-        divisionArray.unshift({
-            name: "Alle",
-            airtable: ""
-        });
-    }
-  
-    return divisionArray;
+    });
+
+    return activeDivision; // Returner den aktive divisjonens ID eller tom streng
 }
-
-
-
