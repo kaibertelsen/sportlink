@@ -112,8 +112,3 @@ function listteams(data) {
         }
     }
 }
-
-
-
-
-
