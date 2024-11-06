@@ -32,7 +32,10 @@ function listmatch(data, grouptype) {
     list.replaceChildren(); // Tøm eksisterende innhold
 
     const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector('.groupholder');
+    const isVolleyball = activetournament.sport[0] === "recSCesi2BGmCyivZ"; // Volleyball ID
+    const nodeelement = isVolleyball
+        ? elementlibrary.querySelector('.volleyball')
+        : elementlibrary.querySelector('.fotball');
 
     for (let item of grouparray) {
         const rowelement = nodeelement.cloneNode(true);
@@ -49,8 +52,10 @@ function listmatch(data, grouptype) {
             team1name.textContent = match.team1name;
             const logoteam1 = matchelement.querySelector(".logoteam1");
             logoteam1.src = match.team1clublogo[0];
+
             const timelable = matchelement.querySelector(".timelable");
 
+            // Sett resultat eller tid basert på om kampen er spilt
             if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
                 timelable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
                 timelable.style.fontWeight = "bold";
@@ -64,12 +69,37 @@ function listmatch(data, grouptype) {
             const logoteam2 = matchelement.querySelector(".logoteam2");
             logoteam2.src = match.team2clublogo[0];
 
+            // Hvis det er volleyball og kampen er spilt, legg til settresultater
+            if (isVolleyball && typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined" && match.goalsett) {
+                const vollyresults = matchelement.querySelector(".vollyresults");
+                vollyresults.style.display = "block"; // Gjør sett-resultatene synlige
+
+                // Legg til sett-informasjon
+                let goalsetData;
+                try {
+                    goalsetData = typeof match.goalsett === 'string' ? JSON.parse(match.goalsett) : match.goalsett;
+                } catch (e) {
+                    console.error("Feil ved parsing av goalsett:", e);
+                    continue; // Hopp over hvis parsing feiler
+                }
+
+                vollyresults.innerHTML = ""; // Tøm tidligere resultater
+
+                Object.entries(goalsetData).forEach(([setNumber, setScores]) => {
+                    const settText = document.createElement("div");
+                    settText.classList.add("setttextlable");
+                    settText.textContent = `${setNumber} ${setScores.team1}-${setScores.team2}`;
+                    vollyresults.appendChild(settText);
+                });
+            }
+
             contentholder.appendChild(matchelement);
         }
 
         list.appendChild(rowelement);
     }
 }
+
 
 function groupArraybyDate(matchs){
 
