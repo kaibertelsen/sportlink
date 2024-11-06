@@ -39,6 +39,37 @@ function loadTourmentHeader(data){
     
 }
 
+// Global variabel for å holde styr på siste trykte knapp
+let lastClickedDivisionButton = "";
+
+// Funksjon som settes som onclick-håndterer for divisjonsknappene
+function handleDivisionButtonClick(item) {
+    // Oppdater `lastClickedDivisionButton` med ID-en til den trykte knappen
+    lastClickedDivisionButton = item.airtable;
+
+    // Oppdater stil for knapper (valgfritt, for å vise aktiv knapp visuelt)
+    const buttonlist = document.getElementById("divisionholder");
+    Array.from(buttonlist.children).forEach(element => {
+        if (element.id === "di" + lastClickedDivisionButton) {
+            element.style.backgroundColor = "#192219";
+            element.style.borderColor = "#61de6e";
+        } else {
+            element.style.backgroundColor = "#1d1d1d";
+            element.style.borderColor = "transparent";
+        }
+    });
+
+    // Oppdater kamp- og lagvisninger
+    listmatch(matches, "dato");
+    listteams(teams);
+}
+
+// Funksjon for å hente ID-en til aktivt filter
+function getActiveDivisionFilter() {
+    return lastClickedDivisionButton || ""; // Returner aktivt filter eller tom streng hvis ingen knapp er trykket
+}
+
+
 function listDivision(tournament) {
     const list = document.getElementById("divisionholder");
     list.replaceChildren();
@@ -48,30 +79,16 @@ function listDivision(tournament) {
     let divisionArray = makeDivisionArray(tournament);
 
     for (let item of divisionArray) {
-        // Lag en kopi av elementet
         const rowelement = nodeelement.cloneNode(true);
         rowelement.id = "di" + item.airtable;
         rowelement.textContent = item.name;
 
-        // Angi klikkhåndtering for divisjonsknappen
-        rowelement.onclick = function() {
-            // Tilbakestill stil for alle knapper
-            Array.from(list.children).forEach(element => {
-                element.style.backgroundColor = "#1d1d1d";
-                element.style.borderColor = "transparent";
-            });
-
-            // Angi aktiv stil for valgt knapp
-            rowelement.style.backgroundColor = "#192219";
-            rowelement.style.borderColor = "#61de6e";
-
-            // Oppdater lister basert på valgt divisjon
-            listmatch(matches, "dato"); // match er kampdataene
-            listteams(teams); // teams er lagdataene
-        };
+        // Bruk `handleDivisionButtonClick` som klikkhåndterer
+        rowelement.onclick = () => handleDivisionButtonClick(item);
 
         // Sett standard stil for første knapp
         if (item === divisionArray[0]) {
+            lastClickedDivisionButton = item.airtable; // Sett første knapp som aktiv ved start
             rowelement.style.backgroundColor = "#192219";
             rowelement.style.borderColor = "#61de6e";
         }
@@ -79,6 +96,7 @@ function listDivision(tournament) {
         list.appendChild(rowelement);
     }
 }
+
 
 
 function makeDivisionArray(tournament){
