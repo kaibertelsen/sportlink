@@ -1,9 +1,22 @@
+function getTournament(klientid) {
+    var body = airtablebodylistAND({klientid:klientid,archived:0});
+    Getlistairtable(baseId,"tblGhVlhWETNvhrWN",body,"getTournamentresponse");
+}
+
+function getTournamentresponse(data){
+    tournament = rawdatacleaner(data);
+    //lag filter
+    listSports(tournament);
+    //sorter på dato
+    listTournament(sortDateArray(tournament,"startdate"));
+}
+
+
 function loadTourment(data){
     //for å gå videre i tab systemet
     document.getElementById('tabtoturnering').click();
 
     activetournament = data
-
     loadTourmentHeader(data);
     listDivision(data);
     getMatch(data);
@@ -52,38 +65,45 @@ function listDivision(tournament){
     }
 }
 
-function filterDevisiontype(item){
-
+function filterDevisiontype(item, match, teams) {
     const buttonlist = document.getElementById("divisionholder");
-    let allButtons =  buttonlist.children;
-    
-    allButtons.forEach(element => {
-       //sett standard verdien
-       element.style.backgroundColor = "#1d1d1d";
-       element.style.borderColor = "transparent";
+    if (!buttonlist) return; // Sjekk at elementet eksisterer
+
+    // Oppdater stil for alle knapper til standard utseende
+    Array.from(buttonlist.children).forEach(element => {
+        element.style.backgroundColor = "#1d1d1d";
+        element.style.borderColor = "transparent";
     });
-    
-    let buttonid = "di"+item.airtable;
+
+    // Oppdater stilen for den valgte knappen
+    let buttonid = "di" + item.airtable;
     const thisfilterbutton = document.getElementById(buttonid);
-
-    if(thisfilterbutton){
-     thisfilterbutton.style.backgroundColor = "#192219";
-     thisfilterbutton.style.borderColor = "#61de6e";
+    if (thisfilterbutton) {
+        thisfilterbutton.style.backgroundColor = "#192219";
+        thisfilterbutton.style.borderColor = "#61de6e";
     }
 
-    if(item.airtable == ""){
-     listmatch(match,"dato");   
-    }else{
-    //lage en ny array av match
-     let filterArray = [];
-    for (let thismatch of match) {
-        if(thismatch.division[0] == item.airtable){
-            filterArray.push(thismatch);
+    // Filtrer kamper
+    if (document.getElementById("matchlistholder")) {
+        let filteredMatches;
+        if (item.airtable === "") {
+            filteredMatches = match; // Vis alle kamper hvis "Alle" er valgt
+        } else {
+            filteredMatches = match.filter(thismatch => thismatch.division[0] === item.airtable);
         }
+        listmatch(filteredMatches, "dato"); // Oppdater kamp-listen
     }
-    listmatch(filterArray,"dato");
+
+    // Filtrer lagtabellen
+    if (document.getElementById("teamslistholder")) {
+        let filteredTeams;
+        if (item.airtable === "") {
+            filteredTeams = teams; // Vis alle lag hvis "Alle" er valgt
+        } else {
+            filteredTeams = teams.filter(team => team.division[0] === item.airtable);
+        }
+        listteams(filteredTeams); // Oppdater lagtabellen
     }
-   
 }
 
 
@@ -104,13 +124,5 @@ function makeDivisionArray(tournament){
     return divisionArray;
 }
 
-function getMatch(data){
-    var body = airtablebodylistAND({tournamentid:data.airtable,archived:0});
-    Getlistairtable(baseId,"tblrHBFa60aIdqkUu",body,"getMatchresponse");
-}
 
-function getMatchresponse(data,id){
-    matches = rawdatacleaner(data);
-    listmatch(matches,"dato");
-}
 

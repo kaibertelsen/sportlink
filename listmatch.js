@@ -1,3 +1,14 @@
+function getMatch(data){
+    var body = airtablebodylistAND({tournamentid:data.airtable,archived:0});
+    Getlistairtable(baseId,"tblrHBFa60aIdqkUu",body,"getMatchresponse");
+}
+
+function getMatchresponse(data,id){
+    matches = rawdatacleaner(data);
+    listmatch(matches,"dato");
+}
+
+
 function listmatch(data, grouptype) {
     // Sorter på `time`-feltet
     let matchs = sortDateArray(data, "time");
@@ -81,12 +92,6 @@ function listmatch(data, grouptype) {
         list.appendChild(rowelement);
     }
 }
-
-
-
-
-
-
 
 function groupArraybyDate(matchs){
 

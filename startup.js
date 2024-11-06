@@ -14,15 +14,3 @@ MemberStack.onReady.then(function(member) {
 
 
 
-function getTournament(klientid) {
-    var body = airtablebodylistAND({klientid:klientid,archived:0});
-    Getlistairtable(baseId,"tblGhVlhWETNvhrWN",body,"getTournamentresponse");
-}
-
-function getTournamentresponse(data){
-    tournament = rawdatacleaner(data);
-    //lag filter
-    listSports(tournament);
-    //sorter på dato
-    listTournament(sortDateArray(tournament,"startdate"));
-}
