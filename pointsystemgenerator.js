@@ -138,15 +138,8 @@ function generateFotballPointToTeams(data) {
 }
 
 function generateVolleyballPointToTeams(data) {
-
-  
-
     // Initialiser poengstatistikk for hvert lag
     for (let team of data) {
-        if (typeof team !== "object" || team === null) {
-            console.error("Invalid team object:", team);
-            continue;
-        }
         team.points = {
             played: 0,
             won: 0,
@@ -154,8 +147,8 @@ function generateVolleyballPointToTeams(data) {
             setsFor: 0,
             setsAgainst: 0,
             setDifference: 0,
-            pointsFor: 0,
-            pointsAgainst: 0,
+            goalsFor: 0,
+            goalsAgainst: 0,
             pointsDifference: 0,
             points: 0,
             goalSetDifference: 0, // Sett målforskjell for ekstra sortering
@@ -165,7 +158,8 @@ function generateVolleyballPointToTeams(data) {
 
     // Oppdater poengstatistikk basert på kamper
     for (let match of matches) {
-        if (typeof match.setsTeam1 === "undefined" || typeof match.setsTeam2 === "undefined") {
+        // Sjekk om kampen har blitt spilt
+        if (typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
             continue; // Hopp over kamper som ikke er spilt
         }
 
@@ -176,23 +170,15 @@ function generateVolleyballPointToTeams(data) {
             team1.points.played++;
             team2.points.played++;
 
-            const setsTeam1 = match.setsTeam1;
-            const setsTeam2 = match.setsTeam2;
+            const team1Score = match.goalteam1;
+            const team2Score = match.goalteam2;
 
-            team1.points.setsFor += setsTeam1;
-            team1.points.setsAgainst += setsTeam2;
-            team2.points.setsFor += setsTeam2;
-            team2.points.setsAgainst += setsTeam1;
-
-            team1.points.setDifference = team1.points.setsFor - team1.points.setsAgainst;
-            team2.points.setDifference = team2.points.setsFor - team2.points.setsAgainst;
-
-            // Bruk `goalsett` for å beregne sett målforskjell og lagre sett-resultater
+            // Oppdater settstatistikk
             if (match.goalsett) {
-                // Konverter `goalsett` fra string til objekt
+                // Konverter `goalsett` fra string til objekt, hvis nødvendig
                 let goalsetData;
                 try {
-                    goalsetData = JSON.parse(match.goalsett);
+                    goalsetData = typeof match.goalsett === 'string' ? JSON.parse(match.goalsett) : match.goalsett;
                 } catch (e) {
                     console.error("Feil ved parsing av goalsett:", e);
                     continue; // Hopp over hvis parsing feiler
@@ -200,13 +186,12 @@ function generateVolleyballPointToTeams(data) {
 
                 let goalSetDifference1 = 0;
                 let goalSetDifference2 = 0;
-                
-                // Legg til informasjon fra `goalsett` til begge lags `goalsetScores`
+
+                // Legg til settresultater
                 team1.points.goalsetScores.push({
                     opponent: team2.name,
                     sets: goalsetData
                 });
-                
                 team2.points.goalsetScores.push({
                     opponent: team1.name,
                     sets: Object.fromEntries(
@@ -221,43 +206,26 @@ function generateVolleyballPointToTeams(data) {
 
                 team1.points.goalSetDifference += goalSetDifference1;
                 team2.points.goalSetDifference += goalSetDifference2;
-
-                // Oppdater poeng for og mot (hvis tilgjengelig)
-                if (typeof match.pointsTeam1 !== "undefined" && typeof match.pointsTeam2 !== "undefined") {
-                    const pointsTeam1 = match.pointsTeam1;
-                    const pointsTeam2 = match.pointsTeam2;
-
-                    team1.points.pointsFor += pointsTeam1;
-                    team1.points.pointsAgainst += pointsTeam2;
-                    team2.points.pointsFor += pointsTeam2;
-                    team2.points.pointsAgainst += pointsTeam1;
-
-                    team1.points.pointsDifference = team1.points.pointsFor - team1.points.pointsAgainst;
-                    team2.points.pointsDifference = team2.points.pointsFor - team2.points.pointsAgainst;
-                }
             }
 
-            // Oppdater seire, tap og poeng
-            if (setsTeam1 > setsTeam2) {
+            // Oppdater mål for og mot
+            team1.points.goalsFor += team1Score;
+            team1.points.goalsAgainst += team2Score;
+            team2.points.goalsFor += team2Score;
+            team2.points.goalsAgainst += team1Score;
+
+            team1.points.setDifference = team1.points.setsFor - team1.points.setsAgainst;
+            team2.points.setDifference = team2.points.setsFor - team2.points.setsAgainst;
+
+            // Oppdater poeng for kampresultater
+            if (team1Score > team2Score) {
                 team1.points.won++;
                 team2.points.lost++;
-
-                if (setsTeam1 === 3 && setsTeam2 <= 1) {
-                    team1.points.points += 3; 
-                } else if (setsTeam1 === 3 && setsTeam2 === 2) {
-                    team1.points.points += 2;
-                    team2.points.points += 1;
-                }
-            } else if (setsTeam1 < setsTeam2) {
+                team1.points.points += 3; // 3 poeng for seier
+            } else if (team1Score < team2Score) {
                 team2.points.won++;
                 team1.points.lost++;
-
-                if (setsTeam2 === 3 && setsTeam1 <= 1) {
-                    team2.points.points += 3;
-                } else if (setsTeam2 === 3 && setsTeam1 === 2) {
-                    team2.points.points += 2;
-                    team1.points.points += 1;
-                }
+                team2.points.points += 3; // 3 poeng for seier
             }
         }
     }
@@ -272,8 +240,8 @@ function generateIceHockeyPointToTeams(data) {
             played: 0,
             won: 0,
             lost: 0,
-            otWon: 0, // Overtid/straffer vunnet
-            otLost: 0, // Overtid/straffer tapt
+            otWon: 0, // Vunnet i overtid
+            otLost: 0, // Tapt i overtid
             goalsFor: 0,
             goalsAgainst: 0,
             goalDifference: 0,
@@ -283,7 +251,6 @@ function generateIceHockeyPointToTeams(data) {
 
     // Oppdater poengstatistikk basert på kamper
     for (let match of matches) {
-        // Sjekk om kampen har blitt spilt
         if (typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
             continue; // Hopp over kamper som ikke er spilt
         }
@@ -309,20 +276,20 @@ function generateIceHockeyPointToTeams(data) {
             team1.points.goalDifference = team1.points.goalsFor - team1.points.goalsAgainst;
             team2.points.goalDifference = team2.points.goalsFor - team2.points.goalsAgainst;
 
-            // Sjekk om kampen gikk til overtid eller straffer
+            // Sjekk om kampen gikk til overtid
             if (match.overtime || match.shootout) {
                 if (team1Score > team2Score) {
-                    // Team1 vant i overtid eller på straffer
+                    // Team1 vant i overtid
                     team1.points.otWon++;
                     team2.points.otLost++;
-                    team1.points.points += 2; // 2 poeng for seier i overtid/straffer
-                    team2.points.points += 1; // 1 poeng for tap i overtid/straffer
+                    team1.points.points += 2; // 2 poeng for OT-seier
+                    team2.points.points += 1; // 1 poeng for OT-tap
                 } else if (team1Score < team2Score) {
-                    // Team2 vant i overtid eller på straffer
+                    // Team2 vant i overtid
                     team2.points.otWon++;
                     team1.points.otLost++;
-                    team2.points.points += 2; // 2 poeng for seier i overtid/straffer
-                    team1.points.points += 1; // 1 poeng for tap i overtid/straffer
+                    team2.points.points += 2; // 2 poeng for OT-seier
+                    team1.points.points += 1; // 1 poeng for OT-tap
                 }
             } else {
                 // Ordinær seier eller tap
@@ -358,7 +325,6 @@ function generatePadelPointToTeams(data) {
 
     // Oppdater poengstatistikk basert på kamper
     for (let match of matches) {
-        // Sjekk om kampen har blitt spilt
         if (typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
             continue; // Hopp over kamper som ikke er spilt
         }
@@ -384,7 +350,7 @@ function generatePadelPointToTeams(data) {
             team1.points.goalDifference = team1.points.goalsFor - team1.points.goalsAgainst;
             team2.points.goalDifference = team2.points.goalsFor - team2.points.goalsAgainst;
 
-            // Oppdater poeng basert på resultat
+            // Oppdater poeng for kampresultater
             if (team1Score > team2Score) {
                 team1.points.won++;
                 team2.points.lost++;
@@ -399,4 +365,5 @@ function generatePadelPointToTeams(data) {
 
     return data;
 }
+
 
