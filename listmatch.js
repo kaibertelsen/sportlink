@@ -93,7 +93,7 @@ function listmatch(data, grouptype) {
                     const settNumber = setKey.replace("sett", ""); // Fjerner "sett" og henter nummeret
                     const settText = document.createElement("div");
                     settText.classList.add("setttextlable");
-                    settText.textContent = `${settNumber}. sett ${setScores.team1}-${setScores.team2}`;
+                    settText.textContent = `${settNumber}. ${setScores.team1}-${setScores.team2}`;
                     vollyresults.appendChild(settText);
                 });
             } else {
