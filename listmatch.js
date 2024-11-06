@@ -98,6 +98,7 @@ function listmatch(data, grouptype) {
                     // Lag et bold-element for settnummeret
                     const boldSetNumber = document.createElement("span");
                     boldSetNumber.style.fontWeight = "bold";
+                    boldSetNumber.style.backgroundColor = "transparent"; // Fjern bakgrunnsfargen
                     boldSetNumber.textContent = `${settNumber}. `;
                 
                     // Legg til resten av teksten etter settnummeret
@@ -109,6 +110,7 @@ function listmatch(data, grouptype) {
                 
                     vollyresults.appendChild(settText);
                 });
+                
             } else {
                 if(vollyresults){vollyresults.style.display = "none"};
                 
