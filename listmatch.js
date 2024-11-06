@@ -97,7 +97,8 @@ function listmatch(data, grouptype) {
                     vollyresults.appendChild(settText);
                 });
             } else {
-                vollyresults.style.display = "none"; // Skjul hvis data mangler
+                if(vollyresults){vollyresults.style.display = "none"; // Skjul hvis data mangler}
+                
             }
 
             contentholder.appendChild(matchelement);
