@@ -66,7 +66,7 @@ function listDivision(tournament) {
             rowelement.style.borderColor = "#61de6e";
 
             // Oppdater lister basert på valgt divisjon
-            listmatch(match, "dato"); // match er kampdataene
+            listmatch(matches, "dato"); // match er kampdataene
             listteams(teams); // teams er lagdataene
         };
 
