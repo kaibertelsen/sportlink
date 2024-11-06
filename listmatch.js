@@ -106,7 +106,7 @@ function listmatch(data, grouptype) {
                     boldSetNumber.style.fontSize = `${originalFontSize + 2}px`; // Legg til 2px for å gjøre den større
                 
                     // Legg til resten av teksten etter settnummeret
-                    const resultText = document.createTextNode(`${setScores.team1}-${setScores.team2}`);
+                    const resultText = document.createTextNode(`(${setScores.team1}-${setScores.team2})`);
                 
                     // Kombiner bold settnummer og resultat
                     settText.appendChild(boldSetNumber);
