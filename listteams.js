@@ -38,7 +38,12 @@ function listteams(data) {
     list.replaceChildren(); // Tømmer holderen for å unngå duplisering
 
     const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector('.tablegroupholder');
+
+    // Bestem hvilket element som skal kopieres basert på sportstypen
+    const isVolleyball = activetournament.sport[0] === "recSCesi2BGmCyivZ"; // Volleyball ID
+    const nodeelement = isVolleyball
+        ? elementlibrary.querySelector('.volleyballview')
+        : elementlibrary.querySelector('.fotballview');
 
     // Loop gjennom hver divisjon og gruppe, og opprett en `tablegroupholder` for hver
     for (const [divisionName, groups] of Object.entries(teamsByDivisionAndGroup)) {
@@ -85,11 +90,19 @@ function listteams(data) {
                 // Poengstatistikk
                 rowelement.querySelector(".played").textContent = team.points.played;
                 rowelement.querySelector(".won").textContent = team.points.won;
-                rowelement.querySelector(".drawn").textContent = team.points.drawn;
                 rowelement.querySelector(".lost").textContent = team.points.lost;
-                rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
-                rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
-                rowelement.querySelector(".points").textContent = team.points.points;
+                
+                if (isVolleyball) {
+                    // Sett-statistikk for volleyball
+                    rowelement.querySelector(".setsdifference").textContent = `${team.points.setsFor}-${team.points.setsAgainst}`;
+                    rowelement.querySelector(".points").textContent = team.points.points;
+                } else {
+                    // Målstatistikk for fotball
+                    rowelement.querySelector(".drawn").textContent = team.points.drawn;
+                    rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
+                    rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
+                    rowelement.querySelector(".points").textContent = team.points.points;
+                }
 
                 range++;
             }
@@ -99,6 +112,7 @@ function listteams(data) {
         }
     }
 }
+
 
 
 
