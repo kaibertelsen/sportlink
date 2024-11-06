@@ -16,61 +16,90 @@ function listteams(data) {
     // Filtrer lagene basert på aktivt divisjonsfilter
     let filteredTeams = activeDivision === "" ? data : data.filter(team => team.division[0] === activeDivision);
 
-    // Generer poengstatistikk og sorter lagene
-    filteredTeams = generatePointToTeams(filteredTeams);
-    filteredTeams.sort((a, b) => {
-        if (b.points.points !== a.points.points) {
-            return b.points.points - a.points.points; // Sorter etter poeng
-        }
-        if (b.points.goalDifference !== a.points.goalDifference) {
-            return b.points.goalDifference - a.points.goalDifference; // Sorter etter målforskjell
-        }
-        return b.points.goalsFor - a.points.goalsFor; // Sorter etter mål for
-    });
+    // Generer og sorter teamslist basert på poeng, målforskjell og mål scoret
+    let teamslist = generatePointToTeams(filteredTeams);
 
-    // Hent elementer og klargjør for oppdatering
+    // Gruppér lagene etter divisjon og gruppe
+    const teamsByDivisionAndGroup = teamslist.reduce((acc, team) => {
+        const division = team.divisionname[0] || "Ukjent divisjon"; // Standardnavn hvis divisjon mangler
+        const group = team.group ? team.group[0] : null; // Null hvis gruppe mangler
+
+        if (!acc[division]) {
+            acc[division] = {};
+        }
+        if (!acc[division][group || "Uten gruppe"]) {
+            acc[division][group || "Uten gruppe"] = [];
+        }
+        acc[division][group || "Uten gruppe"].push(team);
+        return acc;
+    }, {});
+
     const list = document.getElementById("teamslistholder");
-    if (!list) return; // Sjekk at elementet finnes
-    list.replaceChildren();
+    list.replaceChildren(); // Tømmer holderen for å unngå duplisering
 
     const elementlibrary = document.getElementById("elementlibrary");
-    if (!elementlibrary) return; // Sjekk at elementet finnes
     const nodeelement = elementlibrary.querySelector('.tablegroupholder');
-    const copyelement = nodeelement.cloneNode(true);
-    list.appendChild(copyelement);
 
-    // Oppdater tittel for tabellen
-    const nameelement = copyelement.querySelector(".groupheadername");
-    nameelement.textContent = "Tabell";
+    // Loop gjennom hver divisjon og gruppe, og opprett en `tablegroupholder` for hver
+    for (const [divisionName, groups] of Object.entries(teamsByDivisionAndGroup)) {
+        for (const [groupName, groupTeams] of Object.entries(groups)) {
+            const copyelement = nodeelement.cloneNode(true);
+            list.appendChild(copyelement);
 
-    const contentholder = copyelement.querySelector(".rowholder");
-    const nodeteamhholder = contentholder.querySelector('.resultrow');
+            // Sett divisjons- og gruppenavn, kun divisjonsnavn om gruppe mangler
+            const nameelement = copyelement.querySelector(".groupheadername");
+            nameelement.textContent = groupName === "Uten gruppe" ? divisionName : `${divisionName} - ${groupName}`;
 
-    // Legg til hvert lag i listen
-    let range = 1;
-    for (let team of filteredTeams) {
-        const rowelement = nodeteamhholder.cloneNode(true);
+            const contentholder = copyelement.querySelector(".rowholder");
+            const nodeteamhholder = contentholder.querySelector('.resultrow');
 
-        rowelement.querySelector(".rangenr").textContent = range;
-        rowelement.querySelector(".clublogo").src = team.clublogo[0];
-        rowelement.querySelector(".teamnamelable").textContent = team.name;
+            // Sorter lagene i gruppen basert på poeng, målforskjell og mål scoret
+            groupTeams.sort((a, b) => {
+                if (b.points.points !== a.points.points) {
+                    return b.points.points - a.points.points;
+                }
+                if (b.points.goalDifference !== a.points.goalDifference) {
+                    return b.points.goalDifference - a.points.goalDifference;
+                }
+                return b.points.goalsFor - a.points.goalsFor;
+            });
 
-        // Fyll inn poengstatistikken for laget
-        rowelement.querySelector(".played").textContent = team.points.played;
-        rowelement.querySelector(".won").textContent = team.points.won;
-        rowelement.querySelector(".drawn").textContent = team.points.drawn;
-        rowelement.querySelector(".lost").textContent = team.points.lost;
-        rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
-        rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
-        rowelement.querySelector(".points").textContent = team.points.points;
+            let range = 1;
+            for (let team of groupTeams) {
+                const rowelement = nodeteamhholder.cloneNode(true);
+                contentholder.appendChild(rowelement);
 
-        contentholder.appendChild(rowelement);
-        range++;
+                // Rangering
+                const rangenr = rowelement.querySelector(".rangenr");
+                rangenr.textContent = range;
+
+                // Laglogo
+                const logoteam = rowelement.querySelector(".clublogo");
+                logoteam.removeAttribute('srcset');
+                logoteam.src = team.clublogo[0];
+
+                // Lagnavn
+                const teamname = rowelement.querySelector(".teamnamelable");
+                teamname.textContent = team.name;
+
+                // Poengstatistikk
+                rowelement.querySelector(".played").textContent = team.points.played;
+                rowelement.querySelector(".won").textContent = team.points.won;
+                rowelement.querySelector(".drawn").textContent = team.points.drawn;
+                rowelement.querySelector(".lost").textContent = team.points.lost;
+                rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
+                rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
+                rowelement.querySelector(".points").textContent = team.points.points;
+
+                range++;
+            }
+
+            // Fjern mal-elementet etter å ha lagt til alle rader
+            nodeteamhholder.remove();
+        }
     }
-
-    // Fjern mal-elementet etter å ha lagt til alle rader
-    nodeteamhholder.remove();
 }
+
 
 
 
