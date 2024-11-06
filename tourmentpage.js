@@ -39,31 +39,47 @@ function loadTourmentHeader(data){
     
 }
 
-function listDivision(tournament){
+function listDivision(tournament) {
     const list = document.getElementById("divisionholder");
     list.replaceChildren();
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.divisionbutton');
- 
+
     let divisionArray = makeDivisionArray(tournament);
-    
+
     for (let item of divisionArray) {
         // Lag en kopi av elementet
         const rowelement = nodeelement.cloneNode(true);
-        rowelement.id = "di"+item.airtable;
-
-        rowelement.onclick = function() {
-            filterDevisiontype(item);
-        }
+        rowelement.id = "di" + item.airtable;
         rowelement.textContent = item.name;
-        
+
+        // Angi klikkhåndtering for divisjonsknappen
+        rowelement.onclick = function() {
+            // Tilbakestill stil for alle knapper
+            Array.from(list.children).forEach(element => {
+                element.style.backgroundColor = "#1d1d1d";
+                element.style.borderColor = "transparent";
+            });
+
+            // Angi aktiv stil for valgt knapp
+            rowelement.style.backgroundColor = "#192219";
+            rowelement.style.borderColor = "#61de6e";
+
+            // Oppdater lister basert på valgt divisjon
+            listmatch(match, "dato"); // match er kampdataene
+            listteams(teams); // teams er lagdataene
+        };
+
+        // Sett standard stil for første knapp
         if (item === divisionArray[0]) {
             rowelement.style.backgroundColor = "#192219";
             rowelement.style.borderColor = "#61de6e";
         }
+
         list.appendChild(rowelement);
     }
 }
+
 
 function makeDivisionArray(tournament){
     let divisionArray = [];
@@ -81,7 +97,7 @@ function makeDivisionArray(tournament){
   
     return divisionArray;
 }
-
+/*
 function filterDevisiontype(item, match, teams) {
     const buttonlist = document.getElementById("divisionholder");
     if (!buttonlist) return; // Sjekk at elementet eksisterer
@@ -122,7 +138,7 @@ function filterDevisiontype(item, match, teams) {
         listteams(filteredTeams); // Oppdater lagtabellen
     }
 }
-
+*/
 // Funksjon som finner aktiv filterknapp og returnerer valgt divisjon
 function getActiveDivisionFilter() {
     const buttonlist = document.getElementById("divisionholder");
