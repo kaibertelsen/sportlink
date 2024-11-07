@@ -17,7 +17,20 @@ function sortArrayABC(Array,key) {
         console.log(jsonArray);
         try {
             // Konverterer hver streng i arrayen til et objekt
-            let parsedObjects = jsonArray.map(item => JSON.parse(item));
+            let parsedObjects = jsonArray.map(item => {
+                let obj = JSON.parse(item);
+
+                // Sjekk om `goalsett` finnes og er en streng
+                if (obj.goalsett && typeof obj.goalsett === "string" && obj.goalsett.trim() !== "") {
+                    try {
+                        // Parse `goalsett` som JSON hvis det er en streng
+                        obj.goalsett = JSON.parse(obj.goalsett);
+                    } catch (error) {
+                        console.warn("Feil ved parsing av goalsett:", error);
+                    }
+                }
+                return obj;
+            });
 
             // Sjekker resultatet i konsollen
             console.log(parsedObjects);
