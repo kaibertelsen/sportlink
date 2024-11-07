@@ -24,11 +24,24 @@ function sortArrayABC(Array,key) {
                     console.log("Original goalsett:", obj.goalsett);
 
                     try {
-                        // Fjern ekstra escape-tegn
+                        // Fjern eventuelle omsluttende sitater rundt `goalsett`-strengen
+                        if (obj.goalsett.startsWith('"') && obj.goalsett.endsWith('"')) {
+                            obj.goalsett = obj.goalsett.slice(1, -1);
+                        }
+
+                        // Bytt ut escaped anførselstegn i `goalsett` med faktiske anførselstegn
                         obj.goalsett = obj.goalsett.replace(/\\"/g, '"');
-                        
+
                         // Parse `goalsett` som JSON etter at escape-tegn er fjernet
                         obj.goalsett = JSON.parse(obj.goalsett);
+
+                        // Hvis `goalsett` inneholder nestede objekter som strenger, parse dem også
+                        for (let sett in obj.goalsett) {
+                            if (typeof obj.goalsett[sett] === "string") {
+                                obj.goalsett[sett] = JSON.parse(obj.goalsett[sett]);
+                            }
+                        }
+
                         console.log("Parsed goalsett:", obj.goalsett);
                     } catch (error) {
                         console.warn("Feil ved parsing av goalsett etter rydding:", error);
@@ -46,5 +59,3 @@ function sortArrayABC(Array,key) {
     }
     return false;
 }
-
-
