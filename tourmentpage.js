@@ -9,8 +9,6 @@ function getTournamentresponse(data){
     listSports(tournament);
     //sorter på dato
     listTournament(sortDateArray(tournament,"startdate"));
-
-
 }
 
 function emtyTurnamentLists(){

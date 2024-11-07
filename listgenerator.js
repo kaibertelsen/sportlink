@@ -1,5 +1,6 @@
 function listTournament(tournament){
     const list = document.getElementById("maintournamentlist");
+    list.replaceChildren();
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.turneringholder');
 
