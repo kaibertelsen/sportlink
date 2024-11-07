@@ -18,14 +18,13 @@ function getTournamentresponse(data){
 function loadTourment(data){
     //for å gå videre i tab systemet
     document.getElementById('tabtoturnering').click();
-
     activetournament = data
     loadTourmentHeader(data);
     listDivision(data);
     //lagrer lagdata fra tournament
     teams = makeObjectFromAirtableJSON(data, "teamjson");
-    getMatch(data);
-    console.log(data);
+    matches = makeObjectFromAirtableJSON(data, "matchjson");
+    listmatch(matches,"dato");
 }
 
 function loadTourmentHeader(data){
