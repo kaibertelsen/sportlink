@@ -41,7 +41,7 @@ function groupArraybyDate(matchs){
 }
 
 
-function listmatch(data, grouptype) {
+function listmatch(data, grouptype, scroll) {
     // Hent aktivt divisjonsfilter
     const activeDivision = getActiveDivisionFilter();
 
@@ -152,12 +152,13 @@ function listmatch(data, grouptype) {
 
         list.appendChild(rowelement);
     }
-
-    // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
-    if (firstUnplayedMatch) {
-        setTimeout(() => {
-            firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
-        }, 500); 
+    if(scroll){
+        // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
+        if (firstUnplayedMatch) {
+            setTimeout(() => {
+                firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 500); 
+        }
     }
 }
 

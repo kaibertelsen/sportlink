@@ -29,7 +29,7 @@ function loadTourment(data){
     teams = makeObjectFromAirtableJSON(data, "teamjson");
 
     matches = makeObjectFromAirtableJSON(data, "matchjson");
-    listmatch(matches,"dato");
+    listmatch(matches,"dato",true);
 }
 
 function loadTourmentHeader(data){
@@ -115,7 +115,7 @@ function handleDivisionButtonClick(item) {
     });
 
     // Oppdater kamp- og lagvisninger
-    listmatch(matches, "dato");
+    listmatch(matches, "dato",false);
     listteams(teams);
 }
 
