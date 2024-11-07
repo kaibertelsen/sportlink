@@ -13,6 +13,12 @@ function getTournamentresponse(data){
 
 }
 
+function emtyTurnamentLists(){
+
+    document.getElementById("teamslistholder").replaceChildren();
+    document.getElementById("matchlistholder").replaceChildren(); 
+
+}
 
 
 function loadTourment(data){

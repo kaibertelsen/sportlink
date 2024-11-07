@@ -1,6 +1,9 @@
 
 document.getElementById('buttontoallturnering').onclick = function() {
     document.getElementById('taballturnering').click();
+    //tøm listene i konkuransen
+    emtyTurnamentLists();
+
 }
     
 document.getElementById('testtoturnering').onclick = function() {
