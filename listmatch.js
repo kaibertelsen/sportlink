@@ -40,7 +40,6 @@ function listmatch(data, grouptype) {
     for (let item of grouparray) {
         const rowelement = nodeelement.cloneNode(true);
         
-
         const nameelement = rowelement.querySelector(".groupheadername");
         nameelement.textContent = formatDateToNorwegian(item.date);
 
@@ -75,49 +74,31 @@ function listmatch(data, grouptype) {
 
             // Hvis det er volleyball og kampen er spilt, legg til settresultater
             const vollyresults = matchelement.querySelector(".vollyresults");
-            if (isVolleyball && typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined" && match.goalsett) {
+            if (isVolleyball && typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
                 vollyresults.style.display = "block"; // Gjør sett-resultatene synlige
 
-                // Legg til sett-informasjon
-                let goalsetData;
-                try {
-                    goalsetData = typeof match.goalsett === 'string' ? JSON.parse(match.goalsett) : match.goalsett;
-                } catch (e) {
-                    console.error("Feil ved parsing av goalsett:", e);
-                    continue; // Hopp over hvis parsing feiler
+                const vollyresultChildren = vollyresults.children; // Få alle child-elementene i vollyresults
+
+                // Sjekk og legg inn sett-resultater
+                if (match.sett1) {
+                    vollyresultChildren[0].textContent = match.sett1;
+                } else {
+                    vollyresultChildren[0].remove(); // Fjern elementet hvis sett1 ikke eksisterer
                 }
 
-                vollyresults.innerHTML = ""; // Tøm tidligere resultater
+                if (match.sett2) {
+                    vollyresultChildren[1].textContent = match.sett2;
+                } else {
+                    vollyresultChildren[1].remove(); // Fjern elementet hvis sett2 ikke eksisterer
+                }
 
-                Object.entries(goalsetData).forEach(([setKey, setScores]) => {
-                    const settNumber = setKey.replace("sett", ""); // Henter nummeret uten "sett"
-                
-                    const settText = document.createElement("div");
-                    settText.classList.add("setttextlable");
-                
-                    // Lag et bold-element for settnummeret
-                    const boldSetNumber = document.createElement("span");
-                    boldSetNumber.style.fontWeight = "bold";
-                    boldSetNumber.textContent = `${settNumber}. `;
-                
-                    // Hent original font-størrelse fra parent eller et standard element
-                    const computedStyle = getComputedStyle(settText); // Henter stil fra settText (kan også bruke en annen referanse)
-                    const originalFontSize = parseFloat(computedStyle.fontSize); // Hent skriftstørrelsen som tall
-                    boldSetNumber.style.fontSize = `${originalFontSize + 2}px`; // Legg til 2px for å gjøre den større
-                
-                    // Legg til resten av teksten etter settnummeret
-                    const resultText = document.createTextNode(`(${setScores.team1}-${setScores.team2})`);
-                
-                    // Kombiner bold settnummer og resultat
-                    settText.appendChild(boldSetNumber);
-                    settText.appendChild(resultText);
-                
-                    vollyresults.appendChild(settText);
-                });
-                
+                if (match.sett3) {
+                    vollyresultChildren[2].textContent = match.sett3;
+                } else {
+                    vollyresultChildren[2].remove(); // Fjern elementet hvis sett3 ikke eksisterer
+                }
             } else {
-                if(vollyresults){vollyresults.style.display = "none"};
-                
+                if (vollyresults) vollyresults.style.display = "none";
             }
 
             contentholder.appendChild(matchelement);
@@ -129,7 +110,6 @@ function listmatch(data, grouptype) {
         list.appendChild(rowelement);
     }
 }
-
 
 
 
