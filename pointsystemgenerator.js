@@ -172,58 +172,50 @@ function generateVolleyballPointToTeams(data) {
             const team1Score = match.goalteam1;
             const team2Score = match.goalteam2;
 
-            // Oppdater settstatistikk basert på `goalsetScores`
-            if (match.goalsett) {
-                // Konverter `goalsett` fra string til objekt hvis nødvendig
-                let goalsetData;
-                try {
-                    goalsetData = typeof match.goalsett === 'string' ? JSON.parse(match.goalsett) : match.goalsett;
-                } catch (e) {
-                    console.error("Feil ved parsing av goalsett:", e);
-                    continue; // Hopp over hvis parsing feiler
+            // Oppdater settstatistikk basert på settscores (sett1, sett2, sett3)
+            const setKeys = ["sett1", "sett2", "sett3"];
+            let team1SetsWon = 0;
+            let team2SetsWon = 0;
+
+            for (let setKey of setKeys) {
+                if (match[setKey]) {
+                    const [team1SetScore, team2SetScore] = match[setKey].split("-").map(Number);
+
+                    // Oppdater mål i settet
+                    team1.points.goalsFor += team1SetScore;
+                    team1.points.goalsAgainst += team2SetScore;
+                    team2.points.goalsFor += team2SetScore;
+                    team2.points.goalsAgainst += team1SetScore;
+
+                    // Oppdater settstatistikk
+                    team1.points.goalsetScores.push({ setKey, team1SetScore, team2SetScore });
+                    team2.points.goalsetScores.push({ setKey, team2SetScore, team1SetScore });
+
+                    if (team1SetScore > team2SetScore) {
+                        team1.points.setsFor++;
+                        team2.points.setsAgainst++;
+                        team1SetsWon++;
+                    } else if (team2SetScore > team1SetScore) {
+                        team2.points.setsFor++;
+                        team1.points.setsAgainst++;
+                        team2SetsWon++;
+                    }
                 }
-
-                let setsFor = 0;
-                let setsAgainst = 0;
-
-                // Legg til settresultater og beregn summen
-                team1.points.goalsetScores.push({
-                    opponent: team2.name,
-                    sets: goalsetData
-                });
-                team2.points.goalsetScores.push({
-                    opponent: team1.name,
-                    sets: Object.fromEntries(
-                        Object.entries(goalsetData).map(([key, { team1, team2 }]) => [key, { team1: team2, team2: team1 }])
-                    )
-                });
-
-                Object.values(goalsetData).forEach(set => {
-                    setsFor += set.team1;
-                    setsAgainst += set.team2;
-                });
-
-                team1.points.setsFor += setsFor;
-                team1.points.setsAgainst += setsAgainst;
-                team2.points.setsFor += setsAgainst;
-                team2.points.setsAgainst += setsFor;
             }
 
-            // Oppdater mål for og mot
-            team1.points.goalsFor += team1Score;
-            team1.points.goalsAgainst += team2Score;
-            team2.points.goalsFor += team2Score;
-            team2.points.goalsAgainst += team1Score;
-
-            // Oppdater poeng for kampresultater
-            if (team1Score > team2Score) {
+            // Oppdater poeng for kampresultater basert på sett vunnet
+            if (team1SetsWon > team2SetsWon) {
                 team1.points.won++;
                 team2.points.lost++;
                 team1.points.points += 3; // 3 poeng for seier
-            } else if (team1Score < team2Score) {
+            } else if (team2SetsWon > team1SetsWon) {
                 team2.points.won++;
                 team1.points.lost++;
                 team2.points.points += 3; // 3 poeng for seier
+            } else {
+                // Uavgjort tilfelle hvis aktuelt, eller tilpass om det ikke er aktuelt for volleyball
+                team1.points.points += 1; // 1 poeng for uavgjort
+                team2.points.points += 1;
             }
         }
     }
@@ -231,10 +223,12 @@ function generateVolleyballPointToTeams(data) {
     // Beregn settdifferanse etter at alle kamper er oppdatert
     for (let team of data) {
         team.points.setDifference = team.points.setsFor - team.points.setsAgainst;
+        team.points.pointsDifference = team.points.goalsFor - team.points.goalsAgainst;
     }
 
     return data;
 }
+
 
 function generateIceHockeyPointToTeams(data) {
     // Initialiser poengstatistikk for hvert lag
