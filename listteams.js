@@ -14,15 +14,15 @@ function listteams(data) {
     const activeDivision = getActiveDivisionFilter();
 
     // Filtrer lagene basert på aktivt divisjonsfilter
-    let filteredTeams = activeDivision === "" ? data : data.filter(team => team.division[0] === activeDivision);
+    let filteredTeams = activeDivision === "" ? data : data.filter(team => team.division === activeDivision);
 
     // Generer og sorter teamslist basert på poeng, målforskjell og mål scoret
     let teamslist = generatePointToTeams(filteredTeams);
 
     // Gruppér lagene etter divisjon og gruppe
     const teamsByDivisionAndGroup = teamslist.reduce((acc, team) => {
-        const division = team.divisionname[0] || "Ukjent divisjon"; // Standardnavn hvis divisjon mangler
-        const group = team.group ? team.group[0] : null; // Null hvis gruppe mangler
+        const division = team.divisionname || "Ukjent divisjon"; // Standardnavn hvis divisjon mangler
+        const group = team.group ? team.group : null; // Null hvis gruppe mangler
 
         if (!acc[division]) {
             acc[division] = {};
