@@ -46,7 +46,7 @@ function listmatch(data, grouptype, scroll) {
     const activeDivision = getActiveDivisionFilter();
 
     // Filtrer kampene basert på aktivt divisjonsfilter
-    let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division[0] === activeDivision);
+    let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
 
     // Sorter og grupper kampene basert på valgt type
     let matchs = sortDateArray(filteredMatches, "time");
