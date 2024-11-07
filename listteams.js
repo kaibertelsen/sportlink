@@ -80,7 +80,7 @@ function listteams(data) {
                 // Laglogo
                 const logoteam = rowelement.querySelector(".clublogo");
                 logoteam.removeAttribute('srcset');
-                logoteam.src = team.clublogo[0];
+                logoteam.src = team.clublogo;
 
                 // Lagnavn
                 const teamname = rowelement.querySelector(".teamnamelable");
