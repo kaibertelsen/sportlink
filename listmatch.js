@@ -55,7 +55,7 @@ function listmatch(data, grouptype) {
             team1name.textContent = match.team1name;
             
             const logoteam1 = matchelement.querySelector(".logoteam1");
-            logoteam1.src = match.team1clublogo[0];
+            logoteam1.src = match.team1clublogo;
 
             const timelable = matchelement.querySelector(".timelable");
 
@@ -71,7 +71,7 @@ function listmatch(data, grouptype) {
             const team2name = matchelement.querySelector(".team2");
             team2name.textContent = match.team2name;
             const logoteam2 = matchelement.querySelector(".logoteam2");
-            logoteam2.src = match.team2clublogo[0];
+            logoteam2.src = match.team2clublogo;
 
             // Hvis det er volleyball og kampen er spilt, legg til settresultater
             const vollyresults = matchelement.querySelector(".vollyresults");
