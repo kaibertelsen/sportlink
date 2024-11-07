@@ -99,8 +99,8 @@ function listmatch(data, grouptype) {
                     if (match[setKeys[i]]) {
                         const settdiv = settdivnode.cloneNode(true);
 
-                        const settnr = settdiv.querySelector(".settnr");
-                        settnr.textContent = i + 1;
+                        //const settnr = settdiv.querySelector(".settnr");
+                        //settnr.textContent = i + 1;
 
                         const setttextlable = settdiv.querySelector(".setttextlable");
                         setttextlable.textContent = match[setKeys[i]];
