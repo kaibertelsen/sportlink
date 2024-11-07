@@ -11,30 +11,32 @@ function sortArrayABC(Array,key) {
 
 
   function makeObjectFromAirtableJSON(data, key) {
-    // Sjekker om dataene i nøkkelen eksisterer
     if (data[key]) {
         let jsonArray = data[key];
         console.log(jsonArray);
+
         try {
-            // Konverterer hver streng i arrayen til et objekt
             let parsedObjects = jsonArray.map(item => {
                 let obj = JSON.parse(item);
 
                 // Sjekk om `goalsett` finnes og er en streng
                 if (obj.goalsett && typeof obj.goalsett === "string" && obj.goalsett.trim() !== "") {
+                    console.log("Original goalsett:", obj.goalsett);
+
                     try {
-                        // Rydd opp i `goalsett`-strengen ved å escape anførselstegn
-                        obj.goalsett = obj.goalsett.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2":');
-                        // Parse `goalsett` som JSON hvis det er en streng
+                        // Fjern ekstra escape-tegn
+                        obj.goalsett = obj.goalsett.replace(/\\"/g, '"');
+                        
+                        // Parse `goalsett` som JSON etter at escape-tegn er fjernet
                         obj.goalsett = JSON.parse(obj.goalsett);
+                        console.log("Parsed goalsett:", obj.goalsett);
                     } catch (error) {
-                        console.warn("Feil ved parsing av goalsett:", error);
+                        console.warn("Feil ved parsing av goalsett etter rydding:", error);
                     }
                 }
                 return obj;
             });
 
-            // Sjekker resultatet i konsollen
             console.log(parsedObjects);
             return parsedObjects;
         } catch (error) {
@@ -44,4 +46,5 @@ function sortArrayABC(Array,key) {
     }
     return false;
 }
+
 
