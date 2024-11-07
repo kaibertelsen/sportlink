@@ -74,7 +74,8 @@ function listmatch(data, grouptype) {
             // Hvis det er volleyball og kampen er spilt, legg til settresultater
             const vollyresults = matchelement.querySelector(".vollyresults");
             if (isVolleyball && typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
-                vollyresults.style.display = "block"; // Gjør sett-resultatene synlige
+                // Sørg for at display er satt til grid 
+                vollyresults.style.display = "grid";
 
                 const settdivnode = vollyresults.querySelector(".settdiv");
                 // Sjekk og legg inn sett-resultater
