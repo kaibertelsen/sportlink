@@ -144,8 +144,8 @@ function generateVolleyballPointToTeams(data) {
             played: 0,
             won: 0,
             lost: 0,
-            setsFor: 0, // Total sett vunnet
-            setsAgainst: 0, // Total sett tapt
+            setsFor: 0, // Total sett-poeng vunnet
+            setsAgainst: 0, // Total sett-poeng tapt
             setDifference: 0,
             goalsFor: 0,
             goalsAgainst: 0,
@@ -187,17 +187,19 @@ function generateVolleyballPointToTeams(data) {
                     team2.points.goalsFor += team2SetScore;
                     team2.points.goalsAgainst += team1SetScore;
 
+                    // Summer sett-poeng til `setsFor` og `setsAgainst`
+                    team1.points.setsFor += team1SetScore;
+                    team1.points.setsAgainst += team2SetScore;
+                    team2.points.setsFor += team2SetScore;
+                    team2.points.setsAgainst += team1SetScore;
+
                     // Oppdater settstatistikk
                     team1.points.goalsetScores.push({ setKey, team1SetScore, team2SetScore });
                     team2.points.goalsetScores.push({ setKey, team2SetScore, team1SetScore });
 
                     if (team1SetScore > team2SetScore) {
-                        team1.points.setsFor++;
-                        team2.points.setsAgainst++;
                         team1SetsWon++;
                     } else if (team2SetScore > team1SetScore) {
-                        team2.points.setsFor++;
-                        team1.points.setsAgainst++;
                         team2SetsWon++;
                     }
                 }
@@ -228,6 +230,7 @@ function generateVolleyballPointToTeams(data) {
 
     return data;
 }
+
 
 
 function generateIceHockeyPointToTeams(data) {
