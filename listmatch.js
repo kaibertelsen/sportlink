@@ -81,19 +81,19 @@ function listmatch(data, grouptype) {
 
                 // Sjekk og legg inn sett-resultater
                 if (match.sett1) {
-                    vollyresultChildren[0].textContent = match.sett1;
+                    vollyresultChildren[0].textContent = "1. "+match.sett1;
                 } else {
                     vollyresultChildren[0].remove(); // Fjern elementet hvis sett1 ikke eksisterer
                 }
 
                 if (match.sett2) {
-                    vollyresultChildren[1].textContent = match.sett2;
+                    vollyresultChildren[1].textContent = "2. "+match.sett2;
                 } else {
                     vollyresultChildren[1].remove(); // Fjern elementet hvis sett2 ikke eksisterer
                 }
 
                 if (match.sett3) {
-                    vollyresultChildren[2].textContent = match.sett3;
+                    vollyresultChildren[2].textContent = "3. "+match.sett3;
                 } else {
                     vollyresultChildren[2].remove(); // Fjern elementet hvis sett3 ikke eksisterer
                 }
