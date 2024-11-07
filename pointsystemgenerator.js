@@ -250,8 +250,6 @@ function generateVolleyballPointToTeams(data) {
     return data;
 }
 
-
-
 function generateIceHockeyPointToTeams(data) {
     // Initialiser poengstatistikk for hvert lag
     for (let team of data) {

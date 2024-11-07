@@ -71,36 +71,54 @@ function listmatch(data, grouptype) {
             const logoteam2 = matchelement.querySelector(".logoteam2");
             logoteam2.src = match.team2clublogo;
 
-            // Hvis det er volleyball og kampen er spilt, legg til settresultater
+            // Hvis det er volleyball, sjekk om settresultater finnes
             const vollyresults = matchelement.querySelector(".vollyresults");
-            if (isVolleyball && typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
-                // Sørg for at display er satt til grid 
-                vollyresults.style.display = "grid";
+            if (isVolleyball) {
+                const setKeys = ["sett1", "sett2", "sett3"];
+                let hasSetScores = setKeys.some(setKey => match[setKey]);
 
-                const settdivnode = vollyresults.querySelector(".settdiv");
-                // Sjekk og legg inn sett-resultater
-                const setkeys = ["sett1", "sett2", "sett3"]; // Tre mulige sett-verdier
-                let columnCount = 0;
-                
-                for (let i = 0; i < setkeys.length; i++) {
-                    if (match[setkeys[i]]) {
-                        const settdiv = settdivnode.cloneNode(true);
+                if (hasSetScores) {
+                    // Sørg for at display er satt til grid hvis settresultater finnes
+                    vollyresults.style.display = "grid";
 
-                        const settnr = settdiv.querySelector(".settnr");
-                        settnr.textContent = i + 1;
+                    const settdivnode = vollyresults.querySelector(".settdiv");
+                    let columnCount = 0;
 
-                        const setttextlable = settdiv.querySelector(".setttextlable");
-                        setttextlable.textContent = match[setkeys[i]];
+                    // Legg til sett-resultater hvis de finnes
+                    for (let i = 0; i < setKeys.length; i++) {
+                        if (match[setKeys[i]]) {
+                            const settdiv = settdivnode.cloneNode(true);
 
-                        vollyresults.appendChild(settdiv);
-                        columnCount++;
+                            const settnr = settdiv.querySelector(".settnr");
+                            settnr.textContent = i + 1;
+
+                            const setttextlable = settdiv.querySelector(".setttextlable");
+                            setttextlable.textContent = match[setKeys[i]];
+
+                            vollyresults.appendChild(settdiv);
+                            columnCount++;
+                        }
                     }
+
+                    settdivnode.remove(); // Fjern malen etter bruk
+                    vollyresults.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`; // Dynamisk antall kolonner
+                } else if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
+                    // Hvis settdata mangler, vis total score for kampen
+                    vollyresults.style.display = "block"; // Standardvisning for enkel score
+                    vollyresults.textContent = `${match.goalteam1} - ${match.goalteam2}`;
+                    vollyresults.style.fontWeight = "bold";
+                } else {
+                    if (vollyresults) vollyresults.style.display = "none";
                 }
-                
-                settdivnode.remove(); // Fjern malen etter bruk
-                vollyresults.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`; // Dynamisk antall kolonner
             } else {
-                if (vollyresults) vollyresults.style.display = "none";
+                // For andre sporter enn volleyball, bare vis total score om kampen er spilt
+                if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
+                    vollyresults.style.display = "block";
+                    vollyresults.textContent = `${match.goalteam1} - ${match.goalteam2}`;
+                    vollyresults.style.fontWeight = "bold";
+                } else {
+                    vollyresults.style.display = "none";
+                }
             }
 
             contentholder.appendChild(matchelement);
@@ -112,6 +130,7 @@ function listmatch(data, grouptype) {
         list.appendChild(rowelement);
     }
 }
+
 
 
 
