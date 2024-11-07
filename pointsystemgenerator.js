@@ -162,8 +162,8 @@ function generateVolleyballPointToTeams(data) {
             continue; // Hopp over kamper som ikke er spilt
         }
 
-        let team1 = data.find(team => team.airtable === match.team1[0]);
-        let team2 = data.find(team => team.airtable === match.team2[0]);
+        let team1 = data.find(team => team.airtable === match.team1);
+        let team2 = data.find(team => team.airtable === match.team2);
 
         if (team1 && team2) {
             team1.points.played++;
