@@ -19,9 +19,14 @@ function sortArrayABC(Array,key) {
             let parsedObjects = jsonArray.map(item => {
                 let obj = JSON.parse(item);
 
-                // Log the parsed object for debugging
-                console.log("Parsed object:", obj);
+                // Fjern nøkler med verdien "null" eller null
+                Object.keys(obj).forEach(key => {
+                    if (obj[key] === "null" || obj[key] === null) {
+                        delete obj[key];
+                    }
+                });
 
+                console.log("Parsed and cleaned object:", obj);
                 return obj;
             });
 
@@ -34,4 +39,5 @@ function sortArrayABC(Array,key) {
     }
     return false;
 }
+
 
