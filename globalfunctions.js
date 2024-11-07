@@ -14,7 +14,7 @@ function sortArrayABC(Array,key) {
     // Sjekker om dataene i nøkkelen eksisterer
     if (data[key]) {
         let jsonArray = data[key];
-        
+        console.log(jsonArray);
         try {
             // Konverterer hver streng i arrayen til et objekt
             let parsedObjects = jsonArray.map(item => JSON.parse(item));
