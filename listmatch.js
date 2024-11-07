@@ -13,19 +13,11 @@ function listmatch(data, grouptype) {
     const activeDivision = getActiveDivisionFilter();
 
     // Filtrer kampene basert på aktivt divisjonsfilter
-    let filteredMatches;
-    if (activeDivision === "") {
-        filteredMatches = data; // Vis alle kamper hvis "Alle" er valgt
-    } else {
-        filteredMatches = data.filter(match => match.division[0] === activeDivision);
-    }
+    let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division[0] === activeDivision);
 
     // Sorter og grupper kampene basert på valgt type
     let matchs = sortDateArray(filteredMatches, "time");
-    let grouparray = [];
-    if (grouptype === "dato") {
-        grouparray = groupArraybyDate(matchs);
-    }
+    let grouparray = grouptype === "dato" ? groupArraybyDate(matchs) : [];
 
     const list = document.getElementById("matchlistholder");
     list.replaceChildren(); // Tøm eksisterende innhold i hovedliste
@@ -71,20 +63,18 @@ function listmatch(data, grouptype) {
                 timelable.style.fontWeight = "normal";
             }
 
-            // Hvis det er volleyball, sjekk om settresultater finnes
+            // Hvis det er volleyball, sjekk om sett1 og sett2 finnes for å starte poengberegning
             const vollyresults = matchelement.querySelector(".vollyresults");
             if (isVolleyball) {
                 const setKeys = ["sett1", "sett2", "sett3"];
-                let hasSetScores = setKeys.some(setKey => match[setKey]);
+                const hasRequiredSetScores = match.sett1 && match.sett2; // Krever data i sett1 og sett2
 
-                if (hasSetScores) {
-                    // Sørg for at display er satt til grid hvis settresultater finnes
+                if (hasRequiredSetScores) {
                     vollyresults.style.display = "grid";
-
                     const settdivnode = vollyresults.querySelector(".settdiv");
                     let columnCount = 0;
 
-                    // Legg til sett-resultater hvis de finnes
+                    // Legg til sett-resultater for sett1, sett2 og evt. sett3
                     for (let i = 0; i < setKeys.length; i++) {
                         if (match[setKeys[i]]) {
                             const settdiv = settdivnode.cloneNode(true);
@@ -104,11 +94,11 @@ function listmatch(data, grouptype) {
                     vollyresults.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`; // Dynamisk antall kolonner
                 } else if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
                     // Hvis settdata mangler, vis total score for kampen
-                    vollyresults.style.display = "block"; // Standardvisning for enkel score
+                    vollyresults.style.display = "block";
                     vollyresults.textContent = `${match.goalteam1} - ${match.goalteam2}`;
                     vollyresults.style.fontWeight = "bold";
                 } else {
-                    if (vollyresults) vollyresults.style.display = "none";
+                    vollyresults.style.display = "none";
                 }
             } else {
                 // For andre sporter enn volleyball, bare vis total score om kampen er spilt
@@ -130,6 +120,7 @@ function listmatch(data, grouptype) {
         list.appendChild(rowelement);
     }
 }
+
 
 
 
