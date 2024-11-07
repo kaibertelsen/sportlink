@@ -57,6 +57,8 @@ function listmatch(data, grouptype) {
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.groupholder');
+
+    let firstUnplayedMatch = null; // Lagre referanse til første kamp som ikke er spilt
     
     for (let item of grouparray) {
         const rowelement = nodeelement.cloneNode(true);
@@ -98,10 +100,6 @@ function listmatch(data, grouptype) {
                 for (let i = 0; i < setKeys.length; i++) {
                     if (match[setKeys[i]]) {
                         const settdiv = settdivnode.cloneNode(true);
-
-                        //const settnr = settdiv.querySelector(".settnr");
-                        //settnr.textContent = i + 1;
-
                         const setttextlable = settdiv.querySelector(".setttextlable");
                         setttextlable.textContent = match[setKeys[i]];
 
@@ -139,6 +137,11 @@ function listmatch(data, grouptype) {
             } else {
                 resultlable.textContent = formatdatetoTime(match.time);
                 resultlable.style.fontWeight = "normal";
+
+                // Sett første kamp som ikke er spilt hvis ikke allerede satt
+                if (!firstUnplayedMatch) {
+                    firstUnplayedMatch = matchelement;
+                }
             }
 
             matchlist.appendChild(matchelement);
@@ -149,5 +152,11 @@ function listmatch(data, grouptype) {
 
         list.appendChild(rowelement);
     }
+
+    // Scroll til første kamp som ikke er spilt, hvis den finnes
+    if (firstUnplayedMatch) {
+        firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
 }
+
 
