@@ -8,7 +8,6 @@ function getMatchresponse(data,id){
     listmatch(matches,"dato");
 }
 
-
 function listmatch(data, grouptype) {
     // Hent aktivt divisjonsfilter
     const activeDivision = getActiveDivisionFilter();
@@ -77,26 +76,28 @@ function listmatch(data, grouptype) {
             if (isVolleyball && typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
                 vollyresults.style.display = "block"; // Gjør sett-resultatene synlige
 
-                const vollyresultChildren = vollyresults.children; // Få alle child-elementene i vollyresults
-
+                const settdivnode = vollyresults.querySelector(".settdiv");
                 // Sjekk og legg inn sett-resultater
-                if (match.sett1) {
-                    vollyresultChildren[0].textContent = "1. "+match.sett1;
-                } else {
-                    vollyresultChildren[0].remove(); // Fjern elementet hvis sett1 ikke eksisterer
-                }
+                const setkeys = ["sett1", "sett2", "sett3"]; // Tre mulige sett-verdier
+                let columnCount = 0;
+                
+                for (let i = 0; i < setkeys.length; i++) {
+                    if (match[setkeys[i]]) {
+                        const settdiv = settdivnode.cloneNode(true);
 
-                if (match.sett2) {
-                    vollyresultChildren[1].textContent = "2. "+match.sett2;
-                } else {
-                    vollyresultChildren[1].remove(); // Fjern elementet hvis sett2 ikke eksisterer
-                }
+                        const settnr = settdiv.querySelector(".settnr");
+                        settnr.textContent = i + 1;
 
-                if (match.sett3) {
-                    vollyresultChildren[2].textContent = "3. "+match.sett3;
-                } else {
-                    vollyresultChildren[2].remove(); // Fjern elementet hvis sett3 ikke eksisterer
+                        const setttextlable = settdiv.querySelector(".setttextlable");
+                        setttextlable.textContent = match[setkeys[i]];
+
+                        vollyresults.appendChild(settdiv);
+                        columnCount++;
+                    }
                 }
+                
+                settdivnode.remove(); // Fjern malen etter bruk
+                vollyresults.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`; // Dynamisk antall kolonner
             } else {
                 if (vollyresults) vollyresults.style.display = "none";
             }
@@ -110,6 +111,8 @@ function listmatch(data, grouptype) {
         list.appendChild(rowelement);
     }
 }
+
+
 
 
 
