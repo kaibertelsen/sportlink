@@ -9,7 +9,10 @@ function getTournamentresponse(data){
     listSports(tournament);
     //sorter på dato
     listTournament(sortDateArray(tournament,"startdate"));
+
+
 }
+
 
 
 function loadTourment(data){
@@ -19,6 +22,8 @@ function loadTourment(data){
     activetournament = data
     loadTourmentHeader(data);
     listDivision(data);
+    //hente lagdata fra tournament og lag listen
+    listteams(makeObjectFromAirtableJSON(data, "teamjson"));
     getMatch(data);
     console.log(data);
 }
