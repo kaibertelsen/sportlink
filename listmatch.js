@@ -57,7 +57,12 @@ function listmatch(data, grouptype) {
 
             const timelable = matchelement.querySelector(".timelable");
 
-            // Sett resultat eller tid basert på om kampen er spilt
+            const team2name = matchelement.querySelector(".team2");
+            team2name.textContent = match.team2name;
+            const logoteam2 = matchelement.querySelector(".logoteam2");
+            logoteam2.src = match.team2clublogo;
+
+            // Hvis kampen er spilt, vis resultatet; ellers, vis klokkeslettet
             if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
                 timelable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
                 timelable.style.fontWeight = "bold";
@@ -65,11 +70,6 @@ function listmatch(data, grouptype) {
                 timelable.textContent = formatdatetoTime(match.time);
                 timelable.style.fontWeight = "normal";
             }
-
-            const team2name = matchelement.querySelector(".team2");
-            team2name.textContent = match.team2name;
-            const logoteam2 = matchelement.querySelector(".logoteam2");
-            logoteam2.src = match.team2clublogo;
 
             // Hvis det er volleyball, sjekk om settresultater finnes
             const vollyresults = matchelement.querySelector(".vollyresults");
@@ -130,6 +130,7 @@ function listmatch(data, grouptype) {
         list.appendChild(rowelement);
     }
 }
+
 
 
 
