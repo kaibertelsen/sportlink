@@ -23,6 +23,8 @@ function sortArrayABC(Array,key) {
                 // Sjekk om `goalsett` finnes og er en streng
                 if (obj.goalsett && typeof obj.goalsett === "string" && obj.goalsett.trim() !== "") {
                     try {
+                        // Rydd opp i `goalsett`-strengen ved å escape anførselstegn
+                        obj.goalsett = obj.goalsett.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2":');
                         // Parse `goalsett` som JSON hvis det er en streng
                         obj.goalsett = JSON.parse(obj.goalsett);
                     } catch (error) {
@@ -42,3 +44,4 @@ function sortArrayABC(Array,key) {
     }
     return false;
 }
+
