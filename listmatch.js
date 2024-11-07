@@ -153,9 +153,11 @@ function listmatch(data, grouptype) {
         list.appendChild(rowelement);
     }
 
-    // Scroll til første kamp som ikke er spilt, hvis den finnes
+    // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
     if (firstUnplayedMatch) {
-        firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+        setTimeout(() => {
+            firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 500); 
     }
 }
 
