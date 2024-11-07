@@ -56,7 +56,7 @@ function listmatch(data, grouptype) {
     list.replaceChildren(); // Tøm eksisterende innhold i hovedliste
 
     const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector('.groupholder')
+    const nodeelement = elementlibrary.querySelector('.groupholder');
     
     for (let item of grouparray) {
         const rowelement = nodeelement.cloneNode(true);
@@ -83,42 +83,52 @@ function listmatch(data, grouptype) {
             const logoteam2 = matchelement.querySelector(".logoteam2");
             logoteam2.src = match.team2clublogo;
 
-                const settlist = matchelement.querySelector(".settlist");
-                const setKeys = ["sett1", "sett2", "sett3"];
-                const hasRequiredSetScores = match.sett1 && match.sett2; // Krever data i sett1 og sett2
+            const settlist = matchelement.querySelector(".settlist");
+            const setKeys = ["sett1", "sett2", "sett3"];
+            const hasRequiredSetScores = match.sett1 && match.sett2; // Krever data i sett1 og sett2
 
-                if (hasRequiredSetScores) {
-                    settlist.style.display = "grid";
-                    const settdivnode = vollyresults.querySelector(".settdiv");
-                    let columnCount = 0;
-                    // Legg til sett-resultater for sett1, sett2 og evt. sett3
-                    for (let i = 0; i < setKeys.length; i++) {
-                        if (match[setKeys[i]]) {
-                            const settdiv = settdivnode.cloneNode(true);
+            if (hasRequiredSetScores) {
+                settlist.style.display = "grid";
+                const settdivnode = settlist.querySelector(".settdiv");
+                let columnCount = 0;
+                let team1SetsWon = 0;
+                let team2SetsWon = 0;
 
-                            const settnr = settdiv.querySelector(".settnr");
-                            settnr.textContent = i + 1;
+                // Legg til sett-resultater for sett1, sett2 og evt. sett3
+                for (let i = 0; i < setKeys.length; i++) {
+                    if (match[setKeys[i]]) {
+                        const settdiv = settdivnode.cloneNode(true);
 
-                            const setttextlable = settdiv.querySelector(".setttextlable");
-                            setttextlable.textContent = match[setKeys[i]];
+                        const settnr = settdiv.querySelector(".settnr");
+                        settnr.textContent = i + 1;
 
-                            settlist.appendChild(settdiv);
-                            columnCount++;
+                        const setttextlable = settdiv.querySelector(".setttextlable");
+                        setttextlable.textContent = match[setKeys[i]];
+
+                        // Beregn vinner av settet
+                        const [team1Score, team2Score] = match[setKeys[i]].split('-').map(Number);
+                        if (team1Score > team2Score) {
+                            team1SetsWon++;
+                        } else if (team2Score > team1Score) {
+                            team2SetsWon++;
                         }
+
+                        settlist.appendChild(settdiv);
+                        columnCount++;
                     }
-                    settdivnode.remove(); // Fjern malen etter bruk
-                    settlist.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`; // Dynamisk antall kolonner
-
-                    //Sjekke stillingen på bakgrunn av vunne sett og tapte sett
-
-                    match.goalteam1
-                    match.goalteam2
-
-                } else {
-                    //hvis ikke sett verdi
-                    settlist.style.display = "none";
                 }
-            
+
+                settdivnode.remove(); // Fjern malen etter bruk
+                settlist.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`; // Dynamisk antall kolonner
+
+                // Sjekk stillingen på bakgrunn av vunnet og tapt sett
+                match.goalteam1 = team1SetsWon;
+                match.goalteam2 = team2SetsWon;
+
+            } else {
+                // Hvis ikke sett verdi finnes, skjul settlisten
+                settlist.style.display = "none";
+            }
 
             const resultlable = matchelement.querySelector(".resultlable");
 
@@ -130,6 +140,7 @@ function listmatch(data, grouptype) {
                 resultlable.textContent = formatdatetoTime(match.time);
                 resultlable.style.fontWeight = "normal";
             }
+
             matchlist.appendChild(matchelement);
         }
 
@@ -139,3 +150,4 @@ function listmatch(data, grouptype) {
         list.appendChild(rowelement);
     }
 }
+
