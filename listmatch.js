@@ -152,14 +152,16 @@ function listmatch(data, grouptype, scroll) {
 
         list.appendChild(rowelement);
     }
-    if(scroll){
-        // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
-        if (firstUnplayedMatch) {
-            setTimeout(() => {
-                firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
-            }, 500); 
-        }
-    }
+    // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
+if (firstUnplayedMatch) {
+    setTimeout(() => {
+        // Juster scroll-posisjonen i `list`-elementet
+        const list = document.getElementById("matchlistholder");
+        const offsetTop = firstUnplayedMatch.offsetTop - list.offsetTop; // Beregn posisjonen relativt til `list`
+        list.scrollTo({ top: offsetTop, behavior: "smooth" });
+    }, 500); 
+}
+
 }
 
 
