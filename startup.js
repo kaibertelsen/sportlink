@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    markActiveButton(document.getElementById('matchtabbutton'));
+   
 });
 
 MemberStack.onReady.then(function(member) {

@@ -31,6 +31,9 @@ function loadTourment(data){
 
     teams = makeObjectFromAirtableJSON(data, "teamjson");
     listteams(teams);
+
+    //start match window
+    document.getElementById('matchtabbutton').click();
 }
 
 function loadTourmentHeader(data){
