@@ -37,20 +37,3 @@ cdnScripts.reduce((promise, script) => {
     console.error(error);
 });
 
-
-const header = document.getElementById("headerwrapper");
-// Hent opprinnelig høyde av headeren
-const originalHeight = header.offsetHeight;
-document.addEventListener("scroll", function() {
-    const scrollPosition = window.scrollY;
-
-    // Krymp headeren når brukeren scroller mer enn 50px ned
-    if (scrollPosition > 50) {
-        header.style.height = `${originalHeight / 2}px`; // Sett høyden til 50% av opprinnelig
-        header.classList.add('shrink');
-    } else {
-        header.style.height = 'auto'; // Tilbakestill til opprinnelig høyde
-        header.classList.remove('shrink');
-    }
-});
-
