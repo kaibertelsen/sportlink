@@ -25,11 +25,12 @@ function loadTourment(data){
     activetournament = data
     loadTourmentHeader(data);
     listDivision(data);
-     //lagrer lagdata fra tournament
-    teams = makeObjectFromAirtableJSON(data, "teamjson");
-
+    
     matches = makeObjectFromAirtableJSON(data, "matchjson");
     listmatch(matches,"dato",true);
+
+    teams = makeObjectFromAirtableJSON(data, "teamjson");
+    listteams(teams);
 }
 
 function loadTourmentHeader(data){
