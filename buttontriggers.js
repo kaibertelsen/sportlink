@@ -33,7 +33,7 @@ document.getElementById('endplaytabbutton').onclick = function() {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    const header = document.querySelector('.headerwrapper');
+    const header = document.getElementById("headerwrapper");
 
     // Hent opprinnelig høyde av headeren
     const originalHeight = header.offsetHeight;
