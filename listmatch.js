@@ -85,6 +85,10 @@ function listmatch(data, grouptype, scroll) {
             const logoteam2 = matchelement.querySelector(".logoteam2");
             logoteam2.src = match.team2clublogo;
 
+            const divisionlable = matchelement.querySelector(".divisionlable");
+            divisionlable.src = match.divisionname;
+
+
             const settlist = matchelement.querySelector(".settlist");
             const setKeys = ["sett1", "sett2", "sett3"];
             const hasRequiredSetScores = match.sett1 && match.sett2; // Krever data i sett1 og sett2
