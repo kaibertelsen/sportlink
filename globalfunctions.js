@@ -42,15 +42,16 @@ function sortArrayABC(Array,key) {
 
 
 function markActiveButton(button) {
-    
+    // Finn alle child-elementer av samme parent som `button`
     const parentElement = button.parentElement;
-    const allButtons = parentElement.querySelectorAll('button');
+    const allChildren = parentElement.querySelectorAll('*'); // Velger alle barn
 
-    // Sett `border-bottom` til transparent for alle knapper
-    allButtons.forEach(btn => {
-        btn.style.borderBottom = '4px solid transparent';
+    // Sett `border-bottom` til transparent for alle barn
+    allChildren.forEach(child => {
+        child.style.borderBottom = '4px solid transparent';
     });
 
     // Marker den aktive knappen med grønn bottom border
     button.style.borderBottom = '4px solid #61de6e';
 }
+
