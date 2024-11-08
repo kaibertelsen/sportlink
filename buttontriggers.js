@@ -32,12 +32,9 @@ document.getElementById('endplaytabbutton').onclick = function() {
 }
 
 
-document.addEventListener("DOMContentLoaded", function() {
     const header = document.getElementById("headerwrapper");
-
     // Hent opprinnelig høyde av headeren
     const originalHeight = header.offsetHeight;
-
     document.addEventListener("scroll", function() {
         const scrollPosition = window.scrollY;
 
@@ -50,4 +47,4 @@ document.addEventListener("DOMContentLoaded", function() {
             header.classList.remove('shrink');
         }
     });
-});
+
