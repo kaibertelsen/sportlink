@@ -86,7 +86,7 @@ function listmatch(data, grouptype, scroll) {
             logoteam2.src = match.team2clublogo;
             
             const divisionlable = matchelement.querySelector(".divisionlable");
-            if(activeDivision != ""){
+            if(activeDivision == ""){
                 divisionlable.textContent = match.divisionname;
             }else{
                 divisionlable.style.display = "none";
