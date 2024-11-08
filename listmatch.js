@@ -86,7 +86,7 @@ function listmatch(data, grouptype, scroll) {
             logoteam2.src = match.team2clublogo;
 
             const divisionlable = matchelement.querySelector(".divisionlable");
-            divisionlable.src = match.divisionname;
+            divisionlable.textContent = match.divisionname;
 
 
             const settlist = matchelement.querySelector(".settlist");
