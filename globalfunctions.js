@@ -41,17 +41,29 @@ function sortArrayABC(Array,key) {
 }
 
 
+
+
+
 function markActiveButton(button) {
     // Finn alle child-elementer av samme parent som `button`
     const parentElement = button.parentElement;
     const allChildren = parentElement.querySelectorAll('*'); // Velger alle barn
 
-    // Sett `border-bottom` til transparent for alle barn
+    // Lagre opprinnelig farge for alle barn
     allChildren.forEach(child => {
-        child.style.borderBottom = '4px solid transparent';
+        const originalColor = getComputedStyle(child).color;
+        child.dataset.originalColor = originalColor; // Lagre opprinnelig farge i `data`-attributt
     });
 
-    // Marker den aktive knappen med grønn bottom border
+    // Nullstill `border-bottom` og tekstfarge for alle barn
+    allChildren.forEach(child => {
+        child.style.borderBottom = '4px solid transparent';
+        child.style.color = child.dataset.originalColor; // Sett tilbake til opprinnelig farge
+    });
+
+    // Marker den aktive knappen med grønn bottom border og hvit tekstfarge
     button.style.borderBottom = '4px solid #61de6e';
+    button.style.color = '#fff'; // Sett tekstfargen til hvit
 }
+
 
