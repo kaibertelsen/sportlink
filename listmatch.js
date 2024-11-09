@@ -93,8 +93,6 @@ function listmatch(data, grouptype, scroll) {
             }
             
             
-
-
             const settlist = matchelement.querySelector(".settlist");
             const setKeys = ["sett1", "sett2", "sett3"];
             const hasRequiredSetScores = match.sett1 && match.sett2; // Krever data i sett1 og sett2
@@ -132,7 +130,7 @@ function listmatch(data, grouptype, scroll) {
                 // Sjekk stillingen på bakgrunn av vunnet og tapt sett
                 match.goalteam1 = team1SetsWon;
                 match.goalteam2 = team2SetsWon;
-
+                settlist.style.display = "none";
             } else {
                 // Hvis ikke sett verdi finnes, skjul settlisten
                 settlist.style.display = "none";
@@ -144,6 +142,7 @@ function listmatch(data, grouptype, scroll) {
             if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
                 resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
                 resultlable.style.fontWeight = "bold";
+                resultlable.style.color = mapColors("second");
             } else {
                 resultlable.textContent = formatdatetoTime(match.time);
                 resultlable.style.fontWeight = "normal";
