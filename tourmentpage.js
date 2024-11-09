@@ -71,8 +71,8 @@ function listDivision(tournament) {
         // Sett standard stil for første knapp
         if (item === divisionArray[0]) {
             lastClickedDivisionButton = item.airtable; // Sett første knapp som aktiv ved start
-            rowelement.style.backgroundColor = "#192219";
-            rowelement.style.borderColor = "#61de6e";
+            rowelement.style.backgroundColor = mapColors("hoverelement");
+            rowelement.style.borderColor = mapColors("border");
         }
 
         list.appendChild(rowelement);
@@ -111,9 +111,9 @@ function handleDivisionButtonClick(item) {
     Array.from(buttonlist.children).forEach(element => {
         if (element.id === "di" + lastClickedDivisionButton) {
             element.style.backgroundColor = "#192219";
-            element.style.borderColor = "#61de6e";
+            element.style.borderColor = mapColors("border");
         } else {
-            element.style.backgroundColor = "#1d1d1d";
+            element.style.backgroundColor = mapColors("hoverelement");
             element.style.borderColor = "transparent";
         }
     });
@@ -127,10 +127,4 @@ function handleDivisionButtonClick(item) {
 function getActiveDivisionFilter() {
     return lastClickedDivisionButton || ""; // Returner aktivt filter eller tom streng hvis ingen knapp er trykket
 }
-
-
-
-
-
-
 
