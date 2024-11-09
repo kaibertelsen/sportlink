@@ -4,11 +4,7 @@ document.getElementById('buttontoallturnering').onclick = function() {
     //tøm listene i konkuransen
     emtyTurnamentLists();
 }
-    
-document.getElementById('testtoturnering').onclick = function() {
-    document.getElementById('tabtoturnering').click();
-}
-     
+         
 document.getElementById('headermaillogo').onclick = function() {
     location.reload();
 }
