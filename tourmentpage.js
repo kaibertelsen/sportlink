@@ -110,7 +110,7 @@ function handleDivisionButtonClick(item) {
     const buttonlist = document.getElementById("divisionholder");
     Array.from(buttonlist.children).forEach(element => {
         if (element.id === "di" + lastClickedDivisionButton) {
-            element.style.backgroundColor = "#192219";
+            element.style.backgroundColor = mapColors("hoverelement");
             element.style.borderColor = mapColors("border");
         } else {
             element.style.backgroundColor = mapColors("hoverelement");
