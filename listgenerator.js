@@ -29,10 +29,10 @@ function listTournament(tournament){
         if(isDatePassed(item.startdate)){
                 if(item?.enddate && isDatePassed(item.enddate)){
                     statuslableelement.textContent = "Er avsluttet!";
-                    statuslableelement.style.color = "#818181";
+                    statuslableelement.style.color = mapColors(textoff);
                 }else{
                     statuslableelement.textContent = "Spilles nå!";
-                    statuslableelement.style.color = "#60df6e";
+                    statuslableelement.style.color = mapColors("main");
                 }
         }else{
         statuslableelement.textContent = statusDatetoplay(item.startdate);
@@ -72,10 +72,8 @@ function listSports(tournament){
         
         if (item === sports[0]) {
            
-            const backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--bluemarkingdark').trim();
-            rowelement.style.backgroundColor = backgroundColor;
-            const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--bluemarking').trim();
-            rowelement.style.borderColor = borderColor;
+            rowelement.style.backgroundColor = mapColors("elementactive");
+            rowelement.style.borderColor = mapColors("border");
         }
 
 

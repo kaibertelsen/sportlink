@@ -67,3 +67,28 @@ function markActiveButton(button) {
 }
 
 
+function getPageColor(variableName) {
+    const colorName = `--${variableName}`;
+    const colorSpec = getComputedStyle(document.documentElement).getPropertyValue(colorName).trim();
+    return colorSpec || '#000000'; // Returner en fallback farge hvis variabelen ikke er definert
+}
+
+function mapColors(typeColor) {
+    // Definer fargekartet med riktige variabelnavn
+    const colorMap = {
+        main: "bluemarking",
+        second: "bluemarkingdark",
+        element: "elementgray",
+        elementactive: "hoverelement",
+        border: "bluemarking",
+        textoff:"textoff"
+    };
+
+    // Sjekk om `typeColor` finnes i `colorMap`
+    if (colorMap[typeColor]) {
+        return getPageColor(colorMap[typeColor]);
+    } else {
+        // Returner en standardfarge (for eksempel svart) hvis `typeColor` ikke finnes
+        return "#000000";
+    }
+}
