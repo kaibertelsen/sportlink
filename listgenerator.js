@@ -71,8 +71,11 @@ function listSports(tournament){
         }
         
         if (item === sports[0]) {
-            rowelement.style.backgroundColor = "#192219";
-            rowelement.style.borderColor = "#61de6e";
+           
+            const backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--bluemarkingdark').trim();
+            rowelement.style.backgroundColor = backgroundColor;
+            const borderColor = getComputedStyle(document.documentElement).getPropertyValue('--bluemarking').trim();
+            rowelement.style.borderColor = borderColor;
         }
 
 
