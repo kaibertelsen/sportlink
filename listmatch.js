@@ -143,12 +143,7 @@ function listmatch(data, grouptype, scroll) {
                 resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
                 resultlable.style.fontWeight = "bold";
                 resultlable.style.color = mapColors("second");
-                // Hent den nåværende fontstørrelsen
-                const currentFontSize = window.getComputedStyle(resultlable).fontSize;
-                // Fjern "px" fra verdien og konverter til et tall
-                const newFontSize = parseFloat(currentFontSize) + 2;
-                // Sett den nye fontstørrelsen
-                resultlable.style.fontSize = `${newFontSize}px`;
+                resultlable.style.fontSize = "16px";
             } else {
                 resultlable.textContent = formatdatetoTime(match.time);
                 resultlable.style.fontWeight = "normal";
