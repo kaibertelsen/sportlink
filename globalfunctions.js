@@ -62,7 +62,7 @@ function markActiveButton(button) {
     });
 
     // Marker den aktive knappen med grønn bottom border og hvit tekstfarge
-    button.style.borderBottom = '4px solid '+mapColors(border);
+    button.style.borderBottom = '4px solid '+mapColors("border");
     button.style.color = '#fff'; // Sett tekstfargen til hvit
 }
 

@@ -29,7 +29,7 @@ function listTournament(tournament){
         if(isDatePassed(item.startdate)){
                 if(item?.enddate && isDatePassed(item.enddate)){
                     statuslableelement.textContent = "Er avsluttet!";
-                    statuslableelement.style.color = mapColors(textoff);
+                    statuslableelement.style.color = mapColors("textoff");
                 }else{
                     statuslableelement.textContent = "Spilles nå!";
                     statuslableelement.style.color = mapColors("main");
