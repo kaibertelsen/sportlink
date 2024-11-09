@@ -154,6 +154,12 @@ function listmatch(data, grouptype, scroll) {
                 }
             }
 
+            // Hvis det er den siste kampen i gruppen, fjern `border-bottom`
+            if (item.matches.indexOf(match) === item.matches.length - 1) {
+            matchelement.style.borderBottom = 'none';
+}
+
+
             matchlist.appendChild(matchelement);
         }
 
@@ -171,5 +177,7 @@ function listmatch(data, grouptype, scroll) {
     }
 
 }
+
+
 
 
