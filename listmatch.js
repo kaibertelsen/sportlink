@@ -88,6 +88,8 @@ function listmatch(data, grouptype, scroll) {
             const divisionlable = matchelement.querySelector(".divisionlable");
             if(activeDivision == ""){
                 divisionlable.textContent = match.divisionname;
+                divisionlable.style.color = mapColors("second");
+
             }else{
                 divisionlable.style.display = "none";
             }
