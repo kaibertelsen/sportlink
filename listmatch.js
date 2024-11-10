@@ -142,7 +142,7 @@ function listmatch(data, grouptype, scroll) {
             if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
                 resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
                 resultlable.style.fontWeight = "bold";
-                resultlable.style.color = mapColors("second");
+                resultlable.style.color = mapColors("main");
                 resultlable.style.fontSize = "16px";
             } else {
                 resultlable.textContent = formatdatetoTime(match.time);
