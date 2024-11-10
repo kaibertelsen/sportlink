@@ -72,7 +72,7 @@ function listSports(tournament){
         
         if (item === sports[0]) {
            
-            rowelement.style.backgroundColor = mapColors("elementactive");
+            //rowelement.style.backgroundColor = mapColors("elementactive");
             rowelement.style.borderColor = mapColors("border");
         }
 
@@ -102,7 +102,7 @@ function filterSporttype(item){
      const thisfilterbutton = document.getElementById(buttonid);
 
      if(thisfilterbutton){
-      thisfilterbutton.style.backgroundColor = mapColors("elementactive");
+     // thisfilterbutton.style.backgroundColor = mapColors("elementactive");
        thisfilterbutton.style.borderColor = mapColors("border");
      }
 
