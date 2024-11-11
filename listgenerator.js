@@ -95,7 +95,7 @@ function listOrganizer(tournament){
     for (let item of organizerlist) {
         // Lag en kopi av elementet
         const rowelement = nodeelement.cloneNode(true);
-        rowelement.id = "fi"+item.organizer;
+        rowelement.id = "org"+item.organizer;
 
         rowelement.onclick = function() {
             filterSporttype(item);
