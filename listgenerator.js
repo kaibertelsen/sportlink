@@ -88,70 +88,78 @@ function listSports(tournament){
 
 }
 
-function listOrganizer(tournament){
+function listOrganizer(tournament) {
     const list = document.getElementById("organizerlist");
-    const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector('.turnfilterbutton');
-    let organizerlist = findeunicOrganizer(tournament);
-    
-    for (let item of organizerlist) {
-        // Lag en kopi av elementet
-        const rowelement = nodeelement.cloneNode(true);
-        rowelement.id = "org"+item.organizer;
+    const elementLibrary = document.getElementById("elementlibrary");
+    const nodeElement = elementLibrary.querySelector('.turnfilterbutton');
+    const organizerList = findeunicOrganizer(tournament);
 
-        rowelement.onclick = function() {
-            activeorganizer = item.organizer;
-            filterTournamentList(rowElement)
+    // Tøm eksisterende liste før ny oppbygging
+    list.innerHTML = "";
+
+    for (let item of organizerList) {
+        // Lag en kopi av mal-elementet
+        const rowElement = nodeElement.cloneNode(true);
+        rowElement.id = "org" + item.organizer;
+
+        // Definer klikk-funksjonen for filter
+        rowElement.onclick = function () {
+            activeOrganizer = item.organizer;
+            filterTournamentList(rowElement);
+        };
+
+        // Oppdater innholdet i elementet
+        const nameElement = rowElement.querySelector(".sportlable");
+        nameElement.textContent = item.organizername;
+
+        const iconSportElement = rowElement.querySelector(".sporticon");
+        iconSportElement.removeAttribute('srcset');
+
+        // Sett ikon eller fjern hvis organizer er tom
+        if (item.organizer !== "") {
+            iconSportElement.src = item.organizer;
+        } else {
+            iconSportElement.remove();
         }
 
-        const nameelement = rowelement.querySelector(".sportlable");
-        nameelement.textContent = item.organizername;
-        
-        const iconsportelement = rowelement.querySelector(".sporticon");
-        iconsportelement.removeAttribute('srcset');
-        if(item.organizer != ""){
-        iconsportelement.src = item.organizer;
-        }else{
-            iconsportelement.remove(); 
+        // Marker første element som aktivt
+        if (item === organizerList[0]) {
+            rowElement.style.borderColor = mapColors("border");
         }
-        
-        if (item === organizerlist[0]) {
-           
-            //rowelement.style.backgroundColor = mapColors("elementactive");
-            rowelement.style.borderColor = mapColors("border");
-        }
-        list.appendChild(rowelement);
+
+        // Legg til elementet i listen
+        list.appendChild(rowElement);
     }
 }
 
 
 
-function filterTournamentList(button) {
 
-    let allButtons =  button.parent.children;
-    allButtons.forEach(element => {
-        //sett standard verdien
+function filterTournamentList(button) {
+    // Få alle knappene i foreldre-elementet og sett standardstil
+    const allButtons = Array.from(button.parentElement.children);
+    allButtons.forEach((element) => {
         element.style.backgroundColor = mapColors("blueblack");
         element.style.borderColor = "transparent";
-     });
+    });
 
+    // Marker valgt knapp
     button.style.borderColor = mapColors("border");
 
-
+    // Hent listen over turneringer
     const list = document.getElementById("maintournamentlist");
     const allElements = Array.from(list.children);
-    
 
-    // Gå gjennom alle elementene i listen
+    // Gå gjennom alle elementene i listen og filtrer
     allElements.forEach((element) => {
         const elementSport = element.dataset.sport || "";
         const elementOrganizer = element.dataset.organizer || "";
 
-        // Sjekk om elementet matcher kriteriene
-        const matchesSport = !activeSportType || elementSport === activeSportType;
-        const matchesOrganizer = !activeOrganizer || elementOrganizer === activeOrganizer;
+        // Hent aktive verdier (sjekk om de er definert først)
+        const matchesSport = typeof activeSportType === "undefined" || !activeSportType || elementSport === activeSportType;
+        const matchesOrganizer = typeof activeOrganizer === "undefined" || !activeOrganizer || elementOrganizer === activeOrganizer;
 
-        // Oppdater visningen basert på kontrollen
+        // Oppdater visningen basert på filterkriteriene
         if (matchesSport && matchesOrganizer) {
             element.style.display = "grid";
         } else {
@@ -159,6 +167,7 @@ function filterTournamentList(button) {
         }
     });
 }
+
 
 
 
