@@ -43,39 +43,32 @@ function groupArraybyDate(matchs){
 
 // listmatch function adjusted to avoid scroll conflicts
 function listmatch(data, grouptype, scroll) {
-    // Get active division filter
     const activeDivision = getActiveDivisionFilter();
-    // Filter matches by active division or include all if none is set
     const filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
     const matchs = sortDateArray(filteredMatches, "time");
     const grouparray = grouptype === "dato" ? groupArraybyDate(matchs) : [];
 
-    // Clear previous list and get template elements
     const list = document.getElementById("matchlistholder");
     list.replaceChildren();
     const elementLibrary = document.getElementById("elementlibrary");
     const nodeElement = elementLibrary.querySelector('.groupholder');
 
-    let firstUnplayedMatch = null; // Variable to store the first unplayed match element
+    let firstUnplayedMatch = null;
 
-    // Populate matches into groups
     for (let item of grouparray) {
         const rowElement = nodeElement.cloneNode(true);
         rowElement.querySelector(".groupheadername").textContent = formatDateToNorwegian(item.date);
         const matchList = rowElement.querySelector(".matchlist");
         const matchHolder = rowElement.querySelector('.matchholder');
 
-        // Iterate over each match in the group
         for (let match of item.matches) {
             const matchElement = matchHolder.cloneNode(true);
 
-            // Populate team names and logos
             matchElement.querySelector(".team1").textContent = match.team1name;
             matchElement.querySelector(".logoteam1").src = match.team1clublogo;
             matchElement.querySelector(".team2").textContent = match.team2name;
             matchElement.querySelector(".logoteam2").src = match.team2clublogo;
 
-            // Show division label if no specific division filter is set
             const divisionLabel = matchElement.querySelector(".divisionlable");
             if (activeDivision === "") {
                 divisionLabel.textContent = match.divisionname;
@@ -84,7 +77,6 @@ function listmatch(data, grouptype, scroll) {
                 divisionLabel.style.display = "none";
             }
 
-            // Handle set scores and determine winner
             const settList = matchElement.querySelector(".settlist");
             const setKeys = ["sett1", "sett2", "sett3"];
             const hasRequiredSetScores = match.sett1 && match.sett2;
@@ -96,7 +88,6 @@ function listmatch(data, grouptype, scroll) {
                 let team1SetsWon = 0;
                 let team2SetsWon = 0;
 
-                // Populate set scores and determine winner
                 for (const key of setKeys) {
                     if (match[key]) {
                         const settDiv = settDivNode.cloneNode(true);
@@ -121,7 +112,6 @@ function listmatch(data, grouptype, scroll) {
                 settList.style.display = "none";
             }
 
-            // Set result or match time
             const resultLabel = matchElement.querySelector(".resultlable");
             if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
                 resultLabel.textContent = `${match.goalteam1} - ${match.goalteam2}`;
@@ -132,13 +122,11 @@ function listmatch(data, grouptype, scroll) {
                 resultLabel.textContent = formatdatetoTime(match.time);
                 resultLabel.style.fontWeight = "normal";
 
-                // Set first unplayed match if it hasn't been set already
                 if (!firstUnplayedMatch) {
                     firstUnplayedMatch = matchElement;
                 }
             }
 
-            // Remove border-bottom for the last match in the group
             if (item.matches.indexOf(match) === item.matches.length - 1) {
                 matchElement.style.borderBottom = 'none';
             }
@@ -146,38 +134,28 @@ function listmatch(data, grouptype, scroll) {
             matchList.appendChild(matchElement);
         }
 
-        // Clean up template element and append the row to the list
         matchHolder.remove();
         list.appendChild(rowElement);
     }
 
-    // Scroll to the first unplayed match if specified
     if (scroll && firstUnplayedMatch) {
-        let scrollContainer = firstUnplayedMatch.parentElement;
-        while (scrollContainer && scrollContainer.scrollHeight <= scrollContainer.clientHeight) {
-            scrollContainer = scrollContainer.parentElement;
-        }
+        // Find the nearest scrollable container specific to this slide
+        let scrollContainer = firstUnplayedMatch.closest('.swipe-slide');
 
         if (scrollContainer) {
-            // Scroll within the identified scrollable container
             setTimeout(() => {
+                // Get the exact position within this isolated container
                 const targetPosition = firstUnplayedMatch.offsetTop - scrollContainer.offsetTop;
                 scrollContainer.scrollTo({ top: targetPosition, behavior: "smooth" });
 
+                // Save the scroll position for future use
                 setTimeout(() => {
                     scrollPositions[currentIndex] = scrollContainer.scrollTop;
-                }, 500);
-            }, 500);
-        } else {
-            // Fallback to scrolling the entire page
-            setTimeout(() => {
-                firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
-                setTimeout(() => {
-                    scrollPositions[currentIndex] = window.scrollY;
                 }, 500);
             }, 500);
         }
     }
 }
+
 
 
