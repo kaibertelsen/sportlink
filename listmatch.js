@@ -41,6 +41,7 @@ function groupArraybyDate(matchs){
 }
 
 
+// listmatch function adjusted to avoid scroll conflicts
 function listmatch(data, grouptype, scroll) {
     const activeDivision = getActiveDivisionFilter();
     let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
@@ -51,16 +52,16 @@ function listmatch(data, grouptype, scroll) {
     list.replaceChildren();
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.groupholder');
-
     let firstUnplayedMatch = null;
 
-    for (let item of grouparray) {
+    grouparray.forEach(item => {
         const rowelement = nodeelement.cloneNode(true);
         rowelement.querySelector(".groupheadername").textContent = formatDateToNorwegian(item.date);
+
         const matchlist = rowelement.querySelector(".matchlist");
         const matchholder = rowelement.querySelector('.matchholder');
 
-        for (let match of item.matches) {
+        item.matches.forEach(match => {
             const matchelement = matchholder.cloneNode(true);
             matchlist.appendChild(matchelement);
 
@@ -69,99 +70,31 @@ function listmatch(data, grouptype, scroll) {
             matchelement.querySelector(".team2").textContent = match.team2name;
             matchelement.querySelector(".logoteam2").src = match.team2clublogo;
 
-            const divisionlable = matchelement.querySelector(".divisionlable");
-            if (activeDivision == "") {
-                divisionlable.textContent = match.divisionname;
-                divisionlable.style.color = mapColors("second");
-            } else {
-                divisionlable.style.display = "none";
-            }
-
-            const settlist = matchelement.querySelector(".settlist");
-            const setKeys = ["sett1", "sett2", "sett3"];
-            const hasRequiredSetScores = match.sett1 && match.sett2;
-
-            if (hasRequiredSetScores) {
-                settlist.style.display = "grid";
-                const settdivnode = settlist.querySelector(".settdiv");
-                let columnCount = 0;
-                let team1SetsWon = 0;
-                let team2SetsWon = 0;
-
-                for (let i = 0; i < setKeys.length; i++) {
-                    if (match[setKeys[i]]) {
-                        const settdiv = settdivnode.cloneNode(true);
-                        const setttextlable = settdiv.querySelector(".setttextlable");
-                        setttextlable.textContent = match[setKeys[i]];
-
-                        const [team1Score, team2Score] = match[setKeys[i]].split('-').map(Number);
-                        if (team1Score > team2Score) team1SetsWon++;
-                        else if (team2Score > team1Score) team2SetsWon++;
-
-                        settlist.appendChild(settdiv);
-                        columnCount++;
-                    }
-                }
-
-                settdivnode.remove();
-                settlist.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
-
-                match.goalteam1 = team1SetsWon;
-                match.goalteam2 = team2SetsWon;
-                settlist.style.display = "none";
-            } else {
-                settlist.style.display = "none";
-            }
-
             const resultlable = matchelement.querySelector(".resultlable");
-            if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
+            if (match.goalteam1 !== undefined && match.goalteam2 !== undefined) {
                 resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
                 resultlable.style.fontWeight = "bold";
                 resultlable.style.color = mapColors("main");
                 resultlable.style.fontSize = "16px";
             } else {
                 resultlable.textContent = formatdatetoTime(match.time);
-                resultlable.style.fontWeight = "normal";
-
-                if (!firstUnplayedMatch) {
-                    firstUnplayedMatch = matchelement;
-                }
-            }
-
-            if (item.matches.indexOf(match) === item.matches.length - 1) {
-                matchelement.style.borderBottom = 'none';
+                if (!firstUnplayedMatch) firstUnplayedMatch = matchelement;
             }
 
             matchlist.appendChild(matchelement);
-        }
+        });
 
-        matchholder.remove();
         list.appendChild(rowelement);
-    }
+    });
 
     if (scroll && firstUnplayedMatch) {
-        let scrollContainer = firstUnplayedMatch.parentElement;
-        while (scrollContainer && scrollContainer.scrollHeight <= scrollContainer.clientHeight) {
-            scrollContainer = scrollContainer.parentElement;
-        }
-
-        if (scrollContainer) {
-            setTimeout(() => {
-                const targetPosition = firstUnplayedMatch.offsetTop - scrollContainer.offsetTop;
-                scrollContainer.scrollTo({ top: targetPosition, behavior: "smooth" });
-
-                setTimeout(() => {
-                    scrollPositions[currentIndex] = scrollContainer.scrollTop;
-                }, 500);
-            }, 500);
-        } else {
-            setTimeout(() => {
-                firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
-                setTimeout(() => {
-                    scrollPositions[currentIndex] = window.scrollY;
-                }, 500);
-            }, 500);
-        }
+        const scrollContainer = slides[1];
+        const targetPosition = firstUnplayedMatch.offsetTop - scrollContainer.offsetTop;
+        
+        setTimeout(() => {
+            scrollContainer.scrollTo({ top: targetPosition, behavior: "smooth" });
+            scrollPositions[1] = targetPosition;
+        }, 500);
     }
 }
 

@@ -2,128 +2,97 @@ const swipeWrapper = document.querySelector('.swipe-wrapper');
 const slides = document.querySelectorAll('.swipe-slide');
 let currentIndex = 0;
 let startX = 0;
-let startY = 0;
-let currentX = 0;
-let currentY = 0;
-let translateX = 0;
 let isDragging = false;
 let isHorizontalSwipe = null;
 const slideWidth = window.innerWidth;
-const scrollPositions = Array.from(slides).map(() => 0); // Lagre scroll-posisjonen for hver slide
 
+// Scroll positions for each slide container
+const scrollPositions = Array.from(slides).map(() => 0);
+
+// Update slide position with smooth transition
 function updateSlidePosition() {
     swipeWrapper.style.transition = 'transform 0.3s ease';
     swipeWrapper.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 }
 
+// Go to a specific slide and restore its scroll position
 function goToSlide(index) {
     if (index >= 0 && index < slides.length) {
-        // Lagre scroll-posisjonen til den nåværende siden før vi bytter
+        // Save the current slide's scroll position
         scrollPositions[currentIndex] = slides[currentIndex].scrollTop;
 
-        // Oppdater gjeldende indeks
+        // Update current index
         currentIndex = index;
 
-        // Gjenopprett scroll-posisjonen for den nye aktive siden
+        // Restore the new slide's scroll position
         slides[currentIndex].scrollTop = scrollPositions[currentIndex] || 0;
 
-        // Oppdater slide-posisjonen (horisontal swipe)
+        // Update the slide's position in the wrapper
         updateSlidePosition();
-
-        // Marker aktiv knapp basert på currentIndex
-        if (currentIndex === 0) {
-            markActiveButton(document.getElementById('tabeltabbutton'));
-        } else if (currentIndex === 1) {
-            markActiveButton(document.getElementById('matchtabbutton'));
-        } else if (currentIndex === 2) {
-            markActiveButton(document.getElementById('endplaytabbutton'));
-        }
+        markActiveButtonBasedOnIndex();
     }
 }
 
+// Helper function to mark active button based on current index
+function markActiveButtonBasedOnIndex() {
+    if (currentIndex === 0) {
+        markActiveButton(document.getElementById('tabeltabbutton'));
+    } else if (currentIndex === 1) {
+        markActiveButton(document.getElementById('matchtabbutton'));
+    } else if (currentIndex === 2) {
+        markActiveButton(document.getElementById('endplaytabbutton'));
+    }
+}
 
-
-// Håndter touch-start
+// Swipe functionality with touch events
 function handleTouchStart(event) {
     startX = event.touches[0].clientX;
-    startY = event.touches[0].clientY;
     isDragging = true;
     isHorizontalSwipe = null;
     swipeWrapper.style.transition = 'none';
 }
 
-// Håndter touch-move
 function handleTouchMove(event) {
     if (!isDragging) return;
-    currentX = event.touches[0].clientX;
-    currentY = event.touches[0].clientY;
+    const deltaX = event.touches[0].clientX - startX;
 
-    const deltaX = currentX - startX;
-    const deltaY = currentY - startY;
-
-    // Bestem sveiperetningen hvis ikke allerede bestemt
     if (isHorizontalSwipe === null) {
-        if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            isHorizontalSwipe = true; // Lås til horisontal scrolling
-            document.body.style.overflowY = 'hidden';
-        } else {
-            isHorizontalSwipe = false; // Lås til vertikal scrolling
-        }
+        isHorizontalSwipe = Math.abs(deltaX) > Math.abs(event.touches[0].clientY - startY);
     }
 
-    // Horisontal sveiping
     if (isHorizontalSwipe) {
-        translateX = -currentIndex * slideWidth + deltaX;
+        const translateX = -currentIndex * slideWidth + deltaX;
         swipeWrapper.style.transform = `translateX(${translateX}px)`;
     }
 }
 
-// Håndter touch-end
 function handleTouchEnd() {
     if (!isDragging) return;
     const deltaX = currentX - startX;
     const threshold = slideWidth / 4;
 
-    // Hvis horisontal sveiping, bestem hvilken slide å navigere til
     if (isHorizontalSwipe) {
-        // Lagre scroll-posisjonen til den nåværende siden
         scrollPositions[currentIndex] = slides[currentIndex].scrollTop;
-
+        
         if (deltaX < -threshold && currentIndex < slides.length - 1) {
             currentIndex++;
         } else if (deltaX > threshold && currentIndex > 0) {
             currentIndex--;
         }
-
-        // Gjenopprett scroll-posisjonen til den nye aktive siden
-        slides[currentIndex].scrollTop = scrollPositions[currentIndex];
-
-        // Oppdater slide-posisjonen
+        
+        slides[currentIndex].scrollTop = scrollPositions[currentIndex] || 0;
         updateSlidePosition();
-
-        // Marker aktiv knapp basert på currentIndex
-        if (currentIndex === 0) {
-            markActiveButton(document.getElementById('tabeltabbutton'));
-        } else if (currentIndex === 1) {
-            markActiveButton(document.getElementById('matchtabbutton'));
-        } else if (currentIndex === 2) {
-            markActiveButton(document.getElementById('endplaytabbutton'));
-        }
+        markActiveButtonBasedOnIndex();
     }
 
-    // Tilbakestill verdier og lås opp vertikal scrolling
     isDragging = false;
     isHorizontalSwipe = null;
-    document.body.style.overflowY = ''; // Lås opp vertikal scrolling
 }
 
-
-// Legg til touch-event listeners
+// Add event listeners for swipe functionality
 swipeWrapper.addEventListener('touchstart', handleTouchStart);
 swipeWrapper.addEventListener('touchmove', handleTouchMove);
 swipeWrapper.addEventListener('touchend', handleTouchEnd);
 
-
-
-// Initial oppdatering
+// Initial load
 updateSlidePosition();
