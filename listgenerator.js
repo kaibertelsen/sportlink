@@ -98,11 +98,11 @@ function listOrganizer(tournament){
         rowelement.id = "org"+item.organizer;
 
         rowelement.onclick = function() {
-            filterSporttype(item);
+            activeorganizer = item.organizer;
         }
 
         const nameelement = rowelement.querySelector(".sportlable");
-        nameelement.textContent = item.organizer;
+        nameelement.textContent = item.organizername;
         
         const iconsportelement = rowelement.querySelector(".sporticon");
         iconsportelement.removeAttribute('srcset');

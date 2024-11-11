@@ -3,3 +3,4 @@ var tournament;
 var activetournament;
 var matches;
 var teams;
+var activeorganizer;
