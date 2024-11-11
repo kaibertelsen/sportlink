@@ -44,118 +44,125 @@ function groupArraybyDate(matchs){
 // listmatch function adjusted to avoid scroll conflicts
 function listmatch(data, grouptype, scroll) {
     const activeDivision = getActiveDivisionFilter();
-    const filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
-    const matchs = sortDateArray(filteredMatches, "time");
-    const grouparray = grouptype === "dato" ? groupArraybyDate(matchs) : [];
+    let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
+    let matchs = sortDateArray(filteredMatches, "time");
+    let grouparray = grouptype === "dato" ? groupArraybyDate(matchs) : [];
 
     const list = document.getElementById("matchlistholder");
     list.replaceChildren();
-    const elementLibrary = document.getElementById("elementlibrary");
-    const nodeElement = elementLibrary.querySelector('.groupholder');
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector('.groupholder');
 
     let firstUnplayedMatch = null;
 
     for (let item of grouparray) {
-        const rowElement = nodeElement.cloneNode(true);
-        rowElement.querySelector(".groupheadername").textContent = formatDateToNorwegian(item.date);
-        const matchList = rowElement.querySelector(".matchlist");
-        const matchHolder = rowElement.querySelector('.matchholder');
+        const rowelement = nodeelement.cloneNode(true);
+        rowelement.querySelector(".groupheadername").textContent = formatDateToNorwegian(item.date);
+        const matchlist = rowelement.querySelector(".matchlist");
+        const matchholder = rowelement.querySelector('.matchholder');
 
         for (let match of item.matches) {
-            const matchElement = matchHolder.cloneNode(true);
+            const matchelement = matchholder.cloneNode(true);
+            matchlist.appendChild(matchelement);
 
-            matchElement.querySelector(".team1").textContent = match.team1name;
-            matchElement.querySelector(".logoteam1").src = match.team1clublogo;
-            matchElement.querySelector(".team2").textContent = match.team2name;
-            matchElement.querySelector(".logoteam2").src = match.team2clublogo;
+            matchelement.querySelector(".team1").textContent = match.team1name;
+            matchelement.querySelector(".logoteam1").src = match.team1clublogo;
+            matchelement.querySelector(".team2").textContent = match.team2name;
+            matchelement.querySelector(".logoteam2").src = match.team2clublogo;
 
-            const divisionLabel = matchElement.querySelector(".divisionlable");
-            if (activeDivision === "") {
-                divisionLabel.textContent = match.divisionname;
-                divisionLabel.style.color = mapColors("second");
+            const divisionlable = matchelement.querySelector(".divisionlable");
+            if (activeDivision == "") {
+                divisionlable.textContent = match.divisionname;
+                divisionlable.style.color = mapColors("second");
             } else {
-                divisionLabel.style.display = "none";
+                divisionlable.style.display = "none";
             }
 
-            const settList = matchElement.querySelector(".settlist");
+            const settlist = matchelement.querySelector(".settlist");
             const setKeys = ["sett1", "sett2", "sett3"];
             const hasRequiredSetScores = match.sett1 && match.sett2;
 
             if (hasRequiredSetScores) {
-                settList.style.display = "grid";
-                const settDivNode = settList.querySelector(".settdiv");
+                settlist.style.display = "grid";
+                const settdivnode = settlist.querySelector(".settdiv");
                 let columnCount = 0;
                 let team1SetsWon = 0;
                 let team2SetsWon = 0;
 
-                for (const key of setKeys) {
-                    if (match[key]) {
-                        const settDiv = settDivNode.cloneNode(true);
-                        settDiv.querySelector(".setttextlable").textContent = match[key];
-                        const [team1Score, team2Score] = match[key].split('-').map(Number);
+                for (let i = 0; i < setKeys.length; i++) {
+                    if (match[setKeys[i]]) {
+                        const settdiv = settdivnode.cloneNode(true);
+                        const setttextlable = settdiv.querySelector(".setttextlable");
+                        setttextlable.textContent = match[setKeys[i]];
 
+                        const [team1Score, team2Score] = match[setKeys[i]].split('-').map(Number);
                         if (team1Score > team2Score) team1SetsWon++;
                         else if (team2Score > team1Score) team2SetsWon++;
 
-                        settList.appendChild(settDiv);
+                        settlist.appendChild(settdiv);
                         columnCount++;
                     }
                 }
 
-                settDivNode.remove();
-                settList.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
+                settdivnode.remove();
+                settlist.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
 
                 match.goalteam1 = team1SetsWon;
                 match.goalteam2 = team2SetsWon;
-                settList.style.display = "none";
+                settlist.style.display = "none";
             } else {
-                settList.style.display = "none";
+                settlist.style.display = "none";
             }
 
-            const resultLabel = matchElement.querySelector(".resultlable");
+            const resultlable = matchelement.querySelector(".resultlable");
             if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
-                resultLabel.textContent = `${match.goalteam1} - ${match.goalteam2}`;
-                resultLabel.style.fontWeight = "bold";
-                resultLabel.style.color = mapColors("main");
-                resultLabel.style.fontSize = "16px";
+                resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
+                resultlable.style.fontWeight = "bold";
+                resultlable.style.color = mapColors("main");
+                resultlable.style.fontSize = "16px";
             } else {
-                resultLabel.textContent = formatdatetoTime(match.time);
-                resultLabel.style.fontWeight = "normal";
+                resultlable.textContent = formatdatetoTime(match.time);
+                resultlable.style.fontWeight = "normal";
 
                 if (!firstUnplayedMatch) {
-                    firstUnplayedMatch = matchElement;
+                    firstUnplayedMatch = matchelement;
                 }
             }
 
             if (item.matches.indexOf(match) === item.matches.length - 1) {
-                matchElement.style.borderBottom = 'none';
+                matchelement.style.borderBottom = 'none';
             }
 
-            matchList.appendChild(matchElement);
+            matchlist.appendChild(matchelement);
         }
 
-        matchHolder.remove();
-        list.appendChild(rowElement);
+        matchholder.remove();
+        list.appendChild(rowelement);
     }
 
-    // Scroll to the first unplayed match if specified
     if (scroll && firstUnplayedMatch) {
-        setTimeout(() => {
-            const swipeSlide = firstUnplayedMatch.closest('.swipe-slide');
+        let scrollContainer = firstUnplayedMatch.parentElement;
+        while (scrollContainer && scrollContainer.scrollHeight <= scrollContainer.clientHeight) {
+            scrollContainer = scrollContainer.parentElement;
+        }
 
-            // Ensure we're only scrolling within the current slide container
-            if (swipeSlide) {
-                const targetPosition = firstUnplayedMatch.offsetTop - swipeSlide.offsetTop;
+        if (scrollContainer) {
+            setTimeout(() => {
+                const targetPosition = firstUnplayedMatch.offsetTop - scrollContainer.offsetTop;
+                scrollContainer.scrollTo({ top: targetPosition, behavior: "smooth" });
 
-                // Scroll to the position within the isolated container
-                swipeSlide.scrollTo({ top: targetPosition, behavior: "smooth" });
-
-                // Save the scroll position for future use
                 setTimeout(() => {
-                    scrollPositions[currentIndex] = swipeSlide.scrollTop;
+                    scrollPositions[currentIndex] = scrollContainer.scrollTop;
                 }, 500);
-            }
-        }, 500);
+            }, 500);
+        } else {
+            setTimeout(() => {
+                firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+                setTimeout(() => {
+                    scrollPositions[currentIndex] = window.scrollY;
+                }, 500);
+            }, 500);
+        }
     }
 }
 

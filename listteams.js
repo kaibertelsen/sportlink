@@ -10,126 +10,105 @@ function getTeamresponse(data){
 
 
 
-function listmatch(data, grouptype, scroll) {
+function listteams(data) {
     const activeDivision = getActiveDivisionFilter();
-    let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
-    let matchs = sortDateArray(filteredMatches, "time");
-    let grouparray = grouptype === "dato" ? groupArraybyDate(matchs) : [];
 
-    const list = document.getElementById("matchlistholder");
-    list.replaceChildren();
+    // Filtrer lagene basert på aktivt divisjonsfilter
+    let filteredTeams = activeDivision === "" ? data : data.filter(team => team.division === activeDivision);
+
+    // Generer og sorter teamslist basert på poeng, målforskjell og mål scoret
+    let teamslist = generatePointToTeams(filteredTeams);
+
+    // Gruppér lagene etter divisjon og gruppe
+    const teamsByDivisionAndGroup = teamslist.reduce((acc, team) => {
+        const division = team.divisionname || "Ukjent divisjon"; // Standardnavn hvis divisjon mangler
+        const group = team.group ? team.group : null; // Null hvis gruppe mangler
+
+        if (!acc[division]) {
+            acc[division] = {};
+        }
+        if (!acc[division][group || "Uten gruppe"]) {
+            acc[division][group || "Uten gruppe"] = [];
+        }
+        acc[division][group || "Uten gruppe"].push(team);
+        return acc;
+    }, {});
+
+    const list = document.getElementById("teamslistholder");
+    list.replaceChildren(); // Tømmer holderen for å unngå duplisering
+
     const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector('.groupholder');
 
-    let firstUnplayedMatch = null;
+    // Bestem hvilket element som skal kopieres basert på sportstypen
+    const isVolleyball = activetournament.sport[0] === "recSCesi2BGmCyivZ"; // Volleyball ID
+    const nodeelement = isVolleyball
+        ? elementlibrary.querySelector('.volleyballview')
+        : elementlibrary.querySelector('.fotballview');
 
-    for (let item of grouparray) {
-        const rowelement = nodeelement.cloneNode(true);
-        rowelement.querySelector(".groupheadername").textContent = formatDateToNorwegian(item.date);
-        const matchlist = rowelement.querySelector(".matchlist");
-        const matchholder = rowelement.querySelector('.matchholder');
+    // Loop gjennom hver divisjon og gruppe, og opprett en `tablegroupholder` for hver
+    for (const [divisionName, groups] of Object.entries(teamsByDivisionAndGroup)) {
+        for (const [groupName, groupTeams] of Object.entries(groups)) {
+            const copyelement = nodeelement.cloneNode(true);
+            
+            // Sett divisjons- og gruppenavn, kun divisjonsnavn om gruppe mangler
+            const nameelement = copyelement.querySelector(".groupheadername");
+            nameelement.textContent = groupName === "Uten gruppe" ? divisionName : `${divisionName} - ${groupName}`;
 
-        for (let match of item.matches) {
-            const matchelement = matchholder.cloneNode(true);
-            matchlist.appendChild(matchelement);
+            const contentholder = copyelement.querySelector(".rowholder");
+            const nodeteamhholder = contentholder.querySelector('.resultrow');
 
-            matchelement.querySelector(".team1").textContent = match.team1name;
-            matchelement.querySelector(".logoteam1").src = match.team1clublogo;
-            matchelement.querySelector(".team2").textContent = match.team2name;
-            matchelement.querySelector(".logoteam2").src = match.team2clublogo;
+            // Sorter lagene i gruppen basert på poeng, målforskjell og mål scoret
+            groupTeams.sort((a, b) => {
+                if (b.points.points !== a.points.points) {
+                    return b.points.points - a.points.points;
+                }
+                if (b.points.goalDifference !== a.points.goalDifference) {
+                    return b.points.goalDifference - a.points.goalDifference;
+                }
+                return b.points.goalsFor - a.points.goalsFor;
+            });
 
-            const divisionlable = matchelement.querySelector(".divisionlable");
-            if (activeDivision == "") {
-                divisionlable.textContent = match.divisionname;
-                divisionlable.style.color = mapColors("second");
-            } else {
-                divisionlable.style.display = "none";
-            }
+            let range = 1;
+            for (let team of groupTeams) {
+                const rowelement = nodeteamhholder.cloneNode(true);
+                contentholder.appendChild(rowelement);
 
-            const settlist = matchelement.querySelector(".settlist");
-            const setKeys = ["sett1", "sett2", "sett3"];
-            const hasRequiredSetScores = match.sett1 && match.sett2;
+                // Rangering
+                const rangenr = rowelement.querySelector(".rangenr");
+                rangenr.textContent = range;
 
-            if (hasRequiredSetScores) {
-                settlist.style.display = "grid";
-                const settdivnode = settlist.querySelector(".settdiv");
-                let columnCount = 0;
-                let team1SetsWon = 0;
-                let team2SetsWon = 0;
+                // Laglogo
+                const logoteam = rowelement.querySelector(".clublogo");
+                logoteam.removeAttribute('srcset');
+                logoteam.src = team.clublogo;
 
-                for (let i = 0; i < setKeys.length; i++) {
-                    if (match[setKeys[i]]) {
-                        const settdiv = settdivnode.cloneNode(true);
-                        const setttextlable = settdiv.querySelector(".setttextlable");
-                        setttextlable.textContent = match[setKeys[i]];
+                // Lagnavn
+                const teamname = rowelement.querySelector(".teamnamelable");
+                teamname.textContent = team.name;
 
-                        const [team1Score, team2Score] = match[setKeys[i]].split('-').map(Number);
-                        if (team1Score > team2Score) team1SetsWon++;
-                        else if (team2Score > team1Score) team2SetsWon++;
-
-                        settlist.appendChild(settdiv);
-                        columnCount++;
-                    }
+                // Poengstatistikk
+                rowelement.querySelector(".played").textContent = team.points.played;
+                rowelement.querySelector(".won").textContent = team.points.won;
+                rowelement.querySelector(".lost").textContent = team.points.lost;
+                
+                if (isVolleyball) {
+                    // Sett-statistikk for volleyball
+                    rowelement.querySelector(".setsdifference").textContent = `${team.points.setsFor}-${team.points.setsAgainst}`;
+                    rowelement.querySelector(".points").textContent = team.points.points;
+                } else {
+                    // Målstatistikk for fotball
+                    rowelement.querySelector(".drawn").textContent = team.points.drawn;
+                    rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
+                    rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
+                    rowelement.querySelector(".points").textContent = team.points.points;
                 }
 
-                settdivnode.remove();
-                settlist.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
-
-                match.goalteam1 = team1SetsWon;
-                match.goalteam2 = team2SetsWon;
-                settlist.style.display = "none";
-            } else {
-                settlist.style.display = "none";
+                range++;
             }
 
-            const resultlable = matchelement.querySelector(".resultlable");
-            if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
-                resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
-                resultlable.style.fontWeight = "bold";
-                resultlable.style.color = mapColors("main");
-                resultlable.style.fontSize = "16px";
-            } else {
-                resultlable.textContent = formatdatetoTime(match.time);
-                resultlable.style.fontWeight = "normal";
-
-                if (!firstUnplayedMatch) {
-                    firstUnplayedMatch = matchelement;
-                }
-            }
-
-            if (item.matches.indexOf(match) === item.matches.length - 1) {
-                matchelement.style.borderBottom = 'none';
-            }
-
-            matchlist.appendChild(matchelement);
-        }
-
-        matchholder.remove();
-        list.appendChild(rowelement);
-    }
-
-    if (scroll && firstUnplayedMatch) {
-        let scrollContainer = firstUnplayedMatch.parentElement;
-        while (scrollContainer && scrollContainer.scrollHeight <= scrollContainer.clientHeight) {
-            scrollContainer = scrollContainer.parentElement;
-        }
-
-        if (scrollContainer) {
-            setTimeout(() => {
-                const targetPosition = firstUnplayedMatch.offsetTop - scrollContainer.offsetTop;
-                scrollContainer.scrollTo({ top: targetPosition, behavior: "smooth" });
-
-                setTimeout(() => {
-                    scrollPositions[currentIndex] = scrollContainer.scrollTop;
-                }, 500);
-            }, 500);
-        } else {
-            setTimeout(() => {
-                firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
-                setTimeout(() => {
-                    scrollPositions[currentIndex] = window.scrollY;
-                }, 500);
-            }, 500);
+            // Fjern mal-elementet etter å ha lagt til alle rader
+            nodeteamhholder.remove();
+            list.appendChild(copyelement);
         }
     }
 }
