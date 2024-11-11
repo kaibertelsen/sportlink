@@ -170,18 +170,19 @@ function listmatch(data, grouptype, scroll) {
 
         list.appendChild(rowelement);
     }
-    // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
-    // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
-    if (scroll && firstUnplayedMatch) {
-        setTimeout(() => {
-            firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
 
-            // Lagre scrollposisjonen til firstUnplayedMatch etter at scrollIntoView er fullført
+        // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
+        if (scroll && firstUnplayedMatch) {
+            // Få den posisjonen som scrollIntoView vil scrolle til
+            const targetScrollPosition = firstUnplayedMatch.getBoundingClientRect().top + window.scrollY;
+
+            // Lagre denne posisjonen i scrollPositions[1]
+            scrollPositions[1] = targetScrollPosition;
+
             setTimeout(() => {
-                // Finner scrollposisjonen relativt til den nærmeste scrollende beholderen
-                scrollPositions[1] = firstUnplayedMatch.offsetTop;
-            }, 500); // Juster denne verdien for å gi tid til scrollingen
-        }, 500);
-    }
+                firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 500);
+        }
+
 
 }
