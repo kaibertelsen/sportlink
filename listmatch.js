@@ -171,7 +171,6 @@ function listmatch(data, grouptype, scroll) {
         list.appendChild(rowelement);
     }
     // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
-    // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
     if (scroll && firstUnplayedMatch) {
         setTimeout(() => {
             firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -185,8 +184,3 @@ function listmatch(data, grouptype, scroll) {
 
 
 }
-
-
-
-
-scrollPositions[currentIndex]
