@@ -140,6 +140,13 @@ function listmatch(data, grouptype, scroll) {
         list.appendChild(rowelement);
     }
 
+    // Scroll til den første kampen som ikke er spilt, og plasser den midt på skjermen
+        if (firstUnplayedMatch) {
+        firstUnplayedMatch.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+     });
+    }
     
 }
 
