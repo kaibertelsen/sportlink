@@ -5,7 +5,7 @@ function getTournament(klientid) {
 
 function getTournamentresponse(data){
     tournament = rawdatacleaner(data);
-    //lag filter
+    listOrganizer(tournament);
     listSports(tournament);
     //sorter på dato
     listTournament(sortDateArray(tournament,"startdate"));
