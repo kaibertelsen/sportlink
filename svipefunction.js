@@ -1,13 +1,14 @@
-const swipeWrapper = document.querySelector('.swipe-wrapper');
-const slides = document.querySelectorAll('.swipe-slide');
 let currentIndex = 0;
 let startX = 0;
+let startY = 0;  // Declare startY here
+let currentX = 0; // Declare currentX here
+let currentY = 0;
+let translateX = 0;
 let isDragging = false;
 let isHorizontalSwipe = null;
 const slideWidth = window.innerWidth;
-
-// Scroll positions for each slide container
 const scrollPositions = Array.from(slides).map(() => 0);
+
 
 // Update slide position with smooth transition
 function updateSlidePosition() {
