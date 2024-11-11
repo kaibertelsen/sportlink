@@ -44,48 +44,48 @@ function listTournament(tournament){
 
 }
 
-function listSports(tournament){
+function listSports(tournament) {
     const list = document.getElementById("sportlist");
-    const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector('.turnfilterbutton');
-    let sports = findeunicSport(tournament);
-    
+    const elementLibrary = document.getElementById("elementlibrary");
+    const nodeElement = elementLibrary.querySelector('.turnfilterbutton');
+    const sports = findeunicSport(tournament);
+
+    // Tøm eksisterende liste før ny oppbygging
+    list.innerHTML = "";
 
     for (let item of sports) {
-        // Lag en kopi av elementet
-        const rowelement = nodeelement.cloneNode(true);
-        rowelement.id = "fi"+item.sport;
+        // Lag en kopi av mal-elementet
+        const rowElement = nodeElement.cloneNode(true);
+        rowElement.id = "fi" + item.sport;
 
-        rowelement.onclick = function() {
-            activesporttype = item.sport;
+        // Definer klikk-funksjonen for filter
+        rowElement.onclick = function () {
+            activeSportType = item.sport;
             filterTournamentList(rowElement);
+        };
+
+        // Oppdater innholdet i elementet
+        const nameElement = rowElement.querySelector(".sportlable");
+        nameElement.textContent = item.sportname;
+
+        const iconSportElement = rowElement.querySelector(".sporticon");
+        iconSportElement.removeAttribute('srcset');
+
+        // Sett ikon eller fjern hvis sportIcon er tom
+        if (item.sporticon !== "") {
+            iconSportElement.src = item.sporticon;
+        } else {
+            iconSportElement.remove();
         }
 
-        const nameelement = rowelement.querySelector(".sportlable");
-        nameelement.textContent = item.sportname;
-        
-        const iconsportelement = rowelement.querySelector(".sporticon");
-        iconsportelement.removeAttribute('srcset');
-        if(item.sporticon != ""){
-        iconsportelement.src = item.sporticon;
-        }else{
-            iconsportelement.remove(); 
-        }
-        
+        // Marker første element som aktivt
         if (item === sports[0]) {
-           
-            //rowelement.style.backgroundColor = mapColors("elementactive");
-            rowelement.style.borderColor = mapColors("border");
+            rowElement.style.borderColor = mapColors("border");
         }
 
-
-
-
-        list.appendChild(rowelement);
+        // Legg til elementet i listen
+        list.appendChild(rowElement);
     }
-
-
-
 }
 
 function listOrganizer(tournament) {
@@ -132,9 +132,6 @@ function listOrganizer(tournament) {
     }
 }
 
-
-
-
 function filterTournamentList(button) {
     // Få alle knappene i foreldre-elementet og sett standardstil
     const allButtons = Array.from(button.parentElement.children);
@@ -166,43 +163,6 @@ function filterTournamentList(button) {
             element.style.display = "none";
         }
     });
-}
-
-
-
-
-function filterSporttype(item){
-
-     const buttonlist = document.getElementById("sportlist");
-     let allButtons =  buttonlist.children;
-     
-     allButtons.forEach(element => {
-        //sett standard verdien
-        element.style.backgroundColor = mapColors("blueblack");
-        element.style.borderColor = "transparent";
-     });
-     
-     let buttonid = "fi"+item.sport;
-     const thisfilterbutton = document.getElementById(buttonid);
-
-     if(thisfilterbutton){
-     // thisfilterbutton.style.backgroundColor = mapColors("elementactive");
-       thisfilterbutton.style.borderColor = mapColors("border");
-     }
-
-    const list = document.getElementById("maintournamentlist");
-    let typesport = item.sport;
-    let allElements =  list.children;
-    // Gå gjennom alle elementene og logg dem til konsollen
-    allElements.forEach(element => {
-       if(element.dataset?.sport && element.dataset.sport == typesport){
-        element.style.display = "grid";
-       }else if(typesport == ""){
-       element.style.display = "grid";
-       }else{
-        element.style.display = "none";
-       }
-  });
 }
 
 function findeunicSport(Array){
