@@ -96,7 +96,17 @@ function handleTouchEnd() {
         // Gjenopprett scroll-posisjonen til den nye aktive siden
         slides[currentIndex].scrollTop = scrollPositions[currentIndex];
 
+        // Oppdater slide-posisjonen
         updateSlidePosition();
+
+        // Marker aktiv knapp basert på currentIndex
+        if (currentIndex === 0) {
+            markActiveButton(document.getElementById('tabeltabbutton'));
+        } else if (currentIndex === 1) {
+            markActiveButton(document.getElementById('matchtabbutton'));
+        } else if (currentIndex === 2) {
+            markActiveButton(document.getElementById('endplaytabbutton'));
+        }
     }
 
     // Tilbakestill verdier og lås opp vertikal scrolling
@@ -104,6 +114,7 @@ function handleTouchEnd() {
     isHorizontalSwipe = null;
     document.body.style.overflowY = ''; // Lås opp vertikal scrolling
 }
+
 
 // Legg til touch-event listeners
 swipeWrapper.addEventListener('touchstart', handleTouchStart);
