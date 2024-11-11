@@ -1,99 +1,124 @@
+const swipeWrapper = document.querySelector('.swipe-wrapper');
+const slides = document.querySelectorAll('.swipe-slide');
 let currentIndex = 0;
 let startX = 0;
-let startY = 0;  // Declare startY here
-let currentX = 0; // Declare currentX here
+let startY = 0;
+let currentX = 0;
 let currentY = 0;
 let translateX = 0;
 let isDragging = false;
 let isHorizontalSwipe = null;
 const slideWidth = window.innerWidth;
-const scrollPositions = Array.from(slides).map(() => 0);
+const scrollPositions = Array.from(slides).map(() => 0); // Save scroll position for each slide
 
-
-// Update slide position with smooth transition
 function updateSlidePosition() {
     swipeWrapper.style.transition = 'transform 0.3s ease';
     swipeWrapper.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 }
 
-// Go to a specific slide and restore its scroll position
 function goToSlide(index) {
     if (index >= 0 && index < slides.length) {
-        // Save the current slide's scroll position
+        // Save scroll position of the current slide
         scrollPositions[currentIndex] = slides[currentIndex].scrollTop;
 
         // Update current index
         currentIndex = index;
 
-        // Restore the new slide's scroll position
+        // Restore scroll position for the new active slide
         slides[currentIndex].scrollTop = scrollPositions[currentIndex] || 0;
 
-        // Update the slide's position in the wrapper
+        // Update slide position (horizontal swipe)
         updateSlidePosition();
-        markActiveButtonBasedOnIndex();
+
+        // Mark active button based on currentIndex
+        if (currentIndex === 0) {
+            markActiveButton(document.getElementById('tabeltabbutton'));
+        } else if (currentIndex === 1) {
+            markActiveButton(document.getElementById('matchtabbutton'));
+        } else if (currentIndex === 2) {
+            markActiveButton(document.getElementById('endplaytabbutton'));
+        }
     }
 }
 
-// Helper function to mark active button based on current index
-function markActiveButtonBasedOnIndex() {
-    if (currentIndex === 0) {
-        markActiveButton(document.getElementById('tabeltabbutton'));
-    } else if (currentIndex === 1) {
-        markActiveButton(document.getElementById('matchtabbutton'));
-    } else if (currentIndex === 2) {
-        markActiveButton(document.getElementById('endplaytabbutton'));
-    }
-}
-
-// Swipe functionality with touch events
+// Handle touch start
 function handleTouchStart(event) {
     startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
     isDragging = true;
     isHorizontalSwipe = null;
     swipeWrapper.style.transition = 'none';
 }
 
+// Handle touch move
 function handleTouchMove(event) {
     if (!isDragging) return;
-    const deltaX = event.touches[0].clientX - startX;
+    currentX = event.touches[0].clientX;
+    currentY = event.touches[0].clientY;
 
+    const deltaX = currentX - startX;
+    const deltaY = currentY - startY;
+
+    // Determine swipe direction if not already determined
     if (isHorizontalSwipe === null) {
-        isHorizontalSwipe = Math.abs(deltaX) > Math.abs(event.touches[0].clientY - startY);
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            isHorizontalSwipe = true; // Lock to horizontal scrolling
+            document.body.style.overflowY = 'hidden';
+        } else {
+            isHorizontalSwipe = false; // Lock to vertical scrolling
+        }
     }
 
+    // Horizontal swiping
     if (isHorizontalSwipe) {
-        const translateX = -currentIndex * slideWidth + deltaX;
+        translateX = -currentIndex * slideWidth + deltaX;
         swipeWrapper.style.transform = `translateX(${translateX}px)`;
     }
 }
 
+// Handle touch end
 function handleTouchEnd() {
     if (!isDragging) return;
     const deltaX = currentX - startX;
     const threshold = slideWidth / 4;
 
+    // If horizontal swipe, determine which slide to navigate to
     if (isHorizontalSwipe) {
+        // Save scroll position of the current slide
         scrollPositions[currentIndex] = slides[currentIndex].scrollTop;
-        
+
         if (deltaX < -threshold && currentIndex < slides.length - 1) {
             currentIndex++;
         } else if (deltaX > threshold && currentIndex > 0) {
             currentIndex--;
         }
-        
-        slides[currentIndex].scrollTop = scrollPositions[currentIndex] || 0;
+
+        // Restore scroll position for the new active slide
+        slides[currentIndex].scrollTop = scrollPositions[currentIndex];
+
+        // Update slide position
         updateSlidePosition();
-        markActiveButtonBasedOnIndex();
+
+        // Mark active button based on currentIndex
+        if (currentIndex === 0) {
+            markActiveButton(document.getElementById('tabeltabbutton'));
+        } else if (currentIndex === 1) {
+            markActiveButton(document.getElementById('matchtabbutton'));
+        } else if (currentIndex === 2) {
+            markActiveButton(document.getElementById('endplaytabbutton'));
+        }
     }
 
+    // Reset values and unlock vertical scrolling
     isDragging = false;
     isHorizontalSwipe = null;
+    document.body.style.overflowY = ''; // Unlock vertical scrolling
 }
 
-// Add event listeners for swipe functionality
+// Add touch event listeners
 swipeWrapper.addEventListener('touchstart', handleTouchStart);
 swipeWrapper.addEventListener('touchmove', handleTouchMove);
 swipeWrapper.addEventListener('touchend', handleTouchEnd);
 
-// Initial load
+// Initial update
 updateSlidePosition();
