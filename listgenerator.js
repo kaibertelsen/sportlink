@@ -204,7 +204,7 @@ function findeunicOrganizer(Array){
     }
     });
 
-    uniqueOrganizerArray = sortArrayABC(uniqueSportsArray,"organizername");
+    uniqueOrganizerArray = sortArrayABC(uniqueOrganizerArray,"organizername");
         uniqueSportsArray.unshift({
             organizer: "",
             organizername: "Alle"
