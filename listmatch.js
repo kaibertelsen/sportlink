@@ -140,22 +140,25 @@ function listmatch(data, grouptype, scroll) {
         list.appendChild(rowelement);
     }
 
-        // Sjekk om elementet finnes
-
-            const swipeListContainer = firstUnplayedMatch.closest('.swipe-container-list');
+    if (firstUnplayedMatch) {
+        const swipeListContainer = firstUnplayedMatch.closest('.swipe-container-list');
     
-            // Sørg for at vi scroller inne i swipeListContainer
-            if (swipeListContainer) {
-                setTimeout(() => {
-                    const elementTop = firstUnplayedMatch.offsetTop;
-                    const offset = elementTop - swipeListContainer.clientHeight / 2;
+        if (swipeListContainer) {
+            const scrollToMatch = () => {
+                const elementTop = firstUnplayedMatch.offsetTop;
+                const offset = elementTop - swipeListContainer.clientHeight / 2;
     
-                    swipeListContainer.scrollTo({
-                        top: offset,
-                        behavior: 'smooth'
-                    });
-                }, 500); // Forsinkelse for å sikre at DOM er oppdatert
-            }
+                swipeListContainer.scrollTo({
+                    top: offset,
+                    behavior: 'smooth'
+                });
+            };
+    
+            // Bruk `requestAnimationFrame` for å sikre at scrollingen skjer etter at layouten er oppdatert
+            requestAnimationFrame(scrollToMatch);
+        }
+    }
+    
     
 }
 
