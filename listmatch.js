@@ -140,15 +140,22 @@ function listmatch(data, grouptype, scroll) {
         list.appendChild(rowelement);
     }
 
-    // Scroll til den første kampen som ikke er spilt med en liten forsinkelse
+    // Scroll til den første kampen som ikke er spilt inne i #swipe-container
     if (firstUnplayedMatch) {
+        const swipeContainer = document.getElementById('swipe-container');
         setTimeout(() => {
-            firstUnplayedMatch.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
+            // Beregn posisjonen til `firstUnplayedMatch` relativt til `#swipe-container`
+            const elementTop = firstUnplayedMatch.getBoundingClientRect().top;
+            const containerTop = swipeContainer.getBoundingClientRect().top;
+            const offset = elementTop - containerTop - swipeContainer.clientHeight / 2;
+
+            swipeContainer.scrollTo({
+                top: swipeContainer.scrollTop + offset,
+                behavior: 'smooth'
             });
         }, 500); // Forsinkelse på 500ms
     }
+
 
     
 }
