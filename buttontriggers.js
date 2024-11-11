@@ -14,17 +14,19 @@ document.getElementById('headermaillogo').onclick = function() {
 // on turneringspage
 document.getElementById('tabeltabbutton').onclick = function() {
     markActiveButton(document.getElementById('tabeltabbutton'));
-    document.getElementById('loadtablebutton').click();
+    goToSlide(0);
+    
 }
 
 document.getElementById('matchtabbutton').onclick = function() {
     markActiveButton(document.getElementById('matchtabbutton'));
-    document.getElementById('loadmatchbutton').click();
+    goToSlide(1)
 }
 
 document.getElementById('endplaytabbutton').onclick = function() {
     markActiveButton(document.getElementById('endplaytabbutton'));
-    document.getElementById('loadendplaybutton').click();
+    goToSlide(2);
+   // document.getElementById('loadendplaybutton').click();
 }
 
 
