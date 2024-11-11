@@ -86,6 +86,43 @@ function listSports(tournament){
 
 }
 
+function listOrganizer(tournament){
+    const list = document.getElementById("organizerlist");
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector('.turnfilterbutton');
+    let organizerlist = findeunicOrganizer(tournament);
+    
+    for (let item of organizerlist) {
+        // Lag en kopi av elementet
+        const rowelement = nodeelement.cloneNode(true);
+        rowelement.id = "fi"+item.organizer;
+
+        rowelement.onclick = function() {
+            filterSporttype(item);
+        }
+
+        const nameelement = rowelement.querySelector(".sportlable");
+        nameelement.textContent = item.organizer;
+        
+        const iconsportelement = rowelement.querySelector(".sporticon");
+        iconsportelement.removeAttribute('srcset');
+        if(item.organizer != ""){
+        iconsportelement.src = item.organizer;
+        }else{
+            iconsportelement.remove(); 
+        }
+        
+        if (item === organizerlist[0]) {
+           
+            //rowelement.style.backgroundColor = mapColors("elementactive");
+            rowelement.style.borderColor = mapColors("border");
+        }
+        list.appendChild(rowelement);
+    }
+}
+
+
+
 
 function filterSporttype(item){
 
@@ -147,4 +184,31 @@ function findeunicSport(Array){
             sporticon: ""});
 
     return uniqueSportsArray;
+}
+
+function findeunicOrganizer(Array){
+    // Ny array for unike sportsverdier
+    let uniqueOrganizerArray = [];
+
+    // Funksjon for å finne unike sport, sportname og sporticon
+    Array.forEach(event => {
+    // Sjekk om organizer allerede finnes i den nye arrayen
+    let exists = uniqueOrganizerArray.some(orgObj => orgObj.organizer === event.organizer[0]);
+
+    // Hvis det ikke finnes, legg det til
+    if (!exists) {
+        uniqueOrganizerArray.push({
+            organizer: event.organizer[0],
+            organizername: event.organizername[0]
+        });
+    }
+    });
+
+    uniqueOrganizerArray = sortArrayABC(uniqueSportsArray,"sportname");
+        uniqueSportsArray.unshift({
+            organizer: "",
+            organizername: "Alle"
+        });
+    return uniqueOrganizerArray
+        
 }
