@@ -172,26 +172,38 @@ function listmatch(data, grouptype, scroll) {
         }
 
       // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
-        if (scroll && firstUnplayedMatch) {
+    if (scroll && firstUnplayedMatch) {
+        // Finn den nærmeste scroll-containeren til `firstUnplayedMatch`
+        let scrollContainer = firstUnplayedMatch.parentElement;
+        while (scrollContainer && scrollContainer.scrollHeight <= scrollContainer.clientHeight) {
+            scrollContainer = scrollContainer.parentElement;
+        }
+
+        // Utfør scroll hvis vi fant en riktig scroll-container
+        if (scrollContainer) {
             setTimeout(() => {
-                // Scroll til første kamp
+                // Utfør scroll i riktig scroll-container ved hjelp av scrollTop
+                const targetPosition = firstUnplayedMatch.offsetTop - scrollContainer.offsetTop;
+                scrollContainer.scrollTo({ top: targetPosition, behavior: "smooth" });
+
+                // Lagre scrollposisjonen etter at scrollingen er fullført
+                setTimeout(() => {
+                    scrollPositions[1] = scrollContainer.scrollTop;
+                }, 500); // Juster denne verdien for å gi tid til scrollingen
+            }, 500);
+        } else {
+            // Fallback til `scrollIntoView` dersom ingen scroll-container er funnet
+            setTimeout(() => {
                 firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
 
-                // Vent til scrollingen er fullført og lagre scrollposisjonen
+                // Lagre posisjonen etter at scrollingen er fullført
                 setTimeout(() => {
-                    // Finn nærmeste scroll-container
-                    let scrollContainer = firstUnplayedMatch.parentElement;
-                    while (scrollContainer && scrollContainer.scrollHeight <= scrollContainer.clientHeight) {
-                        scrollContainer = scrollContainer.parentElement;
-                    }
-
-                    // Hvis vi fant en scroll-container, lagre posisjonen etter scrollingen
-                    if (scrollContainer) {
-                        scrollPositions[1] = scrollContainer.scrollTop;
-                    }
-                }, 500); // Juster denne forsinkelsen for å gi tid til scrollingen
+                    scrollPositions[1] = window.scrollY;
+                }, 500);
             }, 500);
         }
+    }
+
 
 
 
