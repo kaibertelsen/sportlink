@@ -18,18 +18,19 @@ function updateSlidePosition() {
 
 function goToSlide(index) {
     if (index >= 0 && index < slides.length) {
-        // Lagre scroll-posisjonen til den nåværende siden
+        // Lagre scroll-posisjonen til den nåværende siden før vi bytter
         scrollPositions[currentIndex] = slides[currentIndex].scrollTop;
 
+        // Oppdater gjeldende indeks
         currentIndex = index;
 
-        // Gjenopprett scroll-posisjonen til den nye aktive siden
-        slides[currentIndex].scrollTop = scrollPositions[currentIndex];
+        // Gjenopprett scroll-posisjonen for den nye aktive siden
+        slides[currentIndex].scrollTop = scrollPositions[currentIndex] || 0;
 
-        // Oppdater slide-posisjonen
+        // Oppdater slide-posisjonen (horisontal swipe)
         updateSlidePosition();
 
-        // Innebygd logikk for å markere aktiv knapp
+        // Marker aktiv knapp basert på currentIndex
         if (currentIndex === 0) {
             markActiveButton(document.getElementById('tabeltabbutton'));
         } else if (currentIndex === 1) {
@@ -39,6 +40,7 @@ function goToSlide(index) {
         }
     }
 }
+
 
 
 // Håndter touch-start

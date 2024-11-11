@@ -42,30 +42,21 @@ function groupArraybyDate(matchs){
 
 
 function listmatch(data, grouptype, scroll) {
-    // Hent aktivt divisjonsfilter
     const activeDivision = getActiveDivisionFilter();
-
-    // Filtrer kampene basert på aktivt divisjonsfilter
     let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
-
-    // Sorter og grupper kampene basert på valgt type
     let matchs = sortDateArray(filteredMatches, "time");
     let grouparray = grouptype === "dato" ? groupArraybyDate(matchs) : [];
 
     const list = document.getElementById("matchlistholder");
-    list.replaceChildren(); // Tøm eksisterende innhold i hovedliste
-
+    list.replaceChildren();
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.groupholder');
 
-    let firstUnplayedMatch = null; // Lagre referanse til første kamp som ikke er spilt
-    
+    let firstUnplayedMatch = null;
+
     for (let item of grouparray) {
         const rowelement = nodeelement.cloneNode(true);
-        
-        const nameelement = rowelement.querySelector(".groupheadername");
-        nameelement.textContent = formatDateToNorwegian(item.date);
-
+        rowelement.querySelector(".groupheadername").textContent = formatDateToNorwegian(item.date);
         const matchlist = rowelement.querySelector(".matchlist");
         const matchholder = rowelement.querySelector('.matchholder');
 
@@ -73,31 +64,22 @@ function listmatch(data, grouptype, scroll) {
             const matchelement = matchholder.cloneNode(true);
             matchlist.appendChild(matchelement);
 
-            const team1name = matchelement.querySelector(".team1");
-            team1name.textContent = match.team1name;
-            
-            const logoteam1 = matchelement.querySelector(".logoteam1");
-            logoteam1.src = match.team1clublogo;
+            matchelement.querySelector(".team1").textContent = match.team1name;
+            matchelement.querySelector(".logoteam1").src = match.team1clublogo;
+            matchelement.querySelector(".team2").textContent = match.team2name;
+            matchelement.querySelector(".logoteam2").src = match.team2clublogo;
 
-            const team2name = matchelement.querySelector(".team2");
-            team2name.textContent = match.team2name;
-
-            const logoteam2 = matchelement.querySelector(".logoteam2");
-            logoteam2.src = match.team2clublogo;
-            
             const divisionlable = matchelement.querySelector(".divisionlable");
-            if(activeDivision == ""){
+            if (activeDivision == "") {
                 divisionlable.textContent = match.divisionname;
                 divisionlable.style.color = mapColors("second");
-
-            }else{
+            } else {
                 divisionlable.style.display = "none";
             }
-            
-            
+
             const settlist = matchelement.querySelector(".settlist");
             const setKeys = ["sett1", "sett2", "sett3"];
-            const hasRequiredSetScores = match.sett1 && match.sett2; // Krever data i sett1 og sett2
+            const hasRequiredSetScores = match.sett1 && match.sett2;
 
             if (hasRequiredSetScores) {
                 settlist.style.display = "grid";
@@ -106,41 +88,32 @@ function listmatch(data, grouptype, scroll) {
                 let team1SetsWon = 0;
                 let team2SetsWon = 0;
 
-                // Legg til sett-resultater for sett1, sett2 og evt. sett3
                 for (let i = 0; i < setKeys.length; i++) {
                     if (match[setKeys[i]]) {
                         const settdiv = settdivnode.cloneNode(true);
                         const setttextlable = settdiv.querySelector(".setttextlable");
                         setttextlable.textContent = match[setKeys[i]];
 
-                        // Beregn vinner av settet
                         const [team1Score, team2Score] = match[setKeys[i]].split('-').map(Number);
-                        if (team1Score > team2Score) {
-                            team1SetsWon++;
-                        } else if (team2Score > team1Score) {
-                            team2SetsWon++;
-                        }
+                        if (team1Score > team2Score) team1SetsWon++;
+                        else if (team2Score > team1Score) team2SetsWon++;
 
                         settlist.appendChild(settdiv);
                         columnCount++;
                     }
                 }
 
-                settdivnode.remove(); // Fjern malen etter bruk
-                settlist.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`; // Dynamisk antall kolonner
+                settdivnode.remove();
+                settlist.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
 
-                // Sjekk stillingen på bakgrunn av vunnet og tapt sett
                 match.goalteam1 = team1SetsWon;
                 match.goalteam2 = team2SetsWon;
                 settlist.style.display = "none";
             } else {
-                // Hvis ikke sett verdi finnes, skjul settlisten
                 settlist.style.display = "none";
             }
 
             const resultlable = matchelement.querySelector(".resultlable");
-
-            // Hvis kampen er spilt, vis resultatet; ellers, vis klokkeslettet
             if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
                 resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
                 resultlable.style.fontWeight = "bold";
@@ -150,61 +123,45 @@ function listmatch(data, grouptype, scroll) {
                 resultlable.textContent = formatdatetoTime(match.time);
                 resultlable.style.fontWeight = "normal";
 
-                // Sett første kamp som ikke er spilt hvis ikke allerede satt
                 if (!firstUnplayedMatch) {
                     firstUnplayedMatch = matchelement;
                 }
             }
 
-            // Hvis det er den siste kampen i gruppen, fjern `border-bottom`
             if (item.matches.indexOf(match) === item.matches.length - 1) {
-            matchelement.style.borderBottom = 'none';
-}
-
+                matchelement.style.borderBottom = 'none';
+            }
 
             matchlist.appendChild(matchelement);
         }
 
-        // Fjern nodematchholder-malen etter bruk
         matchholder.remove();
-
         list.appendChild(rowelement);
-        }
+    }
 
-      // Scroll til første kamp som ikke er spilt, hvis den finnes, med en forsinkelse
     if (scroll && firstUnplayedMatch) {
-        // Finn den nærmeste scroll-containeren til `firstUnplayedMatch`
         let scrollContainer = firstUnplayedMatch.parentElement;
         while (scrollContainer && scrollContainer.scrollHeight <= scrollContainer.clientHeight) {
             scrollContainer = scrollContainer.parentElement;
         }
 
-        // Utfør scroll hvis vi fant en riktig scroll-container
         if (scrollContainer) {
             setTimeout(() => {
-                // Utfør scroll i riktig scroll-container ved hjelp av scrollTop
                 const targetPosition = firstUnplayedMatch.offsetTop - scrollContainer.offsetTop;
                 scrollContainer.scrollTo({ top: targetPosition, behavior: "smooth" });
 
-                // Lagre scrollposisjonen etter at scrollingen er fullført
                 setTimeout(() => {
-                    scrollPositions[1] = scrollContainer.scrollTop;
-                }, 500); // Juster denne verdien for å gi tid til scrollingen
+                    scrollPositions[currentIndex] = scrollContainer.scrollTop;
+                }, 500);
             }, 500);
         } else {
-            // Fallback til `scrollIntoView` dersom ingen scroll-container er funnet
             setTimeout(() => {
                 firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
-
-                // Lagre posisjonen etter at scrollingen er fullført
                 setTimeout(() => {
-                    scrollPositions[1] = window.scrollY;
+                    scrollPositions[currentIndex] = window.scrollY;
                 }, 500);
             }, 500);
         }
     }
-
-
-
-
 }
+
