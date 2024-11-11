@@ -94,7 +94,7 @@ function filterSporttype(item){
      
      allButtons.forEach(element => {
         //sett standard verdien
-        element.style.backgroundColor = "#1d1d1d";
+        element.style.backgroundColor = mapColors("blueblack");
         element.style.borderColor = "transparent";
      });
      

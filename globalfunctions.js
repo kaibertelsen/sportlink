@@ -81,7 +81,8 @@ function mapColors(typeColor) {
         element: "elementgray",
         elementactive: "hoverelement",
         border: "bluemarking",
-        textoff:"textoff"
+        textoff:"textoff",
+        blueblack:"blueblack",
     };
 
     // Sjekk om `typeColor` finnes i `colorMap`
