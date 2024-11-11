@@ -138,24 +138,27 @@ function listmatch(data, grouptype, scroll) {
         list.appendChild(rowElement);
     }
 
+    // Scroll to the first unplayed match if specified
     if (scroll && firstUnplayedMatch) {
-        // Find the nearest scrollable container specific to this slide
-        let scrollContainer = firstUnplayedMatch.closest('.swipe-slide');
+        setTimeout(() => {
+            const swipeSlide = firstUnplayedMatch.closest('.swipe-slide');
 
-        if (scrollContainer) {
-            setTimeout(() => {
-                // Get the exact position within this isolated container
-                const targetPosition = firstUnplayedMatch.offsetTop - scrollContainer.offsetTop;
-                scrollContainer.scrollTo({ top: targetPosition, behavior: "smooth" });
+            // Ensure we're only scrolling within the current slide container
+            if (swipeSlide) {
+                const targetPosition = firstUnplayedMatch.offsetTop - swipeSlide.offsetTop;
+
+                // Scroll to the position within the isolated container
+                swipeSlide.scrollTo({ top: targetPosition, behavior: "smooth" });
 
                 // Save the scroll position for future use
                 setTimeout(() => {
-                    scrollPositions[currentIndex] = scrollContainer.scrollTop;
+                    scrollPositions[currentIndex] = swipeSlide.scrollTop;
                 }, 500);
-            }, 500);
-        }
+            }
+        }, 500);
     }
 }
+
 
 
 
