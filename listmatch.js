@@ -140,40 +140,7 @@ function listmatch(data, grouptype, scroll) {
         list.appendChild(rowelement);
     }
 
-    // **Sjekk `firstUnplayedMatch` og overordnet container før vi scroller**
-    if (scroll && firstUnplayedMatch) {
-        let scrollContainer = firstUnplayedMatch.parentElement;
-        while (scrollContainer && scrollContainer.scrollHeight <= scrollContainer.clientHeight) {
-            scrollContainer = scrollContainer.parentElement;
-        }
-
-        // Legg til logging for `firstUnplayedMatch` og `scrollContainer`
-        console.log("First unplayed match element:", firstUnplayedMatch);
-        console.log("First unplayed match's scrollable container:", scrollContainer);
-        if (scrollContainer) {
-            console.log("Scrollable container scrollHeight:", scrollContainer.scrollHeight);
-            console.log("Scrollable container clientHeight:", scrollContainer.clientHeight);
-        }
-
-        // Fortsett med scroll hvis en container er funnet
-        if (scrollContainer) {
-            setTimeout(() => {
-                const targetPosition = firstUnplayedMatch.offsetTop - scrollContainer.offsetTop;
-                scrollContainer.scrollTo({ top: targetPosition, behavior: "smooth" });
-
-                setTimeout(() => {
-                    scrollPositions[currentIndex] = scrollContainer.scrollTop;
-                }, 500);
-            }, 500);
-        } else {
-            setTimeout(() => {
-                firstUnplayedMatch.scrollIntoView({ behavior: "smooth", block: "center" });
-                setTimeout(() => {
-                    scrollPositions[currentIndex] = window.scrollY;
-                }, 500);
-            }, 500);
-        }
-    }
+    
 }
 
 
