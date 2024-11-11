@@ -4,3 +4,4 @@ var activetournament;
 var matches;
 var teams;
 var activeorganizer;
+var activesporttype;

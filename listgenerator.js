@@ -7,6 +7,7 @@ function listTournament(tournament){
     for (let item of tournament) {
         const rowelement = nodeelement.cloneNode(true);
         rowelement.dataset.sport = item.sport[0];
+        rowelement.dataset.organizer = item.organizer[0];
         rowelement.onclick = function() {
             loadTourment(item);
         }
@@ -56,7 +57,8 @@ function listSports(tournament){
         rowelement.id = "fi"+item.sport;
 
         rowelement.onclick = function() {
-            filterSporttype(item);
+            activesporttype = item.sport;
+            filterTournamentList(rowElement);
         }
 
         const nameelement = rowelement.querySelector(".sportlable");
@@ -99,6 +101,7 @@ function listOrganizer(tournament){
 
         rowelement.onclick = function() {
             activeorganizer = item.organizer;
+            filterTournamentList(rowElement)
         }
 
         const nameelement = rowelement.querySelector(".sportlable");
@@ -121,6 +124,41 @@ function listOrganizer(tournament){
     }
 }
 
+
+
+function filterTournamentList(button) {
+
+    let allButtons =  button.parent.children;
+    allButtons.forEach(element => {
+        //sett standard verdien
+        element.style.backgroundColor = mapColors("blueblack");
+        element.style.borderColor = "transparent";
+     });
+
+    button.style.borderColor = mapColors("border");
+
+
+    const list = document.getElementById("maintournamentlist");
+    const allElements = Array.from(list.children);
+    
+
+    // Gå gjennom alle elementene i listen
+    allElements.forEach((element) => {
+        const elementSport = element.dataset.sport || "";
+        const elementOrganizer = element.dataset.organizer || "";
+
+        // Sjekk om elementet matcher kriteriene
+        const matchesSport = !activeSportType || elementSport === activeSportType;
+        const matchesOrganizer = !activeOrganizer || elementOrganizer === activeOrganizer;
+
+        // Oppdater visningen basert på kontrollen
+        if (matchesSport && matchesOrganizer) {
+            element.style.display = "grid";
+        } else {
+            element.style.display = "none";
+        }
+    });
+}
 
 
 
