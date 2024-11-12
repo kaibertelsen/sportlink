@@ -205,20 +205,25 @@ function viewMatch(match){
         // Oppdater matchinfo med sjekk for tomme eller manglende verdier
         updateTextContent(".turnamentname", match.tournament);
         matchinfo.querySelector(".icon").src = activetournament.icon;
-        updateTextContent(".datetime", formatdatetoDateAndTime(match.time));
         updateTextContent(".field", match.fieldname);
         updateTextContent(".refereename", match.refereename);
+
+        const timeelement = matchinfo.querySelector(".datetime");
+        timeelement.textContent = formatdatetoDateAndTime(match.time)
+        timeelement.parentElement.appendChild(createICSFile(match));
+
+
 
         const locationElement = matchinfo.querySelector(".location");
         if (match?.fieldlocation) {
             locationElement.parentElement.style.display = "block";
-            // Opprett en link
-            locationElement.innerHTML = `<a href="${match.fieldlocation}" target="_blank" rel="noopener noreferrer">Trykk her for veibeskrivelse</a>`;
+            // Opprett en link med hvit tekst
+            locationElement.innerHTML = `<a href="${match.fieldlocation}" target="_blank" rel="noopener noreferrer" style="color: white;">Trykk her for veibeskrivelse</a>`;
         } else {
-            // Hvis det ikke er en URL, fjern eventuelt innhold
             locationElement.textContent = "";
             locationElement.parentElement.style.display = "none";
         }
+        
 
        
     const streaming = document.getElementById("streaminggroup");
@@ -254,4 +259,43 @@ function viewMatch(match){
     document.getElementById("thismatchtabbutton").click();
 }
 
+
+function createICSFile(match) {
+    const startDate = new Date(match.time).toISOString().replace(/-|:|\.\d+/g, "").split(".")[0] + "Z";
+    const endDate = new Date(new Date(match.time).getTime() + 60 * 60 * 1000).toISOString().replace(/-|:|\.\d+/g, "").split(".")[0] + "Z"; // 1 time varighet
+    const eventTitle = "Kamp"+`${match.goalteam1} - ${match.goalteam2}`;
+    const location = match.location || "";
+    const description = match.tournament || "Kamp";
+
+    // Lag innhold for .ics-fil
+    const icsContent = `
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Your App//NONSGML v1.0//EN
+BEGIN:VEVENT
+UID:${Date.now()}@yourapp.com
+DTSTAMP:${startDate}
+DTSTART:${startDate}
+DTEND:${endDate}
+SUMMARY:${eventTitle}
+LOCATION:${location}
+DESCRIPTION:${description}
+END:VEVENT
+END:VCALENDAR
+`.trim();
+
+    // Lag en Blob for .ics-filen
+    const blob = new Blob([icsContent], { type: "text/calendar" });
+    const url = URL.createObjectURL(blob);
+
+    // Lag og returner et <a>-element
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "event.ics";
+    link.textContent = "Legg til i kalender";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+
+    return link;
+}
 
