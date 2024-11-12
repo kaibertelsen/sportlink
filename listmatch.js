@@ -277,7 +277,7 @@ function createICSFile(icon, match) {
 
     const start = formatDate(startDate);
     const end = formatDate(endDate);
-    const eventTitle = `Kamp ${match.goalteam1 ?? ""} - ${match.goalteam2 ?? ""}`.trim();
+    const eventTitle = `Kamp ${match.team1 ?? ""} - ${match.team2 ?? ""}`.trim();
     const location = match.location || "";
     const description = match.tournament || "Kamp";
 
