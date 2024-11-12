@@ -208,7 +208,18 @@ function viewMatch(match){
         updateTextContent(".datetime", formatdatetoDateAndTime(match.time));
         updateTextContent(".field", match.fieldname);
         updateTextContent(".refereename", match.refereename);
-        updateTextContent(".location", match.location);
+
+        const locationElement = matchinfo.querySelector(".location");
+        if (match?.location) {
+            locationElement.parentElement.style.display = "block";
+            // Opprett en link
+            locationElement.innerHTML = `<a href="${match.location}" target="_blank" rel="noopener noreferrer">Trykk her for veibeskrivelse</a>`;
+        } else {
+            // Hvis det ikke er en URL, fjern eventuelt innhold
+            locationElement.textContent = "";
+            locationElement.parentElement.style.display = "none";
+        }
+
        
     const streaming = document.getElementById("streaminggroup");
         if(match?.streaminglink) {
