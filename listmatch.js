@@ -186,6 +186,7 @@ function viewMatch(match){
     } else {
         resultlable.textContent = formatdatetoTime(match.time);
         resultlable.style.fontWeight = "normal";
+        resultlable.style.color = "white";
     }
 
 
@@ -203,6 +204,7 @@ function viewMatch(match){
     
         // Oppdater matchinfo med sjekk for tomme eller manglende verdier
         updateTextContent(".turnamentname", match.tournament);
+        matchinfo.querySelector(".icon").src = activetournament.icon;
         updateTextContent(".datetime", formatdatetoDateAndTime(match.time));
         updateTextContent(".field", match.fieldname);
         updateTextContent(".refereename", match.refereename);
