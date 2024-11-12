@@ -191,7 +191,7 @@ function viewMatch(match){
 
     const matchinfo = document.getElementById("thismatchinfo");
         matchinfo.querySelector(".turnamentname").textContent = match.tournament;
-        matchinfo.querySelector(".datetime").textContent = formatdatetoTime(match.time);
+        matchinfo.querySelector(".datetime").textContent = formatdatetoDateAndTime(match.time);
         matchinfo.querySelector(".field").textContent = match.fieldname;
         matchinfo.querySelector(".refereename").textContent = match.refereename;
         matchinfo.querySelector(".location").textContent = match.location;
@@ -226,6 +226,5 @@ function viewMatch(match){
 
     document.getElementById("thismatchtabbutton").click();
 }
-
 
 
