@@ -188,6 +188,10 @@ function viewMatch(match){
         resultlable.style.fontWeight = "normal";
         resultlable.style.color = "white";
     }
+   
+    const divisionLabel = header.querySelector(".divisionlablematch");
+    divisionLabel.style.display = match?.divisionname ? "block" : "none";
+    divisionLabel.textContent = match?.divisionname || "";
 
     const matchsettholder = document.getElementById("thismatchsett");
     let settisSett = false;
