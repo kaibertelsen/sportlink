@@ -210,8 +210,9 @@ function viewMatch(match){
 
         const timeelement = matchinfo.querySelector(".datetime");
         timeelement.textContent = formatdatetoDateAndTime(match.time)
-        timeelement.parentElement.appendChild(createICSFile(match));
-
+        
+        const calendeicon = matchinfo.querySelector(".calendeicon");
+        createICSFile(calendeicon, match);
 
 
         const locationElement = matchinfo.querySelector(".location");
@@ -260,10 +261,10 @@ function viewMatch(match){
 }
 
 
-function createICSFile(match) {
+function createICSFile(icon, match) {
     const startDate = new Date(match.time).toISOString().replace(/-|:|\.\d+/g, "").split(".")[0] + "Z";
     const endDate = new Date(new Date(match.time).getTime() + 60 * 60 * 1000).toISOString().replace(/-|:|\.\d+/g, "").split(".")[0] + "Z"; // 1 time varighet
-    const eventTitle = "Kamp"+`${match.goalteam1} - ${match.goalteam2}`;
+    const eventTitle = `Kamp ${match.goalteam1 ?? ""} - ${match.goalteam2 ?? ""}`.trim();
     const location = match.location || "";
     const description = match.tournament || "Kamp";
 
@@ -288,7 +289,7 @@ END:VCALENDAR
     const blob = new Blob([icsContent], { type: "text/calendar" });
     const url = URL.createObjectURL(blob);
 
-    // Lag og returner et <a>-element
+    // Lag et <a>-element for nedlasting
     const link = document.createElement("a");
     link.href = url;
     link.download = "event.ics";
@@ -296,6 +297,9 @@ END:VCALENDAR
     link.target = "_blank";
     link.rel = "noopener noreferrer";
 
-    return link;
+    // Legg lenken til 'icon' elementet
+    icon.innerHTML = ""; // Fjern eksisterende innhold
+    icon.appendChild(link);
 }
+
 
