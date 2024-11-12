@@ -223,7 +223,9 @@ function viewMatch(match){
        
     const streaming = document.getElementById("streaminggroup");
         if(match?.streaminglink) {
+            
 
+            streaming.querySelector(".streaminginfo").textContent = "Kampen sendes "+formatdatetoDateAndTime(match.time);
             streaming.style.display = "block";
             /*
             const iframe = document.getElementById('youtube-iframe');
