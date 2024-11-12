@@ -262,31 +262,49 @@ function viewMatch(match){
 
 
 function createICSFile(icon, match) {
-    const startDate = new Date(match.time).toISOString().replace(/-|:|\.\d+/g, "").split(".")[0] + "Z";
-    const endDate = new Date(new Date(match.time).getTime() + 60 * 60 * 1000).toISOString().replace(/-|:|\.\d+/g, "").split(".")[0] + "Z"; // 1 time varighet
+    const startDate = new Date(match.time);
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 time varighet
+
+    const formatDate = (date) => {
+        const year = date.getUTCFullYear();
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const hours = String(date.getUTCHours()).padStart(2, '0');
+        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+        const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+        return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
+    };
+
+    const start = formatDate(startDate);
+    const end = formatDate(endDate);
     const eventTitle = `Kamp ${match.goalteam1 ?? ""} - ${match.goalteam2 ?? ""}`.trim();
     const location = match.location || "";
     const description = match.tournament || "Kamp";
 
-    // Lag innhold for .ics-fil
+    // Forbedret .ics-innhold
     const icsContent = `
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Your App//NONSGML v1.0//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
 BEGIN:VEVENT
 UID:${Date.now()}@yourapp.com
-DTSTAMP:${startDate}
-DTSTART:${startDate}
-DTEND:${endDate}
+DTSTAMP:${start}
+DTSTART:${start}
+DTEND:${end}
 SUMMARY:${eventTitle}
 LOCATION:${location}
 DESCRIPTION:${description}
+STATUS:CONFIRMED
+SEQUENCE:0
+TRANSP:OPAQUE
 END:VEVENT
 END:VCALENDAR
 `.trim();
 
     // Lag en Blob for .ics-filen
-    const blob = new Blob([icsContent], { type: "text/calendar" });
+    const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
     const url = URL.createObjectURL(blob);
 
     // Sett href direkte på 'icon'-elementet
@@ -295,6 +313,7 @@ END:VCALENDAR
     icon.target = "_blank";
     icon.rel = "noopener noreferrer";
 }
+
 
 
 
