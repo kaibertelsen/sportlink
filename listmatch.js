@@ -189,6 +189,48 @@ function viewMatch(match){
         resultlable.style.color = "white";
     }
 
+    const matchsettholder = document.getElementById("thismatchsett");
+    let settisSett = false;
+    // Håndter sett 1
+    const setgroup1 = matchsettholder.querySelector(".sett1");
+    if (match?.sett1) {
+        setgroup1.textContent = match.sett1;
+        setgroup1.parentElement.style.display = "inline-block";
+        settisSett = true;
+    } else {
+        setgroup1.parentElement.style.display = "none";
+    }
+    
+    // Håndter sett 2
+    const setgroup2 = matchsettholder.querySelector(".sett2");
+    if (match?.sett2) {
+        setgroup2.textContent = match.sett2;
+        setgroup2.parentElement.style.display = "inline-block";
+        settisSett = true;
+    } else {
+        setgroup2.parentElement.style.display = "none";
+    }
+    
+    // Håndter sett 3
+    const setgroup3 = matchsettholder.querySelector(".sett3");
+    if (match?.sett3) {
+        setgroup3.textContent = match.sett3;
+        setgroup3.parentElement.style.display = "inline-block";
+        settisSett = true;
+    } else {
+        setgroup3.parentElement.style.display = "none";
+    }
+    
+    if(settisSett){
+        matchsettholder.style.display = "block";
+    }else{
+        matchsettholder.style.display = "none";
+    }
+
+
+
+    
+
 
     const matchinfo = document.getElementById("thismatchinfo");
 
