@@ -173,10 +173,10 @@ function listmatch(data, grouptype, scroll) {
 function viewMatch(match){
 
     const header = document.getElementById("headerwrappermatch");
-    header.querySelector(".team1").textContent = match.team1name;
-    header.querySelector(".logoteam1").src = match.team1clublogo;
-    header.querySelector(".team2").textContent = match.team2name;
-    header.querySelector(".logoteam2").src = match.team2clublogo;
+        header.querySelector(".team1").textContent = match.team1name;
+        header.querySelector(".logoteam1").src = match.team1clublogo;
+        header.querySelector(".team2").textContent = match.team2name;
+        header.querySelector(".logoteam2").src = match.team2clublogo;
 
     const resultlable = header.querySelector(".resultlablemacth");
     if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
@@ -188,6 +188,41 @@ function viewMatch(match){
         resultlable.style.fontWeight = "normal";
     }
 
+
+    const matchinfo = document.getElementById("thismatchinfo");
+        matchinfo.querySelector(".turnamentname").textContent = match.tournament;
+        matchinfo.querySelector(".datetime").textContent = formatdatetoTime(match.time);
+        matchinfo.querySelector(".field").textContent = match.fieldname;
+        matchinfo.querySelector(".refereename").textContent = match.refereename;
+        matchinfo.querySelector(".location").textContent = match.location;
+       
+    const streaming = document.getElementById("streaminggroup");
+        if(match?.streaminglink) {
+
+            streaming.style.display = "block";
+            /*
+            const iframe = document.getElementById('youtube-iframe');
+            const url = new URL(shortURL);
+            const videoID = url.pathname.split('/')[1]; // Henter video-ID fra path
+            // Sett ny src for iframe med riktig embed URL
+            const embedURL = `https://www.youtube.com/embed/${videoID}`;
+            iframe.src = embedURL;
+            */
+        } else {
+
+            streaming.style.display = "none";
+
+        }
+
+    const fieldmap = document.getElementById("fieldmapwrapper");
+        if(match?.fieldimage){
+            fieldmap.style.display = "block";
+            fieldmap.querySelector(".fieldname").textContent = match.fieldname;
+            fieldmap.querySelector(".fieldimage").src = match.fieldimage;
+        }else{
+            fieldmap.style.display = "none";
+        }
+        
 
     document.getElementById("thismatchtabbutton").click();
 }

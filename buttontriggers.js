@@ -29,5 +29,7 @@ document.getElementById('endplaytabbutton').onclick = function() {
    // document.getElementById('loadendplaybutton').click();
 }
 
-
+document.getElementById('buttontoturnament').onclick = function() {
+    document.getElementById('tabtoturnering').click();
+}
    
