@@ -195,9 +195,9 @@ function viewMatch(match){
         const element = matchinfo.querySelector(selector);
         if (value) {
             element.textContent = value;
-            element.style.display = "block";
+            element.parentElement.style.display = "block";
         } else {
-            element.style.display = "none";
+            element.parentElement.style.display = "none";
         }
         };
     
