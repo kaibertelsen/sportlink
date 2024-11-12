@@ -65,6 +65,10 @@ function listmatch(data, grouptype, scroll) {
             const matchelement = matchholder.cloneNode(true);
             matchlist.appendChild(matchelement);
 
+            matchelement.onclick = function() {
+                viewMatch(match);
+            }
+
             matchelement.querySelector(".team1").textContent = match.team1name;
             matchelement.querySelector(".logoteam1").src = match.team1clublogo;
             matchelement.querySelector(".team2").textContent = match.team2name;
@@ -166,7 +170,27 @@ function listmatch(data, grouptype, scroll) {
     
 }
 
+function viewMatch(match){
 
+    const header = document.getElementById("headerwrappermatch");
+    header.querySelector(".team1").textContent = match.team1name;
+    header.querySelector(".logoteam1").src = match.team1clublogo;
+    header.querySelector(".team2").textContent = match.team2name;
+    header.querySelector(".logoteam2").src = match.team2clublogo;
+
+    const resultlable = header.querySelector(".resultlablemacth");
+    if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
+        resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
+        resultlable.style.fontWeight = "bold";
+        resultlable.style.color = mapColors("main");
+    } else {
+        resultlable.textContent = formatdatetoTime(match.time);
+        resultlable.style.fontWeight = "normal";
+    }
+
+
+    document.getElementById("thismatchtabbutton").click();
+}
 
 
 
