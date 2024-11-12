@@ -190,11 +190,23 @@ function viewMatch(match){
 
 
     const matchinfo = document.getElementById("thismatchinfo");
-        matchinfo.querySelector(".turnamentname").textContent = match.tournament;
-        matchinfo.querySelector(".datetime").textContent = formatdatetoDateAndTime(match.time);
-        matchinfo.querySelector(".field").textContent = match.fieldname;
-        matchinfo.querySelector(".refereename").textContent = match.refereename;
-        matchinfo.querySelector(".location").textContent = match.location;
+
+    const updateTextContent = (selector, value) => {
+        const element = matchinfo.querySelector(selector);
+        if (value) {
+            element.textContent = value;
+            element.style.display = "block";
+        } else {
+            element.style.display = "none";
+        }
+        };
+    
+        // Oppdater matchinfo med sjekk for tomme eller manglende verdier
+        updateTextContent(".turnamentname", match.tournament);
+        updateTextContent(".datetime", formatdatetoDateAndTime(match.time));
+        updateTextContent(".field", match.fieldname);
+        updateTextContent(".refereename", match.refereename);
+        updateTextContent(".location", match.location);
        
     const streaming = document.getElementById("streaminggroup");
         if(match?.streaminglink) {
