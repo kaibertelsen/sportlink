@@ -289,17 +289,12 @@ END:VCALENDAR
     const blob = new Blob([icsContent], { type: "text/calendar" });
     const url = URL.createObjectURL(blob);
 
-    // Lag et <a>-element for nedlasting
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "event.ics";
-    link.textContent = "Legg til i kalender";
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-
-    // Legg lenken til 'icon' elementet
-    icon.innerHTML = ""; // Fjern eksisterende innhold
-    icon.appendChild(link);
+    // Sett href direkte på 'icon'-elementet
+    icon.href = url;
+    icon.download = "event.ics";
+    icon.target = "_blank";
+    icon.rel = "noopener noreferrer";
 }
+
 
 
