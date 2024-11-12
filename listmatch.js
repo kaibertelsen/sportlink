@@ -210,10 +210,10 @@ function viewMatch(match){
         updateTextContent(".refereename", match.refereename);
 
         const locationElement = matchinfo.querySelector(".location");
-        if (match?.location) {
+        if (match?.fieldlocation) {
             locationElement.parentElement.style.display = "block";
             // Opprett en link
-            locationElement.innerHTML = `<a href="${match.location}" target="_blank" rel="noopener noreferrer">Trykk her for veibeskrivelse</a>`;
+            locationElement.innerHTML = `<a href="${match.fieldlocation}" target="_blank" rel="noopener noreferrer">Trykk her for veibeskrivelse</a>`;
         } else {
             // Hvis det ikke er en URL, fjern eventuelt innhold
             locationElement.textContent = "";
