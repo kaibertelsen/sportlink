@@ -134,7 +134,7 @@ function listmatch(data, grouptype, scroll) {
             }
 
             if (item.matches.indexOf(match) === item.matches.length - 1) {
-                matchelement.style.borderBottom = 'none';
+                matchelement.querySelector(".bordholder").style.borderBottom = 'none';
             }
 
             matchlist.appendChild(matchelement);
