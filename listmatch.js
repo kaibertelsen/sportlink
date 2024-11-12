@@ -273,7 +273,7 @@ function viewMatch(match){
         if(match?.streaminglink) {
             
 
-            streaming.querySelector(".streaminginfo").textContent = "Kampen sendes "+formatdatetoDateAndTime(match.time);
+            streaming.querySelector(".streaminginfo").textContent = "Sendes "+formatdatetoDateAndTime(match.time);
             streaming.style.display = "block";
             /*
             const iframe = document.getElementById('youtube-iframe');
