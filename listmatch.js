@@ -81,12 +81,21 @@ function listmatch(data, grouptype, scroll) {
             matchelement.querySelector(".logoteam2").src = match.team2clublogo;
 
             const divisionlable = matchelement.querySelector(".divisionlable");
-            if (activeDivision == "") {
-                divisionlable.textContent = match.divisionname;
+
+            // Bestem tekstinnholdet basert på aktiv divisjon og tilgjengelige data
+            let labelText = activeDivision === "" 
+                ? `${match.divisionname || ""} ${match.groupname || ""}`.trim() 
+                : match.groupname || "";
+
+            // Hvis `labelText` er tom, skjul elementet
+            if (labelText) {
+                divisionlable.textContent = labelText;
                 divisionlable.style.color = mapColors("second");
+                divisionlable.style.display = "block";
             } else {
                 divisionlable.style.display = "none";
             }
+
 
             const settlist = matchelement.querySelector(".settlist");
             const setKeys = ["sett1", "sett2", "sett3"];
