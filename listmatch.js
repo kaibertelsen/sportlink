@@ -82,12 +82,18 @@ function listmatch(data, grouptype, scroll) {
 
             const divisionlable = matchelement.querySelector(".divisionlable");
 
-            // Bestem tekstinnholdet basert på aktiv divisjon og tilgjengelige data
-            let labelText = activeDivision === "" 
-                ? `${match.divisionname || ""} ${match.groupname || ""}`.trim() 
-                : match.groupname || "";
-
-            // Hvis `labelText` er tom, skjul elementet
+            // Bestem tekstinnholdet basert på `activeDivision` og tilgjengelige data
+            let labelText;
+            
+            if (activeDivision === "") {
+                // Når ingen divisjonsfilter er aktivt, inkluder både divisionname og groupname
+                labelText = `${match.divisionname || ""} ${match.groupname || ""}`.trim();
+            } else {
+                // Når divisjonsfilter er aktivt, bruk kun groupname
+                labelText = match.groupname || "";
+            }
+            
+            // Sett tekst og stil hvis `labelText` har verdi, ellers skjul elementet
             if (labelText) {
                 divisionlable.textContent = labelText;
                 divisionlable.style.color = mapColors("second");
@@ -95,6 +101,7 @@ function listmatch(data, grouptype, scroll) {
             } else {
                 divisionlable.style.display = "none";
             }
+            
 
 
             const settlist = matchelement.querySelector(".settlist");
