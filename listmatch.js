@@ -39,7 +39,6 @@ function groupArraybyDate(matchs) {
 }
 
 
-
 // listmatch function adjusted to avoid scroll conflicts
 function listmatch(data, grouptype, scroll) {
     const activeDivision = getActiveDivisionFilter();
