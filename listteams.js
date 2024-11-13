@@ -22,7 +22,7 @@ function listteams(data) {
     // Gruppér lagene etter divisjon og gruppe
     const teamsByDivisionAndGroup = teamslist.reduce((acc, team) => {
         const division = team.divisionname || "Ukjent divisjon"; // Standardnavn hvis divisjon mangler
-        const group = team.group ? team.group : null; // Null hvis gruppe mangler
+        const group = team.groupname ? team.groupname : null; // Null hvis gruppe mangler
 
         if (!acc[division]) {
             acc[division] = {};
