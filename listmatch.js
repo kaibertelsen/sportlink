@@ -55,7 +55,15 @@ function listmatch(data, grouptype, scroll) {
 
     for (let item of grouparray) {
         const rowelement = nodeelement.cloneNode(true);
-        rowelement.querySelector(".groupheadername").textContent = formatDateToNorwegian(item.date);
+
+        const dateValue = item.date;
+        const isValidDate = !isNaN(Date.parse(dateValue));
+
+        // Hvis datoen er gyldig, formatter den. Hvis ikke, bruk verdien av item.date.
+            rowelement.querySelector(".groupheadername").textContent = isValidDate
+            ? formatDateToNorwegian(dateValue)
+            : dateValue;
+
         const matchlist = rowelement.querySelector(".matchlist");
         const matchholder = rowelement.querySelector('.matchholder');
 
