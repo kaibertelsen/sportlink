@@ -87,7 +87,7 @@ function listmatch(data, grouptype, scroll) {
             
             if (activeDivision === "") {
                 // Når ingen divisjonsfilter er aktivt, inkluder både divisionname og groupname
-                labelText = `${match.divisionname || ""} ${match.groupname || ""}`.trim();
+                labelText = `${match.divisionname || ""} - ${match.groupname || ""}`.trim();
             } else {
                 // Når divisjonsfilter er aktivt, bruk kun groupname
                 labelText = match.groupname || "";
