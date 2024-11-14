@@ -87,7 +87,8 @@ function listmatch(data, grouptype, scroll) {
             
             if (activeDivision === "") {
                 // Når ingen divisjonsfilter er aktivt, inkluder både divisionname og groupname
-                labelText = `${match.divisionname || ""} - ${match.groupname || ""}`.trim();
+                labelText = `${match.divisionname || ""} ${match.groupname ? `- ${match.groupname}` : ""}`.trim();
+
             } else {
                 // Når divisjonsfilter er aktivt, bruk kun groupname
                 labelText = match.groupname || "";
@@ -213,7 +214,8 @@ function viewMatch(match){
    
     const divisionLabel = header.querySelector(".divisionlablematch");
     divisionLabel.style.display = match?.divisionname ? "block" : "none";
-    divisionLabel.textContent = `${match.divisionname || ""}  ${- match.groupname || ""}`.trim();
+    divisionLabel.textContent = `${match.divisionname || ""} ${match.groupname ? `- ${match.groupname}` : ""}`.trim();
+
 
     const matchsettholder = document.getElementById("thismatchsett");
     let settisSett = false;
