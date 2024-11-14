@@ -250,15 +250,15 @@ function generateVolleyballPointToTeams(data) {
     return data;
 }
 
-function generateIceHockeyPointToTeams(data) {
+function generateIceHockeyPointsToTeams(data) {
     // Initialiser poengstatistikk for hvert lag
     for (let team of data) {
         team.points = {
             played: 0,
             won: 0,
+            overtimeWins: 0,
+            overtimeLosses: 0,
             lost: 0,
-            otWon: 0, // Vunnet i overtid
-            otLost: 0, // Tapt i overtid
             goalsFor: 0,
             goalsAgainst: 0,
             goalDifference: 0,
@@ -268,18 +268,20 @@ function generateIceHockeyPointToTeams(data) {
 
     // Oppdater poengstatistikk basert på kamper
     for (let match of matches) {
+        // Sjekk om kampen har blitt spilt
         if (typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
             continue; // Hopp over kamper som ikke er spilt
         }
 
-        let team1 = data.find(team => team.airtable === match.team1[0]);
-        let team2 = data.find(team => team.airtable === match.team2[0]);
+        let team1 = data.find(team => team.airtable === match.team1);
+        let team2 = data.find(team => team.airtable === match.team2);
 
         if (team1 && team2) {
             // Oppdater spilte kamper
             team1.points.played++;
             team2.points.played++;
 
+            // Hent mål fra `goalteam1` og `goalteam2`
             const team1Score = match.goalteam1;
             const team2Score = match.goalteam2;
 
@@ -293,31 +295,36 @@ function generateIceHockeyPointToTeams(data) {
             team1.points.goalDifference = team1.points.goalsFor - team1.points.goalsAgainst;
             team2.points.goalDifference = team2.points.goalsFor - team2.points.goalsAgainst;
 
-            // Sjekk om kampen gikk til overtid
-            if (match.overtime || match.shootout) {
-                if (team1Score > team2Score) {
-                    // Team1 vant i overtid
-                    team1.points.otWon++;
-                    team2.points.otLost++;
-                    team1.points.points += 2; // 2 poeng for OT-seier
-                    team2.points.points += 1; // 1 poeng for OT-tap
-                } else if (team1Score < team2Score) {
-                    // Team2 vant i overtid
-                    team2.points.otWon++;
-                    team1.points.otLost++;
-                    team2.points.points += 2; // 2 poeng for OT-seier
-                    team1.points.points += 1; // 1 poeng for OT-tap
-                }
-            } else {
-                // Ordinær seier eller tap
-                if (team1Score > team2Score) {
+            // Sjekk om kampen gikk til overtid eller straffeslag
+            const isOvertime = match.overtime || false;
+            const isShootout = match.shootout || false;
+
+            // Oppdater poeng basert på resultat
+            if (team1Score > team2Score) {
+                if (isOvertime || isShootout) {
+                    // Team 1 vinner i overtid/straffeslag
+                    team1.points.overtimeWins++;
+                    team2.points.overtimeLosses++;
+                    team1.points.points += 2; // 2 poeng for seier i overtid/straffeslag
+                    team2.points.points += 1; // 1 poeng for tap i overtid/straffeslag
+                } else {
+                    // Team 1 vinner i ordinær tid
                     team1.points.won++;
-                    team2.points.lost++;
                     team1.points.points += 3; // 3 poeng for seier i ordinær tid
-                } else if (team1Score < team2Score) {
+                    team2.points.lost++;
+                }
+            } else if (team1Score < team2Score) {
+                if (isOvertime || isShootout) {
+                    // Team 2 vinner i overtid/straffeslag
+                    team2.points.overtimeWins++;
+                    team1.points.overtimeLosses++;
+                    team2.points.points += 2; // 2 poeng for seier i overtid/straffeslag
+                    team1.points.points += 1; // 1 poeng for tap i overtid/straffeslag
+                } else {
+                    // Team 2 vinner i ordinær tid
                     team2.points.won++;
-                    team1.points.lost++;
                     team2.points.points += 3; // 3 poeng for seier i ordinær tid
+                    team1.points.lost++;
                 }
             }
         }
