@@ -36,7 +36,7 @@ function generatePointToTeams(data) {
     } else if (activetournament.sport[0] === "reca0jxxTQAtlUTNu") {
         // Ishockey
         console.log("Dette er ishockeyoppsett");
-        let tabeldata = generateIceHockeyPointToTeams(data);
+        let tabeldata = generateIceHockeyPointsToTeams(data) 
 
         tabeldata.sort((a, b) => {
             if (b.points.points !== a.points.points) {
