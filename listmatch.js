@@ -213,7 +213,7 @@ function viewMatch(match){
    
     const divisionLabel = header.querySelector(".divisionlablematch");
     divisionLabel.style.display = match?.divisionname ? "block" : "none";
-    divisionLabel.textContent = match?.divisionname || "";
+    divisionLabel.textContent = `${match.divisionname || ""} - ${match.groupname || ""}`.trim();
 
     const matchsettholder = document.getElementById("thismatchsett");
     let settisSett = false;
