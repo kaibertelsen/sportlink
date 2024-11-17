@@ -40,10 +40,20 @@ function listteams(data) {
     const elementlibrary = document.getElementById("elementlibrary");
 
     // Bestem hvilket element som skal kopieres basert på sportstypen
-    const isVolleyball = activetournament.sport[0] === "recSCesi2BGmCyivZ"; // Volleyball ID
-    const nodeelement = isVolleyball
-        ? elementlibrary.querySelector('.volleyballview')
-        : elementlibrary.querySelector('.fotballview');
+    const sportId = activetournament.sport[0];
+    let nodeelement;
+
+    if (sportId === "recSCesi2BGmCyivZ") {
+        // Volleyball ID
+        nodeelement = elementlibrary.querySelector('.volleyballview');
+    } else if (sportId === "reca0jxxTQAtlUTNu") {
+        // Ishockey ID
+        nodeelement = elementlibrary.querySelector('.icehockey');
+    } else {
+        // Standard (Fotball)
+        nodeelement = elementlibrary.querySelector('.fotballview');
+    }
+
 
     // Loop gjennom hver divisjon og gruppe, og opprett en `tablegroupholder` for hver
     for (const [divisionName, groups] of Object.entries(teamsByDivisionAndGroup)) {
