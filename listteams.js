@@ -42,7 +42,6 @@ function listteams(data) {
     // Bestem hvilket element som skal kopieres basert på sportstypen
     const sportId = activetournament.sport[0];
     let nodeelement;
-
     if (sportId === "recSCesi2BGmCyivZ") {
         // Volleyball ID
         nodeelement = elementlibrary.querySelector('.volleyballview');
@@ -101,16 +100,23 @@ function listteams(data) {
                 rowelement.querySelector(".won").textContent = team.points.won;
                 rowelement.querySelector(".lost").textContent = team.points.lost;
                 
-                if (isVolleyball) {
+                if (sportId === "recSCesi2BGmCyivZ") {
                     // Sett-statistikk for volleyball
                     rowelement.querySelector(".setsdifference").textContent = `${team.points.setsFor}-${team.points.setsAgainst}`;
                     rowelement.querySelector(".points").textContent = team.points.points;
-                } else {
-                    // Målstatistikk for fotball
-                    rowelement.querySelector(".drawn").textContent = team.points.drawn;
+                } else if (sportId === "reca0jxxTQAtlUTNu") {
+                    // Målstatistikk for icehocey
+                    rowelement.querySelector(".ov").textContent = team.points.overtimeWins;
+                    rowelement.querySelector(".ot").textContent = team.points.overtimeLosses;
                     rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
                     rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
                     rowelement.querySelector(".points").textContent = team.points.points;
+                }else{
+                     // standard Målstatistikk for fotball
+                     rowelement.querySelector(".drawn").textContent = team.points.drawn;
+                     rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
+                     rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
+                     rowelement.querySelector(".points").textContent = team.points.points;
                 }
 
                 range++;
