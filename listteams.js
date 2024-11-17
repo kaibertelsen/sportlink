@@ -121,6 +121,7 @@ function listteams(data) {
 
                 range++;
             }
+            
 
             // Fjern mal-elementet etter å ha lagt til alle rader
             nodeteamhholder.remove();
