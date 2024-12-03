@@ -60,7 +60,7 @@ function listendplay(data, divisjon) {
                 }
 
                 if (finalecount >= 4) {
-                    let quarterFinalElement = elementLibrary.querySelector(".4finale").cloneNode(true);
+                    let quarterFinalElement = elementLibrary.querySelector(".quarterfinalelement").cloneNode(true);
                     list.appendChild(quarterFinalElement);
                 }
 
