@@ -55,7 +55,7 @@ function listendplay(data, divisjon) {
 
                 // Kopier elementer basert på finalecount
                 if (finalecount === 8) {
-                    let eighthFinalElement = elementLibrary.querySelector(".8finale").cloneNode(true);
+                    let eighthFinalElement = elementLibrary.querySelector(".eighthfinalelement").cloneNode(true);
                     list.appendChild(eighthFinalElement);
                 }
 
