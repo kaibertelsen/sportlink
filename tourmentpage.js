@@ -33,7 +33,7 @@ function loadTourment(data){
     listteams(teams);
 
     //list sluttspill
-    endplay = makeObjectFromAirtableJSON(data, "divisjonjson");
+    endplay = endplayConverter(data);
     listendplay(matches,endplay);
 
     //start match window
