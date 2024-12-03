@@ -58,6 +58,28 @@ function listendplay(data, divisjon) {
                 if (!header) continue;
 
                 let contentholderlist = header.querySelector(".contentholder");
+                contentholderlist.style.display = "none"; // Start som skjult
+
+                // Legg til animasjon ved klikk på header
+                header.addEventListener("click", () => {
+                    if (contentholderlist.style.display === "none") {
+                        // Fade inn
+                        contentholderlist.style.display = "block";
+                        contentholderlist.style.opacity = "0";
+                        setTimeout(() => {
+                            contentholderlist.style.transition = "opacity 0.5s";
+                            contentholderlist.style.opacity = "1";
+                        }, 0);
+                    } else {
+                        // Fade ut
+                        contentholderlist.style.transition = "opacity 0.5s";
+                        contentholderlist.style.opacity = "0";
+                        setTimeout(() => {
+                            contentholderlist.style.display = "none";
+                        }, 500); // Vent til fading er ferdig
+                    }
+                });
+
                 let divisionNameElement = header.querySelector(".divisionname");
                 let endplayNameElement = header.querySelector(".endplayname");
 
