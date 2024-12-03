@@ -55,7 +55,8 @@ function listendplay(data, divisjon) {
 
                 // Klon header og sett inn verdier
                 let header = elementLibrary.querySelector(".endplayheaderendplay")?.cloneNode(true);
-                if (header) {
+                    let contentholderlist = header.querySelector(".contentholder");
+
                     let divisionNameElement = header.querySelector(".divisionname");
                     let endplayNameElement = header.querySelector(".endplayname");
 
@@ -63,7 +64,7 @@ function listendplay(data, divisjon) {
                     if (endplayNameElement) endplayNameElement.textContent = endplayname;
 
                     list.appendChild(header); // Legg til header
-                }
+                
 
                 // Klon elementer basert på tilgjengelighet
                 let eighthFinalElement = finalecount === 8 
@@ -87,13 +88,13 @@ function listendplay(data, divisjon) {
                 let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
 
                 // Legg til elementer i ønsket rekkefølge
-                if (eighthFinalElement) list.appendChild(eighthFinalElement);
-                if (quarterFinalElement) list.appendChild(quarterFinalElement);
-                if (semiFinalElement) list.appendChild(semiFinalElement);
-                if (finalElement) list.appendChild(finalElement);
-                if (semiFinalBottomElement) list.appendChild(semiFinalBottomElement);
-                if (quarterFinalBottomElement) list.appendChild(quarterFinalBottomElement);
-                if (eighthFinalBottomElement) list.appendChild(eighthFinalBottomElement);
+                if (eighthFinalElement) contentholderlist.appendChild(eighthFinalElement);
+                if (quarterFinalElement) contentholderlist.appendChild(quarterFinalElement);
+                if (semiFinalElement) contentholderlist.appendChild(semiFinalElement);
+                if (finalElement) contentholderlist.appendChild(finalElement);
+                if (semiFinalBottomElement) contentholderlist.appendChild(semiFinalBottomElement);
+                if (quarterFinalBottomElement) contentholderlist.appendChild(quarterFinalBottomElement);
+                if (eighthFinalBottomElement) contentholderlist.appendChild(eighthFinalBottomElement);
             }
         }
     }
