@@ -53,13 +53,25 @@ function listendplay(data, divisjon) {
                 let endplayname = endplay.endplayname;
                 let finalecount = endplay.finalecount;
 
+                // Klon header og sett inn verdier
+                let header = elementLibrary.querySelector(".header")?.cloneNode(true);
+                if (header) {
+                    let divisionNameElement = header.querySelector(".divisionname");
+                    let endplayNameElement = header.querySelector(".endplayname");
+
+                    if (divisionNameElement) divisionNameElement.textContent = division.name;
+                    if (endplayNameElement) endplayNameElement.textContent = endplayname;
+
+                    list.appendChild(header); // Legg til header
+                }
+
                 // Klon elementer basert på tilgjengelighet
                 let eighthFinalElement = finalecount === 8 
                     ? elementLibrary.querySelector(".eighthfinalelement")?.cloneNode(true)
                     : null;
 
                 let eighthFinalBottomElement = finalecount === 8 
-                    ? elementLibrary.querySelector(".eighthfinalelement.botton")?.cloneNode(true)
+                    ? elementLibrary.querySelector(".eighthfinalelement.bottom")?.cloneNode(true)
                     : null;
 
                 let quarterFinalElement = finalecount >= 4 
@@ -67,11 +79,11 @@ function listendplay(data, divisjon) {
                     : null;
 
                 let quarterFinalBottomElement = finalecount >= 4 
-                    ? elementLibrary.querySelector(".quarterfinalelement.botton")?.cloneNode(true)
+                    ? elementLibrary.querySelector(".quarterfinalelement.bottom")?.cloneNode(true)
                     : null;
 
                 let semiFinalElement = elementLibrary.querySelector(".semi")?.cloneNode(true);
-                let semiFinalBottomElement = elementLibrary.querySelector(".semi")?.cloneNode(true);
+                let semiFinalBottomElement = elementLibrary.querySelector(".semi.bottom")?.cloneNode(true);
                 let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
 
                 // Legg til elementer i ønsket rekkefølge
@@ -86,6 +98,7 @@ function listendplay(data, divisjon) {
         }
     }
 }
+
 
 
 
