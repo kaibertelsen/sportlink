@@ -1,6 +1,5 @@
-
 function endplayConverter(data) {
-    // Sjekk om data har en "divisjon"-nøkkel som er en array
+    // Sjekk om data har en "divisjonjson"-nøkkel som er en array
     if (Array.isArray(data?.divisjonjson)) {
         const parsedData = data.divisjonjson.map(item => {
             // Forsøk å parse hvert element i divisjon-arrayet
@@ -8,12 +7,15 @@ function endplayConverter(data) {
                 const parsedItem = JSON.parse(item);
 
                 // Parse "endplay" hvis det er en gyldig JSON-streng
-                if (parsedItem.endplay) {
+                if (parsedItem.endplay && parsedItem.endplay.trim()) {
                     try {
                         parsedItem.endplay = JSON.parse(parsedItem.endplay);
                     } catch (error) {
                         console.warn("Feil ved parsing av endplay:", error);
                     }
+                } else {
+                    // Hvis endplay er tomt, sett det til en tom array
+                    parsedItem.endplay = [];
                 }
 
                 return parsedItem;
@@ -26,10 +28,11 @@ function endplayConverter(data) {
         // Filtrer ut null-verdier fra resultatet
         return parsedData.filter(item => item !== null);
     } else {
-        console.warn("Data mangler en gyldig divisjon-array.");
+        console.warn("Data mangler en gyldig divisjonjson-array.");
         return [];
     }
 }
+
 
 
 
