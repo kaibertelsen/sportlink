@@ -1,22 +1,36 @@
 
-function endplayConverter(data){
-// Parse hoved-array
-const parsedData = data.map(item => {
-    const parsedItem = JSON.parse(item);
+function endplayConverter(data) {
+    // Sjekk om data har en "divisjon"-nøkkel som er en array
+    if (Array.isArray(data?.divisjon)) {
+        const parsedData = data.divisjon.map(item => {
+            // Forsøk å parse hvert element i divisjon-arrayet
+            try {
+                const parsedItem = JSON.parse(item);
 
-    // Parse "endplay" hvis det er en gyldig JSON-streng
-    if (parsedItem.endplay) {
-        try {
-            parsedItem.endplay = JSON.parse(parsedItem.endplay);
-        } catch (error) {
-            console.warn("Feil ved parsing av endplay:", error);
-        }
+                // Parse "endplay" hvis det er en gyldig JSON-streng
+                if (parsedItem.endplay) {
+                    try {
+                        parsedItem.endplay = JSON.parse(parsedItem.endplay);
+                    } catch (error) {
+                        console.warn("Feil ved parsing av endplay:", error);
+                    }
+                }
+
+                return parsedItem;
+            } catch (error) {
+                console.warn("Feil ved parsing av element:", error, item);
+                return null; // Returner null for elementer som feiler
+            }
+        });
+
+        // Filtrer ut null-verdier fra resultatet
+        return parsedData.filter(item => item !== null);
+    } else {
+        console.warn("Data mangler en gyldig divisjon-array.");
+        return [];
     }
-
-    return parsedItem;
-});
-return parsedData;
 }
+
 
 
 
