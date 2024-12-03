@@ -55,16 +55,16 @@ function listendplay(data, divisjon) {
 
                 // Klon header og sett inn verdier
                 let header = elementLibrary.querySelector(".endplayheaderendplay")?.cloneNode(true);
-                    let contentholderlist = header.querySelector(".contentholder");
+                if (!header) continue;
 
-                    let divisionNameElement = header.querySelector(".divisionname");
-                    let endplayNameElement = header.querySelector(".endplayname");
+                let contentholderlist = header.querySelector(".contentholder");
+                let divisionNameElement = header.querySelector(".divisionname");
+                let endplayNameElement = header.querySelector(".endplayname");
 
-                    if (divisionNameElement) divisionNameElement.textContent = division.name;
-                    if (endplayNameElement) endplayNameElement.textContent = endplayname;
+                if (divisionNameElement) divisionNameElement.textContent = division.name;
+                if (endplayNameElement) endplayNameElement.textContent = endplayname;
 
-                    list.appendChild(header); // Legg til header
-                
+                list.appendChild(header); // Legg til header
 
                 // Klon elementer basert på tilgjengelighet
                 let eighthFinalElement = finalecount === 8 
@@ -83,27 +83,44 @@ function listendplay(data, divisjon) {
                     ? elementLibrary.querySelector(".quarterfinalelement.bottom")?.cloneNode(true)
                     : null;
 
+                if (finalecount === 4) {
+                    // Skjul spesifikke elementer i quarterFinalElement
+                    if (quarterFinalElement) {
+                        let topWireElements = quarterFinalElement.querySelectorAll(".wiresystem.topp");
+                        topWireElements.forEach(el => (el.style.display = "none"));
+                    }
+                    if (quarterFinalBottomElement) {
+                        let bottomWireElements = quarterFinalBottomElement.querySelectorAll(".wiresystem.bottom");
+                        bottomWireElements.forEach(el => (el.style.display = "none"));
+                    }
+                }
+
                 let semiFinalElement = elementLibrary.querySelector(".semi")?.cloneNode(true);
-                let semiFinalBottomElement = elementLibrary.querySelector(".semi")?.cloneNode(true);
+                let semiFinalBottomElement = elementLibrary.querySelector(".semi.bottom")?.cloneNode(true);
                 let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
 
-                finalElement.querySelector(".endplayname").textContent = endplayname;
-                finalElement.querySelector(".divisionnamemidle").textContent = division.name;
-                
-            
+                if (finalElement) {
+                    let finalElementName = finalElement.querySelector(".endplayname");
+                    let finalDivisionMidName = finalElement.querySelector(".divisionnamemidle");
+                    if (finalElementName) finalElementName.textContent = endplayname;
+                    if (finalDivisionMidName) finalDivisionMidName.textContent = division.name;
+                }
 
                 // Legg til elementer i ønsket rekkefølge
-                if (eighthFinalElement) contentholderlist.appendChild(eighthFinalElement);
-                if (quarterFinalElement) contentholderlist.appendChild(quarterFinalElement);
-                if (semiFinalElement) contentholderlist.appendChild(semiFinalElement);
-                if (finalElement) contentholderlist.appendChild(finalElement);
-                if (semiFinalBottomElement) contentholderlist.appendChild(semiFinalBottomElement);
-                if (quarterFinalBottomElement) contentholderlist.appendChild(quarterFinalBottomElement);
-                if (eighthFinalBottomElement) contentholderlist.appendChild(eighthFinalBottomElement);
+                if (contentholderlist) {
+                    if (eighthFinalElement) contentholderlist.appendChild(eighthFinalElement);
+                    if (quarterFinalElement) contentholderlist.appendChild(quarterFinalElement);
+                    if (semiFinalElement) contentholderlist.appendChild(semiFinalElement);
+                    if (finalElement) contentholderlist.appendChild(finalElement);
+                    if (semiFinalBottomElement) contentholderlist.appendChild(semiFinalBottomElement);
+                    if (quarterFinalBottomElement) contentholderlist.appendChild(quarterFinalBottomElement);
+                    if (eighthFinalBottomElement) contentholderlist.appendChild(eighthFinalBottomElement);
+                }
             }
         }
     }
 }
+
 
 
 
