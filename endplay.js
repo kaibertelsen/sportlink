@@ -62,7 +62,7 @@ function listendplay(data, divisjon) {
 
                 // Legg til animasjon ved klikk på header
                 header.addEventListener("click", () => {
-                    if (contentholderlist.style.display === "none" || contentholderlist.style.height === "0px") {
+                    if (contentholderlist.style.height === "0px") {
                         // Fade og utvid høyden
                         //contentholderlist.style.display = "block";
                         contentholderlist.style.opacity = "0";
