@@ -80,7 +80,7 @@ function listendplay(data, divisjon) {
 
 
 
-
+/*
 {
     "name": "J16",
     "airtable": "rec5SA76Qg9zhrX3K",
@@ -95,3 +95,4 @@ function listendplay(data, divisjon) {
         }
     ]
 }
+*/
