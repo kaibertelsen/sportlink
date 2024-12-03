@@ -53,24 +53,35 @@ function listendplay(data, divisjon) {
                 let endplayname = endplay.endplayname;
                 let finalecount = endplay.finalecount;
 
-                // Kopier elementer basert på finalecount
-                if (finalecount === 8) {
-                    let eighthFinalElement = elementLibrary.querySelector(".eighthfinalelement").cloneNode(true);
-                    list.appendChild(eighthFinalElement);
-                }
+                // Klon elementer basert på tilgjengelighet
+                let eighthFinalElement = finalecount === 8 
+                    ? elementLibrary.querySelector(".eighthfinalelement")?.cloneNode(true)
+                    : null;
 
-                if (finalecount >= 4) {
-                    let quarterFinalElement = elementLibrary.querySelector(".quarterfinalelement").cloneNode(true);
-                    list.appendChild(quarterFinalElement);
-                }
+                let eighthFinalBottomElement = finalecount === 8 
+                    ? elementLibrary.querySelector(".eighthfinalelement.bottom")?.cloneNode(true)
+                    : null;
 
-                // Kopier semifinaleholder
-                let semiFinalElement = elementLibrary.querySelector(".semi").cloneNode(true);
-                list.appendChild(semiFinalElement);
+                let quarterFinalElement = finalecount >= 4 
+                    ? elementLibrary.querySelector(".quarterfinalelement")?.cloneNode(true)
+                    : null;
 
-                // Kopier finaleholder
-                let finalElement = elementLibrary.querySelector(".finale").cloneNode(true);
-                list.appendChild(finalElement);
+                let quarterFinalBottomElement = finalecount >= 4 
+                    ? elementLibrary.querySelector(".quarterfinalelement.bottom")?.cloneNode(true)
+                    : null;
+
+                let semiFinalElement = elementLibrary.querySelector(".semi")?.cloneNode(true);
+                let semiFinalBottomElement = elementLibrary.querySelector(".semi.bottom")?.cloneNode(true);
+                let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
+
+                // Legg til elementer i ønsket rekkefølge
+                if (eighthFinalElement) list.appendChild(eighthFinalElement);
+                if (quarterFinalElement) list.appendChild(quarterFinalElement);
+                if (semiFinalElement) list.appendChild(semiFinalElement);
+                if (finalElement) list.appendChild(finalElement);
+                if (quarterFinalBottomElement) list.appendChild(quarterFinalBottomElement);
+                if (semiFinalBottomElement) list.appendChild(semiFinalBottomElement);
+                if (eighthFinalBottomElement) list.appendChild(eighthFinalBottomElement);
             }
         }
     }
