@@ -79,8 +79,8 @@ function listendplay(data, divisjon) {
                 if (quarterFinalElement) list.appendChild(quarterFinalElement);
                 if (semiFinalElement) list.appendChild(semiFinalElement);
                 if (finalElement) list.appendChild(finalElement);
-                if (quarterFinalBottomElement) list.appendChild(quarterFinalBottomElement);
                 if (semiFinalBottomElement) list.appendChild(semiFinalBottomElement);
+                if (quarterFinalBottomElement) list.appendChild(quarterFinalBottomElement);
                 if (eighthFinalBottomElement) list.appendChild(eighthFinalBottomElement);
             }
         }
