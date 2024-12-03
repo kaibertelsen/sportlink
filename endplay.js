@@ -58,13 +58,13 @@ function listendplay(data, divisjon) {
                 if (!header) continue;
 
                 let contentholderlist = header.querySelector(".contentholder");
-                contentholderlist.style.display = "none"; // Start som skjult
+                //contentholderlist.style.display = "none"; // Start som skjult
 
                 // Legg til animasjon ved klikk på header
                 header.addEventListener("click", () => {
                     if (contentholderlist.style.display === "none" || contentholderlist.style.height === "0px") {
                         // Fade og utvid høyden
-                        contentholderlist.style.display = "block";
+                        //contentholderlist.style.display = "block";
                         contentholderlist.style.opacity = "0";
                         contentholderlist.style.height = "0px";
                         setTimeout(() => {
@@ -78,7 +78,7 @@ function listendplay(data, divisjon) {
                         contentholderlist.style.opacity = "0";
                         contentholderlist.style.height = "0px";
                         setTimeout(() => {
-                            contentholderlist.style.display = "none";
+                           // contentholderlist.style.display = "none";
                         }, 500); // Vent til fading og krymping er ferdig
                     }
                 });
