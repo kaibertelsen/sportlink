@@ -36,25 +36,62 @@ function endplayConverter(data) {
 
 
 
-
-
-
-
-
-function listendplay(data,endplay) {
-
+function listendplay(data, divisjon) {
     const activeDivision = getActiveDivisionFilter();
     let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
-    
 
     const list = document.getElementById("endplaylist");
-    list.replaceChildren();
-    const elementlibrary = document.getElementById("elementlibrary");
-    //const nodeelement = elementlibrary.querySelector('.groupholder');
+    list.replaceChildren(); // Fjern eksisterende innhold i listen
+    const elementLibrary = document.getElementById("elementlibrary");
 
-    for (let item of grouparray) {
-        //const rowelement = nodeelement.cloneNode(true);
-        //list.appendChild(rowelement);
+    for (let division of divisjon) {
+        // Sjekk om endplay eksisterer i divisjonen
+        if (division.endplay && Array.isArray(division.endplay)) {
+            let endplays = division.endplay;
+
+            for (let endplay of endplays) {
+                let endplayname = endplay.endplayname;
+                let finalecount = endplay.finalecount;
+
+                // Kopier elementer basert på finalecount
+                if (finalecount === 8) {
+                    let eighthFinalElement = elementLibrary.querySelector(".8finale").cloneNode(true);
+                    list.appendChild(eighthFinalElement);
+                }
+
+                if (finalecount >= 4) {
+                    let quarterFinalElement = elementLibrary.querySelector(".4finale").cloneNode(true);
+                    list.appendChild(quarterFinalElement);
+                }
+
+                // Kopier semifinaleholder
+                let semiFinalElement = elementLibrary.querySelector(".semi").cloneNode(true);
+                list.appendChild(semiFinalElement);
+
+                // Kopier finaleholder
+                let finalElement = elementLibrary.querySelector(".finale").cloneNode(true);
+                list.appendChild(finalElement);
+            }
+        }
     }
-    
+}
+
+
+
+
+
+
+{
+    "name": "J16",
+    "airtable": "rec5SA76Qg9zhrX3K",
+    "endplay": [
+        {
+            "endplayname": "A",
+            "finalecount": 8
+        },
+        {
+            "endplayname": "B",
+            "finalecount": 8
+        }
+    ]
 }
