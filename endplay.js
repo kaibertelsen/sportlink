@@ -62,23 +62,27 @@ function listendplay(data, divisjon) {
 
                 // Legg til animasjon ved klikk på header
                 header.addEventListener("click", () => {
-                    if (contentholderlist.style.display === "none") {
-                        // Fade inn
+                    if (contentholderlist.style.display === "none" || contentholderlist.style.height === "0px") {
+                        // Fade og utvid høyden
                         contentholderlist.style.display = "block";
                         contentholderlist.style.opacity = "0";
+                        contentholderlist.style.height = "0px";
                         setTimeout(() => {
-                            contentholderlist.style.transition = "opacity 0.5s";
+                            contentholderlist.style.transition = "opacity 0.5s, height 0.5s";
                             contentholderlist.style.opacity = "1";
+                            contentholderlist.style.height = contentholderlist.scrollHeight + "px"; // Sett til høyden på innholdet
                         }, 0);
                     } else {
-                        // Fade ut
-                        contentholderlist.style.transition = "opacity 0.5s";
+                        // Krymp høyden og fade ut
+                        contentholderlist.style.transition = "opacity 0.5s, height 0.5s";
                         contentholderlist.style.opacity = "0";
+                        contentholderlist.style.height = "0px";
                         setTimeout(() => {
                             contentholderlist.style.display = "none";
-                        }, 500); // Vent til fading er ferdig
+                        }, 500); // Vent til fading og krymping er ferdig
                     }
                 });
+
 
                 let divisionNameElement = header.querySelector(".divisionname");
                 let endplayNameElement = header.querySelector(".endplayname");
