@@ -88,6 +88,8 @@ function listendplay(data, divisjon) {
                 let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
 
                 finalElement.querySelector(".endplayname").textContent = endplayname;
+                finalElement.querySelector(".divisionnamemidle").textContent = division.name;
+                
             
 
                 // Legg til elementer i ønsket rekkefølge
