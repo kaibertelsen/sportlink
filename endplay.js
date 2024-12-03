@@ -84,8 +84,11 @@ function listendplay(data, divisjon) {
                     : null;
 
                 let semiFinalElement = elementLibrary.querySelector(".semi")?.cloneNode(true);
-                let semiFinalBottomElement = elementLibrary.querySelector(".semi.bottom")?.cloneNode(true);
+                let semiFinalBottomElement = elementLibrary.querySelector(".semi")?.cloneNode(true);
                 let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
+
+                finalElement.querySelector(".endplayname").textContent = endplayname;
+            
 
                 // Legg til elementer i ønsket rekkefølge
                 if (eighthFinalElement) contentholderlist.appendChild(eighthFinalElement);
