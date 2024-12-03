@@ -59,7 +59,7 @@ function listendplay(data, divisjon) {
                     : null;
 
                 let eighthFinalBottomElement = finalecount === 8 
-                    ? elementLibrary.querySelector(".eighthfinalelement.bottom")?.cloneNode(true)
+                    ? elementLibrary.querySelector(".eighthfinalelement.botton")?.cloneNode(true)
                     : null;
 
                 let quarterFinalElement = finalecount >= 4 
@@ -67,11 +67,11 @@ function listendplay(data, divisjon) {
                     : null;
 
                 let quarterFinalBottomElement = finalecount >= 4 
-                    ? elementLibrary.querySelector(".quarterfinalelement.bottom")?.cloneNode(true)
+                    ? elementLibrary.querySelector(".quarterfinalelement.botton")?.cloneNode(true)
                     : null;
 
                 let semiFinalElement = elementLibrary.querySelector(".semi")?.cloneNode(true);
-                let semiFinalBottomElement = elementLibrary.querySelector(".semi.bottom")?.cloneNode(true);
+                let semiFinalBottomElement = elementLibrary.querySelector(".semi")?.cloneNode(true);
                 let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
 
                 // Legg til elementer i ønsket rekkefølge
