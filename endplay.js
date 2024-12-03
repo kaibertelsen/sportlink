@@ -54,7 +54,7 @@ function listendplay(data, divisjon) {
                 let finalecount = endplay.finalecount;
 
                 // Klon header og sett inn verdier
-                let header = elementLibrary.querySelector(".header")?.cloneNode(true);
+                let header = elementLibrary.querySelector(".endplayheaderendplay")?.cloneNode(true);
                 if (header) {
                     let divisionNameElement = header.querySelector(".divisionname");
                     let endplayNameElement = header.querySelector(".endplayname");
