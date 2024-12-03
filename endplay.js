@@ -68,13 +68,13 @@ function listendplay(data, divisjon) {
                         contentholderlist.style.opacity = "0";
                         contentholderlist.style.height = "0px";
                         setTimeout(() => {
-                            contentholderlist.style.transition = "opacity 0.5s, height 0.5s";
+                            contentholderlist.style.transition = "opacity 0.5s ease-in-out, height 0.5s ease-in-out";
                             contentholderlist.style.opacity = "1";
                             contentholderlist.style.height = contentholderlist.scrollHeight + "px"; // Sett til høyden på innholdet
                         }, 0);
                     } else {
                         // Krymp høyden og fade ut
-                        contentholderlist.style.transition = "opacity 0.5s, height 0.5s";
+                        contentholderlist.style.transition = "opacity 0.5s ease-in-out, height 0.5s ease-in-out";
                         contentholderlist.style.opacity = "0";
                         contentholderlist.style.height = "0px";
                         setTimeout(() => {
@@ -82,6 +82,7 @@ function listendplay(data, divisjon) {
                         }, 500); // Vent til fading og krymping er ferdig
                     }
                 });
+
 
 
                 let divisionNameElement = header.querySelector(".divisionname");
