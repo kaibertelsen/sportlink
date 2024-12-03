@@ -1,8 +1,8 @@
 
 function endplayConverter(data) {
     // Sjekk om data har en "divisjon"-nøkkel som er en array
-    if (Array.isArray(data?.divisjon)) {
-        const parsedData = data.divisjon.map(item => {
+    if (Array.isArray(data?.divisjonjson)) {
+        const parsedData = data.divisjonjson.map(item => {
             // Forsøk å parse hvert element i divisjon-arrayet
             try {
                 const parsedItem = JSON.parse(item);
