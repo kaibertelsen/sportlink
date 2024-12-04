@@ -149,7 +149,7 @@ function listendplay(data, divisjon) {
 
 
 
-function loadEndplaysection(eighthFinalElement, listMatches, typematch,startIndex) {
+function loadEndplaysection(eighthFinalElement, listMatches, typematch, startIndex) {
     // Filtrer matcher basert på typematch
     let filteredMatches = typematch === "" ? listMatches : listMatches.filter(match => match.typematch === typematch);
 
@@ -158,9 +158,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch,startInde
 
     // Loop gjennom hvert "endplaymatch"-element
     endplayMatches.forEach((matchElement, index) => {
-        // Finn match hvor `index + 1` tilsvarer `endplayplace`
-
-        
+        // Finn match hvor `index + startIndex` tilsvarer `endplayplace`
         const matchData = filteredMatches.find(match => Number(match.endplayplace) === index + startIndex);
 
         if (!matchData) return; // Hopp over hvis ingen kamp er funnet
@@ -175,30 +173,20 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch,startInde
         const datelable = matchElement.querySelector(".datelable");
         const lablemidt = matchElement.querySelector(".lablemidt");
 
-        // Oppdater logoer
-        if (logo1) logo1.src = matchData.team1clublogo || "";
-        if (logo2) logo2.src = matchData.team2clublogo || "";
+        // Oppdater logoer (kun hvis det finnes en verdi)
+        if (logo1 && matchData.team1clublogo) logo1.src = matchData.team1clublogo;
+        if (logo2 && matchData.team2clublogo) logo2.src = matchData.team2clublogo;
 
         // Oppdater inisialer for lag 1 eller bruk placeholder
         if (inis1) {
             const team1Name = matchData.team1name || matchData.placeholderteam1 || "Unknown";
-            if (team1Name.length > 3) {
-                inis1.textContent = matchData.initials1 || 
-                    (team1Name.split(' ').map(word => word[0]).join('') || team1Name.slice(0, 3)).toUpperCase();
-            } else {
-                inis1.textContent = team1Name;
-            }
+            inis1.textContent = createInitials(team1Name, matchData.initials1);
         }
 
         // Oppdater inisialer for lag 2 eller bruk placeholder
         if (inis2) {
             const team2Name = matchData.team2name || matchData.placeholderteam2 || "Unknown";
-            if (team2Name.length > 3) {
-                inis2.textContent = matchData.initials2 || 
-                    (team2Name.split(' ').map(word => word[0]).join('') || team2Name.slice(0, 3)).toUpperCase();
-            } else {
-                inis2.textContent = team2Name;
-            }
+            inis2.textContent = createInitials(team2Name, matchData.initials2);
         }
 
         // Oppdater mål eller vis dato hvis ingen resultat
@@ -244,7 +232,19 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch,startInde
             }
         }
     });
+
+    // Funksjon for å lage initialer
+    function createInitials(name, existingInitials) {
+        if (existingInitials) return existingInitials.toUpperCase();
+        const words = name.split(' ');
+        if (words.length > 1) {
+            return words.map(word => word[0]).join('').toUpperCase().slice(0, 3);
+        } else {
+            return name.slice(0, 3).toUpperCase();
+        }
+    }
 }
+
 
 
 
