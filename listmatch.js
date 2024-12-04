@@ -257,7 +257,7 @@ function viewMatch(match){
         };
 
         const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
-        endplayLable.textContent = `${endplayText} - ${match.endplay || ""}`;
+        endplayLable.innerHTML = `${match.endplay || ""}<br>${endplayText}`;
         endplayLable.style.display = "block";
     } else {
         endplayLable.style.display = "none";
