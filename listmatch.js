@@ -237,6 +237,22 @@ function viewMatch(match){
     divisionLabel.style.display = match?.divisionname ? "block" : "none";
     divisionLabel.textContent = `${match.divisionname || ""} ${match.groupname ? `- ${match.groupname}` : ""}`.trim();
 
+    // Oppdater sluttspillinformasjon hvis tilgjengelig
+    const endplayLable = matchelement.querySelector(".endplaylableMatch");
+    if (match.typematch) {
+        const matchTypeMap = {
+            "eighthfinale": "ÅF",
+            "quarterfinale": "KF",
+            "semifinale": "SF",
+            "finale": "F"
+        };
+
+        const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
+        endplayLable.textContent = `${endplayText} - ${match.endplay || ""}`;
+        endplayLable.style.display = "block";
+    } else {
+        endplayLable.style.display = "none";
+    }
 
     const matchsettholder = document.getElementById("thismatchsett");
     let settisSett = false;
