@@ -27,7 +27,7 @@ function responseSportlist(data) {
     SportList = sportlist; // Global variabel for videre bruk
 
     // Hent selector-elementet med klassen 'sportselector' innenfor 'activecontainerturnament'
-    const activeContainer = document.getElementById("activecontainerturnament");
+    const activeContainer = document.getElementById("creatturnamentholder");
 
     const sportSelector = activeContainer.querySelector(".sportselector");
 
@@ -58,12 +58,21 @@ function responseOrganizerlist(data) {
     const organizers = rawdatacleaner(data);
     orgaNizer = organizers; // Global variabel for videre bruk
 
-    // Hent holder-elementet med id 'activecontainerturnament'
+    // Sjekk om elementet med id 'creatturnamentholder' eksisterer
     const activeContainer = document.getElementById('creatturnamentholder');
 
+    if (!activeContainer) {
+        console.warn("Element med id 'creatturnamentholder' finnes ikke.");
+        return;
+    }
 
     // Hent selector-elementet med klassen 'organizerselector' innenfor holderen
     const organizerSelector = activeContainer.querySelector(".organizerselector");
+
+    if (!organizerSelector) {
+        console.warn("Selector-element med klassen 'organizerselector' finnes ikke.");
+        return;
+    }
 
     // Tøm tidligere alternativer
     organizerSelector.innerHTML = "";
@@ -84,6 +93,7 @@ function responseOrganizerlist(data) {
 
     console.log("Organizerlist oppdatert:", organizers);
 }
+
 
 
 function startCreateTurnamentWrapper() {
