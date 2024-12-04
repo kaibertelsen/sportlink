@@ -111,13 +111,13 @@ function listendplay(data, divisjon) {
                 let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
 
                 // Last inn kamper i hvert element
-                if (eighthFinalElement) loadEndplaysection(eighthFinalElement, filteredMatches, "eighthfinale", 1);
-                if (eighthFinalBottomElement) loadEndplaysection(eighthFinalBottomElement, filteredMatches, "eighthfinalebottom", 5);
-                if (quarterFinalElement) loadEndplaysection(quarterFinalElement, filteredMatches, "quarterfinale", 1);
-                if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches, "quarterfinalebottom", 3);
-                if (semiFinalElement) loadEndplaysection(semiFinalElement, filteredMatches, "semifinal", 1);
-                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, "semifinalbottom", 2);
-                if (finalElement) loadEndplaysection(finalElement, filteredMatches, "finale", 1);
+                if (eighthFinalElement) loadEndplaysection(eighthFinalElement, filteredMatches,endplayname, "eighthfinale", 1);
+                if (eighthFinalBottomElement) loadEndplaysection(eighthFinalBottomElement, filteredMatches,endplayname, "eighthfinalebottom", 5);
+                if (quarterFinalElement) loadEndplaysection(quarterFinalElement, filteredMatches,endplayname, "quarterfinale", 1);
+                if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches,endplayname, "quarterfinalebottom", 3);
+                if (semiFinalElement) loadEndplaysection(semiFinalElement, filteredMatches,endplayname, "semifinal", 1);
+                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, endplayname,"semifinalbottom", 2);
+                if (finalElement) loadEndplaysection(finalElement, filteredMatches,endplayname, "finale", 1);
 
                 // Skjul spesifikke elementer i quarterFinalElement og quarterFinalBottomElement
                 if (finalecount === 4) {
@@ -149,7 +149,7 @@ function listendplay(data, divisjon) {
 
 
 
-function loadEndplaysection(eighthFinalElement, listMatches, typematch, startIndex) {
+function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayName, startIndex) {
     // Filtrer matcher basert på typematch
     let filteredMatches = typematch === "" ? listMatches : listMatches.filter(match => match.typematch === typematch);
 
@@ -160,8 +160,10 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, startInd
     endplayMatches.forEach((matchElement, index) => {
         // Finn match hvor `index + startIndex` tilsvarer `endplayplace`
         const matchData = filteredMatches.find(match => Number(match.endplayplace) === index + startIndex);
-
         if (!matchData) return; // Hopp over hvis ingen kamp er funnet
+
+        // Sjekk om match har riktig `endplayName`
+        if (matchData.endplay !== endplayName) return;
 
         // Hent spesifikke elementer inne i matchElement
         const logo1 = matchElement.querySelector(".logo1");
@@ -194,20 +196,18 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, startInd
             // Vis datelable og oppdater tekst
             if (datelable) {
                 const matchTime = new Date(matchData.time);
-            
+
                 // Hent klokkeslett og dato hver for seg
                 const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false }; // Sikrer 24-timers format
                 const dateOptions = { day: '2-digit', month: 'short' }; // Sørger for korrekt datoformat
-            
+
                 const timeString = matchTime.toLocaleTimeString('no-NO', timeOptions); // Format tid
                 const dateString = matchTime.toLocaleDateString('no-NO', dateOptions).replace('.', ''); // Format dato og fjern punktum
-            
+
                 // Sett inn tid og dato på separate linjer
                 datelable.innerHTML = `${timeString}<br>${dateString}`;
                 datelable.style.display = "block";
             }
-            
-            
 
             // Skjul mål og lablemidt
             if (goal1) goal1.style.display = "none";
@@ -254,6 +254,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, startInd
         }
     }
 }
+
 
 
 
