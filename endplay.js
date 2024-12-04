@@ -39,12 +39,14 @@ function endplayConverter(data) {
 function listendplay(data, divisjon) {
     const activeDivision = getActiveDivisionFilter();
     let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
+    let filteredDivision = activeDivision === "" ? divisjon : divisjon.filter(div => div.airtable === activeDivision);
+
 
     const list = document.getElementById("endplaylist");
     list.replaceChildren(); // Fjern eksisterende innhold i listen
     const elementLibrary = document.getElementById("elementlibrary");
 
-    for (let division of divisjon) {
+    for (let division of filteredDivision) {
         // Sjekk om endplay eksisterer i divisjonen
         if (division.endplay && Array.isArray(division.endplay)) {
             let endplays = division.endplay;
