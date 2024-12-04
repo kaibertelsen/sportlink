@@ -26,15 +26,16 @@ function loadTourment(data){
     loadTourmentHeader(data);
     listDivision(data);
     
+    
     matches = makeObjectFromAirtableJSON(data, "matchjson");
-    listmatch(matches,"dato",true);
+    if(matches){listmatch(matches,"dato",true);}
 
     teams = makeObjectFromAirtableJSON(data, "teamjson");
-    listteams(teams);
-
+    if(teams){listteams(teams);}
+    
     //list sluttspill
     endplay = endplayConverter(data);
-    listendplay(matches,endplay);
+    if(endplay){listendplay(matches,endplay);}
 
     //start match window
     document.getElementById('matchtabbutton').click();
