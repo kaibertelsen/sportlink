@@ -59,7 +59,7 @@ function responseOrganizerlist(data) {
     orgaNizer = organizers; // Global variabel for videre bruk
 
     // Hent holder-elementet med id 'activecontainerturnament'
-    const activeContainer = document.getElementById("activecontainerturnament");
+    const activeContainer = document.getElementById('creatturnamentholder');
 
 
     // Hent selector-elementet med klassen 'organizerselector' innenfor holderen
