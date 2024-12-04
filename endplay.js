@@ -49,6 +49,10 @@ function listendplay(data, divisjon) {
         if (division.endplay && Array.isArray(division.endplay)) {
             let endplays = division.endplay;
 
+            let divisionNameLable = elementLibrary.querySelector(".divisionname")?.cloneNode(true);
+            divisionNameLable.textContent = division.name;
+            
+
             for (let endplay of endplays) {
                 let endplayname = endplay.endplayname;
                 let finalecount = endplay.finalecount;
@@ -79,9 +83,6 @@ function listendplay(data, divisjon) {
                     }
                 });
 
-
-
-                let divisionNameElement = header.querySelector(".divisionname");
                 let endplayNameElement = header.querySelector(".endplayname");
 
                 if (divisionNameElement) divisionNameElement.textContent = division.name;
