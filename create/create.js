@@ -136,12 +136,11 @@ function saveNewTurnament(wrapperelement) {
     const name = wrapperelement.querySelector('.inputname')?.value.trim() || "";
     const startdate = wrapperelement.querySelector('.startdate')?.value || "";
     const enddate = wrapperelement.querySelector('.enddate')?.value || "";
-
     const sportSelector = wrapperelement.querySelector('.sportselector');
     const sport = sportSelector?.value ? [sportSelector.value] : [];
-
     const organizerSelector = wrapperelement.querySelector('.organizerselector');
     const organizer = organizerSelector?.value ? [organizerSelector.value] : [];
+    const icon = wrapperelement.querySelector('#icon-upload')?.value || ""; // Hent URL for ikonet
 
     // Generer et nytt turneringsobjekt
     const newTournament = {
@@ -150,19 +149,20 @@ function saveNewTurnament(wrapperelement) {
         enddate: enddate,
         sport: sport,
         organizer: organizer,
-        icon: "" // Sett eventuelt ikon senere hvis nødvendig
+        icon: icon
     };
 
     // Sjekk om alle påkrevde felt er fylt ut
-    if (!name || !startdate || !enddate || sport.length === 0 || organizer.length === 0) {
-        alert("Vennligst fyll ut alle feltene.");
+    if (!name || !startdate || !enddate || sport.length === 0 || organizer.length === 0 || !icon) {
+        alert("Vennligst fyll ut alle feltene og last opp et ikon.");
         return;
     }
 
-    // Lagre objektet på serveren og lokalt (for demonstrasjon lagrer vi det kun i konsollen)
+    // Logg det opprettede objektet
     console.log("Nytt turneringsobjekt opprettet:", newTournament);
 
-    // Kall en funksjon for å lagre på server (bruk async/await eller fetch her)
+    // Send til serveren eller prosesser videre
     // saveTournamentToServer(newTournament);
 }
+
 
