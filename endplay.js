@@ -84,8 +84,6 @@ function listendplay(data, divisjon) {
                 });
 
                 let endplayNameElement = header.querySelector(".endplayname");
-
-                if (divisionNameElement) divisionNameElement.textContent = division.name;
                 if (endplayNameElement) endplayNameElement.textContent = endplayname;
 
                 list.appendChild(header); // Legg til header
