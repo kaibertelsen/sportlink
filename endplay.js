@@ -111,13 +111,13 @@ function listendplay(data, divisjon) {
                 let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
 
                 // Last inn kamper i hvert element
-                if (eighthFinalElement) loadEndplaysection(eighthFinalElement, filteredMatches,endplayname, "eighthfinale", 1);
-                if (eighthFinalBottomElement) loadEndplaysection(eighthFinalBottomElement, filteredMatches,endplayname, "eighthfinalebottom", 5);
-                if (quarterFinalElement) loadEndplaysection(quarterFinalElement, filteredMatches,endplayname, "quarterfinale", 1);
-                if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches,endplayname, "quarterfinalebottom", 3);
-                if (semiFinalElement) loadEndplaysection(semiFinalElement, filteredMatches,endplayname, "semifinal", 1);
-                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, endplayname,"semifinalbottom", 2);
-                if (finalElement) loadEndplaysection(finalElement, filteredMatches,endplayname, "finale", 1);
+                if (eighthFinalElement) loadEndplaysection(eighthFinalElement, filteredMatches,"eighthfinale",endplayname,  1);
+                if (eighthFinalBottomElement) loadEndplaysection(eighthFinalBottomElement, filteredMatches, "eighthfinalebottom",endplayname, 5);
+                if (quarterFinalElement) loadEndplaysection(quarterFinalElement, filteredMatches,"quarterfinale",endplayname,  1);
+                if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches, "quarterfinalebottom",endplayname, 3);
+                if (semiFinalElement) loadEndplaysection(semiFinalElement, filteredMatches, "semifinal", endplayname,1);
+                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, "semifinalbottom",endplayname, 2);
+                if (finalElement) loadEndplaysection(finalElement, filteredMatches, "finale",endplayname, 1);
 
                 // Skjul spesifikke elementer i quarterFinalElement og quarterFinalBottomElement
                 if (finalecount === 4) {
