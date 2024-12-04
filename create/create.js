@@ -140,7 +140,10 @@ function saveNewTurnament(wrapperelement) {
     const sport = sportSelector?.value ? [sportSelector.value] : [];
     const organizerSelector = wrapperelement.querySelector('.organizerselector');
     const organizer = organizerSelector?.value ? [organizerSelector.value] : [];
-    const icon = wrapperelement.querySelector('#icon-upload')?.value || ""; // Hent URL for ikonet
+
+    // Hent Uploadcare URL fra widget
+    const iconWidget = uploadcare.Widget(wrapperelement.querySelector('.icon-upload-field'));
+    const icon = iconWidget.value();
 
     // Generer et nytt turneringsobjekt
     const newTournament = {
@@ -158,11 +161,11 @@ function saveNewTurnament(wrapperelement) {
         return;
     }
 
-    // Logg det opprettede objektet
     console.log("Nytt turneringsobjekt opprettet:", newTournament);
 
-    // Send til serveren eller prosesser videre
+    // Lagre objektet på serveren (eksempel)
     // saveTournamentToServer(newTournament);
 }
+
 
 
