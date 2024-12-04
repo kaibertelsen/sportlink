@@ -217,10 +217,18 @@ function listmatch(data, grouptype, scroll) {
 function viewMatch(match){
 
     const header = document.getElementById("headerwrappermatch");
-        header.querySelector(".team1").textContent = match.team1name;
-        header.querySelector(".logoteam1").src = match.team1clublogo;
-        header.querySelector(".team2").textContent = match.team2name;
-        header.querySelector(".logoteam2").src = match.team2clublogo;
+   
+    // Oppdater lagnavn eller bruk plassholdere
+    const team1Name = match.team1name || match.placeholderteam1 || "-";
+    const team2Name = match.team2name || match.placeholderteam2 || "-";
+    header.querySelector(".team1").textContent = team1Name;
+    header.querySelector(".team2").textContent = team2Name;
+
+    // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
+    const team1Logo = header.querySelector(".logoteam1");
+    const team2Logo = header.querySelector(".logoteam2");
+    if (match.team1clublogo) team1Logo.src = match.team1clublogo;
+    if (match.team2clublogo) team2Logo.src = match.team2clublogo;
 
     const resultlable = header.querySelector(".resultlablemacth");
     if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
@@ -241,10 +249,10 @@ function viewMatch(match){
     const endplayLable = header.querySelector(".endplaylablematch");
     if (match.typematch) {
         const matchTypeMap = {
-            "eighthfinale": "ÅF",
-            "quarterfinale": "KF",
-            "semifinale": "SF",
-            "finale": "F"
+            "eighthfinale": "Åttendedelsfinale",
+            "quarterfinale": "Kvartfinale",
+            "semifinale": "Semifinale",
+            "finale": "Finale"
         };
 
         const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
