@@ -51,7 +51,7 @@ function listendplay(data, divisjon) {
 
             let divisionNameLable = elementLibrary.querySelector(".divisionname")?.cloneNode(true);
             divisionNameLable.textContent = division.name;
-            
+            list.appendChild(divisionNameLable);
 
             for (let endplay of endplays) {
                 let endplayname = endplay.endplayname;
