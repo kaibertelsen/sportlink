@@ -61,10 +61,13 @@ function listendplay(data, divisjon) {
                 let endplayname = endplay.endplayname;
                 let finalecount = endplay.finalecount;
 
-                // Klon header og sett inn verdier
-                let header = elementLibrary.querySelector(".headerholder")?.cloneNode(true);
-                if (!header) continue;
+                // Klon container og sett inn verdier
+                let endplayContainer = elementLibrary.querySelector(".endplayheaderendplay")?.cloneNode(true);
+                if (!endplayContainer) continue;
 
+                
+                let header = endplayContainer.querySelector(".headerholder");
+                
                 let contentholderlist = header.querySelector(".contentholder");
                 contentholderlist.style.height = "0px";
                 contentholderlist.style.opacity = "0";
@@ -85,10 +88,10 @@ function listendplay(data, divisjon) {
                     }
                 });
 
-                let endplayNameElement = header.querySelector(".endplayname");
+                let endplayNameElement = endplayContainer.querySelector(".endplayname");
                 if (endplayNameElement) endplayNameElement.textContent = endplayname;
 
-                list.appendChild(header); // Legg til header
+                list.appendChild(endplayContainer); // Legg til header
 
                 // Klon og last inn data i elementer
                 let eighthFinalElement = finalecount === 8
