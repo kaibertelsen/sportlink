@@ -49,9 +49,12 @@ function listendplay(data, divisjon) {
         if (division.endplay && Array.isArray(division.endplay)) {
             let endplays = division.endplay;
 
+            //legger til divisjonsnavnet
+            if(endplays.length>0){
             let divisionNameLable = elementLibrary.querySelector(".divisionname")?.cloneNode(true);
             divisionNameLable.textContent = division.name;
             list.appendChild(divisionNameLable);
+            }
 
             for (let endplay of endplays) {
                 let endplayname = endplay.endplayname;
