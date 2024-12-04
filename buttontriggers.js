@@ -73,32 +73,4 @@ document.getElementById('admincreateturnamentbutton').onclick = function() {
 
 
 
-document.querySelectorAll('input[type="date"]').forEach(input => {
-    const placeholder = input.getAttribute('placeholder');
-
-    // Sett initial tekst hvis ingen dato er valgt
-    if (!input.value) {
-        input.style.color = "#999";
-        input.value = placeholder;
-    }
-
-    // Fjern tekst når brukeren fokuserer
-    input.addEventListener('focus', () => {
-        if (input.value === placeholder) {
-            input.value = "";
-            input.style.color = "#000";
-        }
-    });
-
-    // Legg tilbake tekst hvis feltet er tomt
-    input.addEventListener('blur', () => {
-        if (!input.value) {
-            input.style.color = "#999";
-            input.value = placeholder;
-        }
-    });
-});
-
-
-
 
