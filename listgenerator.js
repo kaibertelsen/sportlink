@@ -1,4 +1,4 @@
-function listTournament(tournament){
+function listTournament(tournament) {
     const list = document.getElementById("maintournamentlist");
     list.replaceChildren();
     const elementlibrary = document.getElementById("elementlibrary");
@@ -10,7 +10,7 @@ function listTournament(tournament){
         rowelement.dataset.organizer = item.organizer[0];
         rowelement.onclick = function() {
             loadTourment(item);
-        }
+        };
 
         const nameelement = rowelement.querySelector(".turnname");
         nameelement.textContent = item.name;
@@ -25,24 +25,48 @@ function listTournament(tournament){
         const iconsportelement = rowelement.querySelector(".sporticon");
         iconsportelement.removeAttribute('srcset');
         iconsportelement.src = item.sporticon[0];
-        
-        const statuslableelement = rowelement.querySelector(".sattuslable");
-        if(isDatePassed(item.startdate)){
-                if(item?.enddate && isDatePassed(item.enddate)){
-                    statuslableelement.textContent = "Er avsluttet!";
-                    statuslableelement.style.color = mapColors("textoff");
-                }else{
-                    statuslableelement.textContent = "Spilles nå!";
-                    statuslableelement.style.color = mapColors("main");
-                }
-        }else{
-        statuslableelement.textContent = statusDatetoplay(item.startdate);
-        }
-        
-        list.appendChild(rowelement);
-      }
 
+        const statuslableelement = rowelement.querySelector(".sattuslable");
+
+        if (isDatePassed(item.startdate)) {
+            if (item?.enddate && isDatePassed(item.enddate)) {
+                statuslableelement.textContent = "Er avsluttet!";
+                statuslableelement.style.color = mapColors("textoff");
+            } else {
+                statuslableelement.textContent = "Spilles nå!";
+                statuslableelement.style.color = mapColors("main");
+            }
+        } else {
+            // Start en live nedtelling til startdatoen
+            const startDate = new Date(item.startdate);
+
+            function updateCountdown() {
+                const now = new Date();
+                const timeDiff = startDate - now;
+
+                if (timeDiff <= 0) {
+                    statuslableelement.textContent = "Starter nå!";
+                    statuslableelement.style.color = mapColors("main");
+                    clearInterval(countdownInterval); // Stopp nedtelling når datoen er nådd
+                    return;
+                }
+
+                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+                statuslableelement.textContent = `${days}d, ${hours}t, ${minutes}m`;
+                statuslableelement.style.color = mapColors("second");
+            }
+
+            updateCountdown(); // Kjør første oppdatering umiddelbart
+            const countdownInterval = setInterval(updateCountdown, 60000); // Oppdater hvert minutt
+        }
+
+        list.appendChild(rowelement);
+    }
 }
+
 
 function listSports(tournament) {
     const list = document.getElementById("sportlist");
