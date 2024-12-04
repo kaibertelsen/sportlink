@@ -33,3 +33,24 @@ document.getElementById('buttontoturnament').onclick = function() {
     document.getElementById('tabtoturnering').click();
 }
    
+
+document.getElementById('admincreateturnamentbutton').onclick = function() {
+    // Finn elementet som skal kopieres
+    const createTurnamentHolder = document.getElementById('creatturnamentholder');
+    
+    // Klon elementet
+    const clonedElement = createTurnamentHolder.cloneNode(true);
+
+    // Finn containeren der elementet skal legges til
+    const containerTurnament = document.getElementById('containerturnament');
+    
+
+    // Legg det klonede elementet øverst i containeren
+    containerTurnament.insertBefore(clonedElement, containerTurnament.firstChild);
+};
+
+
+
+
+
+
