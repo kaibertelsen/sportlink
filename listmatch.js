@@ -91,10 +91,10 @@ function listmatch(data, grouptype, scroll) {
             const endplayLable = matchelement.querySelector(".endplaylable");
             if (match.typematch) {
                 const matchTypeMap = {
-                    "eighthfinale": "Åttendedelsfinale",
-                    "quarterfinale": "Kvartfinale",
-                    "semifinale": "Semifinale",
-                    "finale": "Finale"
+                    "eighthfinale": "ÅF",
+                    "quarterfinale": "KF",
+                    "semifinale": "SF",
+                    "finale": "F"
                 };
         
                 const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
