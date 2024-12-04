@@ -86,11 +86,6 @@ function listendplay(data, divisjon) {
 
                 let contentholderlist = endplayContainer.querySelector(".contentholder");
 
-                if(activeDivision == ""){
-                contentholderlist.style.height = "0px";
-                contentholderlist.style.opacity = "0";
-                }
-
                 let endplayNameElement = endplayContainer.querySelector(".endplayname");
                 if (endplayNameElement) endplayNameElement.textContent = endplayname;
 
@@ -156,11 +151,10 @@ function listendplay(data, divisjon) {
                     if (eighthFinalBottomElement) contentholderlist.appendChild(eighthFinalBottomElement);
                 }
 
-
-
-
-
-
+                if(activeDivision == ""){
+                    contentholderlist.style.height = "0px";
+                    contentholderlist.style.opacity = "0";
+                }
             }
         }
     }
