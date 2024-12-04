@@ -16,7 +16,11 @@ function listTournament(tournament) {
         nameelement.textContent = item.name;
 
         const dateelement = rowelement.querySelector(".datename");
-        dateelement.textContent = formatDate(item.startdate);
+        const startDate = new Date(item.startdate);
+        dateelement.textContent = startDate.toLocaleDateString("no-NO", {
+            day: "2-digit",
+            month: "short"
+        }).replace('.', ''); // Fjerner punktum fra måneden
 
         const iconelement = rowelement.querySelector(".turnicon");
         iconelement.removeAttribute('srcset');
@@ -38,8 +42,6 @@ function listTournament(tournament) {
             }
         } else {
             // Start en live nedtelling til startdatoen
-            const startDate = new Date(item.startdate);
-
             function updateCountdown() {
                 const now = new Date();
                 const timeDiff = startDate - now;
@@ -54,18 +56,20 @@ function listTournament(tournament) {
                 const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-                statuslableelement.textContent = `${days}d, ${hours}t, ${minutes}m`;
+                statuslableelement.textContent = `${days}d, ${hours}t, ${minutes}m, ${seconds}s`;
                 statuslableelement.style.color = mapColors("second");
             }
 
             updateCountdown(); // Kjør første oppdatering umiddelbart
-            const countdownInterval = setInterval(updateCountdown, 60000); // Oppdater hvert minutt
+            const countdownInterval = setInterval(updateCountdown, 1000); // Oppdater hvert sekund
         }
 
         list.appendChild(rowelement);
     }
 }
+
 
 
 function listSports(tournament) {
