@@ -125,6 +125,7 @@ function handleDivisionButtonClick(item) {
     // Oppdater kamp- og lagvisninger
     listmatch(matches, "dato",false);
     listteams(teams);
+    listendplay(matches,endplay);
 }
 
 // Funksjon for å hente ID-en til aktivt filter
