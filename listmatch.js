@@ -157,7 +157,7 @@ function listmatch(data, grouptype, scroll) {
                 match.goalteam1 = team1SetsWon;
                 match.goalteam2 = team2SetsWon;
             } 
-            
+
             settlist.style.display = "none";
             
         
@@ -263,6 +263,13 @@ function viewMatch(match){
         endplayLable.style.display = "none";
     }
 
+    const textturnamentname = header.querySelector(".turnamentname");
+    if(textturnamentname){textturnamentname.textContent = match.tournament};
+    
+    const TurnamentLogo = header.querySelector(".icon");
+    if (activetournament?.icon) {TurnamentLogo.src = activetournament.icon};
+   
+
     const matchsettholder = document.getElementById("thismatchsett");
     let settisSett = false;
     // Håndter sett 1
@@ -319,8 +326,6 @@ function viewMatch(match){
         };
     
         // Oppdater matchinfo med sjekk for tomme eller manglende verdier
-        updateTextContent(".turnamentname", match.tournament);
-        matchinfo.querySelector(".icon").src = activetournament.icon;
         updateTextContent(".field", match.fieldname);
         updateTextContent(".refereename", match.refereename);
 
