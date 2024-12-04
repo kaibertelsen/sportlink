@@ -58,7 +58,10 @@ function listTournament(tournament) {
                 const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-                statuslableelement.textContent = `${days}d ${hours}t ${minutes}m ${seconds}s`;
+                // Formater tid med to sifre
+                const formatTwoDigits = (number) => number.toString().padStart(2, '0');
+
+                statuslableelement.textContent = `${formatTwoDigits(days)}d ${formatTwoDigits(hours)}t ${formatTwoDigits(minutes)}m ${formatTwoDigits(seconds)}s`;
             }
 
             updateCountdown(); // Kjør første oppdatering umiddelbart
@@ -68,8 +71,6 @@ function listTournament(tournament) {
         list.appendChild(rowelement);
     }
 }
-
-
 
 function listSports(tournament) {
     const list = document.getElementById("sportlist");
