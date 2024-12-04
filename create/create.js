@@ -143,8 +143,7 @@ function saveNewTurnament(wrapperelement) {
     const organizer = organizerSelector?.value ? [organizerSelector.value] : [];
 
     // Hent Uploadcare URL fra widget
-    const iconWidget = uploadcare.Widget(wrapperelement.querySelector('.icon-upload-field'));
-    const icon = iconWidget.value();
+    const icon = wrapperelement.querySelector('lr-data-output [input-name="icon"]').value || "";
 
     // Generer et nytt turneringsobjekt
     const newTournament = {
