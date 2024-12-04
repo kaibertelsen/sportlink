@@ -98,7 +98,7 @@ function listmatch(data, grouptype, scroll) {
                 };
         
                 const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
-                endplayLable.textContent = `${endplayText} ${match.endplay || ""}`;
+                endplayLable.textContent = `${endplayText} - ${match.endplay || ""}`;
                 endplayLable.style.display = "block";
             } else {
                 endplayLable.style.display = "none";
