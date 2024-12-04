@@ -62,7 +62,7 @@ function listendplay(data, divisjon) {
                 let finalecount = endplay.finalecount;
 
                 // Klon header og sett inn verdier
-                let header = elementLibrary.querySelector(".endplayheaderendplay")?.cloneNode(true);
+                let header = elementLibrary.querySelector(".headerholder")?.cloneNode(true);
                 if (!header) continue;
 
                 let contentholderlist = header.querySelector(".contentholder");
