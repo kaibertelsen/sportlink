@@ -58,8 +58,7 @@ function listTournament(tournament) {
                 const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-                statuslableelement.textContent = `${days}d, ${hours}t, ${minutes}m, ${seconds}s`;
-                statuslableelement.style.color = mapColors("second");
+                statuslableelement.textContent = `${days}d ${hours}t ${minutes}m ${seconds}s`;
             }
 
             updateCountdown(); // Kjør første oppdatering umiddelbart
