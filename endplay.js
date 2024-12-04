@@ -70,6 +70,7 @@ function listendplay(data, divisjon) {
                 contentholderlist.style.opacity = "0";
 
                 // Legg til animasjon ved klikk på header
+                /*
                 header.addEventListener("click", () => {
                     if (contentholderlist.style.height === "0px") {
                         setTimeout(() => {
@@ -83,7 +84,7 @@ function listendplay(data, divisjon) {
                         contentholderlist.style.height = "0px";
                     }
                 });
-
+*/
                 let endplayNameElement = header.querySelector(".endplayname");
                 if (endplayNameElement) endplayNameElement.textContent = endplayname;
 
