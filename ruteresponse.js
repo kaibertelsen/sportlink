@@ -5,6 +5,9 @@ function ruteresponse(data,id){
         getMatchresponse(data,id);
     }else if(id == "getTeamresponse"){
         getTeamresponse(data);
+    }else if(id == "responseOrganizerlist"){
+        responseOrganizerlist(data);
+    }else if(id == "responseSportlist"){
+        responseSportlist(data);
     }
-    
 }

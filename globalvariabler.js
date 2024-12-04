@@ -6,3 +6,5 @@ var endplay;
 var teams;
 var activeorganizer;
 var activesporttype;
+var orgaNizer;
+var SportList;
