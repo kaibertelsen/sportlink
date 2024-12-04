@@ -67,14 +67,9 @@ function listendplay(data, divisjon) {
 
                 
                 let header = endplayContainer.querySelector(".headerholder");
+                  // Legg til animasjon ved klikk på header
                 
-                let contentholderlist = header.querySelector(".contentholder");
-                contentholderlist.style.height = "0px";
-                contentholderlist.style.opacity = "0";
-
-                // Legg til animasjon ved klikk på header
-                
-                header.addEventListener("click", () => {
+                  header.addEventListener("click", () => {
                     if (contentholderlist.style.height === "0px") {
                         setTimeout(() => {
                             contentholderlist.style.transition = "opacity 0.5s ease-in-out, height 0.5s ease-in-out";
@@ -87,6 +82,11 @@ function listendplay(data, divisjon) {
                         contentholderlist.style.height = "0px";
                     }
                 });
+
+
+                let contentholderlist = endplayContainer.querySelector(".contentholder");
+                contentholderlist.style.height = "0px";
+                contentholderlist.style.opacity = "0";
 
                 let endplayNameElement = endplayContainer.querySelector(".endplayname");
                 if (endplayNameElement) endplayNameElement.textContent = endplayname;
