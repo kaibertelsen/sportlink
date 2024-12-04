@@ -86,41 +86,83 @@ function responseOrganizerlist(data) {
 }
 
 
-function startCreateTurnamentWrapper(){
+function startCreateTurnamentWrapper() {
     // Finn elementet som skal kopieres
     const createTurnamentHolder = document.getElementById('creatturnamentholder');
-       
+
     if (!createTurnamentHolder) {
         console.warn('Element med id "creatturnamentholder" finnes ikke.');
         return;
     }
-   
+
     // Finn containeren der elementet skal legges til
     const containerTurnament = document.getElementById('containerturnament');
-    
+
     if (!containerTurnament) {
         console.warn('Element med id "containerturnament" finnes ikke.');
         return;
     }
-   
+
     // Sjekk om elementet allerede er lagt til
     const existingElement = containerTurnament.querySelector('.cloned-turnament-holder');
-   
+
     if (existingElement) {
         // Fjern det eksisterende elementet
         containerTurnament.removeChild(existingElement);
     } else {
         // Klon elementet
         const clonedElement = createTurnamentHolder.cloneNode(true);
-        clonedElement.id = "activecontainerturnament"
-        // Legg til en unik klasse for enklere identifikasjon
-        clonedElement.classList.add('cloned-turnament-holder');
-   
+        clonedElement.id = "activecontainerturnament"; // Nytt ID for klonede elementer
+        clonedElement.classList.add('cloned-turnament-holder'); // Unik klasse for enklere identifikasjon
+
         // Legg det klonede elementet øverst i containeren
         containerTurnament.insertBefore(clonedElement, containerTurnament.firstChild);
+
+        // Koble "Opprett turnering"-knappen til `saveNewTurnament`
+        const opprettButton = clonedElement.querySelector('.opprettbutton');
+        if (opprettButton) {
+            opprettButton.onclick = function (event) {
+                event.preventDefault();
+                saveNewTurnament(clonedElement);
+            };
+        }
     }
-   
-   
-   
-   
-   }
+}
+
+
+
+function saveNewTurnament(wrapperelement) {
+    // Hent verdier fra inputfeltene
+    const name = wrapperelement.querySelector('.inputname')?.value.trim() || "";
+    const startdate = wrapperelement.querySelector('.startdate')?.value || "";
+    const enddate = wrapperelement.querySelector('.enddate')?.value || "";
+
+    const sportSelector = wrapperelement.querySelector('.sportselector');
+    const sport = sportSelector?.value ? [sportSelector.value] : [];
+
+    const organizerSelector = wrapperelement.querySelector('.organizerselector');
+    const organizer = organizerSelector?.value ? [organizerSelector.value] : [];
+
+    // Generer et nytt turneringsobjekt
+    const newTournament = {
+        name: name,
+        startdate: startdate,
+        enddate: enddate,
+        sport: sport,
+        organizer: organizer,
+        icon: "" // Sett eventuelt ikon senere hvis nødvendig
+    };
+
+    // Sjekk om alle påkrevde felt er fylt ut
+    if (!name || !startdate || !enddate || sport.length === 0 || organizer.length === 0) {
+        alert("Vennligst fyll ut alle feltene.");
+        return;
+    }
+
+    // Lagre objektet på serveren og lokalt (for demonstrasjon lagrer vi det kun i konsollen)
+    console.log("Nytt turneringsobjekt opprettet:", newTournament);
+
+    // Kall en funksjon for å lagre på server (bruk async/await eller fetch her)
+    // saveTournamentToServer(newTournament);
+}
+
