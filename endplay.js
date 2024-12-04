@@ -159,7 +159,9 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch,startInde
     // Loop gjennom hvert "endplaymatch"-element
     endplayMatches.forEach((matchElement, index) => {
         // Finn match hvor `index + 1` tilsvarer `endplayplace`
-        const matchData = filteredMatches.find(match => match.endplayplace === index + startIndex);
+
+        
+        const matchData = filteredMatches.find(match => Number(match.endplayplace) === index + startIndex);
 
         if (!matchData) return; // Hopp over hvis ingen kamp er funnet
 
