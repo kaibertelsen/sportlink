@@ -70,30 +70,52 @@ function listmatch(data, grouptype, scroll) {
         for (let match of item.matches) {
             const matchelement = matchholder.cloneNode(true);
             matchlist.appendChild(matchelement);
-
+        
             matchelement.onclick = function() {
                 viewMatch(match);
+            };
+        
+            // Oppdater lagnavn eller bruk plassholdere
+            const team1Name = match.team1name || match.placeholderteam1 || "Unknown";
+            const team2Name = match.team2name || match.placeholderteam2 || "Unknown";
+            matchelement.querySelector(".team1").textContent = team1Name;
+            matchelement.querySelector(".team2").textContent = team2Name;
+        
+            // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
+            const team1Logo = matchelement.querySelector(".logoteam1");
+            const team2Logo = matchelement.querySelector(".logoteam2");
+            if (match.team1clublogo) team1Logo.src = match.team1clublogo;
+            if (match.team2clublogo) team2Logo.src = match.team2clublogo;
+        
+            // Oppdater sluttspillinformasjon hvis tilgjengelig
+            const endplayLable = matchelement.querySelector(".endplaylable");
+            if (match.typematch) {
+                const matchTypeMap = {
+                    "eighthfinale": "Åttendedelsfinale",
+                    "quarterfinale": "Kvartfinale",
+                    "semifinale": "Semifinale",
+                    "finale": "Finale"
+                };
+        
+                const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
+                endplayLable.textContent = `${endplayText} ${match.endplay || ""}`;
+                endplayLable.style.display = "block";
+            } else {
+                endplayLable.style.display = "none";
             }
-
-            matchelement.querySelector(".team1").textContent = match.team1name;
-            matchelement.querySelector(".logoteam1").src = match.team1clublogo;
-            matchelement.querySelector(".team2").textContent = match.team2name;
-            matchelement.querySelector(".logoteam2").src = match.team2clublogo;
-
+        
             const divisionlable = matchelement.querySelector(".divisionlable");
-
+        
             // Bestem tekstinnholdet basert på `activeDivision` og tilgjengelige data
             let labelText;
-            
             if (activeDivision === "") {
                 // Når ingen divisjonsfilter er aktivt, inkluder både divisionname og groupname
                 labelText = `${match.divisionname || ""} ${match.groupname ? `- ${match.groupname}` : ""}`.trim();
-
             } else {
                 // Når divisjonsfilter er aktivt, bruk kun groupname
                 labelText = match.groupname || "";
             }
-            
+        
             // Sett tekst og stil hvis `labelText` har verdi, ellers skjul elementet
             if (labelText) {
                 divisionlable.textContent = labelText;
@@ -102,45 +124,42 @@ function listmatch(data, grouptype, scroll) {
             } else {
                 divisionlable.style.display = "none";
             }
-            
-
-
+        
             const settlist = matchelement.querySelector(".settlist");
             const setKeys = ["sett1", "sett2", "sett3"];
             const hasRequiredSetScores = match.sett1 && match.sett2;
-
+        
             if (hasRequiredSetScores) {
                 settlist.style.display = "grid";
                 const settdivnode = settlist.querySelector(".settdiv");
                 let columnCount = 0;
                 let team1SetsWon = 0;
                 let team2SetsWon = 0;
-
+        
                 for (let i = 0; i < setKeys.length; i++) {
                     if (match[setKeys[i]]) {
                         const settdiv = settdivnode.cloneNode(true);
                         const setttextlable = settdiv.querySelector(".setttextlable");
                         setttextlable.textContent = match[setKeys[i]];
-
+        
                         const [team1Score, team2Score] = match[setKeys[i]].split('-').map(Number);
                         if (team1Score > team2Score) team1SetsWon++;
                         else if (team2Score > team1Score) team2SetsWon++;
-
+        
                         settlist.appendChild(settdiv);
                         columnCount++;
                     }
                 }
-
+        
                 settdivnode.remove();
                 settlist.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
-
+        
                 match.goalteam1 = team1SetsWon;
                 match.goalteam2 = team2SetsWon;
-                settlist.style.display = "none";
             } else {
                 settlist.style.display = "none";
             }
-
+        
             const resultlable = matchelement.querySelector(".resultlable");
             if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
                 resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
@@ -150,18 +169,20 @@ function listmatch(data, grouptype, scroll) {
             } else {
                 resultlable.textContent = formatdatetoTime(match.time);
                 resultlable.style.fontWeight = "normal";
-
+        
                 if (!firstUnplayedMatch) {
                     firstUnplayedMatch = matchelement;
                 }
             }
-
+        
             if (item.matches.indexOf(match) === item.matches.length - 1) {
                 matchelement.querySelector(".bordholder").style.borderBottom = 'none';
             }
-
+        
             matchlist.appendChild(matchelement);
         }
+        
+        
 
         matchholder.remove();
         list.appendChild(rowelement);
