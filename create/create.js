@@ -2,7 +2,7 @@
 function startCreateTurnament(){
 
 getOrganizerlist(clientID);
-getSportlist(clientID);
+getSportlist();
 startCreateTurnamentWrapper();
 }
 
@@ -16,9 +16,9 @@ function getOrganizerlist(klientid){
 }
 
 
-function getSportlist(klientid){
+function getSportlist(){
 
-    var body = airtablebodylistAND({klientid:klientid});
+    var body = airtablebodylistAND({section:1});
     Getlistairtable(baseId,"tbl2FRAzV1Ze5DdYh",body,"responseSportlist");
 
 }
