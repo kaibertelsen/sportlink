@@ -6,8 +6,6 @@ getSportlist();
 startCreateTurnamentWrapper();
 }
 
-
-
 function getOrganizerlist(klientid){
 
     var body = airtablebodylistAND({klientid:klientid,archived:0});
@@ -28,8 +26,11 @@ function responseSportlist(data) {
     const sportlist = rawdatacleaner(data);
     SportList = sportlist; // Global variabel for videre bruk
 
-    // Hent selector-elementet med id 'sport'
-    const sportSelector = document.getElementById("sport");
+    // Hent selector-elementet med klassen 'sportselector' innenfor 'activecontainerturnament'
+    const activeContainer = document.getElementById("activecontainerturnament");
+
+    const sportSelector = activeContainer.querySelector(".sportselector");
+
 
     // Tøm tidligere alternativer
     sportSelector.innerHTML = "";
@@ -47,24 +48,27 @@ function responseSportlist(data) {
         option.textContent = sport.name; // Sett teksten til sportens navn
         sportSelector.appendChild(option);
     });
+
+    console.log("Sportlist oppdatert:", sportlist);
 }
-
-
-
-
 
 
 function responseOrganizerlist(data) {
     // Rens rådata
     const organizers = rawdatacleaner(data);
-    orgaNizer = organizers;
-    // Hent selector-elementet med id 'organizer'
-    const organizerSelector = document.getElementById("organizer");
+    orgaNizer = organizers; // Global variabel for videre bruk
+
+    // Hent holder-elementet med id 'activecontainerturnament'
+    const activeContainer = document.getElementById("activecontainerturnament");
+
+
+    // Hent selector-elementet med klassen 'organizerselector' innenfor holderen
+    const organizerSelector = activeContainer.querySelector(".organizerselector");
 
     // Tøm tidligere alternativer
     organizerSelector.innerHTML = "";
 
-    // Legg til en standard "Velg" option
+    // Legg til en standard "Velg arrangement" option
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.textContent = "Velg arrangement";
@@ -77,10 +81,9 @@ function responseOrganizerlist(data) {
         option.textContent = organizer.name; // Sett teksten til organisatørens navn
         organizerSelector.appendChild(option);
     });
+
+    console.log("Organizerlist oppdatert:", organizers);
 }
-
-
-
 
 
 function startCreateTurnamentWrapper(){
@@ -109,7 +112,7 @@ function startCreateTurnamentWrapper(){
     } else {
         // Klon elementet
         const clonedElement = createTurnamentHolder.cloneNode(true);
-   
+        clonedElement.id = "activecontainerturnament"
         // Legg til en unik klasse for enklere identifikasjon
         clonedElement.classList.add('cloned-turnament-holder');
    
