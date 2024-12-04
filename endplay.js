@@ -141,6 +141,12 @@ function listendplay(data, divisjon) {
                     if (quarterFinalBottomElement) contentholderlist.appendChild(quarterFinalBottomElement);
                     if (eighthFinalBottomElement) contentholderlist.appendChild(eighthFinalBottomElement);
                 }
+
+
+
+
+
+
             }
         }
     }
@@ -164,6 +170,11 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
 
         // Sjekk om match har riktig `endplayName`
         if (matchData.endplay !== endplayName) return;
+
+        // Legg til klikkhendelse for å starte `viewMatch(matchData)`
+        matchElement.addEventListener("click", () => {
+             viewMatch(matchData);
+        });
 
         // Hent spesifikke elementer inne i matchElement
         const logo1 = matchElement.querySelector(".logo1");
