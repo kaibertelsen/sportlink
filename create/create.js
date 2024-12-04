@@ -87,7 +87,7 @@ function responseOrganizerlist(data) {
 
 
 function startCreateTurnamentWrapper() {
-    // Finn elementet som skal kopieres
+    // Finn elementet som skal flyttes
     const createTurnamentHolder = document.getElementById('creatturnamentholder');
 
     if (!createTurnamentHolder) {
@@ -103,27 +103,28 @@ function startCreateTurnamentWrapper() {
         return;
     }
 
-    // Sjekk om elementet allerede er lagt til
-    const existingElement = containerTurnament.querySelector('.cloned-turnament-holder');
+    // Finn opprinnelig plassering (kan være en annen container)
+    const originalParent = document.getElementById('originalContainerTurnament');
 
-    if (existingElement) {
-        // Fjern det eksisterende elementet
-        containerTurnament.removeChild(existingElement);
+    if (!originalParent) {
+        console.warn('Element med id "originalContainerTurnament" (opprinnelig plassering) finnes ikke.');
+        return;
+    }
+
+    // Sjekk hvor `createTurnamentHolder` er
+    if (containerTurnament.contains(createTurnamentHolder)) {
+        // Flytt tilbake til opprinnelig plassering
+        originalParent.appendChild(createTurnamentHolder);
     } else {
-        // Klon elementet
-        const clonedElement = createTurnamentHolder.cloneNode(true);
-        clonedElement.id = "activecontainerturnament"; // Nytt ID for klonede elementer
-        clonedElement.classList.add('cloned-turnament-holder'); // Unik klasse for enklere identifikasjon
-
-        // Legg det klonede elementet øverst i containeren
-        containerTurnament.insertBefore(clonedElement, containerTurnament.firstChild);
+        // Flytt elementet til containeren
+        containerTurnament.insertBefore(createTurnamentHolder, containerTurnament.firstChild);
 
         // Koble "Opprett turnering"-knappen til `saveNewTurnament`
-        const opprettButton = clonedElement.querySelector('.opprettbutton');
+        const opprettButton = createTurnamentHolder.querySelector('.opprettbutton');
         if (opprettButton) {
             opprettButton.onclick = function (event) {
                 event.preventDefault();
-                saveNewTurnament(clonedElement);
+                saveNewTurnament(createTurnamentHolder);
             };
         }
     }
