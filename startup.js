@@ -2,6 +2,7 @@
 MemberStack.onReady.then(function(member) {
     if (member.loggedIn){
     //hente alle turneringer fra server
+    clientID = member.klient;
     getTournament(member.klient);
 
     document.getElementById("turnamenttabbutton").click();

@@ -8,3 +8,4 @@ var activeorganizer;
 var activesporttype;
 var orgaNizer;
 var SportList;
+var clientID;

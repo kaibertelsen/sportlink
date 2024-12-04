@@ -1,8 +1,8 @@
 
 function startCreateTurnament(){
 
-getOrganizerlist(klientid);
-getSportlist(klientid);
+getOrganizerlist(clientID);
+getSportlist(clientID);
 startCreateTurnamentWrapper();
 }
 
