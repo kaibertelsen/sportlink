@@ -250,7 +250,7 @@ function viewMatch(match){
     const endplayLable = header.querySelector(".endplaylablematch");
     if (match.typematch) {
         const matchTypeMap = {
-            "eighthfinale": "Åttendedelsfinale",
+            "eighthfinale": "8-delsfinale",
             "quarterfinale": "Kvartfinale",
             "semifinale": "Semifinale",
             "finale": "Finale"
