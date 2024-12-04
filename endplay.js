@@ -196,16 +196,17 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, startInd
                 const matchTime = new Date(matchData.time);
             
                 // Hent klokkeslett og dato hver for seg
-                const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false }; // Sikrer 24-timers format med ledende nuller
-                const dateOptions = { day: '2-digit', month: 'short' }; // Sørger for at dagen også har to sifre
+                const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false }; // Sikrer 24-timers format
+                const dateOptions = { day: '2-digit', month: 'short' }; // Sørger for korrekt datoformat
             
                 const timeString = matchTime.toLocaleTimeString('no-NO', timeOptions); // Format tid
                 const dateString = matchTime.toLocaleDateString('no-NO', dateOptions).replace('.', ''); // Format dato og fjern punktum
             
-                // Kombiner tid og dato i ønsket format
-                datelable.textContent = `${timeString} ${dateString}`;
+                // Sett inn tid og dato på separate linjer
+                datelable.innerHTML = `${timeString}<br>${dateString}`;
                 datelable.style.display = "block";
             }
+            
             
 
             // Skjul mål og lablemidt
