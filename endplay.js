@@ -59,14 +59,13 @@ function listendplay(data, divisjon) {
 
                 let contentholderlist = header.querySelector(".contentholder");
                 //contentholderlist.style.display = "none"; // Start som skjult
+                contentholderlist.style.height = "0px";
+                contentholderlist.style.opacity = "0";
 
                 // Legg til animasjon ved klikk på header
                 header.addEventListener("click", () => {
                     if (contentholderlist.style.height === "0px") {
                         // Fade og utvid høyden
-                        //contentholderlist.style.display = "block";
-                        contentholderlist.style.opacity = "0";
-                        contentholderlist.style.height = "0px";
                         setTimeout(() => {
                             contentholderlist.style.transition = "opacity 0.5s ease-in-out, height 0.5s ease-in-out";
                             contentholderlist.style.opacity = "1";
@@ -77,9 +76,6 @@ function listendplay(data, divisjon) {
                         contentholderlist.style.transition = "opacity 0.5s ease-in-out, height 0.5s ease-in-out";
                         contentholderlist.style.opacity = "0";
                         contentholderlist.style.height = "0px";
-                        setTimeout(() => {
-                           // contentholderlist.style.display = "none";
-                        }, 500); // Vent til fading og krymping er ferdig
                     }
                 });
 
