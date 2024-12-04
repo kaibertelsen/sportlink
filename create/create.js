@@ -113,11 +113,11 @@ function startCreateTurnamentWrapper() {
         return;
     }
 
-    // Finn opprinnelig plassering (kan være en annen container)
-    const originalParent = document.getElementById('creatturnamentholder').parentElement;
+    // Finn opprinnelig plassering (statisk definert)
+    const originalParent = document.getElementById('elementlibrary');
 
     if (!originalParent) {
-        console.warn('Element med id "originalContainerTurnament" (opprinnelig plassering) finnes ikke.');
+        console.warn('Element med id "originalContainerTurnament" finnes ikke.');
         return;
     }
 
@@ -139,6 +139,7 @@ function startCreateTurnamentWrapper() {
         }
     }
 }
+
 
 
 
