@@ -112,12 +112,24 @@ function listendplay(data, divisjon) {
 
                 // Last inn kamper i hvert element
                 if (eighthFinalElement) loadEndplaysection(eighthFinalElement, filteredMatches, "eighthfinale", 1);
-                if (eighthFinalBottomElement) loadEndplaysection(eighthFinalBottomElement, filteredMatches, "eighthfinale", 5);
+                if (eighthFinalBottomElement) loadEndplaysection(eighthFinalBottomElement, filteredMatches, "eighthfinalebottom", 5);
                 if (quarterFinalElement) loadEndplaysection(quarterFinalElement, filteredMatches, "quarterfinale", 1);
-                if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches, "quarterfinale", 5);
+                if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches, "quarterfinalebottom", 3);
                 if (semiFinalElement) loadEndplaysection(semiFinalElement, filteredMatches, "semifinal", 1);
-                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, "semifinal", 2);
+                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, "semifinalbottom", 2);
                 if (finalElement) loadEndplaysection(finalElement, filteredMatches, "finale", 1);
+
+                // Skjul spesifikke elementer i quarterFinalElement og quarterFinalBottomElement
+                if (finalecount === 4) {
+                    if (quarterFinalElement) {
+                        let topWireElements = quarterFinalElement.querySelectorAll(".wiresystem.topp");
+                        topWireElements.forEach(el => (el.style.display = "none"));
+                    }
+                    if (quarterFinalBottomElement) {
+                        let bottomWireElements = quarterFinalBottomElement.querySelectorAll(".wiresystem.bottom");
+                        bottomWireElements.forEach(el => (el.style.display = "none"));
+                    }
+                }
 
                 // Legg til elementer i ønsket rekkefølge
                 if (contentholderlist) {
