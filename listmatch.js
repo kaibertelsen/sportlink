@@ -156,9 +156,10 @@ function listmatch(data, grouptype, scroll) {
         
                 match.goalteam1 = team1SetsWon;
                 match.goalteam2 = team2SetsWon;
-            } else {
-                settlist.style.display = "none";
-            }
+            } 
+            
+            settlist.style.display = "none";
+            
         
             const resultlable = matchelement.querySelector(".resultlable");
             if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
