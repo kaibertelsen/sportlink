@@ -238,7 +238,7 @@ function viewMatch(match){
     divisionLabel.textContent = `${match.divisionname || ""} ${match.groupname ? `- ${match.groupname}` : ""}`.trim();
 
     // Oppdater sluttspillinformasjon hvis tilgjengelig
-    const endplayLable = matchelement.querySelector(".endplaylableMatch");
+    const endplayLable = header.querySelector(".endplaylableMatch");
     if (match.typematch) {
         const matchTypeMap = {
             "eighthfinale": "ÅF",
