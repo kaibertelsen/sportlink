@@ -266,10 +266,6 @@ function viewMatch(match){
     const textturnamentname = header.querySelector(".turnamentname");
     if(textturnamentname){textturnamentname.textContent = match.tournament};
     
-    const TurnamentLogo = header.querySelector(".icon");
-    if (activetournament?.icon) {TurnamentLogo.src = activetournament.icon};
-   
-
     const matchsettholder = document.getElementById("thismatchsett");
     let settisSett = false;
     // Håndter sett 1
