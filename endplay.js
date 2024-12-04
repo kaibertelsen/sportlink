@@ -121,8 +121,15 @@ function listendplay(data, divisjon) {
                 if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches, "quarterfinalebottom",endplayname, 3);
                 if (semiFinalElement) loadEndplaysection(semiFinalElement, filteredMatches, "semifinal", endplayname,1);
                 if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, "semifinalbottom",endplayname, 2);
-                if (finalElement) loadEndplaysection(finalElement, filteredMatches, "finale",endplayname, 1);
-
+                if (finalElement) {
+                    let endplayNamef = finalElement.querySelector(".endplaynamemidle");
+                    if (endplayNamef) endplayNamef.textContent = endplayname;
+                    
+                    let endplayDivname = finalElement.querySelector(".divisionnamemidle");
+                    if (endplayDivname) endplayDivname.textContent = division.name;
+                    
+                    loadEndplaysection(finalElement, filteredMatches, "finale",endplayname, 1);
+                }
                 // Skjul spesifikke elementer i quarterFinalElement og quarterFinalBottomElement
                 if (finalecount === 4) {
                     if (quarterFinalElement) {
