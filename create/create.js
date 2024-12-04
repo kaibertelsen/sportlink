@@ -114,7 +114,7 @@ function startCreateTurnamentWrapper() {
     }
 
     // Finn opprinnelig plassering (kan være en annen container)
-    const originalParent = document.getElementById('originalContainerTurnament');
+    const originalParent = document.getElementById('creatturnamentholder').parentElement;
 
     if (!originalParent) {
         console.warn('Element med id "originalContainerTurnament" (opprinnelig plassering) finnes ikke.');
