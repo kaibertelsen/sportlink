@@ -137,13 +137,10 @@ function viewteam(team) {
     console.log(team);
 
     const teamheader = document.getElementById("headerwrapperteam");
-    teamheader.querySelector(".teamnameheader").textContent = ream.name;
+    teamheader.querySelector(".teamnameheader").textContent = team.name;
     const teamLogo = matchelement.querySelector(".logoteam");
     if (team.clublogo) teamLogo.src = match.team1clublogo;
     
-
-
-
     // Filtrer kampene for laget
     const filteredMatches = matches.filter(
         match => match.team1 === team.airtable || match.team2 === team.airtable
