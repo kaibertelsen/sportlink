@@ -248,18 +248,10 @@ function viewteam(team) {
         } else {
             resultlable.textContent = formatdatetoTime(match.time);
             resultlable.style.fontWeight = "normal";
-    
-            if (!firstUnplayedMatch) {
-                firstUnplayedMatch = matchelement;
-            }
-        }
-    
-        if (item.matches.indexOf(match) === item.matches.length - 1) {
-            matchelement.querySelector(".bordholder").style.borderBottom = 'none';
         }
     }
 
     document.getElementById("thisteamtabbutton").click();
-    
+
 }
 
