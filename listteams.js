@@ -181,12 +181,19 @@ function viewteam(team) {
             viewMatch(match);
         };
 
-        // Formatér dato
+    // Formatér dato og klokkeslett
         const matchDate = new Date(match.time);
-        const formattedDate = matchDate.toLocaleDateString("no-NO", {
+        const formattedDateTime = matchDate.toLocaleDateString("no-NO", {
             day: "numeric",
             month: "short"
+        }) + " " + matchDate.toLocaleTimeString("no-NO", {
+            hour: "2-digit",
+            minute: "2-digit"
         });
+
+        // Sett dato og klokkeslett i elementet
+        matchelement.querySelector(".teamdatematch").textContent = formattedDateTime;
+
 
         matchelement.querySelector(".teamdatematch").textContent = formattedDate;
 
