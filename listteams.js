@@ -8,8 +8,6 @@ function getTeamresponse(data){
     listteams(teams);
 }
 
-
-
 function listteams(data) {
     const activeDivision = getActiveDivisionFilter();
 
@@ -134,7 +132,6 @@ function listteams(data) {
         }
     }
 }
-
 
 function viewteam(team) {
     console.log(team);
