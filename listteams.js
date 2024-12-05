@@ -139,7 +139,7 @@ function viewteam(team) {
     const teamheader = document.getElementById("headerwrapperteam");
     teamheader.querySelector(".teamnameheader").textContent = team.name;
     const teamLogo = teamheader.querySelector(".logoteam");
-    if (team.clublogo) teamLogo.src = match.team1clublogo;
+    if (team.clublogo) teamLogo.src = team.clublogo;
     
     const thismatchinfo = document.getElementById("thismatchinfo");
 
