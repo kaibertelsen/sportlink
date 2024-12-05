@@ -174,8 +174,7 @@ function saveNewTurnament(wrapperelement) {
     const organizer = organizerSelector?.value ? [organizerSelector.value] : [];
 
     // Hent Uploadcare URL fra lr-data-output
-    const lrDataOutput = wrapperelement.querySelector('lr-data-output');
-    const icon = lrDataOutput?.getAttribute('value') || ""; // Bruk `getAttribute` for å hente verdien
+    const uploaderInputvalue = document.querySelector('[name="my-uploader"]').value;
 
     // Generer et nytt turneringsobjekt
     const newTournament = {
