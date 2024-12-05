@@ -142,12 +142,17 @@ function viewteam(team) {
     const teamLogo = teamheader.querySelector(".logoteam");
     if (team.clublogo) teamLogo.src = team.clublogo;
 
-    const clublogo = teamheader.querySelector(".clublogo");
-    if (team.clublogo) clublogo.src = team.clublogo;
+    
 
 
     const thismatchinfo = document.getElementById("thisteamhinfo");
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
+
+    const clublogo = thismatchinfo.querySelector(".clublogo");
+    if (team.clublogo) clublogo.src = team.clublogo;
+
+
+
     thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "Ukjent divisjon";
 
     // Filtrer kampene for laget
