@@ -98,47 +98,48 @@ function responseOrganizerlist(data) {
 
 function startCreateTurnamentWrapper() {
     // Finn elementet som skal flyttes
-    const createTurnamentHolder = document.getElementById('creatturnamentholder');
+    const creatturnamentholder = document.getElementById('creatturnamentholder');
 
-    if (!createTurnamentHolder) {
+    if (!creatturnamentholder) {
         console.warn('Element med id "creatturnamentholder" finnes ikke.');
         return;
     }
 
     // Finn containeren der elementet skal legges til
-    const containerTurnament = document.getElementById('containerturnament');
+    const creatturnamentlist = document.getElementById('creatturnamentlist');
 
-    if (!containerTurnament) {
-        console.warn('Element med id "containerturnament" finnes ikke.');
+    if (!creatturnamentlist) {
+        console.warn('Element med id "creatturnamentlist" finnes ikke.');
         return;
     }
 
     // Finn opprinnelig plassering (statisk definert)
-    const originalParent = document.getElementById('elementlibrary');
+    const elementlibrary = document.getElementById('elementlibrary');
 
-    if (!originalParent) {
-        console.warn('Element med id "originalContainerTurnament" finnes ikke.');
+    if (!elementlibrary) {
+        console.warn('Element med id "elementlibrary" finnes ikke.');
         return;
     }
 
-    // Sjekk hvor `createTurnamentHolder` er
-    if (containerTurnament.contains(createTurnamentHolder)) {
+    // Sjekk hvor `creatturnamentholder` er
+    if (creatturnamentlist.contains(creatturnamentholder)) {
         // Flytt tilbake til opprinnelig plassering
-        originalParent.appendChild(createTurnamentHolder);
+        elementlibrary.appendChild(creatturnamentholder);
     } else {
         // Flytt elementet til containeren
-        containerTurnament.insertBefore(createTurnamentHolder, containerTurnament.firstChild);
+        creatturnamentlist.appendChild(creatturnamentholder);
 
         // Koble "Opprett turnering"-knappen til `saveNewTurnament`
-        const opprettButton = createTurnamentHolder.querySelector('.opprettbutton');
+        const opprettButton = creatturnamentholder.querySelector('.opprettbutton');
         if (opprettButton) {
             opprettButton.onclick = function (event) {
                 event.preventDefault();
-                saveNewTurnament(createTurnamentHolder);
+                saveNewTurnament(creatturnamentholder);
             };
         }
     }
 }
+
 
 
 
