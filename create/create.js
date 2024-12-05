@@ -207,6 +207,11 @@ function saveNewTurnament(wrapperelement) {
 
     // Send til server
     POSTairtable(baseId, "tblGhVlhWETNvhrWN", JSON.stringify(body), "responseCreateTournament");
+
+        // Finn opprinnelig plassering (statisk definert)
+        const elementlibrary = document.getElementById('elementlibrary');
+        elementlibrary.appendChild(creatturnamentholder);
+
 }
 
 
