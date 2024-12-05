@@ -178,9 +178,8 @@ function saveNewTurnament(wrapperelement) {
     const organizer = organizerSelector?.value ? [organizerSelector.value] : [];
     const icon = wrapperelement.querySelector('.uploadedtrunamentinput')?.value || "";
 
-
     // Generer et nytt turneringsobjekt
-    const newTournament = {
+    const body = {
         name: name,
         startdate: startdate,
         enddate: enddate,
@@ -190,17 +189,37 @@ function saveNewTurnament(wrapperelement) {
     };
 
     // Sjekk om alle påkrevde felt er fylt ut
-    if (!name || !startdate || !enddate || sport.length === 0 || organizer.length === 0) {
+    if (!name || !startdate || !enddate || sport.length === 0 || organizer.length === 0 || !icon) {
         alert("Vennligst fyll ut alle feltene og last opp et ikon.");
         return;
     }
 
-    console.log("Nytt turneringsobjekt opprettet:", newTournament);
+    // Finn loader-elementet
+    const creatturnamentholder = document.getElementById('creatturnamentholder');
+    const loader = creatturnamentholder.querySelector('.loadingholder');
+    if (loader) {
+        // Kopier loaderen inn i parentElement av wrapperelement
+        const parentElement = wrapperelement.parentElement;
+        const clonedLoader = loader.cloneNode(true);
+        parentElement.appendChild(clonedLoader);
+    }
 
-    // Lagre objektet på serveren (eksempel)
-    // saveTournamentToServer(newTournament);
+    // Send til server
+    POSTairtable(baseId, "tblGhVlhWETNvhrWN", JSON.stringify(body), "responseCreateTournament");
 }
 
 
+function responseCreateTournament(data) {
+    const createdTurnament = data.field; // Antar at `data.field` inneholder turneringen
+    tournament.push(createdTurnament); // Legg til turneringen i `tournament`-arrayen
 
+    // Oppdater liste over turneringer
+    listTournament(sortDateArray(tournament, "startdate"));
 
+    // Fjern loader
+    const creatturnamentholder = document.getElementById('creatturnamentholder');
+    const loader = creatturnamentholder.querySelector('.loadingholder');
+    if (loader) {
+        loader.remove();
+    }
+}
