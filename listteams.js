@@ -82,6 +82,11 @@ function listteams(data) {
                 const rowelement = nodeteamhholder.cloneNode(true);
                 contentholder.appendChild(rowelement);
 
+                // Legg til klikkhendelse på rowelement
+                rowelement.addEventListener('click', () => {
+                viewteam(team);
+                });
+
                 // Rangering
                 const rangenr = rowelement.querySelector(".rangenr");
                 rangenr.textContent = range;
@@ -128,4 +133,11 @@ function listteams(data) {
             list.appendChild(copyelement);
         }
     }
+}
+
+
+function viewteam(team){
+
+    console.log(team);
+
 }
