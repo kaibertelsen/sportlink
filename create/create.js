@@ -164,9 +164,23 @@ function startCreateTurnamentWrapper() {
 
 
     const uploader = document.querySelector('uc-file-uploader-regular');
-    const button = uploader.shadowRoot.querySelector('button');
-    if (button) {
-      button.textContent = "Last opp ikon her";
+    
+    if (uploader) {
+      // Vent til shadowRoot er lastet
+      setTimeout(() => {
+        const shadowRoot = uploader.shadowRoot;
+        if (shadowRoot) {
+          // Finn knappen i shadowRoot
+          const button = shadowRoot.querySelector('button');
+          if (button) {
+            // Oppdater teksten på knappen
+            const span = button.querySelector('span');
+            if (span) {
+              span.textContent = 'Last opp ikon her';
+            }
+          }
+        }
+      }, 500); // Gir tid for shadowRoot til å bli initialisert
     }
 
 }
