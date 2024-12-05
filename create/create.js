@@ -160,7 +160,14 @@ function startCreateTurnamentWrapper() {
          imagepreview.src = "";
          imagepreview.style.display = "inline-blocknone";
          document.querySelector('.uploadedtrunamentinput').value = "";
-       });
+    });
+
+
+    const uploader = document.querySelector('uc-file-uploader-regular');
+    const button = uploader.shadowRoot.querySelector('button');
+    if (button) {
+      button.textContent = "Last opp ikon her";
+    }
 
 }
 
