@@ -138,7 +138,7 @@ function viewteam(team) {
 
     const teamheader = document.getElementById("headerwrapperteam");
     teamheader.querySelector(".teamnameheader").textContent = team.name;
-    const teamLogo = matchelement.querySelector(".logoteam");
+    const teamLogo = teamheader.querySelector(".logoteam");
     if (team.clublogo) teamLogo.src = match.team1clublogo;
     
     const thismatchinfo = document.getElementById("thismatchinfo");
