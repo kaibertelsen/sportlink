@@ -143,7 +143,7 @@ function viewteam(team) {
     
     const thismatchinfo = document.getElementById("thismatchinfo");
 
-    const icon = thismatchinfo.querySelector("icon");
+    const icon = thismatchinfo.querySelector(".logoteam");
     if (team.clublogo) icon.src = team.clublogo;
     
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "";    
