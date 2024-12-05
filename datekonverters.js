@@ -106,13 +106,14 @@ function formatDate(dateString) {
           "september", "oktober", "november", "desember"
       ];
   
-      const dayName = days[date.getDay()]; // Henter navnet på ukedagen
-      const day = date.getDate(); // Henter datoen
-      const monthName = months[date.getMonth()]; // Henter navnet på måneden
-      const hours = String(date.getHours()).padStart(2, '0'); // Henter timen (2-sifret)
-      const minutes = String(date.getMinutes()).padStart(2, '0'); // Henter minuttene (2-sifret)
+      const dayName = days[date.getUTCDay()]; // Henter navnet på ukedagen (UTC)
+      const day = date.getUTCDate(); // Henter datoen (UTC)
+      const monthName = months[date.getUTCMonth()]; // Henter navnet på måneden (UTC)
+      const hours = String(date.getUTCHours()).padStart(2, '0'); // Henter timen (UTC, 2-sifret)
+      const minutes = String(date.getUTCMinutes()).padStart(2, '0'); // Henter minuttene (UTC, 2-sifret)
   
       // Returner formatert dato og tid
       return `${dayName} ${day}. ${monthName} kl. ${hours}:${minutes}`;
   }
+  
   
