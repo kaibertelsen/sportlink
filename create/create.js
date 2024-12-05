@@ -141,8 +141,6 @@ function startCreateTurnamentWrapper() {
 
     //uploader
     const imagepreview = document.querySelector('.uploadedtrunamentimagepreview');
-
-
     const ctx = document.querySelector('uc-upload-ctx-provider')
     ctx.addEventListener('file-url-changed', e => {
      const uploadedFileInfo = e.detail; // Detaljer om det opplastede bildet
@@ -179,9 +177,8 @@ function saveNewTurnament(wrapperelement) {
     const sport = sportSelector?.value ? [sportSelector.value] : [];
     const organizerSelector = wrapperelement.querySelector('.organizerselector');
     const organizer = organizerSelector?.value ? [organizerSelector.value] : [];
+    const icon = wrapperelement.querySelector('.uploadedtrunamentinput')?.value || "";
 
-    // Hent Uploadcare URL fra lr-data-output
-    const uploaderInputvalue = document.querySelector('[name="my-uploader"]').value;
 
     // Generer et nytt turneringsobjekt
     const newTournament = {
@@ -194,7 +191,7 @@ function saveNewTurnament(wrapperelement) {
     };
 
     // Sjekk om alle påkrevde felt er fylt ut
-    if (!name || !startdate || !enddate || sport.length === 0 || organizer.length === 0 || !icon) {
+    if (!name || !startdate || !enddate || sport.length === 0 || organizer.length === 0) {
         alert("Vennligst fyll ut alle feltene og last opp et ikon.");
         return;
     }
