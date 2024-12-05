@@ -121,25 +121,6 @@ function startCreateTurnamentWrapper() {
         return;
     }
 
-
-        // Finn input-elementet med navnet "my-uploader"
-        const uploaderInput = document.querySelector('[name="my-uploader"]');
-      
-        if (uploaderInput) {
-          // Lytt til endringshendelsen
-          uploaderInput.addEventListener('change', (event) => {
-            const uploadedFile = event.target.value; // Hent verdien av input
-            if (uploadedFile) {
-              console.log('Uploader verdi endret:', uploadedFile);
-              alert(`Ny verdi for uploader: ${uploadedFile}`);
-            }
-          });
-        } else {
-          console.warn('Input med navnet "my-uploader" ble ikke funnet.');
-        }
-      
-
-
     // Sjekk hvor `creatturnamentholder` er
     if (creatturnamentlist.contains(creatturnamentholder)) {
         // Flytt tilbake til opprinnelig plassering
