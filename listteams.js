@@ -194,9 +194,6 @@ function viewteam(team) {
         // Sett dato og klokkeslett i elementet
         matchelement.querySelector(".teamdatematch").textContent = formattedDateTime;
 
-
-        matchelement.querySelector(".teamdatematch").textContent = formattedDate;
-
         // Oppdater lagnavn
         const team1Name = match.team1name || match.placeholderteam1 || "Ukjent";
         const team2Name = match.team2name || match.placeholderteam2 || "Ukjent";
