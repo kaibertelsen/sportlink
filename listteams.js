@@ -170,7 +170,17 @@ function viewteam(team) {
         matchelement.onclick = function() {
             viewMatch(match);
         };
-    
+
+           // Konverter datoen til ønsket format
+           const matchDate = new Date(match.time); // Antatt at match.date er en ISO-dato eller lignende
+           const formattedDate = matchDate.toLocaleDateString("no-NO", {
+               day: "numeric",
+               month: "short"
+           });
+   
+           // Sett kampdata i radens elementer
+           rowelement.querySelector(".teamdatematch").textContent = formatt
+
         // Oppdater lagnavn eller bruk plassholdere
         const team1Name = match.team1name || match.placeholderteam1 || "Unknown";
         const team2Name = match.team2name || match.placeholderteam2 || "Unknown";
