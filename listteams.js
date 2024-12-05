@@ -258,5 +258,8 @@ function viewteam(team) {
             matchelement.querySelector(".bordholder").style.borderBottom = 'none';
         }
     }
+
+    document.getElementById("thisteamtabbutton").click();
+    
 }
 
