@@ -140,7 +140,7 @@ function viewteam(team) {
     console.log(team);
 
     // Filtrer kampene for laget
-    const filteredMatches = matchs.filter(
+    const filteredMatches = matches.filter(
         match => match.team1 === team.airtable || match.team2 === team.airtable
     );
 
