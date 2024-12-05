@@ -144,7 +144,7 @@ function startCreateTurnamentWrapper() {
 
 
     const ctx = document.querySelector('uc-upload-ctx-provider')
-    ctx.addEventListener('file-added', e => {
+    ctx.addEventListener('file-url-changed', e => {
      const uploadedFileInfo = e.detail; // Detaljer om det opplastede bildet
      const uploadedImage = uploadedFileInfo.cdnUrl; // Hent URL til bildet fra `cdnUrl`
   
