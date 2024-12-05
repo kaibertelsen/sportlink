@@ -144,7 +144,7 @@ function viewteam(team) {
     const thismatchinfo = document.getElementById("thismatchinfo");
 
     const icon = thismatchinfo.querySelector("icon");
-    if (team.clublogo) icon.src = match.team1clublogo;
+    if (team.clublogo) icon.src = team.clublogo;
     
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "";    
     thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "";
