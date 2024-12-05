@@ -154,8 +154,9 @@ function saveNewTurnament(wrapperelement) {
     const organizerSelector = wrapperelement.querySelector('.organizerselector');
     const organizer = organizerSelector?.value ? [organizerSelector.value] : [];
 
-    // Hent Uploadcare URL fra widget
-    const icon = wrapperelement.querySelector('lr-data-output [input-name="icon"]').value || "";
+    // Hent Uploadcare URL fra lr-data-output
+    const lrDataOutput = wrapperelement.querySelector('lr-data-output');
+    const icon = lrDataOutput?.getAttribute('value') || ""; // Bruk `getAttribute` for å hente verdien
 
     // Generer et nytt turneringsobjekt
     const newTournament = {
@@ -178,6 +179,7 @@ function saveNewTurnament(wrapperelement) {
     // Lagre objektet på serveren (eksempel)
     // saveTournamentToServer(newTournament);
 }
+
 
 
 
