@@ -141,6 +141,13 @@ function viewteam(team) {
     const teamLogo = matchelement.querySelector(".logoteam");
     if (team.clublogo) teamLogo.src = match.team1clublogo;
     
+    const thismatchinfo = document.getElementById("thismatchinfo");
+
+    const icon = thismatchinfo.querySelector("icon");
+    if (team.clublogo) icon.src = match.team1clublogo;
+    
+    thismatchinfo.querySelector(".clublable").textContent = team.clubname || "";    
+    thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "";
     // Filtrer kampene for laget
     const filteredMatches = matches.filter(
         match => match.team1 === team.airtable || match.team2 === team.airtable
