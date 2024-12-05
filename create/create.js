@@ -190,7 +190,7 @@ function saveNewTurnament(wrapperelement) {
     };
 
     // Sjekk om alle påkrevde felt er fylt ut
-    if (!name || !startdate || !enddate || sport.length === 0 || organizer.length === 0 || !icon) {
+    if (!name || !startdate || sport.length === 0 || organizer.length === 0 || !icon) {
         alert("Vennligst fyll ut alle feltene og last opp et ikon.");
         return;
     }
@@ -211,7 +211,7 @@ function saveNewTurnament(wrapperelement) {
 
 
 function responseCreateTournament(data) {
-    const createdTurnament = data.field; // Antar at `data.field` inneholder turneringen
+    const createdTurnament = data.fields; // Antar at `data.field` inneholder turneringen
     tournament.push(createdTurnament); // Legg til turneringen i `tournament`-arrayen
 
     // Oppdater liste over turneringer
