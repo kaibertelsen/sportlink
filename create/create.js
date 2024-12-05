@@ -185,7 +185,8 @@ function saveNewTurnament(wrapperelement) {
         enddate: enddate,
         sport: sport,
         organizer: organizer,
-        icon: icon
+        icon: icon,
+        klient:"recCdECitGpKE2O1F"
     };
 
     // Sjekk om alle påkrevde felt er fylt ut
