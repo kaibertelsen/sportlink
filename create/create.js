@@ -190,7 +190,7 @@ function saveNewTurnament(wrapperelement) {
     };
 
     // Sjekk om alle påkrevde felt er fylt ut
-    if (!name || !startdate || sport.length === 0 || organizer.length === 0 || !icon) {
+    if (!name || !startdate || !startdate || sport.length === 0 || organizer.length === 0 || !icon) {
         alert("Vennligst fyll ut alle feltene og last opp et ikon.");
         return;
     }
