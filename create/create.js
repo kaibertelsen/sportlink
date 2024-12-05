@@ -140,21 +140,29 @@ function startCreateTurnamentWrapper() {
     }
 
     //uploader
+    const imagepreview = document.querySelector('.uploadedtrunamentimagepreview');
+
+
     const ctx = document.querySelector('uc-upload-ctx-provider')
-    ctx.addEventListener('done-click', e => {
+    ctx.addEventListener('file-added', e => {
      const uploadedFileInfo = e.detail; // Detaljer om det opplastede bildet
      const uploadedImage = uploadedFileInfo.cdnUrl; // Hent URL til bildet fra `cdnUrl`
   
       if (uploadedImage) {
-      const imagepreview = document.querySelector('.uploadedtrunamentimagepreview');
-          imagepreview.src = uploadedImage;
-      imagepreview.style.display = "inline-block";
-      document.querySelector('.uploadedtrunamentinput').value = uploadedImage;
+        imagepreview.src = uploadedImage;
+        imagepreview.style.display = "inline-block";
+        document.querySelector('.uploadedtrunamentinput').value = uploadedImage;
       } else {
         console.warn('No cdnUrl found in file-upload-success event.');
       }
   
     });
+
+    ctx.addEventListener('file-removed', e => {    
+         imagepreview.src = "";
+         imagepreview.style.display = "inline-blocknone";
+         document.querySelector('.uploadedtrunamentinput').value = "";
+       });
 
 }
 
