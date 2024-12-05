@@ -138,6 +138,24 @@ function startCreateTurnamentWrapper() {
             };
         }
     }
+
+    //uploader
+    const ctx = document.querySelector('uc-upload-ctx-provider')
+    ctx.addEventListener('file-upload-success', e => {
+     const uploadedFileInfo = e.detail; // Detaljer om det opplastede bildet
+     const uploadedImage = uploadedFileInfo.cdnUrl; // Hent URL til bildet fra `cdnUrl`
+  
+      if (uploadedImage) {
+      const imagepreview = document.querySelector('.uploadedtrunamentimagepreview');
+          imagepreview.src = uploadedImage;
+      imagepreview.style.display = "inline-block";
+      document.querySelector('.uploadedtrunamentinput').value = uploadedImage;
+      } else {
+        console.warn('No cdnUrl found in file-upload-success event.');
+      }
+  
+    });
+
 }
 
 
