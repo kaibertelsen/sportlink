@@ -38,3 +38,7 @@ document.getElementById('admincreateturnamentbutton').onclick = function() {
     startCreateTurnament();
 };
 
+document.getElementById('buttonthisteam').onclick = function() {
+    document.getElementById('tabtoturnering').click();
+}
+
