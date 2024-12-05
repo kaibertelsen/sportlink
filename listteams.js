@@ -136,18 +136,16 @@ function listteams(data) {
 function viewteam(team) {
     console.log(team);
 
+    // Oppdater header-informasjon
     const teamheader = document.getElementById("headerwrapperteam");
-    teamheader.querySelector(".teamnameheader").textContent = team.name;
+    teamheader.querySelector(".teamnameheader").textContent = team.name || "Ukjent lag";
     const teamLogo = teamheader.querySelector(".logoteam");
     if (team.clublogo) teamLogo.src = team.clublogo;
-    
-    const thismatchinfo = document.getElementById("thismatchinfo");
 
-    const icon = thismatchinfo.querySelector(".logoteam");
-    if (team.clublogo) icon.src = team.clublogo;
-    
-    thismatchinfo.querySelector(".clublable").textContent = team.clubname || "";    
-    thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "";
+    const thismatchinfo = document.getElementById("thismatchinfo");
+    thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
+    thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "Ukjent divisjon";
+
     // Filtrer kampene for laget
     const filteredMatches = matches.filter(
         match => match.team1 === team.airtable || match.team2 === team.airtable
@@ -158,7 +156,6 @@ function viewteam(team) {
     // Hent mal-elementet for kampvisning
     const elementlibrary = document.getElementById("elementlibrary");
     const nodematchholder = elementlibrary.querySelector(".teampagematch");
-
     if (!nodematchholder) {
         console.warn("Mal-elementet for kampvisning (.teampagematch) finnes ikke.");
         return;
@@ -178,34 +175,34 @@ function viewteam(team) {
     for (let match of filteredMatches) {
         const matchelement = nodematchholder.cloneNode(true);
         teammatchlist.appendChild(matchelement);
-    
-        matchelement.onclick = function() {
+
+        // Klikkhåndtering for kampvisning
+        matchelement.onclick = function () {
             viewMatch(match);
         };
 
-           // Konverter datoen til ønsket format
-           const matchDate = new Date(match.time); // Antatt at match.date er en ISO-dato eller lignende
-           const formattedDate = matchDate.toLocaleDateString("no-NO", {
-               day: "numeric",
-               month: "short"
-           });
-   
-           // Sett kampdata i radens elementer
-           rowelement.querySelector(".teamdatematch").textContent = formatt
+        // Formatér dato
+        const matchDate = new Date(match.time);
+        const formattedDate = matchDate.toLocaleDateString("no-NO", {
+            day: "numeric",
+            month: "short"
+        });
 
-        // Oppdater lagnavn eller bruk plassholdere
-        const team1Name = match.team1name || match.placeholderteam1 || "Unknown";
-        const team2Name = match.team2name || match.placeholderteam2 || "Unknown";
+        matchelement.querySelector(".teamdatematch").textContent = formattedDate;
+
+        // Oppdater lagnavn
+        const team1Name = match.team1name || match.placeholderteam1 || "Ukjent";
+        const team2Name = match.team2name || match.placeholderteam2 || "Ukjent";
         matchelement.querySelector(".team1").textContent = team1Name;
         matchelement.querySelector(".team2").textContent = team2Name;
-    
-        // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
+
+        // Oppdater logoer
         const team1Logo = matchelement.querySelector(".logoteam1");
         const team2Logo = matchelement.querySelector(".logoteam2");
         if (match.team1clublogo) team1Logo.src = match.team1clublogo;
         if (match.team2clublogo) team2Logo.src = match.team2clublogo;
-    
-        // Oppdater sluttspillinformasjon hvis tilgjengelig
+
+        // Oppdater sluttspillinformasjon
         const endplayLable = matchelement.querySelector(".endplaylable");
         if (match.typematch) {
             const matchTypeMap = {
@@ -214,63 +211,36 @@ function viewteam(team) {
                 "semifinale": "SF",
                 "finale": "F"
             };
-    
+
             const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
             endplayLable.textContent = `${endplayText} - ${match.endplay || ""}`;
             endplayLable.style.display = "block";
         } else {
             endplayLable.style.display = "none";
         }
-    
-    
-        const settlist = matchelement.querySelector(".settlist");
-        const setKeys = ["sett1", "sett2", "sett3"];
-        const hasRequiredSetScores = match.sett1 && match.sett2;
-    
-        if (hasRequiredSetScores) {
-            settlist.style.display = "grid";
-            const settdivnode = settlist.querySelector(".settdiv");
-            let columnCount = 0;
-            let team1SetsWon = 0;
-            let team2SetsWon = 0;
-    
-            for (let i = 0; i < setKeys.length; i++) {
-                if (match[setKeys[i]]) {
-                    const settdiv = settdivnode.cloneNode(true);
-                    const setttextlable = settdiv.querySelector(".setttextlable");
-                    setttextlable.textContent = match[setKeys[i]];
-    
-                    const [team1Score, team2Score] = match[setKeys[i]].split('-').map(Number);
-                    if (team1Score > team2Score) team1SetsWon++;
-                    else if (team2Score > team1Score) team2SetsWon++;
-    
-                    settlist.appendChild(settdiv);
-                    columnCount++;
-                }
-            }
-    
-            settdivnode.remove();
-            settlist.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
-    
-            match.goalteam1 = team1SetsWon;
-            match.goalteam2 = team2SetsWon;
-        } 
 
-        settlist.style.display = "none";
-        
+        // Oppdater resultater
         const resultlable = matchelement.querySelector(".resultlable");
         if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
             resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
             resultlable.style.fontWeight = "bold";
-            resultlable.style.color = mapColors("main");
-            resultlable.style.fontSize = "16px";
+
+            if (match.goalteam1 > match.goalteam2 && match.team1 === team.airtable) {
+                resultlable.style.backgroundColor = "green";
+            } else if (match.goalteam2 > match.goalteam1 && match.team2 === team.airtable) {
+                resultlable.style.backgroundColor = "green";
+            } else {
+                resultlable.style.backgroundColor = "red";
+            }
         } else {
-            resultlable.textContent = formatdatetoTime(match.time);
+            resultlable.textContent = "Ikke spilt";
             resultlable.style.fontWeight = "normal";
+            resultlable.style.backgroundColor = "transparent";
         }
     }
 
+    // Vis lagsiden
     document.getElementById("thisteamtabbutton").click();
-
 }
+
 
