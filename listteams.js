@@ -175,6 +175,7 @@ function viewteam(team) {
         let nodeelement = getPointElement();
         const thisteamrankinfo = document.getElementById("thisteamrankinfo");
         const rankview = thisteamrankinfo.querySelector(".rankview");
+        rankview.innerHTML = "";
         const copyelement = nodeelement.cloneNode(true);
         rankview.appendChild(copyelement);  
         let teaminfo = findRankForTeam(team);
