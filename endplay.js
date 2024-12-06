@@ -187,6 +187,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
 
         // Legg til klikkhendelse for å starte `viewMatch(matchData)`
         matchElement.addEventListener("click", () => {
+            previouspage = "";
              viewMatch(matchData);
         });
 
