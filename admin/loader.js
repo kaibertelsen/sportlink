@@ -13,8 +13,8 @@ function loadScript(url) {
 
 // Liste over CDN-URL-er som skal lastes inn
 const cdnScripts = [
-    "https://kaibertelsen.github.io/sportlink/admin/adminstartup.js"
-    
+    "https://kaibertelsen.github.io/sportlink/admin/adminstartup.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.0/exceljs.min.js" 
 ];
 
 // Laste inn alle skriptene sekvensielt
