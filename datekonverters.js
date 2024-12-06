@@ -116,4 +116,30 @@ function formatDate(dateString) {
       return `${dayName} ${day}. ${monthName} kl. ${hours}:${minutes}`;
   }
   
+  function formatdatetoDateAndTimeshort(dateString) {
+    const matchDate = new Date(dateString);
+
+    // Konverter til UTC-tid ved å bruke tidspunktet som UTC
+    const utcDate = new Date(
+        matchDate.getUTCFullYear(),
+        matchDate.getUTCMonth(),
+        matchDate.getUTCDate(),
+        matchDate.getUTCHours(),
+        matchDate.getUTCMinutes(),
+        matchDate.getUTCSeconds()
+    );
+    
+    // Formatér dato og tid i UTC
+    const formattedDateTime = utcDate.toLocaleDateString("no-NO", {
+        day: "numeric",
+        month: "short"
+    }) + " " + utcDate.toLocaleTimeString("no-NO", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+    });
+    
+    return formattedDateTime;
+  }
+
   
