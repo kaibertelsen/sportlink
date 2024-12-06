@@ -38,7 +38,6 @@ document.getElementById('buttontoturnament').onclick = function() {
     }
 }
    
-
 document.getElementById('admincreateturnamentbutton').onclick = function() {
     startCreateTurnament();
 };

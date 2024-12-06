@@ -198,18 +198,8 @@ function viewteam(team) {
             viewMatch(match);
         };
 
-    // Formatér dato og klokkeslett
-        const matchDate = new Date(match.time);
-        const formattedDateTime = matchDate.toLocaleDateString("no-NO", {
-            day: "numeric",
-            month: "short"
-        }) + " " + matchDate.toLocaleTimeString("no-NO", {
-            hour: "2-digit",
-            minute: "2-digit"
-        });
-
         // Sett dato og klokkeslett i elementet
-        matchelement.querySelector(".teamdatematch").textContent = formattedDateTime;
+        matchelement.querySelector(".teamdatematch").textContent = formatdatetoDateAndTime(match.time);
 
         // Oppdater lagnavn
         const team1Name = match.team1name || match.placeholderteam1 || "Ukjent";
