@@ -101,7 +101,7 @@ function listImporterDivision(divisions){
     
     
                 const endplayNameArray = division.Sluttspill.split(",");
-                const endplayAntArray = division.Sluttspill-finaler.split(",");
+                const endplayAntArray = division["Sluttspill-finaler"].split(",");
                 const endNode = rowelement.querySelector(".endplaydiv");
                 for (var i = 0;i<endplayNameArray.length;i++) {
                     const endElement = endNode.cloneNode(true);
