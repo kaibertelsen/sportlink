@@ -179,7 +179,7 @@ function viewteam(team) {
         loadPointsToviewer(rankview,teaminfo.team,teaminfo.range);
 
 ////kampoversikten
-    const thisteammatchlist = getElementById("thisteammatchlist");
+    const thisteammatchlist = document.getElementById("thisteammatchlist");
     thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "kamper i "+activetournament.name;
     // Filtrer kampene for laget
     const filteredMatches = matches.filter(
