@@ -87,8 +87,19 @@ const nodeelement = elementlibrary.querySelector(".divisjonimportelement");
     for (let division of divisions) {
         const rowelement = nodeelement.cloneNode(true);
         rowelement.querySelector(".name").textContent = division.Divisjon;
+
+            // Konverter "Grupper" til en array
+            const groupsArray = division.Grupper.split(","); // Splitt på komma for å lage en array
+            const groupNode = rowelement.querySelector(".groupdiv");
+            // Legg til hver gruppe som et eget element
+            for (let group of groupsArray) {
+                const groupElement = groupNode.cloneNode(true);
+                groupElement.querySelector(".groupname").textContent = group;
+                groupNode.parentElement.appendChild(groupElement);
+            }
+            groupNode.style.display = "none";
+
         list.appendChild(rowelement);
     }
-
-    
+  
 }
