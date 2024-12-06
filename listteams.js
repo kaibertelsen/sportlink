@@ -187,29 +187,29 @@ function viewteam(team) {
         thisteamrankinfo.querySelector(".rankdescription").textContent = description;
 
 ////kampoversikten
-    const thisteammatchlist = document.getElementById("thisteammatchlist");
-    thisteammatchlist.querySelector(".matchinactiveturnament").textContent = team.name+"`s kamper";
-    // Filtrer kampene for laget
-    const filteredMatches = matches.filter(
-        match => match.team1 === team.airtable || match.team2 === team.airtable
-    );
+        const thisteammatchlist = document.getElementById("thisteammatchlist");
+        thisteammatchlist.querySelector(".matchinactiveturnament").textContent = team.name+" sine kamper";
+        // Filtrer kampene for laget
+        const filteredMatches = matches.filter(
+            match => match.team1 === team.airtable || match.team2 === team.airtable
+        );
 
-    console.log("Filtered Matches:", filteredMatches);
+        console.log("Filtered Matches:", filteredMatches);
 
-    // Hent mal-elementet for kampvisning
-    const elementlibrary = document.getElementById("elementlibrary");
-    const nodematchholder = elementlibrary.querySelector(".teampagematch");
-    if (!nodematchholder) {
-        console.warn("Mal-elementet for kampvisning (.teampagematch) finnes ikke.");
-        return;
-    }
+        // Hent mal-elementet for kampvisning
+        const elementlibrary = document.getElementById("elementlibrary");
+        const nodematchholder = elementlibrary.querySelector(".teampagematch");
+        if (!nodematchholder) {
+            console.warn("Mal-elementet for kampvisning (.teampagematch) finnes ikke.");
+            return;
+        }
 
-    // Hent containeren der kampene skal vises
-    const teammatchlist = document.getElementById("teammatchlist");
-    if (!teammatchlist) {
-        console.warn("Containeren for visning av kamper (teampagecontent) finnes ikke.");
-        return;
-    }
+        // Hent containeren der kampene skal vises
+        const teammatchlist = document.getElementById("teammatchlist");
+        if (!teammatchlist) {
+            console.warn("Containeren for visning av kamper (teampagecontent) finnes ikke.");
+            return;
+        }
     
     // Tøm eksisterende innhold i containeren
     teammatchlist.innerHTML = "";
