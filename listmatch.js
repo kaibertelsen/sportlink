@@ -334,7 +334,7 @@ function viewMatch(match){
     if(matchIsPlayed){
         resultrapp.style.display = "block";
 
-        let discription = "Kampen er ferdig";
+        let discription = "Kampen er ferdig spillt";
         if(match.overtime){
             discription= "Kampen ble avgjort på overtid";
         }else if(match.shootout){
@@ -347,8 +347,8 @@ function viewMatch(match){
         if (match.team1clublogo) team1logo.src = match.team1clublogo;
         if (match.team2clublogo) team2logo.src = match.team2clublogo;
 
-        resultrapp.querySelector(".team1points").textContent = match.team1Name || "";
-        resultrapp.querySelector(".team2points").textContent = match.team2Name || "";
+        resultrapp.querySelector(".team1points").textContent = match.team1name || "";
+        resultrapp.querySelector(".team2points").textContent = match.team2name || "";
     
     }else{
         resultrapp.style.display = "none";
