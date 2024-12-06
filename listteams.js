@@ -74,7 +74,7 @@ function listteams(data) {
                 previouspage="";
                 viewteam(team);
                 });
-                loadPointsToviewer(rowelement,team,range);
+                loadPointsToviewer(rowelement,team,range,false);
                 range++;
             }
             
@@ -104,7 +104,7 @@ function getPointElement(){
 
     return nodeelement
 }
-function loadPointsToviewer(rowelement,team,range){
+function loadPointsToviewer(rowelement,team,range,solo){
     const sportId = activetournament.sport[0];
 
    // Rangering
@@ -143,9 +143,15 @@ function loadPointsToviewer(rowelement,team,range){
         rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
         rowelement.querySelector(".points").textContent = team.points.points;
    }
+
+   if(solo){
+    // Sett bakgrunnen til transparent
+    rowelement.style.background = "transparent";
+    rowelement.querySelector(".groupheadername").style.display = "none";
+    rowelement.querySelector(".teaminfoholder").style.display = "none";
+   }
+
 }
-
-
 
 
 
@@ -164,7 +170,7 @@ function viewteam(team) {
     if (team.clublogo) clublogo.src = team.clublogo;
     thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "Ukjent divisjon";
 
-//vise ranking til laget
+//Ranking
         let description = team.name+" er plasert slik i "+activetournament.name+":";
         thismatchinfo.querySelector(".rankdescription").textContent = description;
         
@@ -176,7 +182,7 @@ function viewteam(team) {
         rankview.appendChild(copyelement);  
         let teaminfo = findRankForTeam(team);
         //laste inn verdiene
-        loadPointsToviewer(rankview,teaminfo.team,teaminfo.range);
+        loadPointsToviewer(rankview,teaminfo.team,teaminfo.rank,true);
 
 ////kampoversikten
     const thisteammatchlist = document.getElementById("thisteammatchlist");
