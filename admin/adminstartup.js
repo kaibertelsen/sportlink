@@ -58,12 +58,37 @@ async function importXlsFile(urlToXlsFile) {
 
             result[sheetName] = sheetData;
         }
-
+        
         // Resultatet inneholder data for hvert ark
         console.log("Importerte data:", result);
+        importedData(result);
         return result; // Returner data som objekt med arrays for hvert ark
     } catch (error) {
         console.error("Feil ved import av XLS-fil:", error.message);
         return null;
     }
+}
+
+
+function importedData(result){
+    listImporterDivision(result.Divisjoner)
+//Kamper
+//Lag
+}
+
+function listImporterDivision(divisions){
+
+const list = document.getElementById("divisionlist");
+list.replaceChildren();
+
+const elementlibrary = document.getElementById("elementlibrary");
+const nodeelement = elementlibrary.querySelector(".divisjonimportelement");
+
+    for (let division of divisions) {
+        const rowelement = nodeelement.cloneNode(true);
+        rowelement.querySelector(".name").textContent = division.name;
+        list.appendChild(rowelement);
+    }
+
+    
 }
