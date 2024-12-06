@@ -90,8 +90,8 @@ function generateFotballPointToTeams(data) {
     // Oppdater poengstatistikk basert på kamper
     for (let match of matches) {
         // Sjekk om kampen har blitt spilt
-        if (typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
-            continue; // Hopp over kamper som ikke er spilt
+        if (match.typematch || typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
+            continue;
         }
 
         let team1 = data.find(team => team.airtable === match.team1);
@@ -159,9 +159,9 @@ function generateVolleyballPointToTeams(data) {
 
     // Oppdater poengstatistikk basert på kamper
     for (let match of matches) {
-        if (typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
-            continue; // Hopp over kamper som ikke er spilt
-        }
+        if (match.typematch || typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
+            continue;
+            }
 
         let team1 = data.find(team => team.airtable === match.team1);
         let team2 = data.find(team => team.airtable === match.team2);
@@ -269,9 +269,10 @@ function generateIceHockeyPointsToTeams(data) {
 
     // Oppdater poengstatistikk basert på kamper
     for (let match of matches) {
-        // Sjekk om kampen har blitt spilt
-        if (typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
-            continue; // Hopp over kamper som ikke er spilt
+        
+        // Hopp over kamper som er i sluttspillet eller som ikke er spilt
+        if (match.typematch || typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
+        continue;
         }
 
         let team1 = data.find(team => team.airtable === match.team1);
@@ -350,9 +351,9 @@ function generatePadelPointToTeams(data) {
 
     // Oppdater poengstatistikk basert på kamper
     for (let match of matches) {
-        if (typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
-            continue; // Hopp over kamper som ikke er spilt
-        }
+        if (match.typematch || typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
+            continue;
+            }
 
         let team1 = data.find(team => team.airtable === match.team1[0]);
         let team2 = data.find(team => team.airtable === match.team2[0]);
