@@ -39,19 +39,8 @@ function listteams(data) {
 
     // Bestem hvilket element som skal kopieres basert på sportstypen
     const sportId = activetournament.sport[0];
-    let nodeelement;
-    if (sportId === "recSCesi2BGmCyivZ") {
-        // Volleyball ID
-        nodeelement = elementlibrary.querySelector('.volleyballview');
-    } else if (sportId === "reca0jxxTQAtlUTNu") {
-        // Ishockey ID
-        nodeelement = elementlibrary.querySelector('.icehockey');
-    } else {
-        // Standard (Fotball)
-        nodeelement = elementlibrary.querySelector('.fotballview');
-    }
-
-
+    let nodeelement = getPointElement();
+    
     // Loop gjennom hver divisjon og gruppe, og opprett en `tablegroupholder` for hver
     for (const [divisionName, groups] of Object.entries(teamsByDivisionAndGroup)) {
         for (const [groupName, groupTeams] of Object.entries(groups)) {
@@ -96,10 +85,28 @@ function listteams(data) {
         }
     }
 }
+function getPointElement(){
+    // Bestem hvilket element som skal kopieres basert på sportstypen
+    const elementlibrary = document.getElementById("elementlibrary");
 
+    const sportId = activetournament.sport[0];
+    let nodeelement;
+    if (sportId === "recSCesi2BGmCyivZ") {
+        // Volleyball ID
+        nodeelement = elementlibrary.querySelector('.volleyballview');
+    } else if (sportId === "reca0jxxTQAtlUTNu") {
+        // Ishockey ID
+        nodeelement = elementlibrary.querySelector('.icehockey');
+    } else {
+        // Standard (Fotball)
+        nodeelement = elementlibrary.querySelector('.fotballview');
+    }
+
+    return nodeelement
+}
 function loadPointsToviewer(rowelement,team,range){
     const sportId = activetournament.sport[0];
-    
+
    // Rangering
    const rangenr = rowelement.querySelector(".rangenr");
    rangenr.textContent = range;
@@ -151,8 +158,6 @@ function viewteam(team) {
     const teamLogo = teamheader.querySelector(".logoteam");
     if (team.clublogo) teamLogo.src = team.clublogo;
 
-    
-
     const thismatchinfo = document.getElementById("thisteamhinfo");
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
 
@@ -166,26 +171,12 @@ function viewteam(team) {
         
         // Bestem hvilket element som skal kopieres basert på sportstypen
         const elementlibrary = document.getElementById("elementlibrary");
-
-        const sportId = activetournament.sport[0];
-        let nodeelement;
-        if (sportId === "recSCesi2BGmCyivZ") {
-            // Volleyball ID
-            nodeelement = elementlibrary.querySelector('.volleyballview');
-        } else if (sportId === "reca0jxxTQAtlUTNu") {
-            // Ishockey ID
-            nodeelement = elementlibrary.querySelector('.icehockey');
-        } else {
-            // Standard (Fotball)
-            nodeelement = elementlibrary.querySelector('.fotballview');
-        }
-        const copyelement = nodeelement.cloneNode(true);
-        rankview.appendChild(copyelement);
-
+        let nodeelement = getPointElement();
         const rankview = thismatchinfo.querySelector(".rankview");
+        const copyelement = nodeelement.cloneNode(true);
+        rankview.appendChild(copyelement);  
         let teaminfo = findRankForTeam(team);
-
-        //laste inn verdiene i 
+        //laste inn verdiene
         loadPointsToviewer(rankview,teaminfo.team,teaminfo.range);
 
 
