@@ -150,7 +150,6 @@ function loadPointsToviewer(rowelement,team,range){
 
 
 function viewteam(team) {
-    console.log(team);
 
     // Oppdater header-informasjon
     const teamheader = document.getElementById("headerwrapperteam");
@@ -165,7 +164,7 @@ function viewteam(team) {
     if (team.clublogo) clublogo.src = team.clublogo;
     thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "Ukjent divisjon";
 
-    //vise ranking til laget
+//vise ranking til laget
         let description = team.name+" er plasert slik i "+activetournament.name+":";
         thismatchinfo.querySelector(".rankdescription").textContent = description;
         
@@ -179,10 +178,9 @@ function viewteam(team) {
         //laste inn verdiene
         loadPointsToviewer(rankview,teaminfo.team,teaminfo.range);
 
-
-    thismatchinfo.querySelector(".matchinactiveturnament").textContent = "kamper i "+activetournament.name;
-    
 ////kampoversikten
+    const thisteammatchlist = getElementById("thisteammatchlist");
+    thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "kamper i "+activetournament.name;
     // Filtrer kampene for laget
     const filteredMatches = matches.filter(
         match => match.team1 === team.airtable || match.team2 === team.airtable
