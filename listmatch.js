@@ -333,10 +333,9 @@ function viewMatch(match){
     const resultrapp = matchinfo.querySelector(".resultrapp");
     if(matchIsPlayed){
         resultrapp.style.display = "block";
-
         let discription = "Kampen er ferdig spillt";
         if(match.overtime){
-            discription= "Kampen ble avgjort på overtid";
+            discription= "Kampen ble avgjort på overtid ⌛️";
         }else if(match.shootout){
             discription = "Kampen ble avgjort på straffekonkuranse";
         }
@@ -347,13 +346,12 @@ function viewMatch(match){
         if (match.team1clublogo) team1logo.src = match.team1clublogo;
         if (match.team2clublogo) team2logo.src = match.team2clublogo;
 
-        resultrapp.querySelector(".team1points").textContent = match.team1name || "";
-        resultrapp.querySelector(".team2points").textContent = match.team2name || "";
-    
+        let points = pointGenerator(match.goalteam1, match.goalteam2,match.overtime,match.shootout,activetournament.sport[0]);
+        resultrapp.querySelector(".team1points").textContent = `${match.team1name || "Team 1"}: ${points?.team1point ?? ""}`;
+        resultrapp.querySelector(".team2points").textContent = `${match.team2name || "Team 2"}: ${points?.team2point ?? ""}`;
     }else{
         resultrapp.style.display = "none";
     }
-
 
 
     const updateTextContent = (selector, value) => {

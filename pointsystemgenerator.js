@@ -137,6 +137,7 @@ function generateFotballPointToTeams(data) {
     return data;
 }
 
+
 function generateVolleyballPointToTeams(data) {
     // Initialiser poengstatistikk for hvert lag
     for (let team of data) {
@@ -390,4 +391,59 @@ function generatePadelPointToTeams(data) {
     return data;
 }
 
+//brukes i i direktevisning av en kamp
 
+function pointGenerator(team1Score, team2Score,isOvertime,isShootout,sport) {
+
+    let team1point = 0;
+    let team2point = 0;
+
+    if(sport  === "recAEU6UjebhKfFBy"){
+        // Oppdater poeng basert på resultat
+        if (team1Score > team2Score) {
+            team1point = 3; // 3 poeng for seier
+        } else if (team1Score < team2Score) {
+            team2point = 3; // 3 poeng for seier
+        } else {
+            team1point = 1; // 1 poeng for uavgjort
+            team2point = 1; // 1 poeng for uavgjort
+        }
+    }else if(sport === "reca0jxxTQAtlUTNu"){
+        if (team1Score > team2Score) {
+            if (isOvertime || isShootout) {
+                // Team 1 vinner i overtid/straffeslag
+                team1point = 2; // 2 poeng for seier i overtid/straffeslag
+                team2point = 1; // 1 poeng for tap i overtid/straffeslag
+            } else {
+                // Team 1 vinner i ordinær tid
+                team1point = 3; // 3 poeng for seier i ordinær tid
+                team2point = 0;
+            }
+        } else if (team1Score < team2Score) {
+            if (isOvertime || isShootout) {
+                // Team 2 vinner i overtid/straffeslag
+                team2point = 2; // 2 poeng for seier i overtid/straffeslag
+                team1point = 1; // 1 poeng for tap i overtid/straffeslag
+            } else {
+                // Team 2 vinner i ordinær tid
+                team2point = 3; // 3 poeng for seier i ordinær tid
+                team1point = 0;
+            }
+        }
+    }else if(sport === "recSCesi2BGmCyivZ"){
+        if (team1Score > team2Score) {
+            team1point = 3; // 3 poeng for seier
+            team2point = 0;
+        } else if (team1Score < team2Score) {
+            team2point = 3; // 3 poeng for seier
+            team1point = 0;
+        } else {
+            // Hvis uavgjort, tildel 1 poeng til hvert lag
+            team1point = 1;
+            team2point = 1;
+        }
+ 
+    }
+
+    return { team1point, team2point };
+}
