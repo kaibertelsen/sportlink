@@ -86,7 +86,7 @@ const nodeelement = elementlibrary.querySelector(".divisjonimportelement");
 
     for (let division of divisions) {
         const rowelement = nodeelement.cloneNode(true);
-        rowelement.querySelector(".name").textContent = division.name;
+        rowelement.querySelector(".name").textContent = division.Divisjon;
         list.appendChild(rowelement);
     }
 
