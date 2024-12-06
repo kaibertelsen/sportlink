@@ -44,6 +44,10 @@ document.getElementById('admincreateturnamentbutton').onclick = function() {
 };
 
 document.getElementById('buttonthisteam').onclick = function() {
+    if(previouspage == "match"){
+    document.getElementById("thismatchtabbutton").click();
+    }else{
     document.getElementById('tabtoturnering').click();
+    }
 }
 

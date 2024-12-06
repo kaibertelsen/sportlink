@@ -264,6 +264,28 @@ function viewMatch(match){
         endplayLable.style.display = "none";
     }
 
+    //gjøre lagene klikkbare
+    const team1button = header.querySelector(".team1button");
+    team1button.onclick = function(){
+        const team1 = teams.find(t => t.airtable === match.team1);
+        if (team1) {
+            //sette historikken
+            previouspage = "match";
+            viewteam(team1);
+        }
+    }
+    const team2button = header.querySelector(".team2button");
+    team2button.onclick = function(){
+        const team2 = teams.find(t => t.airtable === match.team2);
+        if (team2) {
+            //sette historikken
+            previouspage = "match";
+            viewteam(team2);
+        }
+
+    }
+
+
     const textturnamentname = header.querySelector(".turnamentname");
     if(textturnamentname){textturnamentname.textContent = match.tournament};
     
