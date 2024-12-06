@@ -340,6 +340,10 @@ function viewMatch(match){
             discription = "Kampen ble avgjort på straffekonkuranse";
         }
         resultrapp.querySelector(".matchdescription").textContent = discription;
+        
+        if(!match.typematch){
+        //dette er ikke en sluttspilkamp
+        resultrapp.querySelector(".notendplaymatch").style.display = "block";
         // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
         const team1logo = resultrapp.querySelector(".team1logo");
         const team2logo = resultrapp.querySelector(".team2logo");
@@ -349,6 +353,10 @@ function viewMatch(match){
         let points = pointGenerator(match.goalteam1, match.goalteam2,match.overtime,match.shootout,activetournament.sport[0]);
         resultrapp.querySelector(".team1points").textContent = `${points?.team1point} poeng til ${match.team1name}`;
         resultrapp.querySelector(".team2points").textContent = `${points?.team2point} poeng til ${match.team2name}`;
+        }else{
+            resultrapp.querySelector(".notendplaymatch").style.display = "none";
+        }
+
     }else{
         resultrapp.style.display = "none";
     }
