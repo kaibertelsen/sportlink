@@ -30,7 +30,12 @@ document.getElementById('endplaytabbutton').onclick = function() {
 }
 
 document.getElementById('buttontoturnament').onclick = function() {
+    //matchsiden
+    if(previouspage == "team"){
+    document.getElementById("thisteamtabbutton").click();
+    }else{
     document.getElementById('tabtoturnering').click();
+    }
 }
    
 

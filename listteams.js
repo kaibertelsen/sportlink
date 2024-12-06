@@ -187,6 +187,8 @@ function viewteam(team) {
 
         // Klikkhåndtering for kampvisning
         matchelement.onclick = function () {
+            //må sette denne siden som historikken for tilbakeknappen inne på matchsiden
+            previouspage="team";
             viewMatch(match);
         };
 

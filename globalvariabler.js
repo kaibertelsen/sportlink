@@ -9,3 +9,4 @@ var activesporttype;
 var orgaNizer;
 var SportList;
 var clientID;
+var previouspage;
