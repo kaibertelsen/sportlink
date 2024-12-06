@@ -233,10 +233,12 @@ function viewMatch(match){
     if (match.team2clublogo) team2Logo.src = match.team2clublogo;
 
     const resultlable = header.querySelector(".resultlablemacth");
+    let matchIsPlayed = false;
     if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
         resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
         resultlable.style.fontWeight = "bold";
         resultlable.style.color = mapColors("main");
+        matchIsPlayed = true;
     } else {
         resultlable.textContent = formatdatetoTime(match.time);
         resultlable.style.fontWeight = "normal";
@@ -327,12 +329,32 @@ function viewMatch(match){
         matchsettholder.style.display = "none";
     }
 
-
-
-    
-
-
     const matchinfo = document.getElementById("thismatchinfo");
+    const resultrapp = matchinfo.querySelector(".resultrapp");
+    if(matchIsPlayed){
+        resultrapp.style.display = "block";
+
+        let discription = "Kampen er ferdig";
+        if(match.overtime){
+            discription= "Kampen ble avgjort på overtid";
+        }else if(match.shootout){
+            discription = "Kampen ble avgjort på straffekonkuranse";
+        }
+        resultrapp.querySelector(".matchdescription").textContent = discription;
+        // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
+        const team1logo = resultrapp.querySelector(".team1logo");
+        const team2logo = resultrapp.querySelector(".team2logo");
+        if (match.team1clublogo) team1logo.src = match.team1clublogo;
+        if (match.team2clublogo) team2logo.src = match.team2clublogo;
+
+        resultrapp.querySelector(".team1points").textContent = match.team1Name || "";
+        resultrapp.querySelector(".team2points").textContent = match.team2Name || "";
+    
+    }else{
+        resultrapp.style.display = "none";
+    }
+
+
 
     const updateTextContent = (selector, value) => {
         const element = matchinfo.querySelector(selector);
