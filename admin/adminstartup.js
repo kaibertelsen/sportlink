@@ -76,47 +76,40 @@ function importedData(result){
 //Lag
 }
 
-function listImporterDivision(divisions) {
-    const list = document.getElementById("divisionlist");
-    list.replaceChildren(); // Tøm tidligere innhold i listen
+function listImporterDivision(divisions){
 
+    const list = document.getElementById("divisionlist");
+    list.replaceChildren();
+    
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".divisjonimportelement");
-
-    for (let division of divisions) {
-        const rowelement = nodeelement.cloneNode(true);
-        rowelement.querySelector(".name").textContent = division.Divisjon;
-
-        // Håndter grupper
-        const groupsArray = division.Grupper ? division.Grupper.split(",") : [];
-        const groupNode = rowelement.querySelector(".groupdiv");
-        groupNode.innerHTML = ""; // Fjern tidligere innhold
-        for (let group of groupsArray) {
-            const groupElement = document.createElement("span");
-            groupElement.className = "groupname";
-            groupElement.textContent = group.trim();
-            groupNode.appendChild(groupElement);
+    
+        for (let division of divisions) {
+            const rowelement = nodeelement.cloneNode(true);
+            rowelement.querySelector(".name").textContent = division.Divisjon;
+    
+                // Konverter "Grupper" til en array
+                const groupsArray = division.Grupper.split(","); // Splitt på komma for å lage en array
+                const groupNode = rowelement.querySelector(".groupdiv");
+                // Legg til hver gruppe som et eget element
+                for (let group of groupsArray) {
+                    const groupElement = groupNode.cloneNode(true);
+                    groupElement.querySelector(".groupname").textContent = group;
+                    groupNode.parentElement.appendChild(groupElement);
+                }
+                groupNode.style.display = "none";
+    
+    
+                const endplayNameArray = division.Sluttspill.split(",");
+                const endplayAntArray = division.Sluttspill-finaler.split(",");
+                const endNode = rowelement.querySelector(".endplaydiv");
+                for (var i = 0;i<endplayNameArray.length;i++) {
+                    const endElement = endNode.cloneNode(true);
+                    endElement.querySelector(".endname").textContent = endplayNameArray[i];
+                    endElement.querySelector(".endcount").textContent = endplayAntArray[i];
+                    endNode.parentElement.appendChild(endElement);
+                }
+            list.appendChild(rowelement);
         }
-
-        // Håndter sluttspill
-        const endplayNameArray = division.Sluttspill ? division.Sluttspill.split(",") : [];
-        const endplayAntArray = division["Sluttspill-finaler"] ? division["Sluttspill-finaler"].split(",") : [];
-        const endNode = rowelement.querySelector(".endplaydiv");
-        endNode.innerHTML = ""; // Fjern tidligere innhold
-        for (let i = 0; i < endplayNameArray.length; i++) {
-            const endElement = document.createElement("div");
-            endElement.className = "endplayitem";
-            const endName = document.createElement("span");
-            endName.className = "endname";
-            endName.textContent = endplayNameArray[i].trim();
-            const endCount = document.createElement("span");
-            endCount.className = "endcount";
-            endCount.textContent = endplayAntArray[i] || "0"; // Standard til "0" hvis ingen verdi
-            endElement.appendChild(endName);
-            endElement.appendChild(endCount);
-            endNode.appendChild(endElement);
-        }
-
-        list.appendChild(rowelement);
+      
     }
-}
