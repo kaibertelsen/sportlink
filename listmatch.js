@@ -72,6 +72,7 @@ function listmatch(data, grouptype, scroll) {
             matchlist.appendChild(matchelement);
         
             matchelement.onclick = function() {
+                previouspage = "";
                 viewMatch(match);
             };
         

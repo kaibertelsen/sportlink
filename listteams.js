@@ -181,9 +181,15 @@ function viewteam(team) {
     teammatchlist.innerHTML = "";
 
     // Gå gjennom filtrerte kamper og legg til elementer
-    for (let match of filteredMatches) {
+    for (let i = 0; i < filteredMatches.length; i++) {
+        const match = filteredMatches[i];
         const matchelement = nodematchholder.cloneNode(true);
         teammatchlist.appendChild(matchelement);
+    
+        // Hvis dette er den siste match
+        if (i === filteredMatches.length - 1) {
+            matchelement.querySelector(".bordholder").style.borderBottom = 'none';
+        }
 
         // Klikkhåndtering for kampvisning
         matchelement.onclick = function () {
