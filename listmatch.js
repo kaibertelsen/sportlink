@@ -333,7 +333,7 @@ function viewMatch(match){
     const resultrapp = matchinfo.querySelector(".resultrapp");
     if(matchIsPlayed){
         resultrapp.style.display = "block";
-        let discription = "Kampen er ferdig spillt";
+        let discription = "Kampen er ferdig";
         if(match.overtime){
             discription= "Kampen ble avgjort på overtid ⌛️";
         }else if(match.shootout){
