@@ -82,6 +82,7 @@ function listteams(data) {
 
                 // Legg til klikkhendelse på rowelement
                 rowelement.addEventListener('click', () => {
+                previouspage="";
                 viewteam(team);
                 });
 
