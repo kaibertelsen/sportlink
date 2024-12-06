@@ -109,6 +109,7 @@ function listImporterDivision(divisions){
                     endElement.querySelector(".endcount").textContent = endplayAntArray[i];
                     endNode.parentElement.appendChild(endElement);
                 }
+                endNode.style.display = "none";
             list.appendChild(rowelement);
         }
       
