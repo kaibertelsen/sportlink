@@ -85,44 +85,7 @@ function listteams(data) {
                 previouspage="";
                 viewteam(team);
                 });
-
-                // Rangering
-                const rangenr = rowelement.querySelector(".rangenr");
-                rangenr.textContent = range;
-
-                // Laglogo
-                const logoteam = rowelement.querySelector(".clublogo");
-                logoteam.removeAttribute('srcset');
-                logoteam.src = team.clublogo;
-
-                // Lagnavn
-                const teamname = rowelement.querySelector(".teamnamelable");
-                teamname.textContent = team.name;
-
-                // Poengstatistikk
-                rowelement.querySelector(".played").textContent = team.points.played;
-                rowelement.querySelector(".won").textContent = team.points.won;
-                rowelement.querySelector(".lost").textContent = team.points.lost;
-                
-                if (sportId === "recSCesi2BGmCyivZ") {
-                    // Sett-statistikk for volleyball
-                    rowelement.querySelector(".setsdifference").textContent = `${team.points.setsFor}-${team.points.setsAgainst}`;
-                    rowelement.querySelector(".points").textContent = team.points.points;
-                } else if (sportId === "reca0jxxTQAtlUTNu") {
-                    // Målstatistikk for icehocey
-                    rowelement.querySelector(".ov").textContent = team.points.overtimeWins;
-                    rowelement.querySelector(".ot").textContent = team.points.overtimeLosses;
-                    rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
-                    rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
-                    rowelement.querySelector(".points").textContent = team.points.points;
-                }else{
-                     // standard Målstatistikk for fotball
-                     rowelement.querySelector(".drawn").textContent = team.points.drawn;
-                     rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
-                     rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
-                     rowelement.querySelector(".points").textContent = team.points.points;
-                }
-
+                loadPointsToviewer(rowelement,team,range);
                 range++;
             }
             
@@ -133,6 +96,49 @@ function listteams(data) {
         }
     }
 }
+
+function loadPointsToviewer(rowelement,team,range){
+   // Rangering
+   const rangenr = rowelement.querySelector(".rangenr");
+   rangenr.textContent = range;
+
+   // Laglogo
+   const logoteam = rowelement.querySelector(".clublogo");
+   logoteam.removeAttribute('srcset');
+   logoteam.src = team.clublogo;
+
+   // Lagnavn
+   const teamname = rowelement.querySelector(".teamnamelable");
+   teamname.textContent = team.name;
+
+   // Poengstatistikk
+   rowelement.querySelector(".played").textContent = team.points.played;
+   rowelement.querySelector(".won").textContent = team.points.won;
+   rowelement.querySelector(".lost").textContent = team.points.lost;
+   
+   if (sportId === "recSCesi2BGmCyivZ") {
+       // Sett-statistikk for volleyball
+       rowelement.querySelector(".setsdifference").textContent = `${team.points.setsFor}-${team.points.setsAgainst}`;
+       rowelement.querySelector(".points").textContent = team.points.points;
+   } else if (sportId === "reca0jxxTQAtlUTNu") {
+       // Målstatistikk for icehocey
+       rowelement.querySelector(".ov").textContent = team.points.overtimeWins;
+       rowelement.querySelector(".ot").textContent = team.points.overtimeLosses;
+       rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
+       rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
+       rowelement.querySelector(".points").textContent = team.points.points;
+   }else{
+        // standard Målstatistikk for fotball
+        rowelement.querySelector(".drawn").textContent = team.points.drawn;
+        rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
+        rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
+        rowelement.querySelector(".points").textContent = team.points.points;
+   }
+}
+
+
+
+
 
 function viewteam(team) {
     console.log(team);
@@ -153,17 +159,36 @@ function viewteam(team) {
     thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "Ukjent divisjon";
 
     //vise ranking til laget
-    let description = team.name+" er plasert slik i"+activetournament.name+":";
-    thismatchinfo.querySelector(".rankdescription").textContent = description;
-    
-    const rankview = thismatchinfo.querySelector(".rankview");
-    let teaminfo = findRankForTeam(team);
-    console.log(teaminfo);
+        let description = team.name+" er plasert slik i "+activetournament.name+":";
+        thismatchinfo.querySelector(".rankdescription").textContent = description;
+        
+        // Bestem hvilket element som skal kopieres basert på sportstypen
+        const elementlibrary = document.getElementById("elementlibrary");
+
+        const sportId = activetournament.sport[0];
+        let nodeelement;
+        if (sportId === "recSCesi2BGmCyivZ") {
+            // Volleyball ID
+            nodeelement = elementlibrary.querySelector('.volleyballview');
+        } else if (sportId === "reca0jxxTQAtlUTNu") {
+            // Ishockey ID
+            nodeelement = elementlibrary.querySelector('.icehockey');
+        } else {
+            // Standard (Fotball)
+            nodeelement = elementlibrary.querySelector('.fotballview');
+        }
+        const copyelement = nodeelement.cloneNode(true);
+        rankview.appendChild(copyelement);
+
+        const rankview = thismatchinfo.querySelector(".rankview");
+        let teaminfo = findRankForTeam(team);
+
+        //laste inn verdiene i 
+        loadPointsToviewer(rankview,teaminfo.team,teaminfo.range);
 
 
     thismatchinfo.querySelector(".matchinactiveturnament").textContent = "kamper i "+activetournament.name;
     
-
 
     // Filtrer kampene for laget
     const filteredMatches = matches.filter(
@@ -173,7 +198,6 @@ function viewteam(team) {
     console.log("Filtered Matches:", filteredMatches);
 
     // Hent mal-elementet for kampvisning
-    const elementlibrary = document.getElementById("elementlibrary");
     const nodematchholder = elementlibrary.querySelector(".teampagematch");
     if (!nodematchholder) {
         console.warn("Mal-elementet for kampvisning (.teampagematch) finnes ikke.");
@@ -275,7 +299,7 @@ function findRankForTeam(team) {
     // Gruppér lagene etter divisjon og gruppe
     const teamsByDivisionAndGroup = teamslist.reduce((acc, t) => {
         const division = t.divisionname || "Ukjent divisjon"; // Standardnavn hvis divisjon mangler
-        const group = t.groupname ? t.groupname : "Uten gruppe"; // Standardnavn hvis gruppe mangler
+        const group = t.groupname || false; // Hvis gruppe mangler, settes den til `false`
 
         if (!acc[division]) {
             acc[division] = {};
@@ -309,7 +333,7 @@ function findRankForTeam(team) {
             const teamIndex = teams.findIndex(t => t.airtable === team.airtable);
             if (teamIndex !== -1) {
                 rank = teamIndex + 1; // Rangeringen er indeksen + 1
-                group = groupName;
+                group = groupName === "false" ? false : groupName; // Sett gruppe til `false` hvis det ikke er en gyldig gruppe
                 division = divisionName;
             }
         });
@@ -324,3 +348,4 @@ function findRankForTeam(team) {
         teamsByDivisionAndGroup
     };
 }
+
