@@ -172,9 +172,9 @@ function viewteam(team) {
 
 //Ranking
         // Bestem hvilket element som skal kopieres basert på sportstypen
-        const elementlibrary = document.getElementById("elementlibrary");
         let nodeelement = getPointElement();
-        const rankview = thismatchinfo.querySelector(".rankview");
+        const thisteamrankinfo = document.getElementById("thisteamrankinfo");
+        const rankview = thisteamrankinfo.querySelector(".rankview");
         const copyelement = nodeelement.cloneNode(true);
         rankview.appendChild(copyelement);  
         let teaminfo = findRankForTeam(team);
@@ -184,8 +184,7 @@ function viewteam(team) {
         let groupDivisionText = "divisjonen: "+team.divisionname;
         if(teaminfo.group){groupDivisionText = groupDivisionText+" i gruppe: "+teaminfo.group};
         let description = team.name+" er på "+teaminfo.rank+" plass i "+groupDivisionText+".";
-
-        thismatchinfo.querySelector(".rankdescription").textContent = description;
+        thisteamrankinfo.querySelector(".rankdescription").textContent = description;
 
 ////kampoversikten
     const thisteammatchlist = document.getElementById("thisteammatchlist");
@@ -198,6 +197,7 @@ function viewteam(team) {
     console.log("Filtered Matches:", filteredMatches);
 
     // Hent mal-elementet for kampvisning
+    const elementlibrary = document.getElementById("elementlibrary");
     const nodematchholder = elementlibrary.querySelector(".teampagematch");
     if (!nodematchholder) {
         console.warn("Mal-elementet for kampvisning (.teampagematch) finnes ikke.");
@@ -214,6 +214,7 @@ function viewteam(team) {
     // Tøm eksisterende innhold i containeren
     teammatchlist.innerHTML = "";
 
+    
     // Gå gjennom filtrerte kamper og legg til elementer
     for (let i = 0; i < filteredMatches.length; i++) {
         const match = filteredMatches[i];
