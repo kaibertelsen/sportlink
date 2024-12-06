@@ -98,6 +98,8 @@ function listteams(data) {
 }
 
 function loadPointsToviewer(rowelement,team,range){
+    const sportId = activetournament.sport[0];
+    
    // Rangering
    const rangenr = rowelement.querySelector(".rangenr");
    rangenr.textContent = range;
@@ -189,7 +191,7 @@ function viewteam(team) {
 
     thismatchinfo.querySelector(".matchinactiveturnament").textContent = "kamper i "+activetournament.name;
     
-
+////kampoversikten
     // Filtrer kampene for laget
     const filteredMatches = matches.filter(
         match => match.team1 === team.airtable || match.team2 === team.airtable
