@@ -171,9 +171,6 @@ function viewteam(team) {
     thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "Ukjent divisjon";
 
 //Ranking
-        let description = team.name+" er plasert slik i "+activetournament.name+":";
-        thismatchinfo.querySelector(".rankdescription").textContent = description;
-        
         // Bestem hvilket element som skal kopieres basert på sportstypen
         const elementlibrary = document.getElementById("elementlibrary");
         let nodeelement = getPointElement();
@@ -183,6 +180,12 @@ function viewteam(team) {
         let teaminfo = findRankForTeam(team);
         //laste inn verdiene
         loadPointsToviewer(rankview,teaminfo.team,teaminfo.rank,true);
+
+        let groupDivisionText = "divisjonen: "+team.divisionname;
+        if(teaminfo.group){groupDivisionText = groupDivisionText+" i gruppe: "+teaminfo.group};
+        let description = team.name+" er på "+teaminfo.rank+" plass i "+groupDivisionText+".";
+
+        thismatchinfo.querySelector(".rankdescription").textContent = description;
 
 ////kampoversikten
     const thisteammatchlist = document.getElementById("thisteammatchlist");
