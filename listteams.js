@@ -145,16 +145,25 @@ function viewteam(team) {
 
     
 
-
     const thismatchinfo = document.getElementById("thisteamhinfo");
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
 
     const clublogo = thismatchinfo.querySelector(".clublogo");
     if (team.clublogo) clublogo.src = team.clublogo;
-
-
-
     thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "Ukjent divisjon";
+
+    //vise ranking til laget
+    let description = team.name+" er plasert slik i"+activetournament.name+":";
+    thismatchinfo.querySelector(".rankdescription").textContent = description;
+    
+    const rankview = thismatchinfo.querySelector(".rankview");
+    let teaminfo = findRankForTeam(team);
+    console.log(teaminfo);
+
+
+    thismatchinfo.querySelector(".matchinactiveturnament").textContent = "kamper i "+activetournament.name;
+    
+
 
     // Filtrer kampene for laget
     const filteredMatches = matches.filter(
@@ -177,7 +186,7 @@ function viewteam(team) {
         console.warn("Containeren for visning av kamper (teampagecontent) finnes ikke.");
         return;
     }
-
+    
     // Tøm eksisterende innhold i containeren
     teammatchlist.innerHTML = "";
 
@@ -256,3 +265,62 @@ function viewteam(team) {
 }
 
 
+function findRankForTeam(team) {
+    // Filtrer lagene basert på aktivt divisjonsfilter
+    let filteredTeams = teams.filter(t => t.division === team.division);
+
+    // Generer og sorter teamslist basert på poeng, målforskjell og mål scoret
+    let teamslist = generatePointToTeams(filteredTeams);
+
+    // Gruppér lagene etter divisjon og gruppe
+    const teamsByDivisionAndGroup = teamslist.reduce((acc, t) => {
+        const division = t.divisionname || "Ukjent divisjon"; // Standardnavn hvis divisjon mangler
+        const group = t.groupname ? t.groupname : "Uten gruppe"; // Standardnavn hvis gruppe mangler
+
+        if (!acc[division]) {
+            acc[division] = {};
+        }
+        if (!acc[division][group]) {
+            acc[division][group] = [];
+        }
+        acc[division][group].push(t);
+        return acc;
+    }, {});
+
+    // Finn laget i listen og dets rangering
+    let rank = null;
+    let group = null;
+    let division = null;
+
+    Object.entries(teamsByDivisionAndGroup).forEach(([divisionName, groups]) => {
+        Object.entries(groups).forEach(([groupName, teams]) => {
+            // Sorter lagene i gruppen basert på poeng, målforskjell og mål scoret
+            teams.sort((a, b) => {
+                if (b.points.points !== a.points.points) {
+                    return b.points.points - a.points.points;
+                }
+                if (b.points.pointsDifference !== a.points.pointsDifference) {
+                    return b.points.pointsDifference - a.points.pointsDifference;
+                }
+                return b.points.goalsFor - a.points.goalsFor;
+            });
+
+            // Sjekk om laget finnes i denne gruppen
+            const teamIndex = teams.findIndex(t => t.airtable === team.airtable);
+            if (teamIndex !== -1) {
+                rank = teamIndex + 1; // Rangeringen er indeksen + 1
+                group = groupName;
+                division = divisionName;
+            }
+        });
+    });
+
+    // Returner funn
+    return {
+        team,
+        rank,
+        group,
+        division,
+        teamsByDivisionAndGroup
+    };
+}
