@@ -148,7 +148,7 @@ function loadPointsToviewer(rowelement,team,range,solo){
     // Sett bakgrunnen til transparent
     rowelement.style.background = "transparent";
     rowelement.querySelector(".groupheadername").style.display = "none";
-    rowelement.querySelector(".teaminfoholder").style.display = "none";
+    rowelement.querySelector(".teaminfoholder").innerHTML = "";
    }
 
 }
