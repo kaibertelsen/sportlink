@@ -347,8 +347,8 @@ function viewMatch(match){
         if (match.team2clublogo) team2logo.src = match.team2clublogo;
 
         let points = pointGenerator(match.goalteam1, match.goalteam2,match.overtime,match.shootout,activetournament.sport[0]);
-        resultrapp.querySelector(".team1points").textContent = `${match.team1name || "Team 1"}: ${points?.team1point ?? ""}`;
-        resultrapp.querySelector(".team2points").textContent = `${match.team2name || "Team 2"}: ${points?.team2point ?? ""}`;
+        resultrapp.querySelector(".team1points").textContent = `${match.team1name} : ${points?.team1point}poeng`;
+        resultrapp.querySelector(".team2points").textContent = `${match.team2name} : ${points?.team2point}poeng`;
     }else{
         resultrapp.style.display = "none";
     }
