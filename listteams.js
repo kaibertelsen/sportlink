@@ -188,7 +188,7 @@ function viewteam(team) {
 
 ////kampoversikten
     const thisteammatchlist = document.getElementById("thisteammatchlist");
-    thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "kamper i "+activetournament.name;
+    thisteammatchlist.querySelector(".matchinactiveturnament").textContent = team.name+"`s kamper";
     // Filtrer kampene for laget
     const filteredMatches = matches.filter(
         match => match.team1 === team.airtable || match.team2 === team.airtable
