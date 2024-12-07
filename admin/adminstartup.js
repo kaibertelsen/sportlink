@@ -1,3 +1,21 @@
+var gSport = [];
+
+
+function getSportlist(){
+
+    var body = airtablebodylistAND({section:1});
+    Getlistairtable(baseId,"tbl2FRAzV1Ze5DdYh",body,"responseSportlist");
+}
+
+function responseSportlist(data) {
+    // Rens rådata
+    gSport = rawdatacleaner(data); // Global variabel for videre bruk
+
+}
+
+
+
+
 
 //uploader
 const ctx = document.querySelector('uc-upload-ctx-provider')
@@ -76,7 +94,7 @@ function importedData(data){
 document.getElementById("importpanel").style.display = "block";
 
 let iTurnament = convertImportDataTurnament(data.Turnering);
-
+controllTurnament(iTurnament);
 //listImporterDivision(result.Divisjoner)
 //Kamper
 //Lag
@@ -100,12 +118,17 @@ function convertImportDataTurnament(data) {
 
 function controllTurnament(turnament){
 
-
    if(turnament.SystemId){
     //sjekk med databasen og evt last ned denne turneringen
 
    }else{
     //Det er et nytt turnament
+    
+
+
+
+
+
 
    }
 }

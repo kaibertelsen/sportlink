@@ -14,6 +14,7 @@ function loadScript(url) {
 // Liste over CDN-URL-er som skal lastes inn
 const cdnScripts = [
     "https://kaibertelsen.github.io/sportlink/admin/adminstartup.js",
+    "https://kaibertelsen.github.io/sportlink/apicom.js",
     "https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.0/exceljs.min.js" 
 ];
 
@@ -22,6 +23,7 @@ cdnScripts.reduce((promise, script) => {
     return promise.then(() => loadScript(script));
 }, Promise.resolve()).then(() => {
     console.log("All scripts loaded");
+    getSportlist();
 }).catch(error => {
     console.error(error);
 });
