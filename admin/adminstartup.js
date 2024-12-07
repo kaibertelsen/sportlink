@@ -21,7 +21,7 @@ async function importXlsFile(urlToXlsFile) {
         await workbook.xlsx.load(arrayBuffer);
 
         // Arknavn vi ønsker å lese
-        const sheetNames = ["Divisjoner", "Lag", "Kamper"];
+        const sheetNames = ["Turnering","Divisjoner", "Lag", "Kamper"];
         const result = {};
 
         // Iterer gjennom arknavnene
