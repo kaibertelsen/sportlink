@@ -101,7 +101,7 @@ function importedData(data){
     document.getElementById("importpanel").style.display = "block";
 
     let iTurnament = convertImportDataTurnament(data.Turnering);
-    viewOrganizerDat(controllTurnament(iTurnament));
+    viewTurnamentData(controllTurnament(iTurnament));
 
 
 
@@ -170,7 +170,7 @@ function controllTurnament(turnament) {
     }
 }
 
-function viewOrganizerDat(dataArray) {
+function viewTurnamentData(dataArray) {
     const list = document.getElementById("importlist");
     list.replaceChildren(); // Fjern tidligere innhold
 
@@ -182,6 +182,7 @@ function viewOrganizerDat(dataArray) {
         return;
     }
 
+    let turnamentUpgrade = false;
     for (let data of dataArray) {
         const rowelement = nodeelement.cloneNode(true);
 
@@ -194,7 +195,16 @@ function viewOrganizerDat(dataArray) {
 
         // Legg til rad i listen
         list.appendChild(rowelement);
+        if(data.airtable){turnamentUpgrade = true};
     }
+    
+    let text = "Turneringen er klar til å opprettes?";
+    if(turnamentUpgrade){text = "Turneringen er funnet i systemet og klar for å oppgraderes?";}
+
+    document.getElementById("importpanel").querySelector(".discriptiontext").textContent = "Ønsker du å opprette turneringen over?";
+    document.getElementById("importpanel").querySelector(".videreknapp").style.display = "Block";
+    
+    
 }
 
 // Hjelpefunksjon for å formatere datoer
