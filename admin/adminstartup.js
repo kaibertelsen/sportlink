@@ -125,7 +125,9 @@ function convertImportDataTurnament(data) {
     return convertedData;
 }
 
-function controllTurnament(turnament) {
+function controllTurnament(turnaments) {
+    let turnament = turnaments[0];
+
     if (turnament.SystemId) {
         // Sjekk med databasen og evt. last ned denne turneringen
         console.log("Sjekker eksisterende turnering med SystemId:", turnament.SystemId);
@@ -171,7 +173,7 @@ function controllTurnament(turnament) {
     }
 }
 
-function viewTurnamentData(dataArray) {
+function viewTurnamentData(data) {
     const list = document.getElementById("importlist");
     list.replaceChildren(); // Fjern tidligere innhold
 
@@ -184,7 +186,7 @@ function viewTurnamentData(dataArray) {
     }
 
     let turnamentUpgrade = false;
-    for (let data of dataArray) {
+   
         const rowelement = nodeelement.cloneNode(true);
 
         // Fyll ut data i radens felter
@@ -197,7 +199,7 @@ function viewTurnamentData(dataArray) {
         // Legg til rad i listen
         list.appendChild(rowelement);
         if(data.airtable){turnamentUpgrade = true};
-    }
+    
     
     let text = "Turneringen er klar til å opprettes?";
     if(turnamentUpgrade){text = "Turneringen er funnet i systemet og klar for å oppgraderes?";}
