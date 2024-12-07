@@ -157,6 +157,7 @@ function controllTurnament(turnaments) {
                 `Det finnes ingen sporter i systemet med navnet "${turnament.sportname}".\n` +
                 `Tilgjengelige sporter er:\n${availableSports}`
             );
+            return false;
         }
         //sjekk om turnament.organize eksisterer i gOrganizer
         const organizerMatch = gOrganizer.find(organizer => {
@@ -180,6 +181,7 @@ function controllTurnament(turnaments) {
                 `Det finnes ingen arrangementer i systemet med navnet "${turnament.organizer}".\n` +
                 `Tilgjengelige arrangementer er:\n${availableOrganizer}`
             );
+            return false;
         }
         return turnament;
     }
