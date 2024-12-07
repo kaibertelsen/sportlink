@@ -1,6 +1,7 @@
 var gSport = [];
 var gOrganizer = [];
 var klientId = "recCdECitGpKE2O1F";
+var baseId = "appxPi2CoLTlsa3qL";
 
 function startUpAdmin(){
     getSportlist()
@@ -203,7 +204,7 @@ function viewTurnamentData(dataArray) {
 
     document.getElementById("importpanel").querySelector(".discriptiontext").textContent = "Ønsker du å opprette turneringen over?";
     document.getElementById("importpanel").querySelector(".videreknapp").style.display = "Block";
-    
+
     
 }
 
