@@ -137,7 +137,13 @@ function controllTurnament(turnaments) {
         console.log("Ny turnering oppdaget.");
 
         // Sjekk om turnament.sport eksisterer i gSport
-        const sportMatch = gSport.find(sport => sport.name === turnament.sport);
+        // Sjekk om turnament.sport eksisterer i gSport
+        const sportMatch = gSport.find(sport => {
+            const sportName = sport.name.trim().toLowerCase();
+            const turnamentSport = turnament.sport.trim().toLowerCase();
+            return sportName === turnamentSport;
+        });
+
 
         if (sportMatch) {
             console.log("Match funnet i gSport:", sportMatch);
@@ -153,7 +159,13 @@ function controllTurnament(turnaments) {
             );
         }
         //sjekk om turnament.organize eksisterer i gOrganizer
-        const organizerMatch = gOrganizer.find(organizer => organizer.name === turnament.organizer);
+        const organizerMatch = gOrganizer.find(organizer => {
+            // Trim og konverter begge verdier til små bokstaver før sammenligning
+            const organizerName = organizer.name.trim().toLowerCase();
+            const turnamentOrganizer = turnament.organizer.trim().toLowerCase();
+            return organizerName === turnamentOrganizer;
+        });
+        
         if (organizerMatch) {
             console.log("Match funnet i gOrganizer:", organizerMatch);
             turnament.organizer = organizerMatch.airtable;
