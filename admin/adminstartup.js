@@ -75,7 +75,7 @@ function importedData(data){
 
 document.getElementById("importpanel").style.display = "block";
 
-let iTurnament = convertImportDataTurnament(data);
+let iTurnament = convertImportDataTurnament(data.Turnering);
 
 //listImporterDivision(result.Divisjoner)
 //Kamper
