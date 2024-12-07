@@ -15,6 +15,7 @@ function loadScript(url) {
 const cdnScripts = [
     "https://kaibertelsen.github.io/sportlink/admin/adminstartup.js",
     "https://kaibertelsen.github.io/sportlink/apicom.js",
+    "https://kaibertelsen.github.io/sportlink/admin/ruteresponse.js",
     "https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.0/exceljs.min.js" 
 ];
 
