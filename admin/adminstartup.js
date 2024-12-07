@@ -217,9 +217,9 @@ function viewTurnamentData(data) {
     
     let text = "Turneringen er klar til å opprettes?";
     if(turnamentUpgrade){text = "Turneringen er funnet i systemet og klar for å oppgraderes?";}
-
-    document.getElementById("importpanel").querySelector(".discriptiontext").textContent = "Ønsker du å opprette turneringen over?";
-    document.getElementById("importpanel").querySelector(".videreknapp").style.display = "Block";
+    const importpanel = document.getElementById("importpanel");
+    importpanel.querySelector(".discriptiontext").textContent = "Ønsker du å opprette turneringen over?";
+    importpanel.querySelector(".videreknapp").style.display = "Block";
 
     
 }
