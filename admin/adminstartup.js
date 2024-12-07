@@ -192,22 +192,31 @@ function controllTurnament(turnaments) {
     }
 }
 
-function controllDivision(data){
-console.log(data);
-/*
-// Konverterer dataene til riktig nøkkelnavn
-const divisions = data.map(item => ({
-    name: item.Divisjon || "",
-    groupname: item.Gruppe || "",
-    endplay: item.Sluttspill || "",
-    endplay: item.Start || "",
-    enddate: item.Slutt || ""
-}));
-*/
+function controllDivision(data) {
+    const formattedData = data.map(division => {
+        // Formater grupper som et array av objekter
+        const groups = division.Grupper.split(",").map(groupName => ({ name: groupName }));
 
+        // Formater sluttspill som et array av objekter med navn og antall finaler
+        const endplayNames = division.Sluttspill.split(",");
+        const finalCounts = division["Sluttspill-finaler"].split(",").map(Number);
+        const endplay = endplayNames.map((endplayName, index) => ({
+            endplayname: endplayName,
+            finalecount: finalCounts[index] || 0
+        }));
 
+        // Returner det formaterte objektet
+        return {
+            name: division.Divisjon,
+            group: groups,
+            endplay: endplay
+        };
+    });
 
+    console.log(formattedData);
+    return formattedData;
 }
+
 
 
 
