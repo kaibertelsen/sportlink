@@ -272,11 +272,10 @@ function viewDevisionData(data){
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".divisjonlayoutelement");
 
-
     for (let division of data){
         // Fyll ut data i radens felter
         const rowelement = nodeelement.cloneNode(true);
-        rowelement.querySelector(".name").textContent = data.name || "Ukjent navn";
+        rowelement.querySelector(".name").textContent = division.name || "Ukjent navn";
 
         const nodeGroup = rowelement.querySelector(".groupdiv");
         for(let group of division.group){
