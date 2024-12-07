@@ -192,35 +192,6 @@ function controllTurnament(turnaments) {
     }
 }
 
-function controllDivision(data) {
-    const formattedData = data.map(division => {
-        // Formater grupper som et array av objekter
-        const groups = division.Grupper.split(",").map(groupName => ({ name: groupName }));
-
-        // Formater sluttspill som et array av objekter med navn og antall finaler
-        const endplayNames = division.Sluttspill.split(",");
-        const finalCounts = division["Sluttspill-finaler"].split(",").map(Number);
-        const endplay = endplayNames.map((endplayName, index) => ({
-            endplayname: endplayName,
-            finalecount: finalCounts[index] || 0
-        }));
-
-        // Returner det formaterte objektet
-        return {
-            name: division.Divisjon,
-            group: groups,
-            endplay: endplay
-        };
-    });
-
-    console.log(formattedData);
-    return formattedData;
-}
-
-
-
-
-
 function viewTurnamentData(data) {
     const list = document.getElementById("importlist");
     list.replaceChildren(); // Fjern tidligere innhold
@@ -260,14 +231,80 @@ function viewTurnamentData(data) {
     button.onclick = function(){
     //videre knapp
     //start kontroll av divisjoner
-    controllDivision(idivisions);
-
+    let divisions = controllDivision(idivisions);
+        viewDevisionData(divisions);
     }
 
 
     
     
 }
+
+function controllDivision(data) {
+    const formattedData = data.map(division => {
+        // Formater grupper som et array av objekter
+        const groups = division.Grupper.split(",").map(groupName => ({ name: groupName }));
+
+        // Formater sluttspill som et array av objekter med navn og antall finaler
+        const endplayNames = division.Sluttspill.split(",");
+        const finalCounts = division["Sluttspill-finaler"].split(",").map(Number);
+        const endplay = endplayNames.map((endplayName, index) => ({
+            endplayname: endplayName,
+            finalecount: finalCounts[index] || 0
+        }));
+
+        // Returner det formaterte objektet
+        return {
+            name: division.Divisjon,
+            group: groups,
+            endplay: endplay
+        };
+    });
+
+    console.log(formattedData);
+    return formattedData;
+}
+
+function viewDevisionData(data){
+    const list = document.getElementById("importdivisionlist");
+    list.replaceChildren(); // Fjern tidligere innhold
+
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".divisjonlayoutelement");
+
+
+    for (let division of data){
+        // Fyll ut data i radens felter
+        const rowelement = nodeelement.cloneNode(true);
+        rowelement.querySelector(".name").textContent = data.name || "Ukjent navn";
+
+        const nodeGroup = rowelement.querySelector(".groupdiv");
+        for(let group of division.group){
+            const groupElement = nodeGroup.cloneNode(true);
+            groupElement.querySelector(".groupname").textContent = group.name || "";
+            nodeGroup.parentElement.appendChild(groupElement);
+        }
+         nodeGroup.style.display = "none";
+
+        
+        const endNode = rowelement.querySelector(".endplaydiv");
+        for (var i = 0;i<division.endplay.length;i++) {
+             const endElement = endNode.cloneNode(true);
+             endElement.querySelector(".endname").textContent = division.endplay[i].endplayname;
+             endElement.querySelector(".endcount").textContent = division.endplay[i].finalecount;
+             endNode.parentElement.appendChild(endElement);
+            }       
+         endNode.style.display = "none";
+        list.appendChild(rowelement);
+    }
+
+
+
+}
+
+
+
+
 
 // Hjelpefunksjon for å formatere datoer
 function formatDate(dateString) {
