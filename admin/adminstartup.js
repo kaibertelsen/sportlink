@@ -141,7 +141,7 @@ function controllTurnament(turnaments) {
 
         if (sportMatch) {
             console.log("Match funnet i gSport:", sportMatch);
-            turnament.sport = sportMatch.airtable;
+            turnament.sport = [sportMatch.airtable];
             turnament.sportname = sportMatch.name;
         } else {
             // Hent alle navn fra gSport og formater dem med linjeskift
@@ -165,8 +165,8 @@ function controllTurnament(turnaments) {
 
             // Vis en advarsel med tilgjengelige sportsnavn
             alert(
-                `Det finnes ingen sporter i systemet med navnet "${turnament.organizername}".\n` +
-                `Tilgjengelige sporter er:\n${availableOrganizer}`
+                `Det finnes ingen arrangementer i systemet med navnet "${turnament.organizer}".\n` +
+                `Tilgjengelige arrangementer er:\n${availableOrganizer}`
             );
         }
         return turnament;
