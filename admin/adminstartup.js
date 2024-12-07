@@ -1,5 +1,10 @@
 var gSport = [];
 var gOrganizer = [];
+var activetournament;
+var idivisions;
+var iTeams;
+var iMatchs;
+
 var klientId = "recCdECitGpKE2O1F";
 var baseId = "appxPi2CoLTlsa3qL";
 
@@ -98,17 +103,17 @@ async function importXlsFile(urlToXlsFile) {
 }
 
 function importedData(data){
-    //hvise panel;
+    //vise panel;
     document.getElementById("importpanel").style.display = "block";
 
     let iTurnament = convertImportDataTurnament(data.Turnering);
-    viewTurnamentData(controllTurnament(iTurnament));
+    activetournament = controllTurnament(iTurnament);
+    viewTurnamentData(controllTurnament(activetournament));
 
+    idivisions = data.Divisjoner;
+    iTeams = data.Lag;
+    iMatchs = data.Kamper;
 
-
-    //listImporterDivision(result.Divisjoner)
-    //Kamper
-    //Lag
 }
 
 function convertImportDataTurnament(data) {
@@ -187,6 +192,26 @@ function controllTurnament(turnaments) {
     }
 }
 
+function controllDivision(data){
+console.log(data);
+/*
+// Konverterer dataene til riktig nøkkelnavn
+const divisions = data.map(item => ({
+    name: item.Divisjon || "",
+    groupname: item.Gruppe || "",
+    endplay: item.Sluttspill || "",
+    endplay: item.Start || "",
+    enddate: item.Slutt || ""
+}));
+*/
+
+
+
+}
+
+
+
+
 function viewTurnamentData(data) {
     const list = document.getElementById("importlist");
     list.replaceChildren(); // Fjern tidligere innhold
@@ -222,6 +247,16 @@ function viewTurnamentData(data) {
     importpanel.querySelector(".discriptiontext").textContent = "Ønsker du å opprette turneringen over?";
     importpanel.querySelector(".importbuttonpanel").style.display = "block";
    
+    const button = importpanel.querySelector(".videreknapp");
+    button.onclick = function(){
+    //videre knapp
+    //start kontroll av divisjoner
+    controllDivision(idivisions);
+
+    }
+
+
+    
     
 }
 
