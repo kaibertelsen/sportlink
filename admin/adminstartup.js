@@ -71,7 +71,11 @@ async function importXlsFile(urlToXlsFile) {
 
 
 function importedData(data){
-   let iTurnament = convertImportDataTurnament(data);
+
+
+document.getElementById("importpanel").style.display = "block";
+
+let iTurnament = convertImportDataTurnament(data);
 
 //listImporterDivision(result.Divisjoner)
 //Kamper
@@ -79,14 +83,20 @@ function importedData(data){
 }
 
 
-function convertImportDataTurnament(data){
-//konverterer data til riktig nøkler
-console.log(data);
+function convertImportDataTurnament(data) {
+    // Konverterer dataene til riktig nøkkelnavn
+    const convertedData = data.map(item => ({
+        name: item.Turneringsnavn || "",
+        organizer: item.Arrangement || "",
+        sport: item.Sport || "",
+        startdate: item.Start || "",
+        enddate: item.Slutt || ""
+    }));
 
-
-return data;
-
+    console.log(convertedData);
+    return convertedData;
 }
+
 
 function controllTurnament(turnament){
 
