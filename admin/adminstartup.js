@@ -70,19 +70,44 @@ async function importXlsFile(urlToXlsFile) {
 }
 
 
-function importedData(result){
-    listImporterDivision(result.Divisjoner)
+function importedData(data){
+   let iTurnament = convertImportDataTurnament(data);
+
+//listImporterDivision(result.Divisjoner)
 //Kamper
 //Lag
 }
 
-function listImporterDivision(divisions){
+
+function convertImportDataTurnament(data){
+//konverterer data til riktig nøkler
+console.log(data);
+
+
+return data;
+
+}
+
+function controllTurnament(turnament){
+
+
+   if(turnament.SystemId){
+    //sjekk med databasen og evt last ned denne turneringen
+
+   }else{
+    //Det er et nytt turnament
+
+   }
+}
+
+/*
+function listDivision(divisions){
 
     const list = document.getElementById("divisionlist");
     list.replaceChildren();
     
     const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector(".divisjonimportelement");
+    const nodeelement = elementlibrary.querySelector(".divisjonlayoutelement");
     
         for (let division of divisions) {
             const rowelement = nodeelement.cloneNode(true);
@@ -114,3 +139,4 @@ function listImporterDivision(divisions){
         }
       
     }
+*/
