@@ -23,7 +23,7 @@ cdnScripts.reduce((promise, script) => {
     return promise.then(() => loadScript(script));
 }, Promise.resolve()).then(() => {
     console.log("All scripts loaded");
-    getSportlist();
+    startUpAdmin();
 }).catch(error => {
     console.error(error);
 });

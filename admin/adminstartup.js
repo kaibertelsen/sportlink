@@ -1,8 +1,13 @@
 var gSport = [];
+var gOrganizer = [];
+var klientId = "recCdECitGpKE2O1F";
 
+function startUpAdmin(){
+    getSportlist()
+    getOrganizerlist();
+}
 
 function getSportlist(){
-
     var body = airtablebodylistAND({section:1});
     Getlistairtable(baseId,"tbl2FRAzV1Ze5DdYh",body,"responseSportlist");
 }
@@ -10,12 +15,16 @@ function getSportlist(){
 function responseSportlist(data) {
     // Rens rådata
     gSport = rawdatacleaner(data); // Global variabel for videre bruk
-
 }
 
+function getOrganizerlist(){
+    var body = airtablebodylistAND({klientid:klientId,archived:0});
+    Getlistairtable(baseId,"tbl4bHhV4Bnbz8I3r",body,"responseOrganizerlist");
+}
 
-
-
+function responseOrganizerlist(data) {
+    gOrganizer =  rawdatacleaner(data);// Global variabel for videre bruk
+}
 
 //uploader
 const ctx = document.querySelector('uc-upload-ctx-provider')
@@ -87,19 +96,19 @@ async function importXlsFile(urlToXlsFile) {
     }
 }
 
-
 function importedData(data){
+    //hvise panel;
+    document.getElementById("importpanel").style.display = "block";
+
+    let iTurnament = convertImportDataTurnament(data.Turnering);
+    viewOrganizerDat(controllTurnament(iTurnament));
 
 
-document.getElementById("importpanel").style.display = "block";
 
-let iTurnament = convertImportDataTurnament(data.Turnering);
-controllTurnament(iTurnament);
-//listImporterDivision(result.Divisjoner)
-//Kamper
-//Lag
+    //listImporterDivision(result.Divisjoner)
+    //Kamper
+    //Lag
 }
-
 
 function convertImportDataTurnament(data) {
     // Konverterer dataene til riktig nøkkelnavn
@@ -115,23 +124,94 @@ function convertImportDataTurnament(data) {
     return convertedData;
 }
 
+function controllTurnament(turnament) {
+    if (turnament.SystemId) {
+        // Sjekk med databasen og evt. last ned denne turneringen
+        console.log("Sjekker eksisterende turnering med SystemId:", turnament.SystemId);
+        // Legg til databasekall her for å hente turneringen
+    } else {
+        // Det er en ny turnering
+        console.log("Ny turnering oppdaget.");
 
-function controllTurnament(turnament){
+        // Sjekk om turnament.sport eksisterer i gSport
+        const sportMatch = gSport.find(sport => sport.name === turnament.sport);
 
-   if(turnament.SystemId){
-    //sjekk med databasen og evt last ned denne turneringen
+        if (sportMatch) {
+            console.log("Match funnet i gSport:", sportMatch);
+            turnament.sport = sportMatch.airtable;
+            turnament.sportname = sportMatch.name;
+        } else {
+            // Hent alle navn fra gSport og formater dem med linjeskift
+            const availableSports = gSport.map(sport => sport.name).join("\n");
+            // Vis en advarsel med tilgjengelige sportsnavn
+            alert(
+                `Det finnes ingen sporter i systemet med navnet "${turnament.sportname}".\n` +
+                `Tilgjengelige sporter er:\n${availableSports}`
+            );
+        }
+        //sjekk om turnament.organize eksisterer i gOrganizer
+        const organizerMatch = gOrganizer.find(organizer => organizer.name === turnament.organizer);
+        if (organizerMatch) {
+            console.log("Match funnet i gOrganizer:", organizerMatch);
+            turnament.organizer = organizerMatch.airtable;
+            turnament.organizername = organizerMatch.name;
 
-   }else{
-    //Det er et nytt turnament
-    
+        } else {
+            // Hent alle navn fra gSport og formater dem med linjeskift
+            const availableOrganizer = gOrganizer.map(organizer => organizer.name).join("\n");
 
-
-
-
-
-
-   }
+            // Vis en advarsel med tilgjengelige sportsnavn
+            alert(
+                `Det finnes ingen sporter i systemet med navnet "${turnament.organizername}".\n` +
+                `Tilgjengelige sporter er:\n${availableOrganizer}`
+            );
+        }
+        return turnament;
+    }
 }
+
+function viewOrganizerDat(dataArray) {
+    const list = document.getElementById("importlist");
+    list.replaceChildren(); // Fjern tidligere innhold
+
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".turnamentlayoutelement");
+
+    if (!nodeelement) {
+        console.error("Kan ikke finne mal-elementet med klassen 'turnamentlayoutelement'");
+        return;
+    }
+
+    for (let data of dataArray) {
+        const rowelement = nodeelement.cloneNode(true);
+
+        // Fyll ut data i radens felter
+        rowelement.querySelector(".name").textContent = data.name || "Ukjent navn";
+        rowelement.querySelector(".organizername").textContent = data.organizername || "Ukjent arrangør";
+        rowelement.querySelector(".sportname").textContent = data.sportname || "Ukjent sport";
+        rowelement.querySelector(".startdate").textContent = formatDate(data.startdate) || "Ukjent startdato";
+        rowelement.querySelector(".enddate").textContent = formatDate(data.enddate) || "Ukjent sluttdato";
+
+        // Legg til rad i listen
+        list.appendChild(rowelement);
+    }
+}
+
+// Hjelpefunksjon for å formatere datoer
+function formatDate(dateString) {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("no-NO", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+
+
 
 /*
 function listDivision(divisions){
