@@ -108,7 +108,7 @@ function importedData(data){
 
     let iTurnament = convertImportDataTurnament(data.Turnering);
     activetournament = controllTurnament(iTurnament);
-    viewTurnamentData(controllTurnament(activetournament));
+    viewTurnamentData(activetournament);
 
     idivisions = data.Divisjoner;
     iTeams = data.Lag;
