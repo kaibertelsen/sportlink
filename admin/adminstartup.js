@@ -270,7 +270,7 @@ function viewDevisionData(data){
     list.replaceChildren(); // Fjern tidligere innhold
 
     const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector(".divisjonlayoutelement");
+    const nodeelement = elementlibrary.querySelector(".divisionstruktureholder");
 
     for (let division of data){
         // Fyll ut data i radens felter
