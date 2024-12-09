@@ -134,11 +134,21 @@ function viewimportinfo() {
     let message = "";
 
     if (importMessage.length === 0) {
+
+        let countGroup = 0;
+        let countEndplay = 0;
+        
+        for(let division of iDivisions){
+            countGroup  += division.group.length;
+            countEndplay += division.endplay.length;
+        }
         // Klar for import
         message = `
             Xls-filen er klar for import:<br>
             Det er funnet:<br>
             ${iDivisions.length} divisjoner<br>
+            ${countGroup} grupper<br>
+            ${countEndplay} sluttspill<br>
             ${iTeams.length} lag<br>
             ${iMatchs.length} kamper
         `;
