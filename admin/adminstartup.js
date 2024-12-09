@@ -137,7 +137,8 @@ function viewimportinfo() {
         // Klar for import
         message = `
             Xls-filen er klar for import:<br>
-            Det er funnet ${iDivisions.length} divisjoner<br>
+            Det er funnet:<br>
+            ${iDivisions.length} divisjoner<br>
             ${iTeams.length} lag<br>
             ${iMatchs.length} kamper
         `;
