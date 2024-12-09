@@ -208,12 +208,16 @@ function controllMatch(data1, data2) {
         }
 
         // Sjekk lag i iTeams
-        const team1Field = isFinalMatch ? match.Lag1tekst : match.Lag1;
-        const team2Field = isFinalMatch ? match.Lag2tekst : match.Lag2;
-
-        if (!iTeams.some(team => team.name === team1Field) || !iTeams.some(team => team.name === team2Field)) {
-            alert(`Feil på linje ${lineNumber}: I ${isFinalMatch ? "Finalekamper-arket" : "Kamper-arket"}. Ett eller begge lagene "${team1Field}" og "${team2Field}" finnes ikke på Lag-arket.`);
-            return;
+        if (!isFinalMatch) {
+            if (!iTeams.some(team => team.name === match.Lag1) || !iTeams.some(team => team.name === match.Lag2)) {
+                alert(`Feil på linje ${lineNumber}: I Kamper-arket. Ett eller begge lagene "${match.Lag1}" og "${match.Lag2}" finnes ikke på Lag-arket.`);
+                return;
+            }
+        } else {
+            if (!match.Lag1tekst || !match.Lag2tekst) {
+                alert(`Feil på linje ${lineNumber}: I Finalekamper-arket. Ett eller begge lagtekstene mangler (${match.Lag1tekst || "ukjent"} vs ${match.Lag2tekst || "ukjent"}).`);
+                return;
+            }
         }
 
         // Omdøp nøkler
@@ -239,6 +243,7 @@ function controllMatch(data1, data2) {
     console.log(validatedMatches);
     return validatedMatches;
 }
+
 
 
 
