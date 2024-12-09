@@ -151,7 +151,7 @@ function viewimportinfo() {
         const button = buttonpanel.querySelector(".videreknapp");
         
         button.onclick = function () {
-            startImport();
+            saveTournamentToServer();
         }
 
     } else {
@@ -167,11 +167,12 @@ function viewimportinfo() {
 }
 
 
-function startImport() {
+function saveTournamentToServer() {
     console.log(iTurnament);
 
     // Opprett en kopi av iTurnament for å unngå sideeffekter
     let body = { ...iTurnament };
+    body.klient = ["recCdECitGpKE2O1F"];
 
     // Fjern nøklene 'sportname' og 'organizername' fra body
     delete body.sportname;

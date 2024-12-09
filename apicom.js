@@ -166,9 +166,6 @@ async function multisave(data, baseid, tabelid, returid) {
         await processBatches();
         console.log("Samlede responsdata:", allResponses);
         apireturn({ success: true, data: allResponses, id: returid });
-
-        // Oppdater data lokalt med responsdataene
-        updateLocalData(allResponses);
     } catch (error) {
         console.error("Prosesseringen ble stoppet på grunn av en feil:", error);
         apireturn({ success: false, error: error.message, id: returid });
