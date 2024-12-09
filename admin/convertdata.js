@@ -171,13 +171,13 @@ function controllMatch(data1, data2) {
 
         // Sjekk divisjon og gruppe
         if (!iDivisions.some(div => div.name === match.Divisjon)) {
-            alert(`Feil på linje ${lineNumber}: Divisjon "${match.Divisjon}" i Kamper/Finalekamper-arket. Må defineres iht. divisjonsarket. Tidspunkt: ${match.Klokkeslett}`);
+            alert(`Feil på linje ${lineNumber}: Divisjon "${match.Divisjon}" i Kamper/Finalekamper-arket. Må defineres iht. divisjonsarket.`);
             return;
         }
 
         const division = iDivisions.find(div => div.name === match.Divisjon);
         if (division && match.Gruppe && !division.group.some(group => group.name === match.Gruppe)) {
-            alert(`Feil på linje ${lineNumber}: Gruppe "${match.Gruppe}" i kamper/finalekamper-arket, gruppen finnes ikke i divisjonen "${match.Divisjon}". Tidspunkt: ${match.Klokkeslett}`);
+            alert(`Feil på linje ${lineNumber}: Gruppe "${match.Gruppe}" i kamper/finalekamper-arket, gruppen finnes ikke i divisjonen "${match.Divisjon}".`);
             return;
         }
 
