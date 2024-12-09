@@ -140,7 +140,63 @@ function controllTeam(data) {
 
 
 
+function controllMatch(data1, data2) {
+    const combinedData = [...data1, ...data2];
+    const validMatchTypes = ["eighthfinale", "quarterfinale", "semifinale", "finale"];
 
-function controllMatch(data1,data2){
-    console.log(data1,data2);
+    const validatedMatches = combinedData.map(match => {
+        // Sjekk at nødvendige felter i data1 er fylt ut
+        if (!match.Dato || !match.Klokkeslett) {
+            alert(`Kampen mangler dato eller klokkeslett: ${JSON.stringify(match)}`);
+        }
+
+        if (match.team1name === "" || match.team2name === "") {
+            alert(`Kampen mangler et av lagene: ${JSON.stringify(match)}`);
+        }
+
+        // Sjekk at nødvendige felter i data2 er gyldige
+        if (match.Typekamp) {
+            if (!validMatchTypes.includes(match.Typekamp)) {
+                alert(`Ugyldig Typekamp: ${match.Typekamp}. Gyldige verdier: ${validMatchTypes.join(", ")}`);
+            }
+            if (!match.Kampnr) {
+                alert(`Finalekamp mangler Kampnr: ${JSON.stringify(match)}`);
+            }
+            if (!match.Sluttspill) {
+                alert(`Finalekamp mangler Sluttspill: ${JSON.stringify(match)}`);
+            }
+        }
+
+        // Sjekk lag, divisjon og gruppe i begge datasett
+        if (!iDivisions.some(div => div.name === match.Divisjon)) {
+            alert(`Ugyldig divisjon: ${match.Divisjon}`);
+        }
+
+        const division = iDivisions.find(div => div.name === match.Divisjon);
+        if (division && match.Gruppe && !division.group.some(group => group.name === match.Gruppe)) {
+            alert(`Ugyldig gruppe: ${match.Gruppe} i divisjonen ${match.Divisjon}`);
+        }
+
+        if (!gClub.some(team => team.name === match.Lag1) || !gClub.some(team => team.name === match.Lag2)) {
+            alert(`Ugyldige lag: ${match.Lag1} eller ${match.Lag2}`);
+        }
+
+        // Omdøp nøkler
+        return {
+            time: `${new Date(match.Dato).toISOString().split("T")[0]} ${match.Klokkeslett}`,
+            divisionname: match.Divisjon || "",
+            groupname: match.Gruppe || "",
+            team1name: match.Lag1 || "",
+            team2name: match.Lag2 || "",
+            fieldname: match.Bane || "",
+            location: match.Plassering || "",
+            refereename: match.Dommer || "",
+            typematch: match.Typekamp || "",
+            endplayplace: match.Kampnr || "",
+            endplay: match.Sluttspill || ""
+        };
+    });
+
+    console.log(validatedMatches);
+    return validatedMatches;
 }
