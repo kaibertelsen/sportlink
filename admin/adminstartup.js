@@ -5,6 +5,8 @@ var activetournament;
 var iDivisions;
 var iTeams;
 var iMatchs;
+var importMessage = [];
+var importok;
 
 var klientId = "recCdECitGpKE2O1F";
 var baseId = "appxPi2CoLTlsa3qL";
@@ -111,22 +113,51 @@ async function importXlsFile(urlToXlsFile) {
 }
 
 function importedData(data){
-    //vise panel;
-    document.getElementById("importpanel").style.display = "block";
+    
+    var importMessage = [];
+    var importok = true;
 
     let iTurnament = convertImportDataTurnament(data.Turnering);
     activetournament = controllTurnament(iTurnament);
-    
+
     iDivisions = controllDivision(data.Divisjoner);
     iTeams = controllTeam(data.Lag);
     iMatchs = controllMatch(data.Kamper,data.Finalekamper);
-    viewImportedData();
+
+    viewimportinfo();
+ 
 }
 
-function viewImportedData(){
-    viewTurnamentData(activetournament);
-    viewDivisionGroupAndTeamData();
+
+function viewimportinfo() {
+    const messageHolder = document.getElementById("messageholder");
+    const buttonpanel = document.getElementById("importbuttonpanel");
+    let message = "";
+
+    if (importok) {
+        // Klar for import
+        message = `
+            Xls-filen er klar for import:<br>
+            Det er funnet ${iDivisions.length} divisjoner<br>
+            ${iTeams.length} lag<br>
+            ${iMatchs.length} kamper
+        `;
+        messageHolder.innerHTML = message;
+        buttonpanel.style.display = "block";
+    } else {
+        // Ikke klar for import
+        // Må utføre tilbakemeldinger
+        message = "Xls-filen er ikke klar for import, følgende feil er funnet:<br>";
+        const errorList = importMessage.map((error, index) => `<li>${index + 1}. ${error}</li>`).join("");
+
+        message += `<ul>${errorList}</ul>`;
+        messageHolder.innerHTML = message;
+        buttonpanel.style.display = "none";
+    }
 }
+
+
+
 
 function viewTurnamentData(data) {
     const list = document.getElementById("importlist");
@@ -164,7 +195,6 @@ function viewTurnamentData(data) {
     const button = importpanel.querySelector(".videreknapp");
 
 }
-
 
 function viewDivisionGroupAndTeamData(){
 
