@@ -150,7 +150,7 @@ function viewimportinfo() {
 
         const button = buttonpanel.querySelector(".videreknapp");
         
-        button.click() = function(){
+        button.onclick = function () {
             startImport();
         }
 
