@@ -126,12 +126,7 @@ function importedData(data){
 function viewImportedData(){
     viewTurnamentData(dactivetournamentata);
     viewDivisionGroupAndTeamData();
-
-
 }
-
-
-
 
 function viewTurnamentData(data) {
     const list = document.getElementById("importlist");
@@ -171,9 +166,7 @@ function viewTurnamentData(data) {
 }
 
 
-
 function viewDivisionGroupAndTeamData(){
-
 
     const list = document.getElementById("importdivisionlist");
     list.replaceChildren(); // Fjern tidligere innhold
@@ -185,31 +178,28 @@ function viewDivisionGroupAndTeamData(){
         // Fyll ut data i radens felter
         const rowelement = nodeelement.cloneNode(true);
         rowelement.querySelector(".name").textContent = division.name || "Ukjent navn";
-
-        const nodeGroup = rowelement.querySelector(".groupdiv");
-        for(let group of division.group){
-            const groupElement = nodeGroup.cloneNode(true);
-            groupElement.querySelector(".groupname").textContent = group.name || "";
-            nodeGroup.parentElement.appendChild(groupElement);
-        }
-         nodeGroup.style.display = "none";
-
-        
-        const endNode = rowelement.querySelector(".endplaydiv");
-        for (var i = 0;i<division.endplay.length;i++) {
+            const endNode = rowelement.querySelector(".endplaydiv");
+            for (var i = 0;i<division.endplay.length;i++) {
              const endElement = endNode.cloneNode(true);
              endElement.querySelector(".endname").textContent = division.endplay[i].endplayname;
              endElement.querySelector(".endcount").textContent = division.endplay[i].finalecount;
              endNode.parentElement.appendChild(endElement);
             }       
-         endNode.style.display = "none";
+            endNode.style.display = "none";
         list.appendChild(rowelement);
+        viewGroupAndTeams(list,division);
     }
+
+}
+function viewGroupAndTeams(list,division){
+// sjekk om det er noen grupper
+
+
+
 
 
 
 }
-
 
 
 
