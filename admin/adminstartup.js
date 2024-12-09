@@ -188,11 +188,11 @@ function responseCreatTurnament(data) {
     // Hent `tournamentid` fra responsen
     let tournamentid = data.id;
 
-    // Legg til `tournamentid` i hver divisjon og formater `endplay`
-    const formattedDivisions = iDivisions.map(division => {
+    // Legg til `tournamentid` i hver divisjon, formater `endplay` og fjern `group`
+    const formattedDivisions = iDivisions.map(({ group, ...division }) => {
         return {
             ...division,
-            tournament: tournamentid, // Legg til `tournamentid`
+            tournament: [tournamentid], // Legg til `tournamentid`
             endplay: JSON.stringify(division.endplay.map(ep => ({
                 endplayname: ep.endplayname,
                 finalecount: ep.finalecount
@@ -200,11 +200,12 @@ function responseCreatTurnament(data) {
         };
     });
 
-    console.log("Formatterte divisjoner med tournament ID:", formattedDivisions);
+    console.log("Formatterte divisjoner med tournament ID (uten 'group'):", formattedDivisions);
 
     // Send til `multisave`
     multisave(formattedDivisions, baseId, "tblY9xnfQ1y8dXTaA", "responsCreatDivisions");
 }
+
 
 
 
