@@ -53,7 +53,6 @@ const ctx = document.querySelector('uc-upload-ctx-provider')
 });
 
 async function importXlsFile(urlToXlsFile) {
-    try {
         // Last ned filen
         const response = await fetch(urlToXlsFile);
         if (!response.ok) {
@@ -108,10 +107,7 @@ async function importXlsFile(urlToXlsFile) {
         console.log("Importerte data:", result);
         importedData(result);
         return result; // Returner data som objekt med arrays for hvert ark
-    } catch (error) {
-        console.error("Feil ved import av XLS-fil:", error.message);
-        return null;
-    }
+ 
 }
 
 function importedData(data){

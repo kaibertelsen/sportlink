@@ -102,7 +102,16 @@ function controllTeam(data) {
         if (team.Klubb) {
             const clubExists = iClub.some(club => club.name.toLowerCase() === team.Klubb.toLowerCase());
             if (!clubExists) {
-                alert(`Klubb '${team.Klubb}' finnes ikke i iClub for laget ${team.Lagnavn}.`);
+                // Generer en alfabetisk liste over mulige klubber
+                const availableClubs = iClub
+                    .map(club => club.name)
+                    .sort((a, b) => a.localeCompare(b)) // Sorter alfabetisk
+                    .join("\n"); // Legg til linjeskift mellom navnene
+
+                alert(
+                    `Klubb '${team.Klubb}' finnes ikke i iClub for laget ${team.Lagnavn}.\n` +
+                    `Mulige klubber er:\n${availableClubs}`
+                );
             }
         }
 
@@ -128,6 +137,7 @@ function controllTeam(data) {
     console.log(validatedTeams);
     return validatedTeams;
 }
+
 
 
 function controllMatch(data1,data2){
