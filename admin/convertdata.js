@@ -138,8 +138,6 @@ function controllTeam(data) {
     return validatedTeams;
 }
 
-
-
 function controllMatch(data1, data2) {
     const combinedData = [...data1, ...data2];
     const validMatchTypes = ["eighthfinale", "quarterfinale", "semifinale", "finale"];
@@ -184,8 +182,8 @@ function controllMatch(data1, data2) {
             return;
         }
 
-        // Sjekk lag i iTeam
-        if (!iTeam.some(team => team.name === match.Lag1) || !iTeam.some(team => team.name === match.Lag2)) {
+        // Sjekk lag i iTeams
+        if (!iTeams.some(team => team.name === match.Lag1) || !iTeams.some(team => team.name === match.Lag2)) {
             alert(`Feil på linje ${lineNumber}: Ett eller begge lagene "${match.Lag1}" og "${match.Lag2}" finnes ikke på Lag-arket`);
             return;
         }
@@ -211,4 +209,5 @@ function controllMatch(data1, data2) {
     console.log(validatedMatches);
     return validatedMatches;
 }
+
 
