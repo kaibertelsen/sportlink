@@ -124,7 +124,7 @@ function importedData(data){
 }
 
 function viewImportedData(){
-    viewTurnamentData(dactivetournamentata);
+    viewTurnamentData(activetournament);
     viewDivisionGroupAndTeamData();
 }
 
