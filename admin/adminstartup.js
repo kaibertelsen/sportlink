@@ -204,6 +204,7 @@ function viewGroupAndTeams(list,division){
                 const rowelement = nodeelement.cloneNode(true);
                 rowelement.querySelector(".name").textContent = group.name || "Ukjent navn";
                 list.appendChild(rowelement);
+                viewTeams(list, division.name, group.name)
             }
     }
 
