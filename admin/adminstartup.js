@@ -133,7 +133,7 @@ function viewimportinfo() {
     const buttonpanel = document.getElementById("importbuttonpanel");
     let message = "";
 
-    if (importMessage.length>0) {
+    if (importMessage.length === 0) {
         // Klar for import
         message = `
             Xls-filen er klar for import:<br>
