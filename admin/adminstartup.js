@@ -185,9 +185,15 @@ function startImport() {
 function responseCreatTurnament(data){
 console.log(data);
 
+multisave(iDivisions, baseId, "", "responsCreatDivisions")
+
 }
 
+function responsCreatDivisions(data){
 
+console.log(data);
+
+}
 
 
 
