@@ -208,8 +208,11 @@ function controllMatch(data1, data2) {
         }
 
         // Sjekk lag i iTeams
-        if (!iTeams.some(team => team.name === match.Lag1) || !iTeams.some(team => team.name === match.Lag2)) {
-            alert(`Feil på linje ${lineNumber}: I ${isFinalMatch ? "Finalekamper-arket" : "Kamper-arket"}. Ett eller begge lagene "${match.Lag1}" og "${match.Lag2}" finnes ikke på Lag-arket.`);
+        const team1Field = isFinalMatch ? match.Lag1tekst : match.Lag1;
+        const team2Field = isFinalMatch ? match.Lag2tekst : match.Lag2;
+
+        if (!iTeams.some(team => team.name === team1Field) || !iTeams.some(team => team.name === team2Field)) {
+            alert(`Feil på linje ${lineNumber}: I ${isFinalMatch ? "Finalekamper-arket" : "Kamper-arket"}. Ett eller begge lagene "${team1Field}" og "${team2Field}" finnes ikke på Lag-arket.`);
             return;
         }
 
@@ -225,7 +228,9 @@ function controllMatch(data1, data2) {
             refereename: match.Dommer || "",
             typematch: match.Typekamp || "",
             endplayplace: match.Kampnr || "",
-            endplay: match.Sluttspill || ""
+            endplay: match.Sluttspill || "",
+            placeholderteam1: match.Lag1tekst || "",
+            placeholderteam2: match.Lag2tekst || ""
         };
 
         validatedMatches.push(validatedMatch);
@@ -234,6 +239,7 @@ function controllMatch(data1, data2) {
     console.log(validatedMatches);
     return validatedMatches;
 }
+
 
 
 
