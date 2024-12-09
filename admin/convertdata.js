@@ -85,7 +85,6 @@ function controllDivision(data) {
     return formattedData;
 }
 
-
 function controllTeam(data) {
     const validatedTeams = data.map(team => {
         // Valider Lagnavn
@@ -148,19 +147,19 @@ function controllMatch(data1, data2) {
 
         // Sjekk at nødvendige felter er fylt ut
         if (!match.Dato || !match.Klokkeslett) {
-            alert(`Feil på linje ${lineNumber}: Kampen mangler dato eller klokkeslett. Kampdata: ${JSON.stringify(match)}`);
+            alert(`Feil på linje ${lineNumber}: Kamper-arket, mangler dato eller klokkeslett. `);
             return;
         }
 
         if (!match.Lag1 || !match.Lag2) {
-            alert(`Feil på linje ${lineNumber}: Kampen mangler et av lagene (${match.Lag1 || "ukjent"} vs ${match.Lag2 || "ukjent"}). Kampdata: ${JSON.stringify(match)}`);
+            alert(`Feil på linje ${lineNumber}: Kamper-arket mangler et av lagene (${match.Lag1 || "ukjent"} vs ${match.Lag2 || "ukjent"}).`);
             return;
         }
 
         // Sjekk at nødvendige felter i data2 er gyldige
         if (match.Typekamp) {
             if (!validMatchTypes.includes(match.Typekamp)) {
-                alert(`Feil på linje ${lineNumber}: Ugyldig Typekamp "${match.Typekamp}". Gyldige verdier: ${validMatchTypes.join(", ")}.`);
+                alert(`Feil på linje ${lineNumber}: Ugyldig Typekamp "${match.Typekamp}" i Finalekamp-arket. Gyldige verdier: ${validMatchTypes.join(", ")}.`);
             }
             if (!match.Kampnr) {
                 alert(`Feil på linje ${lineNumber}: Finalekamp mangler finalenummer (Kampnr). Kampdata: ${JSON.stringify(match)}`);
@@ -172,19 +171,19 @@ function controllMatch(data1, data2) {
 
         // Sjekk divisjon og gruppe
         if (!iDivisions.some(div => div.name === match.Divisjon)) {
-            alert(`Feil på linje ${lineNumber}: Divisjon "${match.Divisjon}" er ikke definert i divisjonsarket. Lag: ${match.Lag1} vs ${match.Lag2}, Tidspunkt: ${match.Klokkeslett}`);
+            alert(`Feil på linje ${lineNumber}: Divisjon "${match.Divisjon}" i Kamper/Finalekamper-arket. Må defineres iht. divisjonsarket. Tidspunkt: ${match.Klokkeslett}`);
             return;
         }
 
         const division = iDivisions.find(div => div.name === match.Divisjon);
         if (division && match.Gruppe && !division.group.some(group => group.name === match.Gruppe)) {
-            alert(`Feil på linje ${lineNumber}: Gruppe "${match.Gruppe}" finnes ikke i divisjonen "${match.Divisjon}". Lag: ${match.Lag1} vs ${match.Lag2}, Tidspunkt: ${match.Klokkeslett}`);
+            alert(`Feil på linje ${lineNumber}: Gruppe "${match.Gruppe}" i kamper/finalekamper-arket, gruppen finnes ikke i divisjonen "${match.Divisjon}". Tidspunkt: ${match.Klokkeslett}`);
             return;
         }
 
         // Sjekk lag i iTeams
         if (!iTeams.some(team => team.name === match.Lag1) || !iTeams.some(team => team.name === match.Lag2)) {
-            alert(`Feil på linje ${lineNumber}: Ett eller begge lagene "${match.Lag1}" og "${match.Lag2}" finnes ikke på Lag-arket`);
+            alert(`Feil på linje ${lineNumber}: i kamper(finalekamper-arket. Ett eller begge lagene "${match.Lag1}" og "${match.Lag2}" finnes ikke på Lag-arket`);
             return;
         }
 
