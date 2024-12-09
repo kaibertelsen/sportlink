@@ -157,7 +157,6 @@ function controllTeam(data) {
     return validatedTeams;
 }
 
-
 function controllMatch(data1, data2) {
     const validMatchTypes = ["eighthfinale", "quarterfinale", "semifinale", "finale"];
     const validatedMatches = [];
