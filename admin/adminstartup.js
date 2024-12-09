@@ -194,10 +194,17 @@ function viewDivisionGroupAndTeamData(){
 function viewGroupAndTeams(list,division){
 // sjekk om det er noen grupper
 
-
-
-
-
+    if(division.group>0){
+    //det er grupper her list si opp med tilhørende lag under
+    
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".groupstruktureholder");
+            for(let group of division.group ){
+                // Fyll ut data i radens felter
+                const rowelement = nodeelement.cloneNode(true);
+                rowelement.querySelector(".name").textContent = group.name || "Ukjent navn";
+            }
+    }
 
 }
 
