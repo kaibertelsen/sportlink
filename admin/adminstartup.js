@@ -120,33 +120,16 @@ function importedData(data){
     iDivisions = controllDivision(data.Divisjoner);
     iTeams = controllTeam(data.Lag);
     iMatchs = controllMatch(data.Kamper,data.Finalekamper);
+    viewImportedData();
+}
 
-    iMatchs = data.Kamper;
-
-
-
-
-
-    //viewTurnamentData(activetournament);
-
-
+function viewImportedData(){
+    viewTurnamentData(dactivetournamentata);
+    viewDivisionGroupAndTeamData();
 
 
 }
 
-function convertImportDataTurnament(data) {
-    // Konverterer dataene til riktig nøkkelnavn
-    const convertedData = data.map(item => ({
-        name: item.Turneringsnavn || "",
-        organizer: item.Arrangement || "",
-        sport: item.Sport || "",
-        startdate: item.Start || "",
-        enddate: item.Slutt || ""
-    }));
-
-    console.log(convertedData);
-    return convertedData;
-}
 
 
 
@@ -177,37 +160,28 @@ function viewTurnamentData(data) {
         list.appendChild(rowelement);
         if(data.airtable){turnamentUpgrade = true};
     
-    
     let text = "Turneringen er klar til å opprettes?";
     if(turnamentUpgrade){text = "Turneringen er funnet i systemet og klar for å oppgraderes?";}
     const importpanel = document.getElementById("importpanel");
     importpanel.style.display = "block";
     importpanel.querySelector(".discriptiontext").textContent = "Ønsker du å opprette turneringen over?";
     importpanel.querySelector(".importbuttonpanel").style.display = "block";
-   
     const button = importpanel.querySelector(".videreknapp");
-    button.onclick = function(){
-    //videre knapp
-    //start kontroll av divisjoner
-    let divisions = controllDivision(idivisions);
-        viewDevisionData(divisions);
-    }
 
-
-    
-    
 }
 
 
 
-function viewDevisionData(data){
+function viewDivisionGroupAndTeamData(){
+
+
     const list = document.getElementById("importdivisionlist");
     list.replaceChildren(); // Fjern tidligere innhold
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".divisionstruktureholder");
 
-    for (let division of data){
+    for (let division of iDivisions){
         // Fyll ut data i radens felter
         const rowelement = nodeelement.cloneNode(true);
         rowelement.querySelector(".name").textContent = division.name || "Ukjent navn";
@@ -252,47 +226,3 @@ function formatDate(dateString) {
         minute: "2-digit"
     });
 }
-
-
-
-
-/*
-function listDivision(divisions){
-
-    const list = document.getElementById("divisionlist");
-    list.replaceChildren();
-    
-    const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector(".divisjonlayoutelement");
-    
-        for (let division of divisions) {
-            const rowelement = nodeelement.cloneNode(true);
-            rowelement.querySelector(".name").textContent = division.Divisjon;
-    
-                // Konverter "Grupper" til en array
-                const groupsArray = division.Grupper.split(","); // Splitt på komma for å lage en array
-                const groupNode = rowelement.querySelector(".groupdiv");
-                // Legg til hver gruppe som et eget element
-                for (let group of groupsArray) {
-                    const groupElement = groupNode.cloneNode(true);
-                    groupElement.querySelector(".groupname").textContent = group;
-                    groupNode.parentElement.appendChild(groupElement);
-                }
-                groupNode.style.display = "none";
-    
-    
-                const endplayNameArray = division.Sluttspill.split(",");
-                const endplayAntArray = division["Sluttspill-finaler"].split(".");
-                const endNode = rowelement.querySelector(".endplaydiv");
-                for (var i = 0;i<endplayNameArray.length;i++) {
-                    const endElement = endNode.cloneNode(true);
-                    endElement.querySelector(".endname").textContent = endplayNameArray[i];
-                    endElement.querySelector(".endcount").textContent = endplayAntArray[i];
-                    endNode.parentElement.appendChild(endElement);
-                }
-                endNode.style.display = "none";
-            list.appendChild(rowelement);
-        }
-      
-    }
-*/

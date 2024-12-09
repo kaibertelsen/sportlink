@@ -1,3 +1,17 @@
+function convertImportDataTurnament(data) {
+    // Konverterer dataene til riktig nøkkelnavn
+    const convertedData = data.map(item => ({
+        name: item.Turneringsnavn || "",
+        organizer: item.Arrangement || "",
+        sport: item.Sport || "",
+        startdate: item.Start || "",
+        enddate: item.Slutt || ""
+    }));
+
+    console.log(convertedData);
+    return convertedData;
+}
+
 function controllTurnament(turnaments) {
     let turnament = turnaments[0];
 
@@ -138,13 +152,17 @@ function controllTeam(data) {
 }
 
 function controllMatch(data1, data2) {
-    const combinedData = [...data1, ...data2];
     const validMatchTypes = ["eighthfinale", "quarterfinale", "semifinale", "finale"];
     const validatedMatches = [];
 
-    combinedData.forEach((match, index) => {
-        const lineNumber = index + 1; // Linjenummer i datasettet
+    let lineNumberData1 = 0; // Teller for Kamper-arket
+    let lineNumberData2 = 0; // Teller for Finalekamper-arket
+
+    const combinedData = [...data1, ...data2];
+
+    combinedData.forEach((match) => {
         const isFinalMatch = data2.includes(match); // Sjekk om kampen kommer fra Finalekamper-arket
+        const lineNumber = isFinalMatch ? ++lineNumberData2 : ++lineNumberData1; // Inkrementer riktig teller
 
         // Sjekk at nødvendige felter er fylt ut
         if (!match.Dato || !match.Klokkeslett) {
@@ -209,6 +227,7 @@ function controllMatch(data1, data2) {
     console.log(validatedMatches);
     return validatedMatches;
 }
+
 
 
 
