@@ -38,11 +38,11 @@ function controllTurnament(turnaments) {
             // Hent alle navn fra gSport og formater dem med linjeskift
             const availableSports = gSport.map(sport => sport.name).join("\n");
             // Vis en advarsel med tilgjengelige sportsnavn
-            alert(
+            importok.push(
                 `Det finnes ingen sporter i systemet med navnet "${turnament.sportname}".\n` +
                 `Tilgjengelige sporter er:\n${availableSports}`
             );
-            return false;
+            
         }
         //sjekk om turnament.organize eksisterer i gOrganizer
         const organizerMatch = gOrganizer.find(organizer => {
@@ -62,7 +62,7 @@ function controllTurnament(turnaments) {
             const availableOrganizer = gOrganizer.map(organizer => organizer.name).join("\n");
 
             // Vis en advarsel med tilgjengelige sportsnavn
-            alert(
+            importok.push(
                 `Det finnes ingen arrangementer i systemet med navnet "${turnament.organizer}".\n` +
                 `Tilgjengelige arrangementer er:\n${availableOrganizer}`
             );
@@ -103,14 +103,14 @@ function controllTeam(data) {
         if (!team.Lagnavn || typeof team.Lagnavn !== "string") {
            let message = `Feil på linje ${lineNumber}: i Lag-arket, laget mangler Lagnavn eller har en ugyldig verdi. Kampdata: ${JSON.stringify(team)}`;
             importMessage.push(message);
-            importok = false;
+           
         }
 
         // Valider Divisjon
         if (!team.Divisjon || !iDivisions.some(div => div.name === team.Divisjon)) {
             let message = `Feil på linje ${lineNumber}:i Lag-arket, ugyldig eller manglende divisjon for laget ${team.Lagnavn}. Divisjon: ${team.Divisjon}`
             importMessage.push(message);
-            importok = false;
+           
 
         }
 
@@ -128,7 +128,7 @@ function controllTeam(data) {
                     `Feil på linje ${lineNumber}: i Lag-arket, klubb '${team.Klubb}' finnes ikke i systemet for laget ${team.Lagnavn}.\n` +
                     `Mulige klubber som ligger inne i systemet nå er:\n${availableClubs}`
                 );
-                importok = false;
+               
             }
         }
 
@@ -138,7 +138,7 @@ function controllTeam(data) {
             const groupExists = division && division.group.some(group => group.name === team.Gruppe);
             if (!groupExists) {
                 importMessage.push(`Feil på linje ${lineNumber}: i Lag-arket, gruppe '${team.Gruppe}' finnes ikke i divisjonen '${team.Divisjon}' for laget ${team.Lagnavn}.`);
-                importok = false;
+               
             }
         }
 
@@ -165,30 +165,30 @@ function controllMatch(data1, data2) {
         // Sjekk at nødvendige felter er fylt ut
         if (!match.Dato || !match.Klokkeslett) {
             importMessage.push(`Feil på linje ${lineNumber}: Kamper-arket, mangler dato eller klokkeslett.`);
-            importok = false;
+           
         }
 
         if (!match.Lag1 || !match.Lag2) {
             importMessage.push(`Feil på linje ${lineNumber}: Kamper-arket mangler et av lagene (${match.Lag1 || "ukjent"} vs ${match.Lag2 || "ukjent"}).`);
-            importok = false;
+            
         }
 
         // Sjekk divisjon og gruppe
         if (!iDivisions.some(div => div.name === match.Divisjon)) {
             importMessage.push(`Feil på linje ${lineNumber}: Divisjon "${match.Divisjon}" i Kamper-arket. Må defineres som i divisjonsarket.`);
-            importok = false;
+           
         }
 
         const division = iDivisions.find(div => div.name === match.Divisjon);
         if (division && match.Gruppe && !division.group.some(group => group.name === match.Gruppe)) {
             importMessage.push(`Feil på linje ${lineNumber}: Gruppe "${match.Gruppe}" i Kamper-arket finnes ikke i divisjonen "${match.Divisjon}".`);
-            importok = false;
+           
         }
 
         // Sjekk lag i iTeams
         if (!iTeams.some(team => team.name === match.Lag1) || !iTeams.some(team => team.name === match.Lag2)) {
             importMessage.push(`Feil på linje ${lineNumber}: I Kamper-arket. Ett eller begge lagene "${match.Lag1}" og "${match.Lag2}" finnes ikke på Lag-arket.`);
-            importok = false;
+            
         }
 
         // Omdøp nøkler
@@ -211,40 +211,40 @@ function controllMatch(data1, data2) {
         // Sjekk at nødvendige felter er fylt ut
         if (!match.Dato || !match.Klokkeslett) {
             importMessage.push(`Feil på linje ${lineNumber}: Finalekamper-arket, mangler dato eller klokkeslett.`);
-            importok = false;
+            
         }
 
         if (!match.Lag1tekst || !match.Lag2tekst) {
             importMessage.push(`Feil på linje ${lineNumber}: Finalekamper-arket mangler et av lagtekstene (${match.Lag1tekst || "ukjent"} vs ${match.Lag2tekst || "ukjent"}).`);
-            importok = false;
+            
         }
 
         // Sjekk Typekamp, Kampnr og Sluttspill
         if (!validMatchTypes.includes(match.Typekamp)) {
             importMessage.push(`Feil på linje ${lineNumber}: Ugyldig Typekamp "${match.Typekamp}" i Finalekamper-arket. Gyldige verdier: ${validMatchTypes.join(", ")}.`);
-            importok = false;
+            
         }
 
         if (!match.Kampnr) {
             importMessage.push(`Feil på linje ${lineNumber}: Finalekamper-arket mangler finalenummer (Kampnr).`);
-            importok = false;
+            
         }
 
         if (!match.Sluttspill) {
             importMessage.push(`Feil på linje ${lineNumber}: Finalekamper-arket mangler Sluttspill.`);
-            importok = false;
+            
         }
 
         // Sjekk divisjon og gruppe
         if (!iDivisions.some(div => div.name === match.Divisjon)) {
             importMessage.push(`Feil på linje ${lineNumber}: Divisjon "${match.Divisjon}" i Finalekamper-arket. Må defineres som i divisjonsarket.`);
-            importok = false;
+            
         }
 
         const division = iDivisions.find(div => div.name === match.Divisjon);
         if (division && match.Gruppe && !division.group.some(group => group.name === match.Gruppe)) {
             importMessage.push(`Feil på linje ${lineNumber}: Gruppe "${match.Gruppe}" i Finalekamper-arket finnes ikke i divisjonen "${match.Divisjon}".`);
-            importok = false;
+           
         }
 
         // Omdøp nøkler

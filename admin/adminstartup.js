@@ -6,7 +6,6 @@ var iDivisions;
 var iTeams;
 var iMatchs;
 var importMessage = [];
-var importok;
 
 var klientId = "recCdECitGpKE2O1F";
 var baseId = "appxPi2CoLTlsa3qL";
@@ -114,8 +113,8 @@ async function importXlsFile(urlToXlsFile) {
 
 function importedData(data){
     
-    var importMessage = [];
-    var importok = true;
+    importMessage = [];
+    
 
     let iTurnament = convertImportDataTurnament(data.Turnering);
     activetournament = controllTurnament(iTurnament);
@@ -134,7 +133,7 @@ function viewimportinfo() {
     const buttonpanel = document.getElementById("importbuttonpanel");
     let message = "";
 
-    if (importok) {
+    if (importMessage.length>0) {
         // Klar for import
         message = `
             Xls-filen er klar for import:<br>
