@@ -203,11 +203,53 @@ function viewGroupAndTeams(list,division){
                 // Fyll ut data i radens felter
                 const rowelement = nodeelement.cloneNode(true);
                 rowelement.querySelector(".name").textContent = group.name || "Ukjent navn";
+                list.appendChild(rowelement);
             }
     }
 
 }
+function viewTeams(list, divisionname, groupname) {
+    // Filtrer team basert på divisjon og gruppe
+    const filterteam = iTeams.filter(team => 
+        team.divisionname === divisionname && team.groupname === groupname
+    );
 
+    if (filterteam.length === 0) {
+        console.warn(`Ingen lag funnet for divisjon: "${divisionname}" og gruppe: "${groupname}".`);
+        return;
+    }
+
+    // Finn mal-elementet for rader
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".teamelement");
+
+    if (!nodeelement) {
+        console.error("Feil: Mal-elementet for lag (.teamelement) finnes ikke.");
+        return;
+    }
+
+    // Opprett rader for hvert team
+    for (let team of filterteam) {
+        // Klon mal-elementet
+        const rowelement = nodeelement.cloneNode(true);
+
+        // Sett verdier i radens felter
+        rowelement.querySelector(".name").textContent = team.name || "Ukjent navn";
+        //rowelement.querySelector(".club").textContent = team.club || "Ukjent klubb";
+
+        if (team.logo) {
+            const logoElement = rowelement.querySelector(".teamlogo");
+            if (logoElement) {
+                logoElement.src = team.logo;
+            }
+        }
+
+        // Legg til rad i listen
+        list.appendChild(rowelement);
+    }
+
+    console.log(`Fant ${filterteam.length} lag for divisjon "${divisionname}" og gruppe "${groupname}".`);
+}
 
 
 
