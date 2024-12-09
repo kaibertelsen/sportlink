@@ -122,8 +122,8 @@ function controllTeam(data) {
                     .join("\n"); // Legg til linjeskift mellom navnene
 
                 alert(
-                    `Klubb '${team.Klubb}' finnes ikke i gClub for laget ${team.Lagnavn}.\n` +
-                    `Mulige klubber er:\n${availableClubs}`
+                    `Klubb '${team.Klubb}' finnes ikke i systemet for laget ${team.Lagnavn}.\n` +
+                    `Mulige klubber som ligger inne i systemet nå er:\n${availableClubs}`
                 );
             }
         }
