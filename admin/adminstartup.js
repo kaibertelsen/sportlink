@@ -167,20 +167,25 @@ function viewimportinfo() {
 }
 
 
-function startImport(){
+function startImport() {
+    console.log(iTurnament);
 
-console.log(iTurnament)
+    // Opprett en kopi av iTurnament for å unngå sideeffekter
+    let body = { ...iTurnament };
 
-//opprett turnament
-POSTairtable(baseId,"tblGhVlhWETNvhrWN",body,"responseCreatTurnament");
+    // Fjern nøklene 'sportname' og 'organizername' fra body
+    delete body.sportname;
+    delete body.organizername;
+
+    // Opprett turnament
+    POSTairtable(baseId, "tblGhVlhWETNvhrWN", JSON.stringify(body), "responseCreatTurnament");
 }
+
 
 function responseCreatTurnament(data){
 console.log(data);
 
-
 }
-
 
 
 

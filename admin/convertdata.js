@@ -54,7 +54,7 @@ function controllTurnament(turnaments) {
         
         if (organizerMatch) {
             console.log("Match funnet i gOrganizer:", organizerMatch);
-            turnament.organizer = organizerMatch.airtable;
+            turnament.organizer = [organizerMatch.airtable];
             turnament.organizername = organizerMatch.name;
 
         } else {

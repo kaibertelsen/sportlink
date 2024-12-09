@@ -5,5 +5,7 @@ function ruteresponse(data,id){
         responseSportlist(data);
     }else if(id == "responseClublist"){
         responseClublist(data);
+    }else if(id == "responseCreatTurnament"){
+        responseCreatTurnament(data);
     }
 }
