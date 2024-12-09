@@ -194,7 +194,7 @@ function viewDivisionGroupAndTeamData(){
 function viewGroupAndTeams(list,division){
 // sjekk om det er noen grupper
 
-    if(division.group>0){
+    if(division.group.length>0){
     //det er grupper her list si opp med tilhørende lag under
     
     const elementlibrary = document.getElementById("elementlibrary");
