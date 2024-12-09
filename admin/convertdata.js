@@ -100,15 +100,19 @@ function controllDivision(data) {
 }
 
 function controllTeam(data) {
-    const validatedTeams = data.map(team => {
+    const validatedTeams = data.map((team, index) => {
+        const lineNumber = index + 1; // Linjenummer i datasettet
+
         // Valider Lagnavn
         if (!team.Lagnavn || typeof team.Lagnavn !== "string") {
-            alert(`Laget mangler Lagnavn eller har en ugyldig verdi: ${JSON.stringify(team)}`);
+            alert(`Feil på linje ${lineNumber}: i Lag-arket, laget mangler Lagnavn eller har en ugyldig verdi. Kampdata: ${JSON.stringify(team)}`);
+            return null; // Hopp over ugyldig lag
         }
 
         // Valider Divisjon
         if (!team.Divisjon || !iDivisions.some(div => div.name === team.Divisjon)) {
-            alert(`Ugyldig eller manglende divisjon for laget ${team.Lagnavn}. Divisjon: ${team.Divisjon}`);
+            alert(`Feil på linje ${lineNumber}:i Lag-arket, ugyldig eller manglende divisjon for laget ${team.Lagnavn}. Divisjon: ${team.Divisjon}`);
+            return null; // Hopp over ugyldig lag
         }
 
         // Valider Klubb
@@ -122,9 +126,10 @@ function controllTeam(data) {
                     .join("\n"); // Legg til linjeskift mellom navnene
 
                 alert(
-                    `Klubb '${team.Klubb}' finnes ikke i systemet for laget ${team.Lagnavn}.\n` +
+                    `Feil på linje ${lineNumber}: i Lag-arket, klubb '${team.Klubb}' finnes ikke i systemet for laget ${team.Lagnavn}.\n` +
                     `Mulige klubber som ligger inne i systemet nå er:\n${availableClubs}`
                 );
+                return null; // Hopp over ugyldig lag
             }
         }
 
@@ -133,7 +138,8 @@ function controllTeam(data) {
             const division = iDivisions.find(div => div.name === team.Divisjon);
             const groupExists = division && division.group.some(group => group.name === team.Gruppe);
             if (!groupExists) {
-                alert(`Gruppe '${team.Gruppe}' finnes ikke i divisjonen '${team.Divisjon}' for laget ${team.Lagnavn}.`);
+                alert(`Feil på linje ${lineNumber}: i Lag-arket, gruppe '${team.Gruppe}' finnes ikke i divisjonen '${team.Divisjon}' for laget ${team.Lagnavn}.`);
+                return null; // Hopp over ugyldig lag
             }
         }
 
@@ -145,11 +151,12 @@ function controllTeam(data) {
             divisionname: team.Divisjon || "",
             groupname: team.Gruppe || ""
         };
-    });
+    }).filter(Boolean); // Fjern null-verdier for ugyldige lag
 
     console.log(validatedTeams);
     return validatedTeams;
 }
+
 
 function controllMatch(data1, data2) {
     const validMatchTypes = ["eighthfinale", "quarterfinale", "semifinale", "finale"];
