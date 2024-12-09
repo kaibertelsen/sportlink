@@ -222,7 +222,7 @@ function viewTeams(list, divisionname, groupname) {
 
     // Finn mal-elementet for rader
     const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector(".teamelement");
+    const nodeelement = elementlibrary.querySelector(".teamsstruktureholder");
 
     if (!nodeelement) {
         console.error("Feil: Mal-elementet for lag (.teamelement) finnes ikke.");
