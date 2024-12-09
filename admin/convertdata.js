@@ -100,16 +100,16 @@ function controllTeam(data) {
 
         // Valider Klubb
         if (team.Klubb) {
-            const clubExists = iClub.some(club => club.name.toLowerCase() === team.Klubb.toLowerCase());
+            const clubExists = gClub.some(club => club.name.toLowerCase() === team.Klubb.toLowerCase());
             if (!clubExists) {
                 // Generer en alfabetisk liste over mulige klubber
-                const availableClubs = iClub
+                const availableClubs = gClub
                     .map(club => club.name)
                     .sort((a, b) => a.localeCompare(b)) // Sorter alfabetisk
                     .join("\n"); // Legg til linjeskift mellom navnene
 
                 alert(
-                    `Klubb '${team.Klubb}' finnes ikke i iClub for laget ${team.Lagnavn}.\n` +
+                    `Klubb '${team.Klubb}' finnes ikke i gClub for laget ${team.Lagnavn}.\n` +
                     `Mulige klubber er:\n${availableClubs}`
                 );
             }
@@ -137,6 +137,7 @@ function controllTeam(data) {
     console.log(validatedTeams);
     return validatedTeams;
 }
+
 
 
 
