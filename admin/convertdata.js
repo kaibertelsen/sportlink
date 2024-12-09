@@ -143,46 +143,55 @@ function controllTeam(data) {
 function controllMatch(data1, data2) {
     const combinedData = [...data1, ...data2];
     const validMatchTypes = ["eighthfinale", "quarterfinale", "semifinale", "finale"];
+    const validatedMatches = [];
 
-    const validatedMatches = combinedData.map(match => {
-        // Sjekk at nødvendige felter i data1 er fylt ut
+    combinedData.forEach((match, index) => {
+        const lineNumber = index + 1; // Linjenummer i datasettet
+
+        // Sjekk at nødvendige felter er fylt ut
         if (!match.Dato || !match.Klokkeslett) {
-            alert(`Kampen mangler dato eller klokkeslett: ${JSON.stringify(match)}`);
+            alert(`Feil på linje ${lineNumber}: Kampen mangler dato eller klokkeslett. Kampdata: ${JSON.stringify(match)}`);
+            return;
         }
 
-        if (match.team1name === "" || match.team2name === "") {
-            alert(`Kampen mangler et av lagene: ${JSON.stringify(match)}`);
+        if (!match.Lag1 || !match.Lag2) {
+            alert(`Feil på linje ${lineNumber}: Kampen mangler et av lagene (${match.Lag1 || "ukjent"} vs ${match.Lag2 || "ukjent"}). Kampdata: ${JSON.stringify(match)}`);
+            return;
         }
 
         // Sjekk at nødvendige felter i data2 er gyldige
         if (match.Typekamp) {
             if (!validMatchTypes.includes(match.Typekamp)) {
-                alert(`Ugyldig Typekamp: ${match.Typekamp}. Gyldige verdier: ${validMatchTypes.join(", ")}`);
+                alert(`Feil på linje ${lineNumber}: Ugyldig Typekamp "${match.Typekamp}". Gyldige verdier: ${validMatchTypes.join(", ")}.`);
             }
             if (!match.Kampnr) {
-                alert(`Finalekamp mangler Kampnr: ${JSON.stringify(match)}`);
+                alert(`Feil på linje ${lineNumber}: Finalekamp mangler finalenummer (Kampnr). Kampdata: ${JSON.stringify(match)}`);
             }
             if (!match.Sluttspill) {
-                alert(`Finalekamp mangler Sluttspill: ${JSON.stringify(match)}`);
+                alert(`Feil på linje ${lineNumber}: Finalekamp mangler Sluttspill. Kampdata: ${JSON.stringify(match)}`);
             }
         }
 
-        // Sjekk lag, divisjon og gruppe i begge datasett
+        // Sjekk divisjon og gruppe
         if (!iDivisions.some(div => div.name === match.Divisjon)) {
-            alert(`Ugyldig divisjon: ${match.Divisjon}`);
+            alert(`Feil på linje ${lineNumber}: Divisjon "${match.Divisjon}" er ikke definert i divisjonsarket. Lag: ${match.Lag1} vs ${match.Lag2}, Tidspunkt: ${match.Klokkeslett}`);
+            return;
         }
 
         const division = iDivisions.find(div => div.name === match.Divisjon);
         if (division && match.Gruppe && !division.group.some(group => group.name === match.Gruppe)) {
-            alert(`Ugyldig gruppe: ${match.Gruppe} i divisjonen ${match.Divisjon}`);
+            alert(`Feil på linje ${lineNumber}: Gruppe "${match.Gruppe}" finnes ikke i divisjonen "${match.Divisjon}". Lag: ${match.Lag1} vs ${match.Lag2}, Tidspunkt: ${match.Klokkeslett}`);
+            return;
         }
 
-        if (!gClub.some(team => team.name === match.Lag1) || !gClub.some(team => team.name === match.Lag2)) {
-            alert(`Ugyldige lag: ${match.Lag1} eller ${match.Lag2}`);
+        // Sjekk lag i iTeam
+        if (!iTeam.some(team => team.name === match.Lag1) || !iTeam.some(team => team.name === match.Lag2)) {
+            alert(`Feil på linje ${lineNumber}: Ett eller begge lagene "${match.Lag1}" og "${match.Lag2}" finnes ikke på Lag-arket`);
+            return;
         }
 
         // Omdøp nøkler
-        return {
+        const validatedMatch = {
             time: `${new Date(match.Dato).toISOString().split("T")[0]} ${match.Klokkeslett}`,
             divisionname: match.Divisjon || "",
             groupname: match.Gruppe || "",
@@ -195,8 +204,11 @@ function controllMatch(data1, data2) {
             endplayplace: match.Kampnr || "",
             endplay: match.Sluttspill || ""
         };
+
+        validatedMatches.push(validatedMatch);
     });
 
     console.log(validatedMatches);
     return validatedMatches;
 }
+
