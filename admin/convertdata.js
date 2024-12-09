@@ -144,46 +144,47 @@ function controllMatch(data1, data2) {
 
     combinedData.forEach((match, index) => {
         const lineNumber = index + 1; // Linjenummer i datasettet
+        const isFinalMatch = data2.includes(match); // Sjekk om kampen kommer fra Finalekamper-arket
 
         // Sjekk at nødvendige felter er fylt ut
         if (!match.Dato || !match.Klokkeslett) {
-            alert(`Feil på linje ${lineNumber}: Kamper-arket, mangler dato eller klokkeslett. `);
+            alert(`Feil på linje ${lineNumber}: ${isFinalMatch ? "Finalekamper-arket" : "Kamper-arket"}, mangler dato eller klokkeslett.`);
             return;
         }
 
         if (!match.Lag1 || !match.Lag2) {
-            alert(`Feil på linje ${lineNumber}: Kamper-arket mangler et av lagene (${match.Lag1 || "ukjent"} vs ${match.Lag2 || "ukjent"}).`);
+            alert(`Feil på linje ${lineNumber}: ${isFinalMatch ? "Finalekamper-arket" : "Kamper-arket"} mangler et av lagene (${match.Lag1 || "ukjent"} vs ${match.Lag2 || "ukjent"}).`);
             return;
         }
 
         // Sjekk at nødvendige felter i data2 er gyldige
-        if (match.Typekamp) {
+        if (isFinalMatch && match.Typekamp) {
             if (!validMatchTypes.includes(match.Typekamp)) {
-                alert(`Feil på linje ${lineNumber}: Ugyldig Typekamp "${match.Typekamp}" i Finalekamp-arket. Gyldige verdier: ${validMatchTypes.join(", ")}.`);
+                alert(`Feil på linje ${lineNumber}: Ugyldig Typekamp "${match.Typekamp}" i Finalekamper-arket. Gyldige verdier: ${validMatchTypes.join(", ")}.`);
             }
             if (!match.Kampnr) {
-                alert(`Feil på linje ${lineNumber}: Finalekamp mangler finalenummer (Kampnr). Kampdata: ${JSON.stringify(match)}`);
+                alert(`Feil på linje ${lineNumber}: Finalekamp mangler finalenummer (Kampnr).`);
             }
             if (!match.Sluttspill) {
-                alert(`Feil på linje ${lineNumber}: Finalekamp mangler Sluttspill. Kampdata: ${JSON.stringify(match)}`);
+                alert(`Feil på linje ${lineNumber}: Finalekamp mangler Sluttspill.`);
             }
         }
 
         // Sjekk divisjon og gruppe
         if (!iDivisions.some(div => div.name === match.Divisjon)) {
-            alert(`Feil på linje ${lineNumber}: Divisjon "${match.Divisjon}" i Kamper/Finalekamper-arket. Må defineres iht. divisjonsarket.`);
+            alert(`Feil på linje ${lineNumber}: Divisjon "${match.Divisjon}" i ${isFinalMatch ? "Finalekamper-arket" : "Kamper-arket"}. Må defineres som i divisjonsarket.`);
             return;
         }
 
         const division = iDivisions.find(div => div.name === match.Divisjon);
         if (division && match.Gruppe && !division.group.some(group => group.name === match.Gruppe)) {
-            alert(`Feil på linje ${lineNumber}: Gruppe "${match.Gruppe}" i kamper/finalekamper-arket, gruppen finnes ikke i divisjonen "${match.Divisjon}".`);
+            alert(`Feil på linje ${lineNumber}: Gruppe "${match.Gruppe}" i ${isFinalMatch ? "Finalekamper-arket" : "Kamper-arket"}, finnes ikke i divisjonen "${match.Divisjon}".`);
             return;
         }
 
         // Sjekk lag i iTeams
         if (!iTeams.some(team => team.name === match.Lag1) || !iTeams.some(team => team.name === match.Lag2)) {
-            alert(`Feil på linje ${lineNumber}: i kamper(finalekamper-arket. Ett eller begge lagene "${match.Lag1}" og "${match.Lag2}" finnes ikke på Lag-arket`);
+            alert(`Feil på linje ${lineNumber}: I ${isFinalMatch ? "Finalekamper-arket" : "Kamper-arket"}. Ett eller begge lagene "${match.Lag1}" og "${match.Lag2}" finnes ikke på Lag-arket.`);
             return;
         }
 
@@ -208,5 +209,6 @@ function controllMatch(data1, data2) {
     console.log(validatedMatches);
     return validatedMatches;
 }
+
 
 
