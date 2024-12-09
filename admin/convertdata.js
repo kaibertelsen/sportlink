@@ -86,9 +86,49 @@ function controllDivision(data) {
 }
 
 
-function controllTeam(data){
-    console.log(data);
+function controllTeam(data) {
+    const validatedTeams = data.map(team => {
+        // Valider Lagnavn
+        if (!team.Lagnavn || typeof team.Lagnavn !== "string") {
+            alert(`Laget mangler Lagnavn eller har en ugyldig verdi: ${JSON.stringify(team)}`);
+        }
+
+        // Valider Divisjon
+        if (!team.Divisjon || !iDivisions.some(div => div.name === team.Divisjon)) {
+            alert(`Ugyldig eller manglende divisjon for laget ${team.Lagnavn}. Divisjon: ${team.Divisjon}`);
+        }
+
+        // Valider Klubb
+        if (team.Klubb) {
+            const clubExists = iClub.some(club => club.name.toLowerCase() === team.Klubb.toLowerCase());
+            if (!clubExists) {
+                alert(`Klubb '${team.Klubb}' finnes ikke i iClub for laget ${team.Lagnavn}.`);
+            }
+        }
+
+        // Valider Gruppe
+        if (team.Gruppe && team.Divisjon) {
+            const division = iDivisions.find(div => div.name === team.Divisjon);
+            const groupExists = division && division.group.some(group => group.name === team.Gruppe);
+            if (!groupExists) {
+                alert(`Gruppe '${team.Gruppe}' finnes ikke i divisjonen '${team.Divisjon}' for laget ${team.Lagnavn}.`);
+            }
+        }
+
+        // Omdøp nøkler til riktig format
+        return {
+            name: team.Lagnavn || "",
+            initials: team.Initialer || "",
+            club: team.Klubb || "",
+            divisionname: team.Divisjon || "",
+            groupname: team.Gruppe || ""
+        };
+    });
+
+    console.log(validatedTeams);
+    return validatedTeams;
 }
+
 
 function controllMatch(data1,data2){
     console.log(data1,data2);
