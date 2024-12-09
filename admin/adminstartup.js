@@ -182,12 +182,26 @@ function startImport() {
 }
 
 
-function responseCreatTurnament(data){
-console.log(data);
+function responseCreatTurnament(data) {
+    console.log(data);
 
-multisave(iDivisions, baseId, "", "responsCreatDivisions")
+    // Konverter `endplay` nøkler til ønsket format for hver divisjon
+    const formattedDivisions = iDivisions.map(division => {
+        return {
+            ...division,
+            endplay: JSON.stringify(division.endplay.map(ep => ({
+                endplayname: ep.endplayname,
+                finalecount: ep.finalecount
+            })))
+        };
+    });
 
+    console.log("Formatterte divisjoner:", formattedDivisions);
+
+    // Send til `multisave`
+    multisave(formattedDivisions, baseId, "tblY9xnfQ1y8dXTaA", "responsCreatDivisions");
 }
+
 
 function responsCreatDivisions(data){
 
