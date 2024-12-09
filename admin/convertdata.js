@@ -74,26 +74,29 @@ function controllTurnament(turnaments) {
 
 function controllDivision(data) {
     const formattedData = data.map(division => {
-        // Formater grupper som et array av objekter
-        const groups = division.Grupper.split(",").map(groupName => ({ name: groupName }));
+        // Formater grupper som et array av objekter, eller en tom liste hvis Grupper mangler
+        const groups = division.Grupper
+            ? division.Grupper.split(",").map(groupName => ({ name: groupName }))
+            : [];
 
-        // Formater sluttspill som et array av objekter med navn og antall finaler
-        const endplayNames = division.Sluttspill.split(",");
-        const finalCounts = division["Sluttspill-finaler"].split(",").map(Number);
-        const endplay = endplayNames.map((endplayName, index) => ({
-            endplayname: endplayName,
-            finalecount: finalCounts[index] || 0
-        }));
+        // Formater sluttspill som et array av objekter med navn og antall finaler, eller en tom liste hvis Sluttspill mangler
+        const endplay = division.Sluttspill && division["Sluttspill-finaler"]
+            ? division.Sluttspill.split(",").map((endplayName, index) => ({
+                endplayname: endplayName,
+                finalecount: Number(division["Sluttspill-finaler"].split(",")[index]) || 0
+            }))
+            : [];
 
         // Returner det formaterte objektet
         return {
-            name: division.Divisjon,
+            name: division.Divisjon || "Ukjent divisjon",
             group: groups,
             endplay: endplay
         };
     });
     return formattedData;
 }
+
 
 function controllTeam(data) {
     const validatedTeams = data.map((team, index) => {
