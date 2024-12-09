@@ -185,10 +185,14 @@ function startImport() {
 function responseCreatTurnament(data) {
     console.log(data);
 
-    // Konverter `endplay` nøkler til ønsket format for hver divisjon
+    // Hent `tournamentid` fra responsen
+    let tournamentid = data.id;
+
+    // Legg til `tournamentid` i hver divisjon og formater `endplay`
     const formattedDivisions = iDivisions.map(division => {
         return {
             ...division,
+            tournament: tournamentid, // Legg til `tournamentid`
             endplay: JSON.stringify(division.endplay.map(ep => ({
                 endplayname: ep.endplayname,
                 finalecount: ep.finalecount
@@ -196,11 +200,12 @@ function responseCreatTurnament(data) {
         };
     });
 
-    console.log("Formatterte divisjoner:", formattedDivisions);
+    console.log("Formatterte divisjoner med tournament ID:", formattedDivisions);
 
     // Send til `multisave`
     multisave(formattedDivisions, baseId, "tblY9xnfQ1y8dXTaA", "responsCreatDivisions");
 }
+
 
 
 function responsCreatDivisions(data){
