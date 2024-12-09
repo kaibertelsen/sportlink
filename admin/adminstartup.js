@@ -214,6 +214,12 @@ function responsCreatDivisions(data){
 
 console.log(data);
 
+//opprette grupper
+
+//opprette lag
+
+//opprette kamper
+
 }
 
 
