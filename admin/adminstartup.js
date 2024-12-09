@@ -2,6 +2,7 @@ var gSport = [];
 var gOrganizer = [];
 var gClub = [];
 var activetournament;
+var iTurnament;
 var iDivisions;
 var iTeams;
 var iMatchs;
@@ -112,21 +113,13 @@ async function importXlsFile(urlToXlsFile) {
 }
 
 function importedData(data){
-    
     importMessage = [];
-    
-
-    let iTurnament = convertImportDataTurnament(data.Turnering);
-    activetournament = controllTurnament(iTurnament);
-
+    iTurnament = controllTurnament(convertImportDataTurnament(data.Turnering));
     iDivisions = controllDivision(data.Divisjoner);
     iTeams = controllTeam(data.Lag);
     iMatchs = controllMatch(data.Kamper,data.Finalekamper);
-
     viewimportinfo();
- 
 }
-
 
 function viewimportinfo() {
     const messageHolder = document.getElementById("messageholder");
@@ -154,6 +147,13 @@ function viewimportinfo() {
         `;
         messageHolder.innerHTML = message;
         buttonpanel.style.display = "block";
+
+        const button = buttonpanel.querySelector(".videreknapp");
+        
+        button.click() = function(){
+            startImport();
+        }
+
     } else {
         // Ikke klar for import
         // Må utføre tilbakemeldinger
@@ -165,6 +165,39 @@ function viewimportinfo() {
         buttonpanel.style.display = "none";
     }
 }
+
+
+function startImport(){
+
+console.log(iTurnament)
+
+//opprett turnament
+POSTairtable(baseId,"tblGhVlhWETNvhrWN",body,"responseCreatTurnament");
+}
+
+function responseCreatTurnament(data){
+console.log(data);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
