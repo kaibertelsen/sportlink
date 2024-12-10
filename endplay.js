@@ -1,60 +1,37 @@
 function endplayConverter(data) {
-    if (!data) {
-        console.warn("Data er ugyldig eller tom.");
-        return [];
-    }
-
     // Sjekk om data har en "divisjonjson"-nøkkel som er en array
-    if (Array.isArray(data.divisjonjson)) {
-        return data.divisjonjson.map(item => {
+    if (Array.isArray(data?.divisjonjson)) {
+        const parsedData = data.divisjonjson.map(item => {
+            // Forsøk å parse hvert element i divisjon-arrayet
             try {
-                // Forsøk å parse elementet hvis det er en streng
-                let parsedItem = typeof item === "string" ? JSON.parse(item) : item;
+                const parsedItem = JSON.parse(item);
 
                 // Parse "endplay" hvis det er en gyldig JSON-streng
-                if (parsedItem.endplay && typeof parsedItem.endplay === "string" && parsedItem.endplay.trim()) {
+                if (parsedItem.endplay && parsedItem.endplay.trim()) {
                     try {
                         parsedItem.endplay = JSON.parse(parsedItem.endplay);
                     } catch (error) {
-                        console.warn("Feil ved parsing av endplay:", error, parsedItem.endplay);
-                        parsedItem.endplay = [];
+                        console.warn("Feil ved parsing av endplay:", error);
                     }
-                } else if (!Array.isArray(parsedItem.endplay)) {
-                    // Hvis endplay ikke er en array, sett den til en tom array
+                } else {
+                    // Hvis endplay er tomt, sett det til en tom array
                     parsedItem.endplay = [];
                 }
 
                 return parsedItem;
             } catch (error) {
-                console.warn("Feil ved parsing av divisjonjson-element:", error, item);
+                console.warn("Feil ved parsing av element:", error, item);
                 return null; // Returner null for elementer som feiler
             }
-        }).filter(item => item !== null); // Filtrer ut ugyldige elementer
-    }
+        });
 
-    // Hvis divisjonjson ikke er en array, sjekk om data har et allerede-parse format
-    if (Array.isArray(data.division)) {
-        return data.division.map(item => {
-            try {
-                // Forsøk å parse "endplay" hvis det finnes som streng
-                if (item.endplay && typeof item.endplay === "string" && item.endplay.trim()) {
-                    item.endplay = JSON.parse(item.endplay);
-                } else if (!Array.isArray(item.endplay)) {
-                    // Hvis endplay ikke er en array, sett den til en tom array
-                    item.endplay = [];
-                }
-                return item;
-            } catch (error) {
-                console.warn("Feil ved behandling av division-element:", error, item);
-                return null;
-            }
-        }).filter(item => item !== null); // Filtrer ut ugyldige elementer
+        // Filtrer ut null-verdier fra resultatet
+        return parsedData.filter(item => item !== null);
+    } else {
+        console.warn("Data mangler en gyldig divisjonjson-array.");
+        return [];
     }
-
-    console.warn("Data mangler en gyldig divisjonjson- eller division-array.");
-    return [];
 }
-
 
 
 

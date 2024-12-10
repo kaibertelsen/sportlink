@@ -195,13 +195,18 @@ function responseCreatTurnament(data) {
 
     // Legg til `tournamentid` i hver divisjon, formater `endplay` og fjern `group`
     const formattedDivisions = iDivisions.map(({ group, ...division }) => {
+        // Formater `endplay` med escape-tegn
+        const formattedEndplay = JSON.stringify(
+            division.endplay.map(ep => ({
+                endplayname: ep.endplayname,
+                finalecount: ep.finalecount
+            }))
+        ).replace(/"/g, '\\"'); // Escape doble anførselstegn
+
         return {
             ...division,
             tournament: [tournamentid], // Legg til `tournamentid`
-            endplay: JSON.stringify(division.endplay.map(ep => ({
-                endplayname: ep.endplayname,
-                finalecount: ep.finalecount
-            })))
+            endplay: `[${formattedEndplay}]` // Formater `endplay` som ønsket
         };
     });
 
@@ -210,6 +215,7 @@ function responseCreatTurnament(data) {
     // Send til `multisave`
     multisave(formattedDivisions, baseId, "tblY9xnfQ1y8dXTaA", "responsCreatDivisions");
 }
+
 
 function responsCreatDivisions(data){
 
