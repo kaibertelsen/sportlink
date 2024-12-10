@@ -164,11 +164,13 @@ function viewteam(team) {
     if (team.clublogo) teamLogo.src = team.clublogo;
 
     const thismatchinfo = document.getElementById("thisteamhinfo");
-    thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
-
+    
+    /*
     const clublogo = thismatchinfo.querySelector(".clublogo");
     if (team.clublogo) clublogo.src = team.clublogo;
+    */
     thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "Ukjent divisjon";
+    thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
 
 //Ranking
         // Bestem hvilket element som skal kopieres basert på sportstypen
