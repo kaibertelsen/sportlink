@@ -9,6 +9,8 @@ function ruteresponse(data,id){
         responseCreatTurnament(data);
     }else if(id == "responsCreatDivisions"){
         responsCreatDivisions(data);
+    }else if(id == "responsCreatGroups"){
+        responsCreatGroups(data);
     }
-
+    
 }

@@ -172,6 +172,12 @@ async function multisave(data, baseid, tabelid, returid) {
     }
 }
 
+function convertMultiResponseData(data) {
+    return data.flatMap(samling => samling.map(item => item.fields));
+}
+
+
+
 function apireturn(response){
     if(response.success){
      ruteresponse(response.data,response.id);
