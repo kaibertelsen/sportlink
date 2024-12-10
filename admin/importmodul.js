@@ -117,6 +117,7 @@ function responsCreatDivisions(data){
 
     //marker punkt
     setPointIcon(".division");
+    setPointIcon(".endplay");
 
     iGroups = getGroupsWithDivisionAirtable(iDivisions, sDivisions)
     
