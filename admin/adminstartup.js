@@ -224,14 +224,14 @@ function convertMultiResponseData(data) {
 
 
 
-function getGroupsWithDivisionAirtable(iDivisions, sDivisions) {
+function getGroupsWithDivisionAirtable(idivisions, sdivisions) {
     const groups = [];
 
-    iDivisions.forEach(division => {
+    idivisions.forEach(division => {
         const divisionName = division.name;
 
         // Finn divisjonen i sDivisions for å hente airtable ID
-        const matchingDivision = sDivisions.find(sDiv => sDiv.name === divisionName);
+        const matchingDivision = sdivisions.find(sDiv => sDiv.name === divisionName);
         const airtableId = matchingDivision ? matchingDivision.airtable : null;
 
         // Legg til alle grupper med divisjonsinformasjon
