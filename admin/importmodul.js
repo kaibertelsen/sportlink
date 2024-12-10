@@ -294,7 +294,7 @@ function responseSaveMatches(data){
 function allIsImported() {
     // Hent `pointholderpanel` og knapp
     const pointholderpanel = document.getElementById("pointholderpanel");
-    const buttonpanel = document.getElementById("buttonpanel");
+    const buttonpanel = document.getElementById("importbuttonpanel");
     
     if (!pointholderpanel || !buttonpanel) {
         console.warn("Enten 'pointholderpanel' eller 'buttonpanel' mangler i DOM.");
