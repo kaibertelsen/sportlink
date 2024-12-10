@@ -373,7 +373,7 @@ function viewMatch(match){
         };
     
         // Oppdater matchinfo med sjekk for tomme eller manglende verdier
-        updateTextContent(".field", match.fieldname);
+        updateTextContent(".field", "Bane: "+match.fieldname);
         updateTextContent(".refereename", match.refereename);
 
         const timeelement = matchinfo.querySelector(".datetime");
