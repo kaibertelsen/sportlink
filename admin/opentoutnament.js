@@ -73,7 +73,7 @@ function listDivision(divisions) {
         groupNode.style.display = "none";
 
         // Legg til sluttspill
-        const endNode = rowelement.querySelector(".endplaydiv");
+        const endNode = rowelement.querySelector(".endplay");
         division.endplay.forEach(endplay => {
             const endElement = endNode.cloneNode(true);
             endElement.querySelector(".endname").textContent = endplay.endplayname;
