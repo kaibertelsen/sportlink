@@ -349,6 +349,9 @@ function saveMatchsToServer() {
             team2AirtableId = team2Record ? team2Record.airtable : null;
         }
 
+        // Konverter `endplayplace` til numerisk format hvis det finnes
+        const endplayplaceNumeric = match.endplayplace ? parseInt(match.endplayplace, 10) : null;
+
         // Opprett et nytt match-objekt uten team1name, team2name, groupname, divisionname
         const { team1name, team2name, groupname, divisionname, ...rest } = match;
 
@@ -357,15 +360,17 @@ function saveMatchsToServer() {
             division: divisionAirtableId ? [divisionAirtableId] : [], // Legg til division Airtable ID
             group: groupAirtableId ? [groupAirtableId] : [], // Legg til group Airtable ID hvis den finnes
             team1: team1AirtableId ? [team1AirtableId] : [], // Legg til team1 Airtable ID hvis den finnes
-            team2: team2AirtableId ? [team2AirtableId] : [] // Legg til team2 Airtable ID hvis den finnes
+            team2: team2AirtableId ? [team2AirtableId] : [], // Legg til team2 Airtable ID hvis den finnes
+            endplayplace: endplayplaceNumeric // Legg til numerisk `endplayplace`
         };
     });
 
     console.log("Oppdaterte iMatchs:", updatedMatches);
 
     // Send oppdaterte matcher til server
-    multisave(updatedMatches, baseId, "tblrHBFa60aIdqkUu", "responseSaveMatches");
+    multisave(updatedMatches, baseId, "tblMatchTableId", "responseSaveMatches");
 }
+
 
 function responseSaveMatches(data){
     sMatch = convertMultiResponseData(data);
