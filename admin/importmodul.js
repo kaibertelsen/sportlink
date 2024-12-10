@@ -104,6 +104,7 @@ function setPointIcon(name) {
     const targetElement = pointholderpanel.querySelector(name);
     const imagePoint = targetElement.parentElement.querySelector(".imagepoint");
     imagePoint.removeAttribute("src");
+    imagePoint.removeAttribute("srcset");
       
     if (imagePoint) {
         imagePoint.src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/67583a8b7e5074f2b7aa2f6a_done.png";
