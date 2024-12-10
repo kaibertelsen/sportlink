@@ -8,8 +8,10 @@ var iGroups;
 var iTeams;
 var iMatchs;
 var importMessage = [];
+var sTournament;
 var sDivisions;
 var sGroups;
+var sTeams;
 
 var klientId = "recCdECitGpKE2O1F";
 var baseId = "appxPi2CoLTlsa3qL";
@@ -187,6 +189,7 @@ function saveTournamentToServer() {
 function responseCreatTurnament(data) {
     console.log(data);
 
+    sTournament = data.fields;
     // Hent `tournamentid` fra responsen
     let tournamentid = data.id;
 
@@ -280,7 +283,8 @@ function saveTeamsToServer() {
         return {
             ...rest,
             division: divisionAirtableId ? [divisionAirtableId] : [], // Legg til division airtable ID
-            group: groupAirtableId ? [groupAirtableId] : [] // Legg til group airtable ID hvis den finnes
+            group: groupAirtableId ? [groupAirtableId] : [], // Legg til group airtable ID hvis den finnes
+            tournament:[sTournament.airtable]
         };
     });
 
@@ -291,8 +295,8 @@ function saveTeamsToServer() {
 }
 
 function responseSaveTeams(data){
-console.log(data);
-
+    sTeams = convertMultiResponseData(data);
+    console.log(data);
 }
 
 
