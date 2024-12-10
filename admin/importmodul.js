@@ -14,7 +14,7 @@ function viewimportinfo() {
     const pointholderpanel = document.getElementById("pointholderpanel");
     
     if (importMessage.length === 0) {
-        pointholderpanel.style.display = "linline-block";
+        pointholderpanel.style.display = "inline-block";
         let countGroup = 0;
         let countEndplay = 0;
         
