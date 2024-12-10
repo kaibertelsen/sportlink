@@ -368,7 +368,7 @@ function saveMatchsToServer() {
     console.log("Oppdaterte iMatchs:", updatedMatches);
 
     // Send oppdaterte matcher til server
-    multisave(updatedMatches, baseId, "tblMatchTableId", "responseSaveMatches");
+    multisave(updatedMatches, baseId, "tblrHBFa60aIdqkUu", "responseSaveMatches");
 }
 
 
