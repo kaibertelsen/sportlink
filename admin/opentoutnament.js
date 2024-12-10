@@ -50,7 +50,11 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
     tournamentinfoheader.querySelector(".startdate").textContent = new Date(tournament.startdate).toLocaleDateString() || "Ukjent startdato";
     tournamentinfoheader.querySelector(".enddate").textContent = new Date(tournament.enddate).toLocaleDateString() || "Ukjent sluttdato";
     tournamentinfoheader.querySelector(".eventname").textContent = tournament.organizername[0] || "Ukjent Arrangement";
-    
+    tournamentinfoheader.querySelector(".username").textContent = 
+    (tournament.userfirstname && tournament.userlastname) 
+        ? tournament.userfirstname + " " + tournament.userlastname 
+        : "Ukjent bruker";
+
 }
 
 
