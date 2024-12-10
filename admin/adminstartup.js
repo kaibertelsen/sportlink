@@ -208,9 +208,6 @@ function responseCreatTurnament(data) {
     multisave(formattedDivisions, baseId, "tblY9xnfQ1y8dXTaA", "responsCreatDivisions");
 }
 
-
-
-
 function responsCreatDivisions(data){
 
     sDivisions = convertMultiResponseData(data);
@@ -223,23 +220,6 @@ function responsCreatDivisions(data){
     saveTeamsToServer();
     }
 }
-
-function responsCreatGroups(data){
-    sGroups = convertMultiResponseData(data);
-    console.log(sGroups);
-//starte lag eksport
-saveTeamsToServer();
-}
-
-function saveTeamsToServer(){
-
-
-
-
-
-}
-
-
 
 function getGroupsWithDivisionAirtable(idivisions, sdivisions) {
     const groups = [];
@@ -266,6 +246,31 @@ function getGroupsWithDivisionAirtable(idivisions, sdivisions) {
 
     return groups;
 }
+
+function responsCreatGroups(data){
+    sGroups = convertMultiResponseData(data);
+    console.log(sGroups);
+//starte lag eksport
+saveTeamsToServer();
+}
+
+function saveTeamsToServer(){
+
+    console.log(iTeams);
+    
+    /*
+    legge til 
+    gruppe id
+    divisjonsid
+    klubid
+    turnamentid
+   */
+
+}
+
+
+
+
 
 
 function viewTurnamentData(data) {
