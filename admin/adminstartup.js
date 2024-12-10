@@ -361,7 +361,8 @@ function saveMatchsToServer() {
             group: groupAirtableId ? [groupAirtableId] : [], // Legg til group Airtable ID hvis den finnes
             team1: team1AirtableId ? [team1AirtableId] : [], // Legg til team1 Airtable ID hvis den finnes
             team2: team2AirtableId ? [team2AirtableId] : [], // Legg til team2 Airtable ID hvis den finnes
-            endplayplace: endplayplaceNumeric // Legg til numerisk `endplayplace`
+            endplayplace: endplayplaceNumeric, // Legg til numerisk `endplayplace`
+            tournament: [sTournament.airtable] // Legg til tournament Airtable ID
         };
     });
 
