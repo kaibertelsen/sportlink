@@ -309,15 +309,69 @@ saveMatchsToServer();
 }
 
 function saveMatchsToServer() {
-console.log(iMatchs);
+    console.log("Original iMatchs:", iMatchs);
 
+    const updatedMatches = iMatchs.map(match => {
+        // Finn division Airtable ID fra sDivisions
+        const divisionRecord = sDivisions.find(div => div.name === match.divisionname);
+        const divisionAirtableId = divisionRecord ? divisionRecord.airtable : null;
+
+        // Finn group Airtable ID fra sGroups hvis groupname finnes
+        let groupAirtableId = null;
+        if (match.groupname) {
+            const groupRecord = sGroups.find(
+                group =>
+                    group.name === match.groupname &&
+                    group.division.includes(divisionAirtableId) // Sjekk at gruppen tilhører divisjonen
+            );
+            groupAirtableId = groupRecord ? groupRecord.airtable : null;
+        }
+
+        // Finn team1 Airtable ID fra sTeams hvis team1name finnes
+        let team1AirtableId = null;
+        if (match.team1name) {
+            const team1Record = sTeams.find(
+                team =>
+                    team.name === match.team1name &&
+                    team.division && team.division.includes(divisionAirtableId) // Sjekk divisjon
+            );
+            team1AirtableId = team1Record ? team1Record.airtable : null;
+        }
+
+        // Finn team2 Airtable ID fra sTeams hvis team2name finnes
+        let team2AirtableId = null;
+        if (match.team2name) {
+            const team2Record = sTeams.find(
+                team =>
+                    team.name === match.team2name &&
+                    team.division && team.division.includes(divisionAirtableId) // Sjekk divisjon
+            );
+            team2AirtableId = team2Record ? team2Record.airtable : null;
+        }
+
+        // Opprett et nytt match-objekt uten team1name, team2name, groupname, divisionname
+        const { team1name, team2name, groupname, divisionname, ...rest } = match;
+
+        return {
+            ...rest,
+            division: divisionAirtableId ? [divisionAirtableId] : [], // Legg til division Airtable ID
+            group: groupAirtableId ? [groupAirtableId] : [], // Legg til group Airtable ID hvis den finnes
+            team1: team1AirtableId ? [team1AirtableId] : [], // Legg til team1 Airtable ID hvis den finnes
+            team2: team2AirtableId ? [team2AirtableId] : [] // Legg til team2 Airtable ID hvis den finnes
+        };
+    });
+
+    console.log("Oppdaterte iMatchs:", updatedMatches);
+
+    // Send oppdaterte matcher til server
+    multisave(updatedMatches, baseId, "tblrHBFa60aIdqkUu", "responseSaveMatches");
 }
 
+function responseSaveMatches(data){
+    sMatch = convertMultiResponseData(data);
+    console.log(data);
 
-
-
-
-
+}
 
 
 

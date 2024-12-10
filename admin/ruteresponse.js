@@ -13,6 +13,8 @@ function ruteresponse(data,id){
         responsCreatGroups(data);
     }else if(id == "responseSaveTeams"){
         responseSaveTeams(data);
+    }else if(id == "responseSaveMatches"){
+        responseSaveMatches(data);
     }
 
 }
