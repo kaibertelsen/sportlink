@@ -100,25 +100,13 @@ function setPointIcon(name) {
     // Marker punkt
     const pointholderpanel = document.getElementById("pointholderpanel");
   
-    // Fjern alle eksisterende `src`-verdier for elementer med klassen `.imagepoint`
-    const allImagePoints = pointholderpanel.querySelectorAll(".imagepoint");
-    allImagePoints.forEach(image => {
-      image.removeAttribute("src");
-    });
-  
     // Finn elementet basert på `name`
     const targetElement = pointholderpanel.querySelector(name);
-  
-    if (targetElement) {
-      // Sett ny `src` for den spesifikke `.imagepoint` under valgt element
-      const imagePoint = targetElement.parentElement.querySelector(".imagepoint");
-      if (imagePoint) {
+    const imagePoint = targetElement.parentElement.querySelector(".imagepoint");
+    imagePoint.removeAttribute("src");
+      
+    if (imagePoint) {
         imagePoint.src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/67583a8b7e5074f2b7aa2f6a_done.png";
-      } else {
-        console.warn("Ingen '.imagepoint' funnet for elementet:", targetElement);
-      }
-    } else {
-      console.warn("Element ikke funnet med selector:", name);
     }
 }
   
