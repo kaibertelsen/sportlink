@@ -309,6 +309,7 @@ function allIsImported() {
 
     // Endre tekstinnhold på knappen
     button.textContent = "Åpne importert turnering";
+    button.classList.add("open");
 
     // Fjern tidligere klikkhendelser ved å erstatte `onclick`
     button.onclick = null;
