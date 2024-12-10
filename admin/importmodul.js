@@ -30,7 +30,7 @@ function viewimportinfo() {
         `;
         pointholderpanel.querySelector(".messageinfo").innerHTML = info;
         pointholderpanel.querySelector(".division").textContent = iDivisions.length+"stk. Divisjoner";
-        pointholderpanel.querySelector(".group").textContent = countGroup.length+"stk.  Grupper";
+        pointholderpanel.querySelector(".group").textContent = countGroup+"stk.  Grupper";
         pointholderpanel.querySelector(".endplay").textContent = countEndplay+"stk. Sluttspill";
         pointholderpanel.querySelector(".team").textContent = iTeams.length+"stk. Lag";
         pointholderpanel.querySelector(".match").textContent = iMatchs.length+"stk.Kamper";
