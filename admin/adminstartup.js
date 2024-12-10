@@ -7,6 +7,7 @@ var iDivisions;
 var iTeams;
 var iMatchs;
 var importMessage = [];
+var sDivisions;
 
 var klientId = "recCdECitGpKE2O1F";
 var baseId = "appxPi2CoLTlsa3qL";
@@ -166,7 +167,6 @@ function viewimportinfo() {
     }
 }
 
-
 function saveTournamentToServer() {
     console.log(iTurnament);
 
@@ -181,7 +181,6 @@ function saveTournamentToServer() {
     // Opprett turnament
     POSTairtable(baseId, "tblGhVlhWETNvhrWN", JSON.stringify(body), "responseCreatTurnament");
 }
-
 
 function responseCreatTurnament(data) {
     console.log(data);
@@ -212,14 +211,9 @@ function responseCreatTurnament(data) {
 
 function responsCreatDivisions(data){
 
-console.log(data);
-
-//opprette grupper
-
-//opprette lag
-
-//opprette kamper
-
+    sDivisions = data.map(item => item.fields);
+    iDivisions
+    console.log(sDivisions,iDivisions);
 }
 
 
