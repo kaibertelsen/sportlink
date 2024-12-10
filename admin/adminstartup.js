@@ -16,6 +16,13 @@ var sTeams;
 var klientId = "recCdECitGpKE2O1F";
 var baseId = "appxPi2CoLTlsa3qL";
 
+
+
+document.getElementById("testopentournament").addEventListener("click", function () {
+    openTournament("rec0PhjE8top4ySXU");
+});
+
+
 function startUpAdmin(){
     getSportlist()
     getOrganizerlist();
