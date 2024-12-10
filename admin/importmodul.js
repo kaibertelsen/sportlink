@@ -99,7 +99,7 @@ function responseCreatTurnament(data) {
 function setPointIcon(name){
   //marker punkt
   const pointholderpanel = document.getElementById("pointholderpanel");
-  pointholderpanel.querySelector(name).parentElement.querySelector(".imagepoint").src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/67051259d0e8738b9c4c8ef6_favo-icon.png";
+  pointholderpanel.querySelector(name).parentElement.querySelector(".imagepoint").src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/67583a8b7e5074f2b7aa2f6a_done.png";
 }
 function responsCreatDivisions(data){
 
