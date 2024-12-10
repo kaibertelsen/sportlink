@@ -388,7 +388,11 @@ function viewMatch(match){
             locationElement.parentElement.style.display = "block";
             // Opprett en link med hvit tekst
             locationElement.innerHTML = `<a href="${match.fieldlocation}" target="_blank" rel="noopener noreferrer" style="color: white;">Trykk her for veibeskrivelse</a>`;
-        } else {
+        }else if (match?.location){
+            locationElement.parentElement.style.display = "block";
+            locationElement.textContent = match.location;
+
+        }else {
             locationElement.textContent = "";
             locationElement.parentElement.style.display = "none";
         }
