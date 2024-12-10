@@ -234,21 +234,22 @@ function getGroupsWithDivisionAirtable(idivisions, sdivisions) {
         const matchingDivision = sdivisions.find(sDiv => sDiv.name === divisionName);
         const airtableId = matchingDivision ? matchingDivision.airtable : null;
 
-        // Legg til alle grupper med divisjonsinformasjon
-        division.group.forEach(group => {
-            groups.push({
-                name: group.name,
-                division: airtableId ? [airtableId] : []
+        // Sjekk om group eksisterer og er en array før iterasjon
+        if (Array.isArray(division.group)) {
+            division.group.forEach(group => {
+                groups.push({
+                    name: group.name,
+                    division: airtableId ? [airtableId] : []
+                });
             });
-        });
+        } else {
+            console.warn(`Divisjon "${divisionName}" har ingen grupper eller ugyldig format for grupper.`);
+        }
     });
 
     return groups;
 }
 
-// Eksempel på bruk
-const groupsWithAirtable = getGroupsWithDivisionAirtable(iDivisions, sDivisions);
-console.log(groupsWithAirtable);
 
 
 
