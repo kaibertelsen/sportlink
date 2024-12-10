@@ -39,6 +39,7 @@ function viewimportinfo() {
         const button = buttonpanel.querySelector(".videreknapp");
         button.onclick = function () {
             saveTournamentToServer();
+            pointholderpanel.querySelector(".loadingholder").style.display = "block";
         }
 
     } else {
@@ -294,6 +295,8 @@ function responseSaveMatches(data){
 function allIsImported() {
     // Hent `pointholderpanel` og knapp
     const pointholderpanel = document.getElementById("pointholderpanel");
+    pointholderpanel.querySelector(".loadingholder").style.display = "none";
+
     const buttonpanel = document.getElementById("importbuttonpanel");
     
     if (!pointholderpanel || !buttonpanel) {
