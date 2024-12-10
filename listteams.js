@@ -177,6 +177,8 @@ function viewteam(team) {
         const rankview = thisteamrankinfo.querySelector(".rankview");
         rankview.innerHTML = "";
         const copyelement = nodeelement.cloneNode(true);
+        copyelement.style.background = 'none';
+
         rankview.appendChild(copyelement);  
         let teaminfo = findRankForTeam(team);
         //laste inn verdiene
@@ -189,7 +191,7 @@ function viewteam(team) {
 
 ////kampoversikten
         const thisteammatchlist = document.getElementById("thisteammatchlist");
-        thisteammatchlist.querySelector(".matchinactiveturnament").textContent = team.name+" sine kamper";
+        thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "Kamper";
         // Filtrer kampene for laget
         const filteredMatches = matches.filter(
             match => match.team1 === team.airtable || match.team2 === team.airtable
@@ -276,7 +278,10 @@ function viewteam(team) {
                 resultlable.style.backgroundColor = "green";
             } else if (match.goalteam2 > match.goalteam1 && match.team2 === team.airtable) {
                 resultlable.style.backgroundColor = "green";
-            } else {
+            } else if (match.goalteam1 == match.goalteam2){
+            //uavgjort
+                resultlable.style.backgroundColor = "gray";
+            }else {
                 resultlable.style.backgroundColor = "red";
             }
         } else {
