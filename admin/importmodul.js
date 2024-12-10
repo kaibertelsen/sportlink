@@ -107,7 +107,7 @@ function setPointIcon(name) {
     imagePoint.removeAttribute("srcset");
       
     if (imagePoint) {
-        imagePoint.src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/67583a8b7e5074f2b7aa2f6a_done.png";
+        imagePoint.src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675845629945e9a41d5ad653_done.png";
     }
 }
   
