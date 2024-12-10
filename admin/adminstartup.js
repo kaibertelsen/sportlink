@@ -215,7 +215,7 @@ function responsCreatDivisions(data){
     
     if(iGroups.length>0){
   // Send til `multisave`
-    multisave(formattedDivisions, baseId, "tblq6O7fjqtz5ZOae", "responsCreatGroups");
+    multisave(iGroups, baseId, "tblq6O7fjqtz5ZOae", "responsCreatGroups");
     }else{
     saveTeamsToServer();
     }
