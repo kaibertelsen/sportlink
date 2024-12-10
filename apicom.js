@@ -91,7 +91,12 @@ async function GETairtable(baseId,tableId,itemId,id){
         let token = MemberStack.getToken();
         let response = await fetch(`https://expoapi-zeta.vercel.app/api/row?baseId=${baseId}&tableId=${tableId}&rowId=${itemId}&token=${token}`);
         let data = await response.json();
-        apireturn (data,id);
+        if (!response.ok) {
+            throw new Error(`HTTP-feil! status: ${response.status} - ${response.statusText}`);
+            }else {
+            let data = await response.json();
+            apireturn({success: true, data: data, id: id});
+        }
         
 }
 

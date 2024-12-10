@@ -322,6 +322,6 @@ function allIsImported() {
 }
 
 
-function openTournament(Tournamentid){
-    console.logh(Tournamentid);
-}
+
+
+

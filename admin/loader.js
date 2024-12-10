@@ -15,6 +15,7 @@ function loadScript(url) {
 const cdnScripts = [
     "https://kaibertelsen.github.io/sportlink/admin/adminstartup.js",
     "https://kaibertelsen.github.io/sportlink/admin/importmodul.js",
+    "https://kaibertelsen.github.io/sportlink/admin/opentoutnament.js",
     "https://kaibertelsen.github.io/sportlink/apicom.js",
     "https://kaibertelsen.github.io/sportlink/admin/ruteresponse.js",
     "https://kaibertelsen.github.io/sportlink/admin/convertdata.js",

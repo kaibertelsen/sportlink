@@ -15,6 +15,9 @@ function ruteresponse(data,id){
         responseSaveTeams(data);
     }else if(id == "responseSaveMatches"){
         responseSaveMatches(data);
+    }else if(id == "responsGetTournament"){
+        responsGetTournament(data);
     }
 
+  
 }
