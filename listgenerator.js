@@ -23,9 +23,10 @@ function listTournament(tournament) {
         }).replace('.', ''); // Fjerner punktum fra måneden
 
         const iconelement = rowelement.querySelector(".turnicon");
+        if(item.icon){
         iconelement.removeAttribute('srcset');
         iconelement.src = item.icon;
-
+        }
         const iconsportelement = rowelement.querySelector(".sporticon");
         iconsportelement.removeAttribute('srcset');
         iconsportelement.src = item.sporticon[0];
