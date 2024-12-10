@@ -161,31 +161,7 @@ function viewTurnamentData(data) {
 
 }
 
-function viewDivisionGroupAndTeamData(){
 
-    const list = document.getElementById("importdivisionlist");
-    list.replaceChildren(); // Fjern tidligere innhold
-
-    const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector(".divisionstruktureholder");
-
-    for (let division of iDivisions){
-        // Fyll ut data i radens felter
-        const rowelement = nodeelement.cloneNode(true);
-        rowelement.querySelector(".name").textContent = division.name || "Ukjent navn";
-            const endNode = rowelement.querySelector(".endplaydiv");
-            for (var i = 0;i<division.endplay.length;i++) {
-             const endElement = endNode.cloneNode(true);
-             endElement.querySelector(".endname").textContent = division.endplay[i].endplayname;
-             endElement.querySelector(".endcount").textContent = division.endplay[i].finalecount;
-             endNode.parentElement.appendChild(endElement);
-            }       
-            endNode.style.display = "none";
-        list.appendChild(rowelement);
-        viewGroupAndTeams(list,division);
-    }
-
-}
 function viewGroupAndTeams(list,division){
 // sjekk om det er noen grupper
 
