@@ -254,19 +254,53 @@ function responsCreatGroups(data){
 saveTeamsToServer();
 }
 
-function saveTeamsToServer(){
+function saveTeamsToServer() {
+    console.log("Original iTeams:", iTeams);
 
-    console.log(iTeams);
-    
-    /*
-    legge til 
-    gruppe id
-    divisjonsid
-    klubid
-    turnamentid
-   */
+    // Legg til division og group airtable IDs
+    const updatedTeams = iTeams.map(team => {
+        // Finn division airtable ID fra sDivisions
+        const divisionRecord = sDivisions.find(div => div.name === team.divisionname);
+        const divisionAirtableId = divisionRecord ? divisionRecord.airtable : null;
+
+        // Finn group airtable ID fra sGroup hvis groupname finnes
+        let groupAirtableId = null;
+        if (team.groupname) {
+            const groupRecord = sGroups.find(
+                group =>
+                    group.name === team.groupname &&
+                    group.division.includes(divisionAirtableId) // Sjekk at gruppen tilhører divisjonen
+            );
+            groupAirtableId = groupRecord ? groupRecord.airtable : null;
+        }
+
+        // Opprett et nytt team-objekt uten clubname, divisionname, groupname
+        const { clubname, divisionname, groupname, ...rest } = team;
+
+        return {
+            ...rest,
+            division: divisionAirtableId ? [divisionAirtableId] : [], // Legg til division airtable ID
+            group: groupAirtableId ? [groupAirtableId] : [] // Legg til group airtable ID hvis den finnes
+        };
+    });
+
+    console.log("Oppdaterte iTeams:", updatedTeams);
+
+    // Send oppdaterte teams til server
+    multisave(updatedTeams, baseId, "tbl3ta1WZBr6wKPSp", "responseSaveTeams");
+}
+
+function responseSaveTeams(data){
+console.log(data);
 
 }
+
+
+
+
+
+
+
 
 
 

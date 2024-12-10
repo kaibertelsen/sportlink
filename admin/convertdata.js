@@ -118,6 +118,7 @@ function controllTeam(data) {
         }
 
         // Valider Klubb
+        let clubid = "";
         if (team.Klubb) {
             const clubExists = gClub.some(club => club.name.toLowerCase() === team.Klubb.toLowerCase());
             if (!clubExists) {
@@ -132,6 +133,8 @@ function controllTeam(data) {
                     `Mulige klubber som ligger inne i systemet nå er:\n${availableClubs}`
                 );
                
+            }else{
+                clubid =  clubExists.airtable;
             }
         }
 
@@ -149,7 +152,8 @@ function controllTeam(data) {
         return {
             name: team.Lagnavn || "",
             initials: team.Initialer || "",
-            club: team.Klubb || "",
+            clubname: team.Klubb || "",
+            club:clubid || "",
             divisionname: team.Divisjon || "",
             groupname: team.Gruppe || ""
         };

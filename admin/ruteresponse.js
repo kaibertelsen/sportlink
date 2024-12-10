@@ -11,6 +11,8 @@ function ruteresponse(data,id){
         responsCreatDivisions(data);
     }else if(id == "responsCreatGroups"){
         responsCreatGroups(data);
+    }else if(id == "responseSaveTeams"){
+        responseSaveTeams(data);
     }
-    
+
 }
