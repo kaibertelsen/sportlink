@@ -4,6 +4,7 @@ var gClub = [];
 var activetournament;
 var iTurnament;
 var iDivisions;
+var iGroups;
 var iTeams;
 var iMatchs;
 var importMessage = [];
@@ -211,11 +212,43 @@ function responseCreatTurnament(data) {
 
 function responsCreatDivisions(data){
 
-    sDivisions = data.map(item => item.fields);
-    iDivisions
-    console.log(sDivisions,iDivisions);
+    sDivisions = convertMultiResponseData(data);
+    iGroups = getGroupsWithDivisionAirtable(iDivisions, sDivisions)
+    console.log(iGroups);
 }
 
+function convertMultiResponseData(data) {
+    return data.flatMap(samling => samling.map(item => item.fields));
+}
+
+
+
+
+function getGroupsWithDivisionAirtable(iDivisions, sDivisions) {
+    const groups = [];
+
+    iDivisions.forEach(division => {
+        const divisionName = division.name;
+
+        // Finn divisjonen i sDivisions for å hente airtable ID
+        const matchingDivision = sDivisions.find(sDiv => sDiv.name === divisionName);
+        const airtableId = matchingDivision ? matchingDivision.airtable : null;
+
+        // Legg til alle grupper med divisjonsinformasjon
+        division.group.forEach(group => {
+            groups.push({
+                name: group.name,
+                division: airtableId ? [airtableId] : []
+            });
+        });
+    });
+
+    return groups;
+}
+
+// Eksempel på bruk
+const groupsWithAirtable = getGroupsWithDivisionAirtable(iDivisions, sDivisions);
+console.log(groupsWithAirtable);
 
 
 
@@ -371,3 +404,151 @@ function formatDate(dateString) {
         minute: "2-digit"
     });
 }
+
+
+
+[
+    [
+        {
+            "_table": {
+                "_base": {
+                    "_airtable": {},
+                    "_id": "appxPi2CoLTlsa3qL"
+                },
+                "id": null,
+                "name": "tblY9xnfQ1y8dXTaA"
+            },
+            "id": "recrVi9vZPvTjxf4A",
+            "_rawJson": {
+                "id": "recrVi9vZPvTjxf4A",
+                "createdTime": "2024-12-10T07:58:07.000Z",
+                "fields": {
+                    "name": "G13",
+                    "tournament": [
+                        "rec49MKz0rurJUm1n"
+                    ],
+                    "endplay": "[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]",
+                    "airtable": "recrVi9vZPvTjxf4A",
+                    "json": "{\"name\":\"G13\",\"airtable\":\"recrVi9vZPvTjxf4A\",\"endplay\":\"[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]\"}"
+                }
+            },
+            "fields": {
+                "name": "G13",
+                "tournament": [
+                    "rec49MKz0rurJUm1n"
+                ],
+                "endplay": "[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]",
+                "airtable": "recrVi9vZPvTjxf4A",
+                "json": "{\"name\":\"G13\",\"airtable\":\"recrVi9vZPvTjxf4A\",\"endplay\":\"[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]\"}"
+            }
+        },
+        {
+            "_table": {
+                "_base": {
+                    "_airtable": {},
+                    "_id": "appxPi2CoLTlsa3qL"
+                },
+                "id": null,
+                "name": "tblY9xnfQ1y8dXTaA"
+            },
+            "id": "rec3M30Oc6bk5BBy0",
+            "_rawJson": {
+                "id": "rec3M30Oc6bk5BBy0",
+                "createdTime": "2024-12-10T07:58:07.000Z",
+                "fields": {
+                    "name": "G16",
+                    "tournament": [
+                        "rec49MKz0rurJUm1n"
+                    ],
+                    "endplay": "[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]",
+                    "airtable": "rec3M30Oc6bk5BBy0",
+                    "json": "{\"name\":\"G16\",\"airtable\":\"rec3M30Oc6bk5BBy0\",\"endplay\":\"[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]\"}"
+                }
+            },
+            "fields": {
+                "name": "G16",
+                "tournament": [
+                    "rec49MKz0rurJUm1n"
+                ],
+                "endplay": "[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]",
+                "airtable": "rec3M30Oc6bk5BBy0",
+                "json": "{\"name\":\"G16\",\"airtable\":\"rec3M30Oc6bk5BBy0\",\"endplay\":\"[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]\"}"
+            }
+        },
+        {
+            "_table": {
+                "_base": {
+                    "_airtable": {},
+                    "_id": "appxPi2CoLTlsa3qL"
+                },
+                "id": null,
+                "name": "tblY9xnfQ1y8dXTaA"
+            },
+            "id": "recZ9jeOlmu0tKviU",
+            "_rawJson": {
+                "id": "recZ9jeOlmu0tKviU",
+                "createdTime": "2024-12-10T07:58:07.000Z",
+                "fields": {
+                    "name": "J16",
+                    "tournament": [
+                        "rec49MKz0rurJUm1n"
+                    ],
+                    "endplay": "[{\"endplayname\":\"A\",\"finalecount\":1}]",
+                    "airtable": "recZ9jeOlmu0tKviU",
+                    "json": "{\"name\":\"J16\",\"airtable\":\"recZ9jeOlmu0tKviU\",\"endplay\":\"[{\"endplayname\":\"A\",\"finalecount\":1}]\"}"
+                }
+            },
+            "fields": {
+                "name": "J16",
+                "tournament": [
+                    "rec49MKz0rurJUm1n"
+                ],
+                "endplay": "[{\"endplayname\":\"A\",\"finalecount\":1}]",
+                "airtable": "recZ9jeOlmu0tKviU",
+                "json": "{\"name\":\"J16\",\"airtable\":\"recZ9jeOlmu0tKviU\",\"endplay\":\"[{\"endplayname\":\"A\",\"finalecount\":1}]\"}"
+            }
+        }
+    ]
+]
+
+
+
+
+[
+{
+    "name": "J16",
+    "tournament": [
+        "rec49MKz0rurJUm1n"
+    ],
+    "endplay": "[{\"endplayname\":\"A\",\"finalecount\":1}]",
+    "airtable": "recZ9jeOlmu0tKviU",
+    "json": "{\"name\":\"J16\",\"airtable\":\"recZ9jeOlmu0tKviU\",\"endplay\":\"[{\"endplayname\":\"A\",\"finalecount\":1}]\"}"
+},
+{
+    "name": "G13",
+    "tournament": [
+        "rec49MKz0rurJUm1n"
+    ],
+    "endplay": "[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]",
+    "airtable": "recrVi9vZPvTjxf4A",
+    "json": "{\"name\":\"G13\",\"airtable\":\"recrVi9vZPvTjxf4A\",\"endplay\":\"[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]\"}"
+},
+{
+    "name": "G16",
+    "tournament": [
+        "rec49MKz0rurJUm1n"
+    ],
+    "endplay": "[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]",
+    "airtable": "rec3M30Oc6bk5BBy0",
+    "json": "{\"name\":\"G16\",\"airtable\":\"rec3M30Oc6bk5BBy0\",\"endplay\":\"[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]\"}"
+},
+{
+    "name": "G13",
+    "tournament": [
+        "rec49MKz0rurJUm1n"
+    ],
+    "endplay": "[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]",
+    "airtable": "recrVi9vZPvTjxf4A",
+    "json": "{\"name\":\"G13\",\"airtable\":\"recrVi9vZPvTjxf4A\",\"endplay\":\"[{\"endplayname\":\"A\",\"finalecount\":4},{\"endplayname\":\"B\",\"finalecount\":4}]\"}"
+}
+]
