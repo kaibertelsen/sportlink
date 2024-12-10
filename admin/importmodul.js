@@ -316,8 +316,7 @@ function allIsImported() {
 
     // Legg til ny klikkhendelse
     button.onclick = function () {
-        console.log("Importert turnering åpnes...");
-        // Her kan du implementere funksjonaliteten for å åpne turneringen
+        openTournament(sTournament.airtable);
     };
 
 }
