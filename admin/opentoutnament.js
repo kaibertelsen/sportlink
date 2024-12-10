@@ -45,11 +45,13 @@ function updateTournamentInfo(tournament) {
 
 const tournamentinfoheader = document.getElementById("tournamentinfoheader");
     tournamentinfoheader.querySelector(".tournamentname").textContent = tournament.name || "Ukjent turnering";
-    tournamentinfoheader.querySelector(".tournamenticon").src = tournament.icon[0] || "";
+    tournamentinfoheader.querySelector(".tournamenticon").src = tournament.icon || "";
     tournamentinfoheader.querySelector(".sporticon").src = tournament.sporticon[0] || "";
     tournamentinfoheader.querySelector(".sportname").textContent = tournament.sportname[0] || "Ukjent sport";
     tournamentinfoheader.querySelector(".startdate").textContent = new Date(tournament.startdate).toLocaleDateString() || "Ukjent startdato";
     tournamentinfoheader.querySelector(".enddate").textContent = new Date(tournament.enddate).toLocaleDateString() || "Ukjent sluttdato";
+    tournamentinfoheader.querySelector(".eventname").textContent = tournament.organizername[0] || "Ukjent Arrangement";
+    
 }
 
 
