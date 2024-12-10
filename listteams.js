@@ -170,7 +170,7 @@ function viewteam(team) {
     if (team.clublogo) clublogo.src = team.clublogo;
     */
     thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "Ukjent divisjon";
-    let grouplable = thismatchinfo.querySelector(".group")
+    let grouplable = thismatchinfo.querySelector(".groupname");
     if(team.group){
         grouplable.textContent = team.groupname;
         grouplable.parentElement.style.display = "block";
@@ -178,7 +178,7 @@ function viewteam(team) {
         grouplable.textContent = "";
         grouplable.parentElement.style.display = "none";
     }
-    
+
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
 
 //Ranking
