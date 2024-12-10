@@ -11,6 +11,9 @@ function responsGetTournament(data) {
     // Klikk på tournament-knapp
     document.getElementById("tournamenttabbutton").click();
 
+    // Oppdater turneringsinformasjon
+    updateTournamentInfo(tournament);
+
     // Konverter divisjoner og liste dem opp
     const divisions = convertJSONrow(tournament.divisjonjson);
     listDivision(divisions);
@@ -19,8 +22,6 @@ function responsGetTournament(data) {
     // const teams = convertJSONrow(tournament.teamjson);
     // const matches = convertJSONrow(tournament.matchjson);
 
-    // Oppdater turneringsinformasjon
-    updateTournamentInfo(tournament);
 }
 
 
@@ -41,11 +42,13 @@ function convertJSONrow(data) {
 
 
 function updateTournamentInfo(tournament) {
-    document.getElementById("tournamentName").textContent = tournament.name || "Ukjent turnering";
-    document.getElementById("tournamentIcon").src = tournament.sporticon[0] || "";
-    document.getElementById("tournamentSport").textContent = tournament.sportname[0] || "Ukjent sport";
-    document.getElementById("tournamentStartDate").textContent = new Date(tournament.startdate).toLocaleDateString() || "Ukjent startdato";
-    document.getElementById("tournamentEndDate").textContent = new Date(tournament.enddate).toLocaleDateString() || "Ukjent sluttdato";
+
+const tournamentinfoheader = document.getElementById("tournamentinfoheader");
+    tournamentinfoheader.querySelector(".tournamentname").textContent = tournament.name || "Ukjent turnering";
+    tournamentinfoheader.querySelector(".tournamenticon").src = tournament.sporticon[0] || "";
+    tournamentinfoheader.querySelector(".sportname").textContent = tournament.sportname[0] || "Ukjent sport";
+    tournamentinfoheader.querySelector(".startdate").textContent = new Date(tournament.startdate).toLocaleDateString() || "Ukjent startdato";
+    tournamentinfoheader.querySelector(".enddate").textContent = new Date(tournament.enddate).toLocaleDateString() || "Ukjent sluttdato";
 }
 
 
