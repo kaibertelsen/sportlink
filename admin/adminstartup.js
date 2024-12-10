@@ -305,13 +305,11 @@ function responseSaveTeams(data){
     console.log(data);
 
 //starte å importer kamper
-saveTeamsToServer();
+saveMatchsToServer();
 }
 
-function saveTeamsToServer() {
-
-
-
+function saveMatchsToServer() {
+console.log(iMatchs);
 
 }
 
