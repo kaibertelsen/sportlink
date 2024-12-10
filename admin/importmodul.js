@@ -286,4 +286,42 @@ function responseSaveMatches(data){
        setPointIcon(".match");
     console.log(data);
 
+    allIsImported();
+
+}
+
+
+function allIsImported() {
+    // Hent `pointholderpanel` og knapp
+    const pointholderpanel = document.getElementById("pointholderpanel");
+    const buttonpanel = document.getElementById("buttonpanel");
+    
+    if (!pointholderpanel || !buttonpanel) {
+        console.warn("Enten 'pointholderpanel' eller 'buttonpanel' mangler i DOM.");
+        return;
+    }
+
+    const button = buttonpanel.querySelector(".videreknapp");
+    if (!button) {
+        console.warn("Knappen '.videreknapp' finnes ikke i buttonpanel.");
+        return;
+    }
+
+    // Endre tekstinnhold på knappen
+    button.textContent = "Åpne importert turnering";
+
+    // Fjern tidligere klikkhendelser ved å erstatte `onclick`
+    button.onclick = null;
+
+    // Legg til ny klikkhendelse
+    button.onclick = function () {
+        console.log("Importert turnering åpnes...");
+        // Her kan du implementere funksjonaliteten for å åpne turneringen
+    };
+
+}
+
+
+function openTournament(Tournamentid){
+    console.logh(Tournamentid);
 }
