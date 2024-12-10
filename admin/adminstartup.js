@@ -260,13 +260,13 @@ saveTeamsToServer();
 function saveTeamsToServer() {
     console.log("Original iTeams:", iTeams);
 
-    // Legg til division og group airtable IDs
+    // Legg til division, group, club og tournament Airtable IDs
     const updatedTeams = iTeams.map(team => {
-        // Finn division airtable ID fra sDivisions
+        // Finn division Airtable ID fra sDivisions
         const divisionRecord = sDivisions.find(div => div.name === team.divisionname);
         const divisionAirtableId = divisionRecord ? divisionRecord.airtable : null;
 
-        // Finn group airtable ID fra sGroup hvis groupname finnes
+        // Finn group Airtable ID fra sGroups hvis groupname finnes
         let groupAirtableId = null;
         if (team.groupname) {
             const groupRecord = sGroups.find(
@@ -277,14 +277,19 @@ function saveTeamsToServer() {
             groupAirtableId = groupRecord ? groupRecord.airtable : null;
         }
 
+        // Finn club Airtable ID fra gClub basert på clubname
+        const clubRecord = gClub.find(club => club.name === team.clubname);
+        const clubAirtableId = clubRecord ? clubRecord.airtable : null;
+
         // Opprett et nytt team-objekt uten clubname, divisionname, groupname
         const { clubname, divisionname, groupname, ...rest } = team;
 
         return {
             ...rest,
-            division: divisionAirtableId ? [divisionAirtableId] : [], // Legg til division airtable ID
-            group: groupAirtableId ? [groupAirtableId] : [], // Legg til group airtable ID hvis den finnes
-            tournament:[sTournament.airtable]
+            division: divisionAirtableId ? [divisionAirtableId] : [], // Legg til division Airtable ID
+            group: groupAirtableId ? [groupAirtableId] : [], // Legg til group Airtable ID hvis den finnes
+            club: clubAirtableId ? [clubAirtableId] : [], // Legg til club Airtable ID hvis den finnes
+            tournament: [sTournament.airtable] // Legg til tournament Airtable ID
         };
     });
 
@@ -294,14 +299,21 @@ function saveTeamsToServer() {
     multisave(updatedTeams, baseId, "tbl3ta1WZBr6wKPSp", "responseSaveTeams");
 }
 
+
 function responseSaveTeams(data){
     sTeams = convertMultiResponseData(data);
     console.log(data);
+
+//starte å importer kamper
+saveTeamsToServer();
 }
 
+function saveTeamsToServer() {
 
 
 
+
+}
 
 
 
