@@ -14,6 +14,7 @@ function loadScript(url) {
 // Liste over CDN-URL-er som skal lastes inn
 const cdnScripts = [
     "https://kaibertelsen.github.io/sportlink/admin/adminstartup.js",
+    "https://kaibertelsen.github.io/sportlink/admin/importmodul.js",
     "https://kaibertelsen.github.io/sportlink/apicom.js",
     "https://kaibertelsen.github.io/sportlink/admin/ruteresponse.js",
     "https://kaibertelsen.github.io/sportlink/admin/convertdata.js",
