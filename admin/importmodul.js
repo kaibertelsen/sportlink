@@ -96,10 +96,18 @@ function responseCreatTurnament(data) {
     // Send til `multisave`
     multisave(formattedDivisions, baseId, "tblY9xnfQ1y8dXTaA", "responsCreatDivisions");
 }
-
+function setPointIcon(name){
+  //marker punkt
+  const pointholderpanel = document.getElementById("pointholderpanel");
+  pointholderpanel.querySelector(name).parentElement.querySelector(".imagepoint").src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/67051259d0e8738b9c4c8ef6_favo-icon.png";
+}
 function responsCreatDivisions(data){
 
     sDivisions = convertMultiResponseData(data);
+
+    //marker punkt
+    setPointIcon(".division");
+
     iGroups = getGroupsWithDivisionAirtable(iDivisions, sDivisions)
     
     if(iGroups.length>0){
@@ -138,6 +146,8 @@ function getGroupsWithDivisionAirtable(idivisions, sdivisions) {
 
 function responsCreatGroups(data){
     sGroups = convertMultiResponseData(data);
+       //marker punkt
+       setPointIcon(".group");
     console.log(sGroups);
 //starte lag eksport
 saveTeamsToServer();
@@ -187,6 +197,8 @@ function saveTeamsToServer() {
 
 function responseSaveTeams(data){
     sTeams = convertMultiResponseData(data);
+       //marker punkt
+       setPointIcon(".team");
     console.log(data);
 
 //starte å importer kamper
@@ -259,6 +271,8 @@ function saveMatchsToServer() {
 
 function responseSaveMatches(data){
     sMatch = convertMultiResponseData(data);
+       //marker punkt
+       setPointIcon(".match");
     console.log(data);
 
 }
