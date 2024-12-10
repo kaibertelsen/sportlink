@@ -96,11 +96,26 @@ function responseCreatTurnament(data) {
     // Send til `multisave`
     multisave(formattedDivisions, baseId, "tblY9xnfQ1y8dXTaA", "responsCreatDivisions");
 }
-function setPointIcon(name){
-  //marker punkt
-  const pointholderpanel = document.getElementById("pointholderpanel");
-  pointholderpanel.querySelector(name).parentElement.querySelector(".imagepoint").src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/67583a8b7e5074f2b7aa2f6a_done.png";
-}
+function setPointIcon(name) {
+    // Marker punkt
+    const pointholderpanel = document.getElementById("pointholderpanel");
+    
+    // Finn elementet basert på `name`
+    const targetElement = pointholderpanel.querySelector(name);
+  
+    if (targetElement) {
+      // Finn den relaterte `.imagepoint` og sett ny src
+      const imagePoint = targetElement.parentElement.querySelector(".imagepoint");
+      if (imagePoint) {
+        imagePoint.src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/67583a8b7e5074f2b7aa2f6a_done.png";
+      } else {
+        console.warn("Ingen '.imagepoint' funnet for elementet:", targetElement);
+      }
+    } else {
+      console.warn("Element ikke funnet med selector:", name);
+    }
+  }
+  
 function responsCreatDivisions(data){
 
     sDivisions = convertMultiResponseData(data);
