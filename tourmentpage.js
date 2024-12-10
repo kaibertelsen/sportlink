@@ -46,9 +46,10 @@ function loadTourmentHeader(data){
     const headerholder = document.getElementById("tourmentheader");
     
     const icon = headerholder.querySelector(".tourmenticon");
+    if(data.icon){
     icon.removeAttribute('srcset');
     icon.src = data.icon;
-
+    }
     const name = headerholder.querySelector(".tourmentlable");
     name.textContent = data.name;
     
