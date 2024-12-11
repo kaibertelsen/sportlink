@@ -123,7 +123,7 @@ function resetPointHolder() {
     pointholderpanel.querySelector(".endplay").textContent = "";
     pointholderpanel.querySelector(".team").textContent = "";
     pointholderpanel.querySelector(".match").textContent = "";
-    
+    pointholderpanel.style.display = "none";
     
     // Fjern tidligere klikkhendelser ved å erstatte `onclick`
     const buttonpanel = document.getElementById("importbuttonpanel");
@@ -131,15 +131,23 @@ function resetPointHolder() {
     const button = buttonpanel.querySelector(".videreknapp");
     button.onclick = null;
 
+
     // Finn elementet basert på `name`
     const targetElement = pointholderpanel.querySelector(".match");
-    const imagePoint = targetElement.parentElement.querySelector(".imagepoint");
-    imagePoint.removeAttribute("src");
-    imagePoint.removeAttribute("srcset");
-      
-    if (imagePoint) {
-        imagePoint.src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/67051259d0e8738b9c4c8ef6_favo-icon.png";
+
+    const imagePoint = targetElement.parentElement.querySelectorAll(".imagepoint");
+
+    for(let image of imagePoint){
+        image.removeAttribute("src");
+        image.removeAttribute("srcset");
+          
+        if (image) {
+            image.src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/67051259d0e8738b9c4c8ef6_favo-icon.png";
+        }
+
+
     }
+   
 }
   
 function responsCreatDivisions(data){
