@@ -275,6 +275,20 @@ function controllMatch(data1, data2) {
     return validatedMatches;
 }
 
+function convertJSONrow(data) {
+    try {
+        return data.map(item => {
+            // Fjern ekstra escape-tegn fra JSON-strengen
+            const sanitizedItem = item.replace(/\\\"/g, '"').replace(/\\\\/g, '\\');
+            
+            // Parse JSON-strengen
+            return JSON.parse(sanitizedItem);
+        });
+    } catch (error) {
+        console.error("Feil ved parsing av JSON-rad:", error, item);
+        return [];
+    }
+}
 
 
 

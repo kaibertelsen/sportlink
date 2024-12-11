@@ -7,7 +7,7 @@ function responsGetTournament(data) {
 
     // Hent tournament-data
     const tournament = data.fields;
-
+    activetournament = tournament;
     // Klikk på tournament-knapp
     document.getElementById("tournamenttabbutton").click();
 
@@ -22,22 +22,6 @@ function responsGetTournament(data) {
     // const teams = convertJSONrow(tournament.teamjson);
     // const matches = convertJSONrow(tournament.matchjson);
 
-}
-
-
-function convertJSONrow(data) {
-    try {
-        return data.map(item => {
-            // Fjern ekstra escape-tegn fra JSON-strengen
-            const sanitizedItem = item.replace(/\\\"/g, '"').replace(/\\\\/g, '\\');
-            
-            // Parse JSON-strengen
-            return JSON.parse(sanitizedItem);
-        });
-    } catch (error) {
-        console.error("Feil ved parsing av JSON-rad:", error, item);
-        return [];
-    }
 }
 
 
@@ -57,7 +41,12 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
 
 }
 
+function publichTournament(){
 
+
+
+
+}
 
 
 
