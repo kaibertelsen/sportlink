@@ -144,29 +144,36 @@ function respondPublish(data){
 function divisionSelectorChange(selectorId) {
     // Find the selected division ID
     let divId = "";
-    if(selectorId=="groupSelectorTeam"){
-        //sjekk verdi i divisjon på lagsiden
+    if (selectorId === "groupSelectorTeam") {
+        // Check division value on the team page
         divId = document.getElementById("divisionSelectorTeam").value;
-    }else{
-        //sjekk vedi i divisjon på kampsiden
+    } else {
+        // Check division value on the match page
         divId = document.getElementById("divisionSelectorMatch").value;
     }
-    
+
     // Populate the groupSelector dropdown
     const groupSelector = document.getElementById(selectorId);
-    
-    if(divId == ""){
+
+    if (divId === "") {
+        // Hide group selector if no division is selected
         groupSelector.style.display = "none";
-    }else{
+    } else {
         // Find groups associated with the division
-        let groups = findGroupByDivision(divId);
+        const groups = findGroupByDivision(divId);
+
+        // Find the division name from gDivision
+        const division = gDivision.find(div => div.id === divId);
+        const divisionName = division ? division.name : "divisjon";
+
+        // Show the group selector
         groupSelector.style.display = "block";
         groupSelector.replaceChildren(); // Clear previous options
 
-        // Add default option "Alle grupper"
+        // Add default option with division name
         const defaultOption = document.createElement("option");
         defaultOption.value = "";
-        defaultOption.textContent = "Alle grupper";
+        defaultOption.textContent = `Grupper i ${divisionName}`;
         groupSelector.appendChild(defaultOption);
 
         // Add group options
@@ -176,12 +183,12 @@ function divisionSelectorChange(selectorId) {
             option.textContent = group.name || "Ukjent navn";
             groupSelector.appendChild(option);
         });
-
     }
 
+    // Update the team list
     listTeams(gTeam);
-
 }
+
 function groupSelectorChange(listName){
     if(listName == "Match"){
         listMatch(gMatchs);
