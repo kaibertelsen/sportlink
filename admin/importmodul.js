@@ -124,7 +124,7 @@ function resetPointHolder() {
     pointholderpanel.querySelector(".team").textContent = "";
     pointholderpanel.querySelector(".match").textContent = "";
     
-    buttonpanel.style.display = "none";
+    
     // Fjern tidligere klikkhendelser ved å erstatte `onclick`
     const buttonpanel = document.getElementById("importbuttonpanel");
     buttonpanel.style.display = "none";

@@ -142,18 +142,35 @@ function respondPublish(data){
 
 function listDivision(divisions) {
     const list = document.getElementById("divisionlistholder");
-    list.replaceChildren(); // Fjern tidligere innhold
+    list.replaceChildren(); // Clear previous content
 
-    list.parentElement.querySelector(".rowcounter").textContent = divisions.length+" stk.";
+    list.parentElement.querySelector(".rowcounter").textContent = `${divisions.length} stk.`;
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".divisionrow");
+
+    // Clear and prepare selectors
+    const divisionSelectorTeam = document.getElementById("divisionSelectorTeam");
+    const divisionSelectorMatch = document.getElementById("divisionSelectorMatch");
+    divisionSelectorTeam.replaceChildren();
+    divisionSelectorMatch.replaceChildren();
+
+    // Add default option "Alle divisjoner"
+    const defaultOptionTeam = document.createElement("option");
+    defaultOptionTeam.value = "";
+    defaultOptionTeam.textContent = "Alle divisjoner";
+    divisionSelectorTeam.appendChild(defaultOptionTeam);
+
+    const defaultOptionMatch = document.createElement("option");
+    defaultOptionMatch.value = "";
+    defaultOptionMatch.textContent = "Alle divisjoner";
+    divisionSelectorMatch.appendChild(defaultOptionMatch);
 
     for (let division of divisions) {
         const rowelement = nodeelement.cloneNode(true);
         rowelement.querySelector(".name").textContent = division.name || "Ukjent navn";
 
-        // Legg til grupper
+        // Add groups
         const groupNode = rowelement.querySelector(".group");
         division.group.forEach(group => {
             const groupElement = groupNode.cloneNode(true);
@@ -162,7 +179,7 @@ function listDivision(divisions) {
         });
         groupNode.style.display = "none";
 
-        // Legg til sluttspill
+        // Add endplay
         const endNode = rowelement.querySelector(".endplay");
         division.endplay.forEach(endplay => {
             const endElement = endNode.cloneNode(true);
@@ -172,11 +189,20 @@ function listDivision(divisions) {
         });
         endNode.style.display = "none";
 
+        // Add row to list
         list.appendChild(rowelement);
+
+        // Populate selectors with options
+        const optionTeam = document.createElement("option");
+        optionTeam.value = division.airtable;
+        optionTeam.textContent = division.name || "Ukjent navn";
+        divisionSelectorTeam.appendChild(optionTeam);
+
+        const optionMatch = document.createElement("option");
+        optionMatch.value = division.airtable;
+        optionMatch.textContent = division.name || "Ukjent navn";
+        divisionSelectorMatch.appendChild(optionMatch);
     }
-
-
-
 }
 
 function listTeams(teams) {
@@ -203,6 +229,10 @@ function listTeams(teams) {
         rowelement.querySelector(".groupname").textContent = team.groupname || "-";
         list.appendChild(rowelement);
     }
+
+
+
+
 }
 
 function listMatch(matchs) {
