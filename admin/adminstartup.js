@@ -2,6 +2,7 @@ var gSport = [];
 var gOrganizer = [];
 var gClub = [];
 var gTournament =[];
+var gDivision = [];
 
 var activetournament;
 var activeklient;

@@ -27,7 +27,6 @@ function loadTurnamentSelector(tournaments) {
         onTournamentSelected(selectedValue, selectedText);
     });
 
-    console.log("Turneringer lastet inn i dropdown:", tournaments);
 }
 
 // Funksjon som kjøres når en turnering velges
@@ -50,6 +49,10 @@ function openTournament(Tournamentid){
     document.getElementById("teamlistholder").replaceChildren();
     document.getElementById("matchlistholder").replaceChildren();
 
+    //skjul gruppeselectorer
+    document.getElementById("groupSelectorTeam").style.display = "none";
+    document.getElementById("divisionSelectorMatch").style.display = "none";
+
 }
 
 function responsGetTournament(data) {
@@ -67,6 +70,7 @@ function responsGetTournament(data) {
 
     // Konverter divisjoner og liste dem opp
     const divisions = convertJSONrow(tournament.divisjonjson);
+    gDivision = divisions;
     listDivision(divisions);
 
     const teams = convertJSONrow(tournament.teamjson);
@@ -139,6 +143,75 @@ function respondPublish(data){
     const tournament = data.fields;
     activetournament = tournament;
 }
+function divisionSelectorTeamChange() {
+    // Find the selected division ID
+    let divId = document.getElementById("divisionSelectorTeam").value;
+
+    // Find groups associated with the division
+    let groups = findGroupByDivision(divId);
+
+    // Populate the groupSelectorTeam dropdown
+    const groupSelectorTeam = document.getElementById("groupSelectorTeam");
+    groupSelectorTeam.replaceChildren(); // Clear previous options
+    groupSelectorTeam.style.display = "block"
+    // Add default option "Alle grupper"
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Alle grupper";
+    groupSelectorTeam.appendChild(defaultOption);
+
+    // Add group options
+    groups.forEach(group => {
+        const option = document.createElement("option");
+        option.value = group.airtable;
+        option.textContent = group.name || "Ukjent navn";
+        groupSelectorTeam.appendChild(option);
+    });
+}
+
+function divisionSelectorMatchChange() {
+    // Find the selected division ID
+    let divId = document.getElementById("divisionSelectorMatch").value;
+
+    // Find groups associated with the division
+    let groups = findGroupByDivision(divId);
+
+    // Populate the groupSelectorMatch dropdown
+    const groupSelectorMatch = document.getElementById("groupSelectorMatch");
+    groupSelectorMatch.style.display = "block"
+    groupSelectorMatch.replaceChildren(); // Clear previous options
+
+    // Add default option "Alle grupper"
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Alle grupper";
+    groupSelectorMatch.appendChild(defaultOption);
+
+    // Add group options
+    groups.forEach(group => {
+        const option = document.createElement("option");
+        option.value = group.airtable;
+        option.textContent = group.name || "Ukjent navn";
+        groupSelectorMatch.appendChild(option);
+    });
+}
+
+function findGroupByDivision(divisionId) {
+    // Find the division object in `gDivision` array by `divisionId`
+    let division = gDivision.find(div => div.id === divisionId);
+
+    // Return groups if division is found, otherwise return an empty array
+    return division ? division.group || [] : [];
+}
+
+
+function findGroupByDivision(divisionId) {
+    // Find the division object in `gDivision` array by `divisionId`
+    let division = gDivision.find(div => div.airtable === divisionId);
+
+    // Return groups if division is found, otherwise return an empty array
+    return division ? division.group || [] : [];
+}
 
 function listDivision(divisions) {
     const list = document.getElementById("divisionlistholder");
@@ -154,6 +227,10 @@ function listDivision(divisions) {
     const divisionSelectorMatch = document.getElementById("divisionSelectorMatch");
     divisionSelectorTeam.replaceChildren();
     divisionSelectorMatch.replaceChildren();
+
+    // Attach change event listeners
+    divisionSelectorTeam.addEventListener("change", divisionSelectorTeamChange);
+    divisionSelectorMatch.addEventListener("change", divisionSelectorMatchChange);
 
     // Add default option "Alle divisjoner"
     const defaultOptionTeam = document.createElement("option");
