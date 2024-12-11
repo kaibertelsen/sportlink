@@ -19,6 +19,8 @@ function ruteresponse(data,id){
         responsGetTournament(data);
     }else if(id == "respondPublish"){
         respondPublish(data);
+    }else if(id == "responsklient"){
+        responsklient(data);
     }
     
   
