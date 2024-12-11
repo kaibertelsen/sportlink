@@ -179,7 +179,6 @@ function divisionSelectorChange(selectorId) {
     }
 }
 
-
 function findGroupByDivision(divisionId) {
     // Find the division object in `gDivision` array by `divisionId`
     let division = gDivision.find(div => div.airtable === divisionId);
@@ -198,14 +197,14 @@ function listDivision(divisions) {
     const nodeelement = elementlibrary.querySelector(".divisionrow");
 
     // Clear and prepare selectors
-    const divisionSelectorTeam = document.getElementById("groupSelectorTeam");
-    const divisionSelectorMatch = document.getElementById("groupSelectorMatch");
+    const divisionSelectorTeam = document.getElementById("divisionSelectorTeam");
+    const divisionSelectorMatch = document.getElementById("divisionSelectorMatch");
     divisionSelectorTeam.replaceChildren();
     divisionSelectorMatch.replaceChildren();
 
     // Attach change event listeners
-    divisionSelectorTeam.addEventListener("change", divisionSelectorChange(""));
-    divisionSelectorMatch.addEventListener("change", divisionSelectorChange(""));
+    divisionSelectorTeam.addEventListener("change", divisionSelectorChange("groupSelectorTeam"));
+    divisionSelectorMatch.addEventListener("change", divisionSelectorChange("groupSelectorMatch"));
 
     // Add default option "Alle divisjoner"
     const defaultOptionTeam = document.createElement("option");
