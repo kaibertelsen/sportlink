@@ -10,7 +10,7 @@ function endplayConverter(data) {
                 
                 // Parse "endplay" hvis det er en gyldig JSON-streng
                 if (parsedItem.endplay) {
-                    parsedItem.endplay = parsedItem
+                    parsedItem.endplay = parsedItem.endplay;
                 } else {
                     // Hvis endplay er tomt, sett det til en tom array
                     parsedItem.endplay = [];
