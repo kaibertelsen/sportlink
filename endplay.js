@@ -9,17 +9,12 @@ function endplayConverter(data) {
                 const parsedItem = JSON.parse(sanitizedItem);
                 
                 // Parse "endplay" hvis det er en gyldig JSON-streng
-                if (parsedItem.endplay && parsedItem.endplay.trim()) {
-                    try {
-                        parsedItem.endplay = JSON.parse(parsedItem.endplay);
-                    } catch (error) {
-                        console.warn("Feil ved parsing av endplay:", error);
-                    }
+                if (parsedItem.endplay) {
+                    parsedItem.endplay = parsedItem
                 } else {
                     // Hvis endplay er tomt, sett det til en tom array
                     parsedItem.endplay = [];
                 }
-
                 return parsedItem;
             } catch (error) {
                 console.warn("Feil ved parsing av element:", error, item);
