@@ -248,26 +248,3 @@ function listMatch(matchs) {
 
 
 
-function listClub(clubs) {
- 
-    const list = document.getElementById("clublistholder");
-    list.replaceChildren(); // Fjern tidligere innhold
-
-    list.parentElement.querySelector(".rowcounter").textContent = clubs.length+" stk.";
-
-    const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector(".clubrow");
-
-    for (let club of clubs) {
-        const rowelement = nodeelement.cloneNode(true);
-
-        if(club.logo){
-            rowelement.querySelector(".teamlogo").src = club.logo;
-        }
-        
-        rowelement.querySelector(".name").textContent = club.name || "-";
-        rowelement.querySelector(".contry").textContent = club.contry || "Norge";
-
-        list.appendChild(rowelement);
-    }
-}

@@ -56,6 +56,7 @@ function responsklient(data){
     gClub = convertJSONrow(activeklient.clubjson);
     gTournament = convertJSONrow(activeklient.tournamentjson);
 
+    listOrganizer(gOrganizer);
     listClub(gClub);
 
 loadTurnamentSelector(gTournament);
@@ -271,3 +272,50 @@ function formatDate(dateString) {
     });
 }
 
+
+function listClub(clubs) {
+ 
+    const list = document.getElementById("clublistholder");
+    list.replaceChildren(); // Fjern tidligere innhold
+
+    list.parentElement.querySelector(".rowcounter").textContent = clubs.length+" stk.";
+
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".clubrow");
+
+    for (let club of clubs) {
+        const rowelement = nodeelement.cloneNode(true);
+
+        if(club.logo){
+            rowelement.querySelector(".teamlogo").src = club.logo;
+        }
+        
+        rowelement.querySelector(".name").textContent = club.name || "-";
+        rowelement.querySelector(".contry").textContent = club.contry || "Norge";
+
+        list.appendChild(rowelement);
+    }
+}
+
+function listOrganizer(organizers) {
+ 
+    const list = document.getElementById("organizerlistholder");
+    list.replaceChildren(); // Fjern tidligere innhold
+
+    list.parentElement.querySelector(".organizerrow").textContent = organizers.length+" stk.";
+
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".clubrow");
+
+    for (let organizer of organizers) {
+        const rowelement = nodeelement.cloneNode(true);
+
+        if(organizer.logo){
+            rowelement.querySelector(".teamlogo").src = organizer.logo;
+        }
+        
+        rowelement.querySelector(".name").textContent = organizer.name || "-";
+        rowelement.querySelector(".contry").textContent = organizer.contry || "Norge";
+        list.appendChild(rowelement);
+    }
+}
