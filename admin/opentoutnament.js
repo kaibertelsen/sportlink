@@ -202,11 +202,10 @@ function listTeams(teams) {
 }
 
 function listMatch(matchs) {
- 
     const list = document.getElementById("matchlistholder");
-    list.replaceChildren(); // Fjern tidligere innhold
+    list.replaceChildren(); // Clear previous content
 
-    list.parentElement.querySelector(".rowcounter").textContent = matchs.length+" stk.";
+    list.parentElement.querySelector(".rowcounter").textContent = `${matchs.length} stk.`;
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".matchrow");
@@ -214,25 +213,22 @@ function listMatch(matchs) {
     for (let match of matchs) {
         const rowelement = nodeelement.cloneNode(true);
 
-        
-
         rowelement.querySelector(".time").textContent = new Date(match.time).toLocaleDateString() || "Ukjent startdato";
         rowelement.querySelector(".division").textContent = match.divisionname || "Ukjent divisjon";
         rowelement.querySelector(".groupname").textContent = match.groupname || "-";
         rowelement.querySelector(".team1name").textContent = match.team1name || match.placeholderteam1 || "-";
-        
-        if(match.team1clublogo){
+
+        if (match.team1clublogo) {
             rowelement.querySelector(".team1logo").src = match.team1clublogo;
         }
         rowelement.querySelector(".goalteam1").textContent = match.goalteam1 || "-";
         rowelement.querySelector(".goalteam2").textContent = match.goalteam2 || "-";
 
-        if(match.team2clublogo){
+        if (match.team2clublogo) {
             rowelement.querySelector(".team2logo").src = match.team2clublogo;
         }
 
         rowelement.querySelector(".team2name").textContent = match.team2name || match.placeholderteam2 || "-";
-
         rowelement.querySelector(".field").textContent = match.fieldname || "-";
         rowelement.querySelector(".location").textContent = match.location || "-";
         rowelement.querySelector(".refereename").textContent = match.refereename || "-";
@@ -240,9 +236,20 @@ function listMatch(matchs) {
         rowelement.querySelector(".endplay").textContent = match.endplay || "-";
         rowelement.querySelector(".type").textContent = match.typematch || "-";
         rowelement.querySelector(".matchnr").textContent = match.nr || "-";
+
+        // Add click event listener to toggle `.allinfomatch` styles
+        rowelement.addEventListener("click", () => {
+            const allInfoMatch = rowelement.querySelector(".allinfomatch");
+            if (allInfoMatch) {
+                // Toggle between `grid` and `none`
+                allInfoMatch.style.display = allInfoMatch.style.display === "grid" ? "none" : "grid";
+            }
+        });
+
         list.appendChild(rowelement);
     }
 }
+
 
 
 
