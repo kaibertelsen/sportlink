@@ -222,13 +222,13 @@ function listMatch(matchs) {
         rowelement.querySelector(".team1name").textContent = match.team1name || match.placeholderteam1 || "-";
         
         if(match.team1clublogo){
-            rowelement.querySelector(".teamlogo").src = match.team1clublogo;
+            rowelement.querySelector(".team1logo").src = match.team1clublogo;
         }
         rowelement.querySelector(".goalteam1").textContent = match.goalteam1 || "-";
         rowelement.querySelector(".goalteam2").textContent = match.goalteam2 || "-";
 
         if(match.team2clublogo){
-            rowelement.querySelector(".teamlogo").src = match.team2clublogo;
+            rowelement.querySelector(".team2logo").src = match.team2clublogo;
         }
 
         rowelement.querySelector(".team2name").textContent = match.team2name || match.placeholderteam2 || "-";
