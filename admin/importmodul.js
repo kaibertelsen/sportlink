@@ -90,6 +90,7 @@ function responseCreatTurnament(data) {
         return {
             ...division,
             tournament: [tournamentid], // Legg til `tournamentid`
+            endplay: JSON.stringify(division.endplay)
         };
     });
 
