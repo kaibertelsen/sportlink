@@ -112,6 +112,35 @@ function setPointIcon(name) {
         imagePoint.src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675845629945e9a41d5ad653_done.png";
     }
 }
+
+function resetPointHolder() {
+
+    // Marker punkt
+    const pointholderpanel = document.getElementById("pointholderpanel");
+    pointholderpanel.querySelector(".messageinfo").innerHTML = info;
+    pointholderpanel.querySelector(".division").textContent = "";
+    pointholderpanel.querySelector(".group").textContent = "";
+    pointholderpanel.querySelector(".endplay").textContent = "";
+    pointholderpanel.querySelector(".team").textContent = "";
+    pointholderpanel.querySelector(".match").textContent = "";
+    
+    buttonpanel.style.display = "none";
+    // Fjern tidligere klikkhendelser ved å erstatte `onclick`
+    const buttonpanel = document.getElementById("importbuttonpanel");
+    buttonpanel.style.display = "none";
+    const button = buttonpanel.querySelector(".videreknapp");
+    button.onclick = null;
+
+    // Finn elementet basert på `name`
+    const targetElement = pointholderpanel.querySelector(".match");
+    const imagePoint = targetElement.parentElement.querySelector(".imagepoint");
+    imagePoint.removeAttribute("src");
+    imagePoint.removeAttribute("srcset");
+      
+    if (imagePoint) {
+        imagePoint.src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/67051259d0e8738b9c4c8ef6_favo-icon.png";
+    }
+}
   
 function responsCreatDivisions(data){
 
@@ -334,8 +363,9 @@ function allIsImported() {
     
         // Sett den nye turneringen som valgt
         selector.selectedIndex = selector.options.length - 1; // Velg den siste (nyeste) turneringen
-    
-        console.log("Turneringen er lagt til og satt som aktiv:", sTournament.airtable);
+        //tøm og klargjør importscreen
+        resetPointHolder();
+
     };
     
 

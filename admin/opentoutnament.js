@@ -34,21 +34,21 @@ function loadTurnamentSelector(tournaments) {
 function onTournamentSelected(airtableId, tournamentName) {
     console.log("Valgt turnering:", tournamentName, "med Airtable ID:", airtableId);
     openTournament(airtableId);
-     // Klikk på tournament-knapp
-     document.getElementById("tournamenttabbutton").click();
+    
 
 }
 
 function openTournament(Tournamentid){
-
+    // Klikk på tournament-knapp
+    document.getElementById("tournamenttabbutton").click();
     //hvis loader
      document.getElementById("loadingholdertournament").style.display = "block";
     GETairtable(baseId,"tblGhVlhWETNvhrWN",Tournamentid,"responsGetTournament");
 
-//tøm listene
-document.getElementById("divisionlistholder").replaceChildren();
-document.getElementById("teamlistholder").replaceChildren();
-document.getElementById("matchlistholder").replaceChildren();
+    //tøm listene
+    document.getElementById("divisionlistholder").replaceChildren();
+    document.getElementById("teamlistholder").replaceChildren();
+    document.getElementById("matchlistholder").replaceChildren();
 
 }
 
