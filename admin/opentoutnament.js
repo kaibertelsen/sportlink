@@ -65,7 +65,7 @@ function responsGetTournament(data) {
     const divisions = convertJSONrow(tournament.divisjonjson);
     listDivision(divisions);
 
-    const team = convertJSONrow(tournament.teamjson);
+    const teams = convertJSONrow(tournament.teamjson);
     listTeams(teams);
     // TODO: Legg til funksjonalitet for å håndtere teamjson og matchjson
     // const teams = convertJSONrow(tournament.teamjson);
