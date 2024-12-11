@@ -319,14 +319,12 @@ function listOrganizer(organizers) {
 
         const switsjElement = rowelement.querySelector(".organizeractive"); 
         if (organizer?.archived){
-            if(organizer.archived == "true"){
-                switsjElement.checked = false;
-            }else{
-                switsjElement.checked = true;
-            }
-        }
-
-
+            
+           switsjElement.checked = false;
+        }else{
+           switsjElement.checked = true;
+         }
+       
         list.appendChild(rowelement);
     }
 }
