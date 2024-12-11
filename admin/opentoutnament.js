@@ -34,15 +34,22 @@ function loadTurnamentSelector(tournaments) {
 function onTournamentSelected(airtableId, tournamentName) {
     console.log("Valgt turnering:", tournamentName, "med Airtable ID:", airtableId);
     openTournament(airtableId);
-
-
-//hvis loader
-document.getElementById("loadingholdertournament").style.display = "block";
+     // Klikk på tournament-knapp
+     document.getElementById("tournamenttabbutton").click();
 
 }
 
 function openTournament(Tournamentid){
+
+    //hvis loader
+     document.getElementById("loadingholdertournament").style.display = "block";
     GETairtable(baseId,"tblGhVlhWETNvhrWN",Tournamentid,"responsGetTournament");
+
+//tøm listene
+document.getElementById("divisionlistholder").replaceChildren();
+document.getElementById("teamlistholder").replaceChildren();
+document.getElementById("matchlistholder").replaceChildren();
+
 }
 
 function responsGetTournament(data) {
@@ -54,9 +61,7 @@ function responsGetTournament(data) {
     // Hent tournament-data
     const tournament = data.fields;
     activetournament = tournament;
-    // Klikk på tournament-knapp
-    document.getElementById("tournamenttabbutton").click();
-
+   
     // Oppdater turneringsinformasjon
     updateTournamentInfo(tournament);
 

@@ -332,9 +332,9 @@ function listOrganizer(organizers) {
 
 function listTournament(tournaments) {
     const list = document.getElementById("tournamentlistholderlist");
-    list.replaceChildren(); // Fjern tidligere innhold
+    list.replaceChildren(); // Clear previous content
 
-    // Oppdater antall rader i telleren
+    // Update the row counter
     list.parentElement.querySelector(".rowcounter").textContent = `${tournaments.length} stk.`;
 
     const elementlibrary = document.getElementById("elementlibrary");
@@ -343,25 +343,37 @@ function listTournament(tournaments) {
     for (let tournament of tournaments) {
         const rowelement = nodeelement.cloneNode(true);
 
-        // Sett turneringsikon hvis tilgjengelig
+        // Set tournament icon if available
         if (tournament.icon) {
             rowelement.querySelector(".teamlogo").src = tournament.icon;
         }
 
-        // Sett turneringsnavn og arrangørnavn
+        // Set tournament name and organizer name
         rowelement.querySelector(".name").textContent = tournament.name || "-";
         rowelement.querySelector(".organizername").textContent = tournament.organizername || "-";
 
-        // Legg til klikkhendelse for rad
+        // Add click event for the row
         rowelement.addEventListener("click", () => {
-            // Klikk på tournament-knapp
+            // Trigger tournament tab button click
             document.getElementById("tournamenttabbutton").click();
             openTournament(tournament.airtable);
+
+            const selector = document.getElementById("tournamentSelector");
+
+            // Find and set the matching option in the selector
+            const matchingOption = Array.from(selector.options).find(
+                (option) => option.value === tournament.airtable
+            );
+
+            if (matchingOption) {
+                matchingOption.selected = true; // Set the option itself
+            }
         });
 
-        // Legg raden til listen
+        // Append the row to the list
         list.appendChild(rowelement);
     }
 }
+
 
 
