@@ -18,6 +18,7 @@ function responsGetTournament(data) {
     const divisions = convertJSONrow(tournament.divisjonjson);
     listDivision(divisions);
 
+    const team = convertJSONrow(tournament.teamjson);
     // TODO: Legg til funksjonalitet for å håndtere teamjson og matchjson
     // const teams = convertJSONrow(tournament.teamjson);
     // const matches = convertJSONrow(tournament.matchjson);
@@ -42,8 +43,15 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
 }
 
 function publishTournament() {
+    const Pswitch = document.getElementById("publichswitsj");
+   
+   let message = "Er du sikker på at du vil publisere denne turneringen?";
+    if(!Pswitch.checked){
+        message = "Er du sikker på at du vil avpublisere denne turneringen?"; 
+    }
+
     // Vis en bekreftelsesdialog
-    const userConfirmation = confirm("Er du sikker på at du vil publisere denne turneringen?");
+    const userConfirmation = confirm(message);
     
     // Sjekk brukerens valg
     if (userConfirmation) {
