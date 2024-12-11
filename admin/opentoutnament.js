@@ -51,7 +51,7 @@ function openTournament(Tournamentid){
 
     //skjul gruppeselectorer
     document.getElementById("groupSelectorTeam").style.display = "none";
-    document.getElementById("divisionSelectorMatch").style.display = "none";
+    document.getElementById("groupSelectorMatch").style.display = "none";
 
 }
 
@@ -163,7 +163,7 @@ function divisionSelectorChange(selectorId) {
         const groups = findGroupByDivision(divId);
 
         // Find the division name from gDivision
-        const division = gDivision.find(div => div.id === divId);
+        const division = gDivision.find(div => div.airtable === divId);
         const divisionName = division ? division.name : "divisjon";
 
         // Show the group selector
@@ -173,7 +173,7 @@ function divisionSelectorChange(selectorId) {
         // Add default option with division name
         const defaultOption = document.createElement("option");
         defaultOption.value = "";
-        defaultOption.textContent = `Grupper i ${divisionName}`;
+        defaultOption.textContent = `Alle grupper i ${divisionName}`;
         groupSelector.appendChild(defaultOption);
 
         // Add group options
