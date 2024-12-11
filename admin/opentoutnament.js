@@ -372,10 +372,9 @@ function listMatch(matchs) {
         const matchDate = new Date(match.time);
         const day = String(matchDate.getUTCDate()).padStart(2, "0");
         const month = matchDate.toLocaleString("no-NO", { month: "short", timeZone: "UTC" }).replace('.', '');
-        const year = String(matchDate.getUTCFullYear()).slice(-2);
         const hours = String(matchDate.getUTCHours()).padStart(2, "0");
         const minutes = String(matchDate.getUTCMinutes()).padStart(2, "0");
-        const formattedTime = `${day}.${month} ${year} ${hours}:${minutes}`;
+        const formattedTime = `${day}.${month} ${hours}:${minutes}`;
 
         rowelement.querySelector(".time").textContent = formattedTime || "Ukjent startdato";
 
