@@ -331,11 +331,11 @@ function listOrganizer(organizers) {
 }
 
 function listTournament(tournaments) {
- 
     const list = document.getElementById("tournamentlistholderlist");
     list.replaceChildren(); // Fjern tidligere innhold
 
-    list.parentElement.querySelector(".rowcounter").textContent = tournaments.length+" stk.";
+    // Oppdater antall rader i telleren
+    list.parentElement.querySelector(".rowcounter").textContent = `${tournaments.length} stk.`;
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".tournamentrow");
@@ -343,22 +343,27 @@ function listTournament(tournaments) {
     for (let tournament of tournaments) {
         const rowelement = nodeelement.cloneNode(true);
 
-        if(tournament.icon){
+        // Sett turneringsikon hvis tilgjengelig
+        if (tournament.icon) {
             rowelement.querySelector(".teamlogo").src = tournament.icon;
         }
-        
+
+        // Sett turneringsnavn og arrangørnavn
         rowelement.querySelector(".name").textContent = tournament.name || "-";
         rowelement.querySelector(".organizername").textContent = tournament.organizername || "-";
 
-        const switsjElement = rowelement.querySelector(".tournamentactive"); 
-        if (tournament?.archived){
+        // Konfigurer bryter for arkivering
+        const switsjElement = rowelement.querySelector(".tournamentactive");
+        switsjElement.checked = !tournament.archived;
 
-           switsjElement.checked = false;
-        }else{
-           switsjElement.checked = true;
-         }
-       
+        // Legg til klikkhendelse for rad
+        rowelement.addEventListener("click", () => {
+            openTournament(tournament.airtable);
+        });
+
+        // Legg raden til listen
         list.appendChild(rowelement);
     }
 }
+
 
