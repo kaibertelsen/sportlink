@@ -67,6 +67,9 @@ function responsGetTournament(data) {
 
     const teams = convertJSONrow(tournament.teamjson);
     listTeams(teams);
+
+    const matchs = convertJSONrow(tournament.matchjson);
+    listMatch(matchs);
     // TODO: Legg til funksjonalitet for å håndtere teamjson og matchjson
     // const teams = convertJSONrow(tournament.teamjson);
     // const matches = convertJSONrow(tournament.matchjson);
@@ -194,6 +197,45 @@ function listTeams(teams) {
         rowelement.querySelector(".club").textContent = team.clubname || "Ukjent klubb";
         rowelement.querySelector(".division").textContent = team.divisionname || "Ukjent divisjon";
         rowelement.querySelector(".groupname").textContent = team.groupname || "-";
+        list.appendChild(rowelement);
+    }
+}
+
+function listMatch(matchs) {
+ 
+    const list = document.getElementById("teamlistholder");
+    list.replaceChildren(); // Fjern tidligere innhold
+
+    list.parentElement.querySelector(".rowcounter").textContent = matchs.length+" stk.";
+
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".matchrow");
+
+    for (let match of matchs) {
+        const rowelement = nodeelement.cloneNode(true);
+
+        
+
+        rowelement.querySelector(".time").textContent = new Date(match.time).toLocaleDateString() || "Ukjent startdato";
+        rowelement.querySelector(".division").textContent = match.divisionname || "Ukjent divisjon";
+        rowelement.querySelector(".groupname").textContent = match.groupname || "-";
+        rowelement.querySelector(".team1name").textContent = match.team1name || match.placeholderteam1 || "-";
+        
+        if(match.team1logo){
+            rowelement.querySelector(".teamlogo").src = match.team1logo;
+        }
+        if(match.team2logo){
+            rowelement.querySelector(".teamlogo").src = match.team2logo;
+        }
+        rowelement.querySelector(".team2name").textContent = match.team2name || match.placeholderteam2 || "-";
+
+        rowelement.querySelector(".field").textContent = match.fieldname || "-";
+        rowelement.querySelector(".location").textContent = match.location || "-";
+        rowelement.querySelector(".refereename").textContent = match.refereename || "-";
+
+        //finalekamp info og sluttspill
+
+
         list.appendChild(rowelement);
     }
 }
