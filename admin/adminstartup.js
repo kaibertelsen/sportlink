@@ -318,12 +318,13 @@ function listOrganizer(organizers) {
         rowelement.querySelector(".contry").textContent = organizer.contry || "Norge";
 
         const switsjElement = rowelement.querySelector(".organizeractive"); 
-        if(organizer.archived){
-            switsjElement.checked = false;
-        }else{
-            switsjElement.checked = true;
+        if (organizer?.archived){
+            if(organizer.archived == "true"){
+                switsjElement.checked = false;
+            }else{
+                switsjElement.checked = true;
+            }
         }
-
 
 
         list.appendChild(rowelement);
