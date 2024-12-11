@@ -6,6 +6,9 @@ function loadTurnamentSelector(tournaments) {
     // Fjern eksisterende valg for å starte med en tom liste
     selector.innerHTML = "";
 
+    // Sorter turneringer alfabetisk basert på navn
+    tournaments.sort((a, b) => a.name.localeCompare(b.name, 'nb', { sensitivity: 'base' }));
+
     // Gå gjennom alle turneringer og legg dem til i dropdown
     tournaments.forEach(tournament => {
         // Opprett et nytt <option>-element
@@ -27,6 +30,7 @@ function loadTurnamentSelector(tournaments) {
     console.log("Turneringer lastet inn i dropdown:", tournaments);
 }
 
+
 // Funksjon som kjøres når en turnering velges
 function onTournamentSelected(airtableId, tournamentName) {
     console.log("Valgt turnering:", tournamentName, "med Airtable ID:", airtableId);
@@ -37,8 +41,6 @@ function onTournamentSelected(airtableId, tournamentName) {
 document.getElementById("loadingholdertournament").style.display = "block";
 
 }
-
-
 
 function openTournament(Tournamentid){
     GETairtable(baseId,"tblGhVlhWETNvhrWN",Tournamentid,"responsGetTournament");
@@ -64,6 +66,7 @@ function responsGetTournament(data) {
     listDivision(divisions);
 
     const team = convertJSONrow(tournament.teamjson);
+    listTeams(teams);
     // TODO: Legg til funksjonalitet for å håndtere teamjson og matchjson
     // const teams = convertJSONrow(tournament.teamjson);
     // const matches = convertJSONrow(tournament.matchjson);
@@ -73,7 +76,6 @@ function responsGetTournament(data) {
 
 
 }
-
 
 function updateTournamentInfo(tournament) {
 
@@ -125,14 +127,50 @@ function sendPublishRequest() {
     PATCHairtable(baseId,"tblGhVlhWETNvhrWN",activetournament.airtable,JSON.stringify(body),"respondPublish")
 
 }
+
 function respondPublish(data){
     const tournament = data.fields;
     activetournament = tournament;
 }
 
-
-
 function listDivision(divisions) {
+    const list = document.getElementById("divisionlistholder");
+    list.replaceChildren(); // Fjern tidligere innhold
+
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".divisionrow");
+
+    for (let division of divisions) {
+        const rowelement = nodeelement.cloneNode(true);
+        rowelement.querySelector(".name").textContent = division.name || "Ukjent navn";
+
+        // Legg til grupper
+        const groupNode = rowelement.querySelector(".group");
+        division.group.forEach(group => {
+            const groupElement = groupNode.cloneNode(true);
+            groupElement.querySelector(".groupname").textContent = group.name;
+            groupNode.parentElement.appendChild(groupElement);
+        });
+        groupNode.style.display = "none";
+
+        // Legg til sluttspill
+        const endNode = rowelement.querySelector(".endplay");
+        division.endplay.forEach(endplay => {
+            const endElement = endNode.cloneNode(true);
+            endElement.querySelector(".endname").textContent = endplay.endplayname;
+            endElement.querySelector(".endcount").textContent = endplay.finalecount;
+            endNode.parentElement.appendChild(endElement);
+        });
+        endNode.style.display = "none";
+
+        list.appendChild(rowelement);
+    }
+}
+
+function listTeams(teams) {
+    //tab navigasjon
+    document.getElementById("teamtabbutton").click();
+
     const list = document.getElementById("divisionlistholder");
     list.replaceChildren(); // Fjern tidligere innhold
 

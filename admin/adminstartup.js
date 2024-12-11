@@ -35,11 +35,6 @@ MemberStack.onReady.then(function(member) {
 );
 
 
-document.getElementById("testopentournament").addEventListener("click", function () {
-    openTournament("recnakqdHf6tA8GvH");
-});
-
-
 function startUpAdmin(){
     GETairtable(baseId,"tblbg3RRnKTDBaoeP","recCdECitGpKE2O1F","responsklient")
 
