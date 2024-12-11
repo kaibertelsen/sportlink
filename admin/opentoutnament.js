@@ -137,6 +137,8 @@ function listDivision(divisions) {
     const list = document.getElementById("divisionlistholder");
     list.replaceChildren(); // Fjern tidligere innhold
 
+    list.parentElement.querySelector(".rowcounter").textContent = divisions.length+" stk.";
+
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".divisionrow");
 
@@ -165,12 +167,17 @@ function listDivision(divisions) {
 
         list.appendChild(rowelement);
     }
+
+
+
 }
 
 function listTeams(teams) {
  
     const list = document.getElementById("teamlistholder");
     list.replaceChildren(); // Fjern tidligere innhold
+
+    list.parentElement.querySelector(".rowcounter").textContent = divisions.length+" stk.";
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".teamrow");
