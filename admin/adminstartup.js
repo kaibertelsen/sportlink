@@ -12,10 +12,19 @@ var sTournament;
 var sDivisions;
 var sGroups;
 var sTeams;
-
+var memberData;
 var klientId = "recCdECitGpKE2O1F";
 var baseId = "appxPi2CoLTlsa3qL";
 
+
+MemberStack.onReady.then(function(member) {
+    if (member.loggedIn){
+    
+        memberData = member;
+
+    }
+}
+);
 
 
 document.getElementById("testopentournament").addEventListener("click", function () {
