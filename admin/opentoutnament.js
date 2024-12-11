@@ -179,7 +179,7 @@ function listTeams(teams) {
         const rowelement = nodeelement.cloneNode(true);
 
         if(team.clublogo){
-        tournamentinfoheader.querySelector(".teamlogo").src = team.clublogo;
+            rowelement.querySelector(".teamlogo").src = team.clublogo;
         }
 
         rowelement.querySelector(".name").textContent = team.name || "Ukjent navn";
