@@ -302,10 +302,10 @@ function listOrganizer(organizers) {
     const list = document.getElementById("organizerlistholder");
     list.replaceChildren(); // Fjern tidligere innhold
 
-    list.parentElement.querySelector(".organizerrow").textContent = organizers.length+" stk.";
+    list.parentElement.querySelector(".rowcounter").textContent = organizers.length+" stk.";
 
     const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector(".clubrow");
+    const nodeelement = elementlibrary.querySelector(".organizerrow");
 
     for (let organizer of organizers) {
         const rowelement = nodeelement.cloneNode(true);
