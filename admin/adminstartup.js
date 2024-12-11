@@ -316,6 +316,16 @@ function listOrganizer(organizers) {
         
         rowelement.querySelector(".name").textContent = organizer.name || "-";
         rowelement.querySelector(".contry").textContent = organizer.contry || "Norge";
+
+        const switsjElement = rowelement.querySelector(".organizeractive"); 
+        if(organizer.archived){
+            switsjElement.checked = false;
+        }else{
+            switsjElement.checked = true;
+        }
+
+
+
         list.appendChild(rowelement);
     }
 }
