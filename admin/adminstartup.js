@@ -56,6 +56,7 @@ function responsklient(data){
     gClub = convertJSONrow(activeklient.clubjson);
     gTournament = convertJSONrow(activeklient.tournamentjson);
 
+    listClub(gClub);
 
 loadTurnamentSelector(gTournament);
 
