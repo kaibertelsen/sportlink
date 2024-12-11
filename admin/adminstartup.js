@@ -1,7 +1,10 @@
 var gSport = [];
 var gOrganizer = [];
 var gClub = [];
+var gTournament =[];
+
 var activetournament;
+var activeklient;
 var iTurnament;
 var iDivisions;
 var iGroups;
@@ -15,6 +18,11 @@ var sTeams;
 var memberData;
 var klientId = "recCdECitGpKE2O1F";
 var baseId = "appxPi2CoLTlsa3qL";
+
+//lists
+var Organizerlist;
+
+
 
 
 MemberStack.onReady.then(function(member) {
@@ -33,9 +41,24 @@ document.getElementById("testopentournament").addEventListener("click", function
 
 
 function startUpAdmin(){
+    GETairtable(baseId,"tblbg3RRnKTDBaoeP","recCdECitGpKE2O1F","responsklient")
+
+    /*
     getSportlist()
     getOrganizerlist();
     getClublist();
+    */
+}
+
+
+function responsklient(data){
+    let klient = data.fields;
+    activeklient = klient;
+
+    gSport = convertJSONrow(activeklient.organizerjson);
+    gOrganizer = convertJSONrow(activeklient.organizerjson);
+    gClub = convertJSONrow(activeklient.clubjson);
+    gTournament = convertJSONrow(activeklient.tournamentjson);
 }
 
 function getSportlist(){
