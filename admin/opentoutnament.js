@@ -57,7 +57,7 @@ function openTournament(Tournamentid){
 
 function responsGetTournament(data) {
     console.log(data.fields);
-//skul loader
+    //skul loader
     document.getElementById("loadingholdertournament").style.display = "none";
     document.getElementById("tournamentinfopage").style.display = "block";
 
@@ -80,16 +80,14 @@ function responsGetTournament(data) {
     const matchs = convertJSONrow(tournament.matchjson);
     gMatchs = matchs;
     listMatch(matchs);
-    // TODO: Legg til funksjonalitet for å håndtere teamjson og matchjson
-    // const teams = convertJSONrow(tournament.teamjson);
-    // const matches = convertJSONrow(tournament.matchjson);
+
 }
 
 function updateTournamentInfo(tournament) {
 
 const tournamentinfoheader = document.getElementById("tournamentinfoheader");
     tournamentinfoheader.querySelector(".tournamentname").textContent = tournament.name || "Ukjent turnering";
-    tournamentinfoheader.querySelector(".tournamenticon").src = tournament.icon || "";
+    tournamentinfoheader.querySelector(".tournamenticon").src = tournament.icon || "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
     tournamentinfoheader.querySelector(".sportname").textContent = tournament.sportname[0] || "Ukjent sport";
     tournamentinfoheader.querySelector(".startdate").textContent = new Date(tournament.startdate).toLocaleDateString() || "Ukjent startdato";
     tournamentinfoheader.querySelector(".enddate").textContent = new Date(tournament.enddate).toLocaleDateString() || "Ukjent sluttdato";
