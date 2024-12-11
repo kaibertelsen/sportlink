@@ -203,7 +203,7 @@ function listTeams(teams) {
 
 function listMatch(matchs) {
  
-    const list = document.getElementById("teamlistholder");
+    const list = document.getElementById("matchlistholder");
     list.replaceChildren(); // Fjern tidligere innhold
 
     list.parentElement.querySelector(".rowcounter").textContent = matchs.length+" stk.";
