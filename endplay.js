@@ -1,11 +1,13 @@
 function endplayConverter(data) {
+
     // Sjekk om data har en "divisjonjson"-nøkkel som er en array
     if (Array.isArray(data?.divisjonjson)) {
         const parsedData = data.divisjonjson.map(item => {
             // Forsøk å parse hvert element i divisjon-arrayet
             try {
-                const parsedItem = JSON.parse(item);
-
+                const sanitizedItem = item.replace(/\\\"/g, '"').replace(/\\\\/g, '\\');
+                const parsedItem = JSON.parse(sanitizedItem);
+                
                 // Parse "endplay" hvis det er en gyldig JSON-streng
                 if (parsedItem.endplay && parsedItem.endplay.trim()) {
                     try {
@@ -31,9 +33,8 @@ function endplayConverter(data) {
         console.warn("Data mangler en gyldig divisjonjson-array.");
         return [];
     }
+    
 }
-
-
 
 
 function listendplay(data, divisjon) {
