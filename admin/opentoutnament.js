@@ -232,10 +232,10 @@ function listMatch(matchs) {
         rowelement.querySelector(".field").textContent = match.fieldname || "-";
         rowelement.querySelector(".location").textContent = match.location || "-";
         rowelement.querySelector(".refereename").textContent = match.refereename || "-";
-
-        //finalekamp info og sluttspill
-
-
+        rowelement.querySelector(".finalenr").textContent = match.endplayplace || "-";
+        rowelement.querySelector(".endplay").textContent = match.endplay || "-";
+        rowelement.querySelector(".type").textContent = match.typematch || "-";
+        rowelement.querySelector(".matchnr").textContent = match.nr || "-";
         list.appendChild(rowelement);
     }
 }
