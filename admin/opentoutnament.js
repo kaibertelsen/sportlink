@@ -78,15 +78,11 @@ function responsGetTournament(data) {
     listTeams(gTeam);
 
     const matchs = convertJSONrow(tournament.matchjson);
+    gMatchs = matchs;
     listMatch(matchs);
     // TODO: Legg til funksjonalitet for å håndtere teamjson og matchjson
     // const teams = convertJSONrow(tournament.teamjson);
     // const matches = convertJSONrow(tournament.matchjson);
-
-   
-    
-
-
 }
 
 function updateTournamentInfo(tournament) {
@@ -185,6 +181,14 @@ function divisionSelectorChange(selectorId) {
 
     listTeams(gTeam);
 
+}
+function groupSelectorChange(listName){
+    if(listName == "Match"){
+        listMatch(gMatchs);
+    }else{
+        listTeams(gTeam)
+
+    }
 }
 
 function findGroupByDivision(divisionId) {
