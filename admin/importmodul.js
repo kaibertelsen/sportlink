@@ -117,7 +117,7 @@ function resetPointHolder() {
 
     // Marker punkt
     const pointholderpanel = document.getElementById("pointholderpanel");
-    pointholderpanel.querySelector(".messageinfo").innerHTML = info;
+    pointholderpanel.querySelector(".messageinfo").innerHTML = "";
     pointholderpanel.querySelector(".division").textContent = "";
     pointholderpanel.querySelector(".group").textContent = "";
     pointholderpanel.querySelector(".endplay").textContent = "";
