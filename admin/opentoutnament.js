@@ -183,10 +183,10 @@ function listTeams(teams) {
         }
 
         rowelement.querySelector(".name").textContent = team.name || "Ukjent navn";
-        rowelement.querySelector(".initialer").textContent = team.initials || "Ingen initialer";
+        rowelement.querySelector(".initialer").textContent = team.initials || "-";
         rowelement.querySelector(".club").textContent = team.clubname || "Ukjent klubb";
         rowelement.querySelector(".division").textContent = team.divisionname || "Ukjent divisjon";
-        rowelement.querySelector(".groupname").textContent = team.groupname || "Ukjent gruppe";
+        rowelement.querySelector(".groupname").textContent = team.groupname || "-";
         list.appendChild(rowelement);
     }
 }
