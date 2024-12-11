@@ -3,6 +3,7 @@ var gOrganizer = [];
 var gClub = [];
 var gTournament =[];
 var gDivision = [];
+var gTeam = [];
 
 var activetournament;
 var activeklient;

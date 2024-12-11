@@ -71,10 +71,11 @@ function responsGetTournament(data) {
     // Konverter divisjoner og liste dem opp
     const divisions = convertJSONrow(tournament.divisjonjson);
     gDivision = divisions;
-    listDivision(divisions);
+    listDivision(gDivision);
 
     const teams = convertJSONrow(tournament.teamjson);
-    listTeams(teams);
+    gTeam = teams;
+    listTeams(gTeam);
 
     const matchs = convertJSONrow(tournament.matchjson);
     listMatch(matchs);
@@ -174,6 +175,9 @@ function divisionSelectorChange(selectorId) {
         });
 
     }
+
+    listTeams(gTeam);
+
 }
 
 function findGroupByDivision(divisionId) {
