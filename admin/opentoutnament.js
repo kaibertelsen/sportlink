@@ -147,17 +147,24 @@ function respondPublish(data){
 
 function divisionSelectorChange(selectorId) {
     // Find the selected division ID
+    let divId = "";
+    if(selectorId=="groupSelectorTeam"){
+        //sjekk verdi i divisjon på lagsiden
+        divId = document.getElementById("divisionSelectorTeam").value;
+    }else{
+        //sjekk vedi i divisjon på kampsiden
+        divId = document.getElementById("divisionSelectorMatch").value;
+    }
     
     // Populate the groupSelector dropdown
     const groupSelector = document.getElementById(selectorId);
-    let divId = groupSelector.value;
-
+    
     if(divId == ""){
-  
+        groupSelector.style.display = "none";
     }else{
         // Find groups associated with the division
         let groups = findGroupByDivision(divId);
-        groupSelector.style.display = "block"
+        groupSelector.style.display = "block";
         groupSelector.replaceChildren(); // Clear previous options
 
         // Add default option "Alle grupper"
