@@ -1,5 +1,5 @@
 function getTournament(klientid) {
-    var body = airtablebodylistAND({klientid:klientid,archived:0});
+    var body = airtablebodylistAND({klientid:klientid,archived:0,hidden:0});
     Getlistairtable(baseId,"tblGhVlhWETNvhrWN",body,"getTournamentresponse");
 }
 
