@@ -333,8 +333,8 @@ function listTeams(teams) {
 
 function listMatch(matchs) {
     // Get selected values from division and group selectors
-    const divisionValue = document.getElementById("divisionSelectorTeam").value;
-    const groupValue = document.getElementById("groupSelectorTeam").value;
+    const divisionValue = document.getElementById("divisionSelectorMatch").value;
+    const groupValue = document.getElementById("groupSelectorMatch").value;
 
     // Filter matches based on selected division and group
     const filteredMatches = matchs.filter(match => {
