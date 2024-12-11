@@ -177,7 +177,7 @@ function listTeams(teams) {
     const list = document.getElementById("teamlistholder");
     list.replaceChildren(); // Fjern tidligere innhold
 
-    list.parentElement.querySelector(".rowcounter").textContent = divisions.length+" stk.";
+    list.parentElement.querySelector(".rowcounter").textContent = teams.length+" stk.";
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".teamrow");
