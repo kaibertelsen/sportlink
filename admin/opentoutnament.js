@@ -145,12 +145,15 @@ function divisionSelectorChange(selectorId) {
     
     // Find the selected division ID
     let divId = "";
+    let listTeamsObject = false;
     if (selectorId === "groupSelectorTeam") {
         // Check division value on the team page
         divId = document.getElementById("divisionSelectorTeam").value;
+        listTeamsObject = true;
     } else {
         // Check division value on the match page
         divId = document.getElementById("divisionSelectorMatch").value;
+        listTeamsObject = false;
     }
 
     // Populate the groupSelector dropdown
@@ -194,8 +197,14 @@ function divisionSelectorChange(selectorId) {
         });
     }
 
+
+    if(listTeamsObject){
     // Update the team list
-    listTeams(gTeam);
+        listTeams(gTeam);
+    }else{
+        listMatch(gMatchs); 
+    }
+   
 }
 
 function groupSelectorChange(listName){
