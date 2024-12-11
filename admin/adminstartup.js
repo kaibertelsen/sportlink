@@ -335,7 +335,7 @@ function listTournament(tournaments) {
     const list = document.getElementById("tournamentlistholderlist");
     list.replaceChildren(); // Fjern tidligere innhold
 
-    list.parentElement.querySelector(".rowcounter").textContent = organizers.length+" stk.";
+    list.parentElement.querySelector(".rowcounter").textContent = tournaments.length+" stk.";
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".tournamentrow");
