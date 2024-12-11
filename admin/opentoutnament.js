@@ -323,15 +323,31 @@ function listTeams(teams) {
 
 
 function listMatch(matchs) {
+    // Get selected values from division and group selectors
+    const divisionValue = document.getElementById("divisionSelectorTeam").value;
+    const groupValue = document.getElementById("groupSelectorTeam").value;
+
+    // Filter matches based on selected division and group
+    const filteredMatches = matchs.filter(match => {
+        const matchesDivision = !divisionValue || match.division === divisionValue;
+        const matchesGroup = !groupValue || match.group === groupValue;
+        return matchesDivision && matchesGroup;
+    });
+
+    // Sort matches by time
+    filteredMatches.sort((a, b) => new Date(a.time) - new Date(b.time));
+
+    // Get the list holder and clear previous content
     const list = document.getElementById("matchlistholder");
     list.replaceChildren(); // Clear previous content
 
-    list.parentElement.querySelector(".rowcounter").textContent = `${matchs.length} stk.`;
+    // Update row counter
+    list.parentElement.querySelector(".rowcounter").textContent = `${filteredMatches.length} stk.`;
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".matchrow");
 
-    for (let match of matchs) {
+    for (let match of filteredMatches) {
         const rowelement = nodeelement.cloneNode(true);
 
         rowelement.querySelector(".time").textContent = new Date(match.time).toLocaleDateString() || "Ukjent startdato";
@@ -367,9 +383,11 @@ function listMatch(matchs) {
             }
         });
 
+        // Append the row to the list
         list.appendChild(rowelement);
     }
 }
+
 
 
 
