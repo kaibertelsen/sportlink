@@ -318,9 +318,24 @@ function allIsImported() {
     // Fjern tidligere klikkhendelser ved å erstatte `onclick`
     button.onclick = null;
 
+    gTournament.push(sTournament);
     // Legg til ny klikkhendelse
     button.onclick = function () {
         openTournament(sTournament.airtable);
+    
+        // Sett den valgte turneringen som aktiv i dropdown
+        const selector = document.getElementById("tournamentSelector");
+    
+        // Finn `option`-elementet som samsvarer med `sTournament.airtable`
+        const options = selector.options;
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === sTournament.airtable) {
+                selector.selectedIndex = i; // Sett dette som valgt
+                break;
+            }
+        }
+    
+        console.log("Turneringen er satt som aktiv:", sTournament.airtable);
     };
 
 }
