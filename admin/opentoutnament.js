@@ -144,8 +144,11 @@ function respondPublish(data){
     activetournament = tournament;
 }
 
-function divisionSelectorChange(groupSelector) {
-
+function divisionSelectorChange(selectorId) {
+    // Find the selected division ID
+    
+    // Populate the groupSelector dropdown
+    const groupSelector = document.getElementById(selectorId);
     let divId = groupSelector.value;
 
     if(divId == ""){
@@ -176,14 +179,14 @@ function divisionSelectorChange(groupSelector) {
     }
 }
 
+
 function findGroupByDivision(divisionId) {
     // Find the division object in `gDivision` array by `divisionId`
-    let division = gDivision.find(div => div.id === divisionId);
+    let division = gDivision.find(div => div.airtable === divisionId);
 
     // Return groups if division is found, otherwise return an empty array
     return division ? division.group || [] : [];
 }
-
 
 function listDivision(divisions) {
     const list = document.getElementById("divisionlistholder");
@@ -195,14 +198,14 @@ function listDivision(divisions) {
     const nodeelement = elementlibrary.querySelector(".divisionrow");
 
     // Clear and prepare selectors
-    const divisionSelectorTeam = document.getElementById("divisionSelectorTeam");
-    const divisionSelectorMatch = document.getElementById("divisionSelectorMatch");
+    const divisionSelectorTeam = document.getElementById("groupSelectorTeam");
+    const divisionSelectorMatch = document.getElementById("groupSelectorMatch");
     divisionSelectorTeam.replaceChildren();
     divisionSelectorMatch.replaceChildren();
 
     // Attach change event listeners
-    divisionSelectorTeam.addEventListener("change", divisionSelectorChange(divisionSelectorTeam));
-    divisionSelectorMatch.addEventListener("change", divisionSelectorChange(divisionSelectorMatch));
+    divisionSelectorTeam.addEventListener("change", divisionSelectorChange(""));
+    divisionSelectorMatch.addEventListener("change", divisionSelectorChange(""));
 
     // Add default option "Alle divisjoner"
     const defaultOptionTeam = document.createElement("option");
