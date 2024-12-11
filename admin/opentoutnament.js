@@ -142,6 +142,7 @@ function respondPublish(data){
 }
 
 function divisionSelectorChange(selectorId) {
+    
     // Find the selected division ID
     let divId = "";
     if (selectorId === "groupSelectorTeam") {
@@ -158,6 +159,14 @@ function divisionSelectorChange(selectorId) {
     if (divId === "") {
         // Hide group selector if no division is selected
         groupSelector.style.display = "none";
+        groupSelector.replaceChildren(); // Clear previous options
+
+        // Add default option with division name
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = `Alle grupper`;
+        groupSelector.appendChild(defaultOption);
+
     } else {
         // Find groups associated with the division
         const groups = findGroupByDivision(divId);
@@ -173,7 +182,7 @@ function divisionSelectorChange(selectorId) {
         // Add default option with division name
         const defaultOption = document.createElement("option");
         defaultOption.value = "";
-        defaultOption.textContent = `Alle grupper i ${divisionName}`;
+        defaultOption.textContent = `Alle grupper`;
         groupSelector.appendChild(defaultOption);
 
         // Add group options
