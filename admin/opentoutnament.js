@@ -156,8 +156,6 @@ function divisionSelectorChange(selectorId) {
     }else{
         // Find groups associated with the division
         let groups = findGroupByDivision(divId);
-
-        
         groupSelector.style.display = "block"
         groupSelector.replaceChildren(); // Clear previous options
 
@@ -252,34 +250,47 @@ function listDivision(divisions) {
 }
 
 function listTeams(teams) {
- 
-    const list = document.getElementById("teamlistholder");
-    list.replaceChildren(); // Fjern tidligere innhold
+    // Get selected values from division and group selectors
+    const divisionValue = document.getElementById("divisionSelectorTeam").value;
+    const groupValue = document.getElementById("groupSelectorTeam").value;
 
-    list.parentElement.querySelector(".rowcounter").textContent = teams.length+" stk.";
+    // Filter teams based on selected division and group
+    const filteredTeams = teams.filter(team => {
+        const matchesDivision = !divisionValue || team.division === divisionValue;
+        const matchesGroup = !groupValue || team.group === groupValue;
+        return matchesDivision && matchesGroup;
+    });
+
+    // Get the list holder and clear previous content
+    const list = document.getElementById("teamlistholder");
+    list.replaceChildren(); // Clear previous content
+
+    // Update row counter
+    list.parentElement.querySelector(".rowcounter").textContent = `${filteredTeams.length} stk.`;
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".teamrow");
 
-    for (let team of teams) {
+    for (let team of filteredTeams) {
         const rowelement = nodeelement.cloneNode(true);
 
-        if(team.clublogo){
+        // Set team logo if available
+        if (team.clublogo) {
             rowelement.querySelector(".teamlogo").src = team.clublogo;
         }
 
+        // Set team details
         rowelement.querySelector(".name").textContent = team.name || "Ukjent navn";
         rowelement.querySelector(".initialer").textContent = team.initials || "-";
         rowelement.querySelector(".club").textContent = team.clubname || "Ukjent klubb";
         rowelement.querySelector(".division").textContent = team.divisionname || "Ukjent divisjon";
         rowelement.querySelector(".groupname").textContent = team.groupname || "-";
+
+        // Append the row to the list
         list.appendChild(rowelement);
     }
-
-
-
-
 }
+
 
 function listMatch(matchs) {
     const list = document.getElementById("matchlistholder");
