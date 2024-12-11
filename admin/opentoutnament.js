@@ -168,9 +168,7 @@ function listDivision(divisions) {
 }
 
 function listTeams(teams) {
-    //tab navigasjon
-    document.getElementById("teamtabbutton").click();
-
+ 
     const list = document.getElementById("teamlistholder");
     list.replaceChildren(); // Fjern tidligere innhold
 
