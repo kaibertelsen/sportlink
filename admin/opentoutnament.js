@@ -152,8 +152,7 @@ function divisionSelectorChange(selectorId) {
     let divId = groupSelector.value;
 
     if(divId == ""){
-        //alle da skjul gruppevalg
-        groupSelector.style.display = "none";
+  
     }else{
         // Find groups associated with the division
         let groups = findGroupByDivision(divId);
@@ -201,10 +200,6 @@ function listDivision(divisions) {
     const divisionSelectorMatch = document.getElementById("divisionSelectorMatch");
     divisionSelectorTeam.replaceChildren();
     divisionSelectorMatch.replaceChildren();
-
-    // Attach change event listeners
-    divisionSelectorTeam.addEventListener("change", divisionSelectorChange("groupSelectorTeam"));
-    divisionSelectorMatch.addEventListener("change", divisionSelectorChange("groupSelectorMatch"));
 
     // Add default option "Alle divisjoner"
     const defaultOptionTeam = document.createElement("option");
