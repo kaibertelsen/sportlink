@@ -30,7 +30,6 @@ function loadTurnamentSelector(tournaments) {
     console.log("Turneringer lastet inn i dropdown:", tournaments);
 }
 
-
 // Funksjon som kjøres når en turnering velges
 function onTournamentSelected(airtableId, tournamentName) {
     console.log("Valgt turnering:", tournamentName, "med Airtable ID:", airtableId);

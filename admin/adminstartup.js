@@ -354,6 +354,8 @@ function listTournament(tournaments) {
 
         // Legg til klikkhendelse for rad
         rowelement.addEventListener("click", () => {
+            // Klikk på tournament-knapp
+            document.getElementById("tournamenttabbutton").click();
             openTournament(tournament.airtable);
         });
 
