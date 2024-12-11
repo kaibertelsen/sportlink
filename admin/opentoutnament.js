@@ -52,6 +52,9 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
     tournamentinfoheader.querySelector(".eventname").textContent = tournament.organizername[0] || "Ukjent Arrangement";
     tournamentinfoheader.querySelector(".username").textContent = tournament.username[0] || "";
 
+    const switsj = tournamentinfoheader.querySelector(".merkibj");
+    switsj.checked = !tournament?.hidden;
+
 }
 
 
