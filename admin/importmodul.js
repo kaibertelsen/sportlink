@@ -323,20 +323,21 @@ function allIsImported() {
     button.onclick = function () {
         openTournament(sTournament.airtable);
     
-        // Sett den valgte turneringen som aktiv i dropdown
+        // Hent dropdown (selector)
         const selector = document.getElementById("tournamentSelector");
     
-        // Finn `option`-elementet som samsvarer med `sTournament.airtable`
-        const options = selector.options;
-        for (let i = 0; i < options.length; i++) {
-            if (options[i].value === sTournament.airtable) {
-                selector.selectedIndex = i; // Sett dette som valgt
-                break;
-            }
-        }
+        // Legg til turneringen i dropdown
+        const newOption = document.createElement("option");
+        newOption.value = sTournament.airtable;
+        newOption.textContent = sTournament.name;
+        selector.appendChild(newOption);
     
-        console.log("Turneringen er satt som aktiv:", sTournament.airtable);
+        // Sett den nye turneringen som valgt
+        selector.selectedIndex = selector.options.length - 1; // Velg den siste (nyeste) turneringen
+    
+        console.log("Turneringen er lagt til og satt som aktiv:", sTournament.airtable);
     };
+    
 
 }
 
