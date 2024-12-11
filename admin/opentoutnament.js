@@ -368,7 +368,17 @@ function listMatch(matchs) {
     for (let match of filteredMatches) {
         const rowelement = nodeelement.cloneNode(true);
 
-        rowelement.querySelector(".time").textContent = new Date(match.time).toLocaleDateString() || "Ukjent startdato";
+        // Format the time field using UTC
+        const matchDate = new Date(match.time);
+        const day = String(matchDate.getUTCDate()).padStart(2, "0");
+        const month = matchDate.toLocaleString("no-NO", { month: "short", timeZone: "UTC" }).replace('.', '');
+        const year = String(matchDate.getUTCFullYear()).slice(-2);
+        const hours = String(matchDate.getUTCHours()).padStart(2, "0");
+        const minutes = String(matchDate.getUTCMinutes()).padStart(2, "0");
+        const formattedTime = `${day}.${month} ${year} ${hours}:${minutes}`;
+
+        rowelement.querySelector(".time").textContent = formattedTime || "Ukjent startdato";
+
         rowelement.querySelector(".division").textContent = match.divisionname || "Ukjent divisjon";
         rowelement.querySelector(".groupname").textContent = match.groupname || "-";
         rowelement.querySelector(".team1name").textContent = match.team1name || match.placeholderteam1 || "-";
@@ -405,6 +415,7 @@ function listMatch(matchs) {
         list.appendChild(rowelement);
     }
 }
+
 
 
 
