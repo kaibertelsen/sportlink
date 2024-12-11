@@ -41,11 +41,36 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
 
 }
 
-function publichTournament(){
+function publishTournament() {
+    // Vis en bekreftelsesdialog
+    const userConfirmation = confirm("Er du sikker på at du vil publisere denne turneringen?");
+    
+    // Sjekk brukerens valg
+    if (userConfirmation) {
+        sendPublishRequest();
+    } else {
+        // Brukeren trykket Avbryt
+        console.log("Publisering avbrutt.");
+    }
+}
 
+function sendPublishRequest() {
 
+    const Pswitch = document.getElementById("publichswitsj");
+    let hidden = false;
+    if(Pswitch.checked){
+        hidden = false;
+    }else{
+        hidden = true; 
+    }
 
+    let body = {hidden:hidden};
+    PATCHairtable(baseId,"tblGhVlhWETNvhrWN",activetournament.airtable,JSON.stringify(body),"respondPublish")
 
+}
+function respondPublish(data){
+    const tournament = data.fields;
+    activetournament = tournament;
 }
 
 

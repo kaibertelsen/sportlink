@@ -17,7 +17,9 @@ function ruteresponse(data,id){
         responseSaveMatches(data);
     }else if(id == "responsGetTournament"){
         responsGetTournament(data);
+    }else if(id == "respondPublish"){
+        respondPublish(data);
     }
-
+    
   
 }
