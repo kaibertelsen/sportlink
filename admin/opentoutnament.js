@@ -143,57 +143,37 @@ function respondPublish(data){
     const tournament = data.fields;
     activetournament = tournament;
 }
-function divisionSelectorTeamChange() {
-    // Find the selected division ID
-    let divId = document.getElementById("divisionSelectorTeam").value;
 
-    // Find groups associated with the division
-    let groups = findGroupByDivision(divId);
+function divisionSelectorChange(groupSelector) {
 
-    // Populate the groupSelectorTeam dropdown
-    const groupSelectorTeam = document.getElementById("groupSelectorTeam");
-    groupSelectorTeam.replaceChildren(); // Clear previous options
-    groupSelectorTeam.style.display = "block"
-    // Add default option "Alle grupper"
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = "Alle grupper";
-    groupSelectorTeam.appendChild(defaultOption);
+    let divId = groupSelector.value;
 
-    // Add group options
-    groups.forEach(group => {
-        const option = document.createElement("option");
-        option.value = group.airtable;
-        option.textContent = group.name || "Ukjent navn";
-        groupSelectorTeam.appendChild(option);
-    });
-}
+    if(divId == ""){
+        //alle da skjul gruppevalg
+        groupSelector.style.display = "none";
+    }else{
+        // Find groups associated with the division
+        let groups = findGroupByDivision(divId);
 
-function divisionSelectorMatchChange() {
-    // Find the selected division ID
-    let divId = document.getElementById("divisionSelectorMatch").value;
+        
+        groupSelector.style.display = "block"
+        groupSelector.replaceChildren(); // Clear previous options
 
-    // Find groups associated with the division
-    let groups = findGroupByDivision(divId);
+        // Add default option "Alle grupper"
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = "Alle grupper";
+        groupSelector.appendChild(defaultOption);
 
-    // Populate the groupSelectorMatch dropdown
-    const groupSelectorMatch = document.getElementById("groupSelectorMatch");
-    groupSelectorMatch.style.display = "block"
-    groupSelectorMatch.replaceChildren(); // Clear previous options
+        // Add group options
+        groups.forEach(group => {
+            const option = document.createElement("option");
+            option.value = group.airtable;
+            option.textContent = group.name || "Ukjent navn";
+            groupSelector.appendChild(option);
+        });
 
-    // Add default option "Alle grupper"
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = "Alle grupper";
-    groupSelectorMatch.appendChild(defaultOption);
-
-    // Add group options
-    groups.forEach(group => {
-        const option = document.createElement("option");
-        option.value = group.airtable;
-        option.textContent = group.name || "Ukjent navn";
-        groupSelectorMatch.appendChild(option);
-    });
+    }
 }
 
 function findGroupByDivision(divisionId) {
@@ -204,14 +184,6 @@ function findGroupByDivision(divisionId) {
     return division ? division.group || [] : [];
 }
 
-
-function findGroupByDivision(divisionId) {
-    // Find the division object in `gDivision` array by `divisionId`
-    let division = gDivision.find(div => div.airtable === divisionId);
-
-    // Return groups if division is found, otherwise return an empty array
-    return division ? division.group || [] : [];
-}
 
 function listDivision(divisions) {
     const list = document.getElementById("divisionlistholder");
@@ -229,8 +201,8 @@ function listDivision(divisions) {
     divisionSelectorMatch.replaceChildren();
 
     // Attach change event listeners
-    divisionSelectorTeam.addEventListener("change", divisionSelectorTeamChange);
-    divisionSelectorMatch.addEventListener("change", divisionSelectorMatchChange);
+    divisionSelectorTeam.addEventListener("change", divisionSelectorChange(divisionSelectorTeam));
+    divisionSelectorMatch.addEventListener("change", divisionSelectorChange(divisionSelectorMatch));
 
     // Add default option "Alle divisjoner"
     const defaultOptionTeam = document.createElement("option");
