@@ -171,35 +171,24 @@ function listTeams(teams) {
     //tab navigasjon
     document.getElementById("teamtabbutton").click();
 
-    const list = document.getElementById("divisionlistholder");
+    const list = document.getElementById("teamlistholder");
     list.replaceChildren(); // Fjern tidligere innhold
 
     const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector(".divisionrow");
+    const nodeelement = elementlibrary.querySelector(".teamrow");
 
-    for (let division of divisions) {
+    for (let team of teams) {
         const rowelement = nodeelement.cloneNode(true);
-        rowelement.querySelector(".name").textContent = division.name || "Ukjent navn";
 
-        // Legg til grupper
-        const groupNode = rowelement.querySelector(".group");
-        division.group.forEach(group => {
-            const groupElement = groupNode.cloneNode(true);
-            groupElement.querySelector(".groupname").textContent = group.name;
-            groupNode.parentElement.appendChild(groupElement);
-        });
-        groupNode.style.display = "none";
+        if(team.clublogo){
+        tournamentinfoheader.querySelector(".teamlogo").src = team.clublogo;
+        }
 
-        // Legg til sluttspill
-        const endNode = rowelement.querySelector(".endplay");
-        division.endplay.forEach(endplay => {
-            const endElement = endNode.cloneNode(true);
-            endElement.querySelector(".endname").textContent = endplay.endplayname;
-            endElement.querySelector(".endcount").textContent = endplay.finalecount;
-            endNode.parentElement.appendChild(endElement);
-        });
-        endNode.style.display = "none";
-
+        rowelement.querySelector(".name").textContent = team.name || "Ukjent navn";
+        rowelement.querySelector(".initialer").textContent = team.initials || "Ingen initialer";
+        rowelement.querySelector(".club").textContent = team.clubname || "Ukjent klubb";
+        rowelement.querySelector(".division").textContent = team.divisionname || "Ukjent divisjon";
+        rowelement.querySelector(".groupname").textContent = team.groupname || "Ukjent gruppe";
         list.appendChild(rowelement);
     }
 }
