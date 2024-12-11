@@ -58,6 +58,7 @@ function responsklient(data){
 
     listOrganizer(gOrganizer);
     listClub(gClub);
+    listTournament(gTournament);
 
 loadTurnamentSelector(gTournament);
 
@@ -319,7 +320,7 @@ function listOrganizer(organizers) {
 
         const switsjElement = rowelement.querySelector(".organizeractive"); 
         if (organizer?.archived){
-            
+
            switsjElement.checked = false;
         }else{
            switsjElement.checked = true;
@@ -328,3 +329,36 @@ function listOrganizer(organizers) {
         list.appendChild(rowelement);
     }
 }
+
+function listTournament(tournaments) {
+ 
+    const list = document.getElementById("tournamentlistholderlist");
+    list.replaceChildren(); // Fjern tidligere innhold
+
+    list.parentElement.querySelector(".rowcounter").textContent = organizers.length+" stk.";
+
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".tournamentrow");
+
+    for (let tournament of tournaments) {
+        const rowelement = nodeelement.cloneNode(true);
+
+        if(tournament.icon){
+            rowelement.querySelector(".teamlogo").src = tournament.icon;
+        }
+        
+        rowelement.querySelector(".name").textContent = tournament.name || "-";
+        rowelement.querySelector(".organizername").textContent = tournament.organizername || "-";
+
+        const switsjElement = rowelement.querySelector(".tournamentactive"); 
+        if (tournament?.archived){
+
+           switsjElement.checked = false;
+        }else{
+           switsjElement.checked = true;
+         }
+       
+        list.appendChild(rowelement);
+    }
+}
+
