@@ -352,10 +352,6 @@ function listTournament(tournaments) {
         rowelement.querySelector(".name").textContent = tournament.name || "-";
         rowelement.querySelector(".organizername").textContent = tournament.organizername || "-";
 
-        // Konfigurer bryter for arkivering
-        const switsjElement = rowelement.querySelector(".tournamentactive");
-        switsjElement.checked = !tournament.archived;
-
         // Legg til klikkhendelse for rad
         rowelement.addEventListener("click", () => {
             openTournament(tournament.airtable);
