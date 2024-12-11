@@ -43,6 +43,7 @@ document.getElementById("testopentournament").addEventListener("click", function
 function startUpAdmin(){
     GETairtable(baseId,"tblbg3RRnKTDBaoeP","recCdECitGpKE2O1F","responsklient")
 
+    document.getElementById("tournamentinfopage").style.display = "none";
     /*
     getSportlist()
     getOrganizerlist();
@@ -65,8 +66,6 @@ loadTurnamentSelector(gTournament);
 
 
 }
-
-
 
 
 function getSportlist(){

@@ -31,6 +31,11 @@ function loadTurnamentSelector(tournaments) {
 function onTournamentSelected(airtableId, tournamentName) {
     console.log("Valgt turnering:", tournamentName, "med Airtable ID:", airtableId);
     openTournament(airtableId);
+
+
+//hvis loader
+document.getElementById("loadingholdertournament").style.display = "block";
+
 }
 
 
@@ -41,6 +46,9 @@ function openTournament(Tournamentid){
 
 function responsGetTournament(data) {
     console.log(data.fields);
+//skul loader
+    document.getElementById("loadingholdertournament").style.display = "none";
+    document.getElementById("tournamentinfopage").style.display = "block";
 
     // Hent tournament-data
     const tournament = data.fields;
@@ -59,6 +67,10 @@ function responsGetTournament(data) {
     // TODO: Legg til funksjonalitet for å håndtere teamjson og matchjson
     // const teams = convertJSONrow(tournament.teamjson);
     // const matches = convertJSONrow(tournament.matchjson);
+
+   
+    
+
 
 }
 
