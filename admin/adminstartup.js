@@ -55,31 +55,13 @@ function responsklient(data){
     let klient = data.fields;
     activeklient = klient;
 
-    gSport = parsStringArray(activeklient.sportjson);
-    gOrganizer = parsStringArray(activeklient.organizerjson);
-    gClub = parsStringArray(activeklient.clubjson);
-    gTournament = parsStringArray(activeklient.tournamentjson);
+    gSport = convertJSONrow(activeklient.sportjson);
+    gOrganizer = convertJSONrow(activeklient.organizerjson);
+    gClub = convertJSONrow(activeklient.clubjson);
+    gTournament = convertJSONrow(activeklient.tournamentjson);
 }
 
-function parsStringArray(data) {
-    try {
-        // Mapper gjennom arrayet og parser hver streng
-        const parsedArray = data.map(item => {
-            try {
-                return JSON.parse(item);
-            } catch (error) {
-                console.warn("Feil ved parsing av element:", item, error);
-                return null; // Returner null for feilende elementer
-            }
-        });
 
-        // Filtrer ut null-verdier fra resultatet
-        return parsedArray.filter(item => item !== null);
-    } catch (error) {
-        console.error("Feil ved parsing av JSON-rader:", error);
-        return [];
-    }
-}
 
 
 function getSportlist(){
