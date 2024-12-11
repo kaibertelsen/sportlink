@@ -1,3 +1,40 @@
+
+function loadTurnamentSelector(tournaments) {
+    // Finn dropdown-elementet
+    const selector = document.getElementById("tournamentSelector");
+
+    // Fjern eksisterende valg for å starte med en tom liste
+    selector.innerHTML = "";
+
+    // Gå gjennom alle turneringer og legg dem til i dropdown
+    tournaments.forEach(tournament => {
+        // Opprett et nytt <option>-element
+        const option = document.createElement("option");
+        option.textContent = tournament.name; // Sett tekst som turneringsnavn
+        option.value = tournament.airtable;   // Sett verdi som airtable-id
+
+        // Legg til <option> i <select>
+        selector.appendChild(option);
+    });
+
+    // Legg til en eventlistener for når verdien endres
+    selector.addEventListener("change", () => {
+        const selectedValue = selector.value;
+        const selectedText = selector.options[selector.selectedIndex].text;
+        onTournamentSelected(selectedValue, selectedText);
+    });
+
+    console.log("Turneringer lastet inn i dropdown:", tournaments);
+}
+
+// Funksjon som kjøres når en turnering velges
+function onTournamentSelected(airtableId, tournamentName) {
+    console.log("Valgt turnering:", tournamentName, "med Airtable ID:", airtableId);
+    openTournament(airtableId);
+}
+
+
+
 function openTournament(Tournamentid){
     GETairtable(baseId,"tblGhVlhWETNvhrWN",Tournamentid,"responsGetTournament");
 }
