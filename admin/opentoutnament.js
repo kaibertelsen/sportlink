@@ -265,6 +265,13 @@ function listTeams(teams) {
         return matchesDivision && matchesGroup;
     });
 
+    // Sort teams alphabetically by name
+    filteredTeams.sort((a, b) => {
+        const nameA = (a.name || "").toLowerCase();
+        const nameB = (b.name || "").toLowerCase();
+        return nameA.localeCompare(nameB); // Alphabetical order
+    });
+
     // Get the list holder and clear previous content
     const list = document.getElementById("teamlistholder");
     list.replaceChildren(); // Clear previous content
@@ -294,6 +301,7 @@ function listTeams(teams) {
         list.appendChild(rowelement);
     }
 }
+
 
 
 function listMatch(matchs) {
