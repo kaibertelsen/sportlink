@@ -37,6 +37,13 @@ MemberStack.onReady.then(function(member) {
 }
 );
 
+// Legg til event listener på knappen
+document.getElementById("tournamenttabbuttonHeader").addEventListener("click", function () {
+    listTournament(gTournament);
+});
+
+
+
 
 function startUpAdmin(){
     GETairtable(baseId,"tblbg3RRnKTDBaoeP","recCdECitGpKE2O1F","responsklient")
