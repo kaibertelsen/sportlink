@@ -25,7 +25,7 @@ document.getElementById("teamSearchField").addEventListener("input", function ()
 
 document.getElementById("MatchSearchField").addEventListener("input", function () {
     let keys = ["team1name","team2name","placeholderteam1","placeholderteam2","refereename"];
-    const filterdata = filterSearchList(this.value, gTeam, keys);
+    const filterdata = filterSearchList(this.value, gMatchs, keys);
     listMatch(filterdata);
 });
 
