@@ -105,16 +105,12 @@ function triggerEditInput(cell, item, field,type, tabelid) {
 }
 
 
-
-
-
-
-
-
 /// feller for alle typer inputs
 function rutingArrayName(tabelid){
     if(tabelid == "tblGhVlhWETNvhrWN"){
         return gTournament;
+    }else if(tabelid=="tblqf56gcQaGJsBcl"){
+        return gClub;
     }
 return [];
 

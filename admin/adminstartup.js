@@ -284,6 +284,7 @@ function listClub(clubs) {
 
     list.parentElement.querySelector(".rowcounter").textContent = clubs.length+" stk.";
 
+    let tabelid = "tblqf56gcQaGJsBcl";
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".clubrow");
 
@@ -294,7 +295,11 @@ function listClub(clubs) {
             rowelement.querySelector(".teamlogo").src = club.logo;
         }
         
-        rowelement.querySelector(".name").textContent = club.name || "-";
+        const ClubName = rowelement.querySelector(".name")
+        ClubName.textContent = club.name || "-";
+        ClubName.addEventListener("click", () => triggerEditInput(ClubName, club, "name", "text",tabelid));
+
+
         rowelement.querySelector(".contry").textContent = club.contry || "Norge";
 
         list.appendChild(rowelement);
