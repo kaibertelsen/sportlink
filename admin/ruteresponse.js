@@ -21,7 +21,9 @@ function ruteresponse(data,id){
         respondPublish(data);
     }else if(id == "responsklient"){
         responsklient(data);
+    }else if(id == "respondsaveToServer"){
+        respondsaveToServer(data);
     }
     
-  
+    
 }

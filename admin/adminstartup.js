@@ -336,7 +336,9 @@ function listOrganizer(organizers) {
 function listTournament(tournaments) {
     const list = document.getElementById("tournamentlistholderlist");
     list.replaceChildren(); // Clear previous content
-
+    
+    //tabelid for lagring lokalt og på server
+    let tabelid = "tblGhVlhWETNvhrWN";
     // Update the row counter
     list.parentElement.querySelector(".rowcounter").textContent = `${tournaments.length} stk.`;
 
@@ -352,7 +354,11 @@ function listTournament(tournaments) {
         }
 
         // Set tournament name and organizer name
-        rowelement.querySelector(".name").textContent = tournament.name || "-";
+        const tournamentName = rowelement.querySelector(".name");
+        tournamentName.textContent = tournament.name || "-";
+        tournamentName.addEventListener("click", () => triggerEditInput(tournamentName, tournament, "name", "text",tabelid));
+        
+
         rowelement.querySelector(".organizername").textContent = tournament.organizername || "-";
 
         // Add click event for the row
