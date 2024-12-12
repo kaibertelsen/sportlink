@@ -88,9 +88,20 @@ function updateTournamentInfo(tournament) {
 const tournamentinfoheader = document.getElementById("tournamentinfoheader");
     //tabelid for lagring lokalt og på server
     let tabelid = "tblGhVlhWETNvhrWN";
-    const tournamentName = tournamentinfoheader.querySelector(".tournamentname")
+    
+    const tournamentName = tournamentinfoheader.querySelector(".tournamentname");
+
+    // Oppdater turneringsnavn
     tournamentName.textContent = tournament.name || "Ukjent turnering";
-    tournamentName.addEventListener("click", () => triggerEditInput(tournamentName, tournament, "name", "text",tabelid));
+    
+    // Fjern tidligere event listeners ved å klone elementet
+    const newTournamentName = tournamentName.cloneNode(true);
+    tournamentName.parentNode.replaceChild(newTournamentName, tournamentName);
+    
+    // Legg til ny "click" event listener
+    newTournamentName.addEventListener("click", () => 
+        triggerEditInput(newTournamentName, tournament, "name", "text", tabelid)
+    );
 
     tournamentinfoheader.querySelector(".tournamenticon").src = tournament.icon || "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
     tournamentinfoheader.querySelector(".sportname").textContent = tournament.sportname[0] || "Ukjent sport";
