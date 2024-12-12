@@ -30,7 +30,6 @@ document.getElementById("MatchSearchField").addEventListener("input", function (
 });
 //
 
-
 // Filterfunksjon for søk i input text field
 function filterSearchList(searchValue, array, keys) {
     const searchQuery = searchValue.toLowerCase();
@@ -42,7 +41,6 @@ function filterSearchList(searchValue, array, keys) {
         )
     );
 }
-
 
 function triggerEditInput(cell, item, field,type, tabelid) {
 
@@ -106,15 +104,21 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     });
 }
 
+
+
+
+
+
+
+
+/// feller for alle typer inputs
 function rutingArrayName(tabelid){
     if(tabelid == "tblGhVlhWETNvhrWN"){
         return gTournament;
     }
-
 return [];
 
 }
-
 
 function updateRowData(itemId, savedata,tabelid) {
 //finne riktig object i riktig array
@@ -142,7 +146,7 @@ function saveToServer(itemId, savedata, tabelid) {
 
     const body = JSON.stringify(updatedFieldValue);
     PATCHairtable(
-        "app1WzN1IxEnVu3m0", // App ID
+        baseId, // App ID
         tabelid, // Tabell ID
         itemId,          // Company ID
         body,           // JSON-data
