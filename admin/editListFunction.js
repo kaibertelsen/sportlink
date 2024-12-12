@@ -1,10 +1,16 @@
 
-// Legg til en event listener på søkefeltet
 document.getElementById("tournamentSearchField").addEventListener("input", function () {
-    let keys = ["name"];
+    let keys = ["name","organizername"];
     const filterdata = filterSearchList(this.value, gTournament, keys);
     listTournament(filterdata);
 });
+
+document.getElementById("organizerSearchField").addEventListener("input", function () {
+    let keys = ["name"];
+    const filterdata = filterSearchList(this.value, gOrganizer, keys);
+    listTournament(filterdata);
+});
+
 
 
 
