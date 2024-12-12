@@ -247,7 +247,7 @@ console.log(data);
 
 function controllAction(item,newValue,field,tabelid,cell){
 
-    if(tabelid === "tblY9xnfQ1y8dXTaA" && field == "club"){
+    if(tabelid === "tbl3ta1WZBr6wKPSp" && field == "club"){
         //dette er lagtabellen som oppdaterer club
       
         //finn clubitem
