@@ -150,6 +150,10 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
             cell.textContent = newText;
             savedata[field] = [newValue];
             updateRowData(item.airtable, savedata,tabelid);
+            //oppdater evt. ander felt/ iconer på samme rad
+
+            //send denne til kontroll for unik action 
+            controllAction(item,newValue,field,tabelid,cell);
         }
 
         // Fjern dropdown og vis cellen med den opprinnelige display-verdi
@@ -235,5 +239,29 @@ function saveToServer(itemId, savedata, tabelid) {
 function respondsaveToServer(data){
 
 console.log(data);
+
+}
+
+
+
+
+function controllAction(item,newValue,field,tabelid,cell){
+
+    if(tabelid === "tblY9xnfQ1y8dXTaA" && field == "club"){
+        //dette er lagtabellen som oppdaterer club
+      
+        //finn clubitem
+        const clubitem = gClub.find(item => item.airtable === newValue);
+
+        //oppdater også clubid og clubname lokalt
+        item.club = [clubitem.airtable];
+        item.clubname = clubitem.name;
+        
+         // Set team logo if available
+         if (clubitem.logo) {
+            cell.parentElement.parentElement.querySelector(".teamlogo").src = clubitem.logo;
+        }
+
+    }
 
 }
