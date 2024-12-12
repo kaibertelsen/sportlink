@@ -243,31 +243,43 @@ console.log(data);
 }
 
 
-
-
-function controllAction(item,newValue,field,tabelid,cell){
-
-    if(tabelid === "tbl3ta1WZBr6wKPSp" && field == "club"){
-        //dette er lagtabellen som oppdaterer club
-      
-        //finn clubitem
+function controllAction(item, newValue, field, tabelid, cell) {
+    if (tabelid === "tbl3ta1WZBr6wKPSp" && field === "club") {
+        // Dette er lagtabellen som oppdaterer club
+        
+        // Finn clubitem
         const clubitem = gClub.find(item => item.airtable === newValue);
 
-        //oppdater også clubid og clubname lokalt
+        // Oppdater også clubid og clubname lokalt
         item.club = [clubitem.airtable];
         item.clubname = clubitem.name;
-        
-         // Set team logo if available
-         if (clubitem.logo) {
+
+        // Sett team logo hvis tilgjengelig
+        if (clubitem.logo) {
             cell.parentElement.parentElement.querySelector(".teamlogo").src = clubitem.logo;
         }
 
-    }else if(tabelid === "tbl3ta1WZBr6wKPSp" && field == "division"){
-        //finn divisjon
+    } else if (tabelid === "tbl3ta1WZBr6wKPSp" && field === "division") {
+        // Finn divisjon
         const divisjon = gDivision.find(item => item.airtable === newValue);
-        //oppdater også lokalt
+
+        // Oppdater også lokalt
         item.divisjon = [divisjon.airtable];
         item.divisionname = divisjon.name;
-    }
 
+    } else if (tabelid === "tblqf56gcQaGJsBcl" && field === "name") {
+        // Oppdater alle lag som er med i denne klubben
+        
+        // Finn alle lag i gTeam som tilhører denne klubben
+        const teamsInClub = gTeam.filter(team => 
+            team.club && team.club.includes(item.airtable)
+        );
+
+        for (let team of teamsInClub) {
+            // Oppdater nøkkelfeltene club, clubname og clublogo
+            team.club = [item.airtable];
+            team.clubname = item.name;
+            team.clublogo = item.logo;
+        }
+    }
 }
