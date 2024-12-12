@@ -59,6 +59,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     const input = document.createElement("input");
     input.type = type;
     input.value = currentValue;
+    input.classList.add("standardInputfield");
     
     if (type === "number") {
         currentValue = 
