@@ -88,7 +88,7 @@ function updateTournamentInfo(tournament) {
 const tournamentinfoheader = document.getElementById("tournamentinfoheader");
     //tabelid for lagring lokalt og på server
     let tabelid = "tblGhVlhWETNvhrWN";
-    
+
     const tournamentName = tournamentinfoheader.querySelector(".tournamentname");
 
     // Oppdater turneringsnavn
@@ -243,7 +243,7 @@ function listDivision(divisions) {
     list.replaceChildren(); // Clear previous content
 
     list.parentElement.querySelector(".rowcounter").textContent = `${divisions.length} stk.`;
-
+    let tabelid = "tblY9xnfQ1y8dXTaA";
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".divisionrow");
 
@@ -266,7 +266,9 @@ function listDivision(divisions) {
 
     for (let division of divisions) {
         const rowelement = nodeelement.cloneNode(true);
-        rowelement.querySelector(".name").textContent = division.name || "Ukjent navn";
+        const divisionName = rowelement.querySelector(".name")
+        divisionName.textContent = division.name || "Ukjent navn";
+        divisionName.addEventListener("click", () => triggerEditInput(divisionName, division, "name", "text", tabelid));
 
         // Add groups
         const groupNode = rowelement.querySelector(".group");
@@ -326,6 +328,7 @@ function listTeams(teams) {
     const list = document.getElementById("teamlistholder");
     list.replaceChildren(); // Clear previous content
 
+    let tabelid = "tbl3ta1WZBr6wKPSp";
     // Update row counter
     list.parentElement.querySelector(".rowcounter").textContent = `${filteredTeams.length} stk.`;
 
@@ -341,8 +344,14 @@ function listTeams(teams) {
         }
 
         // Set team details
-        rowelement.querySelector(".name").textContent = team.name || "Ukjent navn";
-        rowelement.querySelector(".initialer").textContent = team.initials || "-";
+        const teamName = rowelement.querySelector(".name")
+        teamName.textContent = team.name || "Ukjent navn";
+        teamName.addEventListener("click", () => triggerEditInput(teamName, team, "name", "text", tabelid));
+
+        const teamInitial = rowelement.querySelector(".initialer")
+        teamInitial.textContent = team.initials || "-";
+        teamInitial.addEventListener("click", () => triggerEditInput(teamInitial, team, "initials", "text", tabelid));
+
         rowelement.querySelector(".club").textContent = team.clubname || "Ukjent klubb";
         rowelement.querySelector(".division").textContent = team.divisionname || "Ukjent divisjon";
         rowelement.querySelector(".groupname").textContent = team.groupname || "-";

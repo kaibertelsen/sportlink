@@ -118,6 +118,8 @@ function rutingArrayName(tabelid){
         return gClub;
     }else if(tabelid== "tbl4bHhV4Bnbz8I3r"){
         return gOrganizer;
+    }else if (tabelid == "tbl3ta1WZBr6wKPSp"){
+        return gTeam;
     }
 return [];
 
