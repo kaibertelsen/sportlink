@@ -262,6 +262,12 @@ function controllAction(item,newValue,field,tabelid,cell){
             cell.parentElement.parentElement.querySelector(".teamlogo").src = clubitem.logo;
         }
 
+    }else if(tabelid === "tbl3ta1WZBr6wKPSp" && field == "division"){
+        //finn divisjon
+        const divisjon = gDivision.find(item => item.airtable === newValue);
+        //oppdater også lokalt
+        item.divisjon = [divisjon.airtable];
+        item.divisionname = divisjon.name;
     }
 
 }

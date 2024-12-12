@@ -291,15 +291,20 @@ function convertJSONrow(data) {
 }
 
 
-function convertArrayToOptions(array,textKey,valueKey){
-let options = [];
-    for(let item of array){
+function convertArrayToOptions(array, textKey, valueKey) {
+    let options = [];
+    for (let item of array) {
         let value = item[valueKey];
         let text = item[textKey];
-        options.push({value:value,text:text});
+        options.push({ value: value, text: text });
     }
-return options;
+
+    // Sorter options alfabetisk etter text
+    options.sort((a, b) => a.text.localeCompare(b.text, 'no', { sensitivity: 'base' }));
+
+    return options;
 }
+
 
 
 
