@@ -356,7 +356,7 @@ function listTournament(tournaments) {
         // Set tournament name and organizer name
         const tournamentName = rowelement.querySelector(".name");
         tournamentName.textContent = tournament.name || "-";
-        tournamentName.addEventListener("click", () => triggerEditInput(tournamentName, tournament, "name", "text",tabelid));
+       
         
 
         rowelement.querySelector(".organizername").textContent = tournament.organizername || "-";
