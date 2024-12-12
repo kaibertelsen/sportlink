@@ -336,8 +336,6 @@ function listTeams(teams) {
     }
 }
 
-
-
 function listMatch(matchs) {
     // Get selected values from division and group selectors
     const divisionValue = document.getElementById("divisionSelectorMatch").value;
