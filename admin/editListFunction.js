@@ -148,7 +148,7 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
             let newText = selectedOption.text;
             let savedata = {};
             cell.textContent = newText;
-            savedata[field] = newValue;
+            savedata[field] = [newValue];
             updateRowData(item.airtable, savedata,tabelid);
         }
 
