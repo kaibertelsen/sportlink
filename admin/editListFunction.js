@@ -89,7 +89,12 @@ function triggerEditInput(cell, item, field,type, tabelid) {
 
         // Fjern input-feltet og vis cellen med den opprinnelige display-verdi
         input.remove();
-        cell.style.display = originalDisplay || "block";
+        if (originalDisplay === "none" || originalDisplay === "") {
+            cell.style.display = "block";
+        } else {
+            cell.style.display = originalDisplay;
+        }
+        
     });
 
     // Lagre endringer ved `Enter` og avbryt ved `Escape`
