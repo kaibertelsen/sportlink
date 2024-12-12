@@ -329,6 +329,7 @@ function listTeams(teams) {
     list.replaceChildren(); // Clear previous content
 
     let tabelid = "tbl3ta1WZBr6wKPSp";
+    let Cluboptions = convertArrayToOptions(gClub,"name","airtable");
     // Update row counter
     list.parentElement.querySelector(".rowcounter").textContent = `${filteredTeams.length} stk.`;
 
@@ -352,7 +353,11 @@ function listTeams(teams) {
         teamInitial.textContent = team.initials || "-";
         teamInitial.addEventListener("click", () => triggerEditInput(teamInitial, team, "initials", "text", tabelid));
 
-        rowelement.querySelector(".club").textContent = team.clubname || "Ukjent klubb";
+        const teamClubName = rowelement.querySelector(".club");
+        teamClubName.textContent = team.clubname || "Ukjent klubb";
+        teamClubName.addEventListener("click", () => triggerEditInput(teamClubName, team, "initials", Cluboptions, tabelid));
+
+
         rowelement.querySelector(".division").textContent = team.divisionname || "Ukjent divisjon";
         rowelement.querySelector(".groupname").textContent = team.groupname || "-";
 

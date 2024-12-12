@@ -291,7 +291,15 @@ function convertJSONrow(data) {
 }
 
 
-
+function convertArrayToOptions(array,textKey,valueKey){
+let options = [];
+    for(let item of array){
+        let value = item[valueKey];
+        let text = item[textKey];
+        options.push({value:value,text:text});
+    }
+return options;
+}
 
 
 

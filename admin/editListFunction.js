@@ -109,6 +109,74 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     });
 }
 
+function triggerEditDropdown(cell, item, field, options, tabelid) {
+    const currentValue = cell.textContent.trim();
+
+    // Hindre flere dropdowns
+    if (cell.querySelector("select")) return;
+
+    // Lagre cellens opprinnelige display-verdi
+    const originalDisplay = getComputedStyle(cell).display;
+
+    const select = document.createElement("select");
+
+    options.forEach(option => {
+        const optionElement = document.createElement("option");
+        optionElement.value = option.value;
+        optionElement.textContent = option.text;
+
+        if (option.text === currentValue) {
+            optionElement.selected = true;
+        }
+        select.appendChild(optionElement);
+    });
+
+    // Skjul cellen
+    cell.style.display = "none";
+
+    // Legg til dropdown i foreldre-elementet
+    cell.parentElement.appendChild(select);
+    select.focus();
+
+    // Lagre endringer ved `blur`
+    select.addEventListener("blur", () => {
+        const selectedOption = options.find(opt => opt.value.toString() === select.value);
+
+        if (selectedOption && selectedOption.text !== currentValue) {
+            let newValue = selectedOption.value;
+            let newText = selectedOption.text;
+            let savedata = {};
+            cell.textContent = newText;
+            savedata[field] = newValue;
+            updateRowData(item.airtable, savedata,tabelid);
+        }
+
+        // Fjern dropdown og vis cellen med den opprinnelige display-verdi
+        select.remove();
+
+        if (originalDisplay === "none" || originalDisplay === "") {
+            cell.style.display = "block";
+        } else {
+            cell.style.display = originalDisplay;
+        }
+    });
+
+    // Håndter tastetrykk (Enter for lagring, Escape for avbryt)
+    select.addEventListener("keydown", e => {
+        if (e.key === "Enter") {
+            select.blur(); // Trigger `blur`-hendelsen
+        } else if (e.key === "Escape") {
+            // Avbryt redigeringen
+            select.remove();
+
+            if (originalDisplay === "none" || originalDisplay === "") {
+                cell.style.display = "block";
+            } else {
+                cell.style.display = originalDisplay;
+            }
+        }
+    });
+}
 
 /// feller for alle typer inputs
 function rutingArrayName(tabelid){
