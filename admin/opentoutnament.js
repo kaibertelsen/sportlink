@@ -40,6 +40,10 @@ function onTournamentSelected(airtableId, tournamentName) {
 function openTournament(Tournamentid){
     // Klikk på tournament-knapp
     document.getElementById("tournamenttabbutton").click();
+
+    //
+    document.getElementById("tournamenttabbutton").style.display = "inline-block";
+
     //hvis loader
      document.getElementById("loadingholdertournament").style.display = "block";
     GETairtable(baseId,"tblGhVlhWETNvhrWN",Tournamentid,"responsGetTournament");
