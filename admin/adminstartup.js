@@ -312,7 +312,7 @@ function listOrganizer(organizers) {
     list.replaceChildren(); // Fjern tidligere innhold
 
     list.parentElement.querySelector(".rowcounter").textContent = organizers.length+" stk.";
-
+    let tabelid = "tbl4bHhV4Bnbz8I3r";
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".organizerrow");
 
@@ -323,7 +323,10 @@ function listOrganizer(organizers) {
             rowelement.querySelector(".teamlogo").src = organizer.logo;
         }
         
-        rowelement.querySelector(".name").textContent = organizer.name || "-";
+        const OrganizerName = rowelement.querySelector(".name")
+        OrganizerName.textContent = organizer.name || "-";
+        OrganizerName.addEventListener("click", () => triggerEditInput(OrganizerName, organizer, "name", "text",tabelid));
+
         rowelement.querySelector(".contry").textContent = organizer.contry || "Norge";
 
         const switsjElement = rowelement.querySelector(".organizeractive"); 

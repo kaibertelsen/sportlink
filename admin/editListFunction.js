@@ -111,6 +111,8 @@ function rutingArrayName(tabelid){
         return gTournament;
     }else if(tabelid=="tblqf56gcQaGJsBcl"){
         return gClub;
+    }else if(tabelid== "tbl4bHhV4Bnbz8I3r"){
+        return gOrganizer;
     }
 return [];
 
