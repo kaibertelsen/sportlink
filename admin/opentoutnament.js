@@ -330,6 +330,7 @@ function listTeams(teams) {
 
     let tabelid = "tbl3ta1WZBr6wKPSp";
     let Cluboptions = convertArrayToOptions(gClub,"name","airtable");
+    let Divisionoptions = convertArrayToOptions(gDivision,"name","airtable");
     // Update row counter
     list.parentElement.querySelector(".rowcounter").textContent = `${filteredTeams.length} stk.`;
 
@@ -355,10 +356,13 @@ function listTeams(teams) {
 
         const teamClubName = rowelement.querySelector(".club");
         teamClubName.textContent = team.clubname || "Ukjent klubb";
-        teamClubName.addEventListener("click", () => triggerEditInput(teamClubName, team, "initials", Cluboptions, tabelid));
+        teamClubName.addEventListener("click", () => triggerEditDropdown(teamClubName, team, "club", Cluboptions, tabelid));
 
 
-        rowelement.querySelector(".division").textContent = team.divisionname || "Ukjent divisjon";
+        const DivisionName = rowelement.querySelector(".division");
+        DivisionName.textContent = team.divisionname || "Ukjent divisjon";
+        DivisionName.addEventListener("click", () => triggerEditDropdown(DivisionName, team, "division", Divisionoptions, tabelid));
+
         rowelement.querySelector(".groupname").textContent = team.groupname || "-";
 
         // Append the row to the list
