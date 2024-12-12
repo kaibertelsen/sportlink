@@ -17,6 +17,21 @@ document.getElementById("clubSearchField").addEventListener("input", function ()
     listClub(filterdata);
 });
 
+document.getElementById("teamSearchField").addEventListener("input", function () {
+    let keys = ["name","initials"];
+    const filterdata = filterSearchList(this.value, gTeam, keys);
+    listTeams(filterdata);
+});
+
+document.getElementById("MatchSearchField").addEventListener("input", function () {
+    let keys = ["team1name","team2name","placeholderteam1","placeholderteam2","refereename"];
+    const filterdata = filterSearchList(this.value, gTeam, keys);
+    listMatch(filterdata);
+});
+
+
+
+
 
 
 
