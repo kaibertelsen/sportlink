@@ -8,9 +8,14 @@ document.getElementById("tournamentSearchField").addEventListener("input", funct
 document.getElementById("organizerSearchField").addEventListener("input", function () {
     let keys = ["name"];
     const filterdata = filterSearchList(this.value, gOrganizer, keys);
-    listTournament(filterdata);
+    listOrganizer(filterdata);
 });
 
+document.getElementById("clubSearchField").addEventListener("input", function () {
+    let keys = ["name"];
+    const filterdata = filterSearchList(this.value, gClub, keys);
+    listClub(filterdata);
+});
 
 
 
