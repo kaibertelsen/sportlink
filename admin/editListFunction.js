@@ -120,8 +120,10 @@ function rutingArrayName(tabelid){
         return gOrganizer;
     }else if (tabelid == "tbl3ta1WZBr6wKPSp"){
         return gTeam;
+    }else if (tabelid == "tblY9xnfQ1y8dXTaA"){
+        return gDivision;
     }
-return [];
+    return [];
 
 }
 
