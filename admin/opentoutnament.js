@@ -405,7 +405,7 @@ function listMatch(matchs) {
         const rowelement = nodeelement.cloneNode(true);
 
         const Timeelement = rowelement.querySelector(".time")
-        Timeelement.textContent = formatIsoDateName(isoDate) || "Ukjent startdato";
+        Timeelement.textContent = formatIsoDateName(match.time) || "Ukjent startdato";
         Timeelement.dataset.date = formatIsoDateValue(match.time);
         Timeelement.addEventListener("click", () => triggerEditInput(Timeelement, match, "time", "datetime-local", tabelid));
         
