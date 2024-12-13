@@ -101,16 +101,21 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
     // Fjern tidligere event listeners ved å klone elementet
     const newTournamentName = tournamentName.cloneNode(true);
     tournamentName.parentNode.replaceChild(newTournamentName, tournamentName);
-    
-    // Legg til ny "click" event listener
     newTournamentName.addEventListener("click", () => 
         triggerEditInput(newTournamentName, tournament, "name", "text", tabelid)
     );
 
     tournamentinfoheader.querySelector(".tournamenticon").src = tournament.icon || "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
     tournamentinfoheader.querySelector(".sportname").textContent = tournament.sportname[0] || "Ukjent sport";
-    tournamentinfoheader.querySelector(".startdate").textContent = new Date(tournament.startdate).toLocaleDateString() || "Ukjent startdato";
-    tournamentinfoheader.querySelector(".enddate").textContent = new Date(tournament.enddate).toLocaleDateString() || "Ukjent sluttdato";
+    const startDate = tournamentinfoheader.querySelector(".startdate");
+            startDate.textContent = formatIsoDateName(tournament.startdate) || "Ukjent startdato";
+            startDate.dataset.date = formatIsoDateValue(tournament.startdate);
+            startDate.addEventListener("click", () => triggerEditInput(startDate, tournament, "startdate", "datetime-local", tabelid));
+    const endDate = tournamentinfoheader.querySelector(".enddate");
+            endDate.textContent = formatIsoDateName(tournament.enddate) || "Ukjent sluttdato";
+            endDate.dataset.date = formatIsoDateValue(tournament.enddate);
+            endDate.addEventListener("click", () => triggerEditInput(endDate, tournament, "enddate", "datetime-local", tabelid));
+
     tournamentinfoheader.querySelector(".eventname").textContent = tournament.organizername[0] || "Ukjent Arrangement";
     tournamentinfoheader.querySelector(".username").textContent = tournament.username || "";
 
