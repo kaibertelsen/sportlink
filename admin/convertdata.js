@@ -324,7 +324,7 @@ return formattedDate;
 
 function formatIsoDateName(isoDate){
 
-    const matchDate = new Date(match.time);
+    const matchDate = new Date(isoDate);
         const day = String(matchDate.getUTCDate()).padStart(2, "0");
         const month = matchDate.toLocaleString("no-NO", { month: "short", timeZone: "UTC" }).replace('.', '');
         const hours = String(matchDate.getUTCHours()).padStart(2, "0");
