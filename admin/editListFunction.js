@@ -318,5 +318,8 @@ function controllAction(item, newValue, field, tabelid, cell) {
             ResultStatus.classList.remove("played"); // Fjern klassen "played"
         }
 
+    }else if(tabelid === "tblrHBFa60aIdqkUu" && (field === "team1" || field === "team2") ){
+    
+
     }
 }
