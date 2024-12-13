@@ -330,3 +330,19 @@ function formatIsoDateName(isoDate){
         
 return `${day}.${month} ${hours}:${minutes}`;
 }
+
+function formatDateName(Date){
+   
+    // Konverter til Date-objekt
+    const date = new Date(Date);
+    
+    // Hent dag, måned og tid
+    const day = String(date.getDate()).padStart(2, "0"); // Henter dag med to sifre
+    const months = ["jan.", "feb.", "mars", "apr.", "mai", "jun.", "jul.", "aug.", "sep.", "okt.", "nov.", "des."];
+    const month = months[date.getMonth()]; // Finner riktig måned basert på index
+    const hours = String(date.getHours()).padStart(2, "0"); // Henter timer
+    const minutes = String(date.getMinutes()).padStart(2, "0"); // Henter minutter
+    
+    // Bygg ønsket format
+    return `${day}.${month} ${hours}:${minutes}`;
+}
