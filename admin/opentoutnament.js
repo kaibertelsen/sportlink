@@ -440,30 +440,36 @@ function listMatch(matchs) {
             const allInfoMatch = rowelement.querySelector(".allinfomatch");
             if (allInfoMatch) {
                 if (allInfoMatch.style.display === "grid") {
-                    // Hide with animation
-                    allInfoMatch.style.transition = "opacity 0.3s ease, height 0.3s ease";
-                    allInfoMatch.style.opacity = "0";
-                    allInfoMatch.style.height = "0";
+                    // Skjul med animasjon
+                    const currentHeight = allInfoMatch.offsetHeight + "px"; // Få nåværende høyde
+                    allInfoMatch.style.height = currentHeight; // Sett eksplisitt høyde
+                    allInfoMatch.style.transition = "height 0.3s ease-in-out, opacity 0.3s ease-in-out";
+                    requestAnimationFrame(() => {
+                        allInfoMatch.style.height = "0";
+                        allInfoMatch.style.opacity = "0";
+                    });
                     setTimeout(() => {
                         allInfoMatch.style.display = "none";
-                    }, 300); // Match the transition duration
+                    }, 300); // Match overgangsvarighet
                     openButton.classList.remove("open");
                     openButton.classList.add("close");
                 } else {
-                    // Show with animation
-                    allInfoMatch.style.display = "grid"; // Ensure element is visible before animating
+                    // Vis med animasjon
+                    allInfoMatch.style.display = "grid";
+                    const targetHeight = allInfoMatch.scrollHeight + "px"; // Få innholdshøyde
+                    allInfoMatch.style.height = "0"; // Start fra null høyde
                     allInfoMatch.style.opacity = "0";
-                    allInfoMatch.style.height = "0";
-                    allInfoMatch.style.transition = "opacity 0.3s ease, height 0.3s ease";
-                    setTimeout(() => {
+                    allInfoMatch.style.transition = "height 0.3s ease-in-out, opacity 0.3s ease-in-out";
+                    requestAnimationFrame(() => {
+                        allInfoMatch.style.height = targetHeight;
                         allInfoMatch.style.opacity = "1";
-                        allInfoMatch.style.height = "auto"; // Expand to full height
-                    }, 0);
+                    });
                     openButton.classList.remove("close");
                     openButton.classList.add("open");
                 }
             }
         });
+
         
 
         // Append the row to the list
