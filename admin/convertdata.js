@@ -331,10 +331,10 @@ function formatIsoDateName(isoDate){
 return `${day}.${month} ${hours}:${minutes}`;
 }
 
-function formatDateName(Date){
+function formatDateName(input){
    
     // Konverter til Date-objekt
-    const date = new Date(Date);
+    const date = new Date(input);
     
     // Hent dag, måned og tid
     const day = String(date.getDate()).padStart(2, "0"); // Henter dag med to sifre
