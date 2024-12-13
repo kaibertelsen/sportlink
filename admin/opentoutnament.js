@@ -455,7 +455,7 @@ function listMatch(matchs) {
                     openButton.classList.add("close");
                 } else {
                     // Vis med animasjon
-                    allInfoMatch.style.display = "grid";
+                    allInfoMatch.style.display = "block";
                     const targetHeight = allInfoMatch.scrollHeight + "px"; // Få innholdshøyde
                     allInfoMatch.style.height = "0"; // Start fra null høyde
                     allInfoMatch.style.opacity = "0";
