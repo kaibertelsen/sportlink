@@ -435,8 +435,9 @@ function listMatch(matchs) {
         rowelement.querySelector(".type").textContent = match.typematch || "-";
         rowelement.querySelector(".matchnr").textContent = match.nr || "-";
 
+        const openButton = rowelement.querySelector(".infobutton");
         // Add click event listener to toggle `.allinfomatch` styles
-        rowelement.addEventListener("click", () => {
+        openButton.addEventListener("click", () => {
             const allInfoMatch = rowelement.querySelector(".allinfomatch");
             if (allInfoMatch) {
                 // Toggle between `grid` and `none`
