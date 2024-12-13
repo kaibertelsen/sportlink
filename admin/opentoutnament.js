@@ -457,7 +457,7 @@ function listMatch(matchs) {
         const openButton = rowelement.querySelector(".infobutton");
         const allInfoMatch = rowelement.querySelector(".allinfomatch");
         //starter skjult
-        allInfoMatch.style.display === "none";
+        allInfoMatch.style.display = "none";
 
         openButton.addEventListener("click", () => {
             if (allInfoMatch) {
