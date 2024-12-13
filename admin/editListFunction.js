@@ -101,7 +101,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
             cell.textContent = formatDateName(newValue)
             cell.dataset.date = newValue;
             }else{
-            cell.textContent = newValue || "-";
+            cell.textContent = newValue === "" ? "-" : newValue;
             }
             
             savedata[field] = newValue || null;
