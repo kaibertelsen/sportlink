@@ -87,8 +87,8 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     // Lagre endringer ved `blur`
     input.addEventListener("blur", () => {
         let newValue = input.value.trim();
-
-        if (newValue && newValue !== currentValue) {
+       
+        if (newValue !== currentValue) {
             //innholdet er forandret
             let savedata = {};
             if (type === "number") {
@@ -99,10 +99,10 @@ function triggerEditInput(cell, item, field,type, tabelid) {
             cell.textContent = formatDateName(newValue)
             cell.dataset.date = newValue;
             }else{
-            cell.textContent = newValue;
+            cell.textContent = newValue || "-";
             }
             
-            savedata[field] = newValue;
+            savedata[field] = newValue || null;
             updateRowData(item.airtable, savedata,tabelid);
             controllAction(item, newValue, field, tabelid, cell);
         }
