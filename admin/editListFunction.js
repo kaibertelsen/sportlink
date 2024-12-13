@@ -69,10 +69,13 @@ function triggerEditInput(cell, item, field,type, tabelid) {
         input.classList.add("standardinputfield");
     }
 
-    if (type === "number") {
-        input.style.maxWidth = "100px";
-        input.value = parseFloat(currentValue.replace(/[^0-9.-]/g, "")) || 0; //kun tall
-    }
+    // Spesifikk behandling for nummer
+        if (type === "number") {
+            input.style.maxWidth = "100px";
+            input.value = currentValue
+                ? parseFloat(currentValue.replace(/[^0-9.-]/g, "")) || 0 // Kun tall
+                : null; // Null hvis currentValue er tomt
+        }
 
     // Skjul cellen
     cell.style.display = "none";

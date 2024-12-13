@@ -446,6 +446,9 @@ function listMatch(matchs) {
             rowelement.querySelector(".resultstatus").textContent = "Resultat";
         }
 
+
+
+        
         if (match.team2clublogo) {
             rowelement.querySelector(".team2logo").src = match.team2clublogo;
         }
