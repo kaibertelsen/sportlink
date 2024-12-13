@@ -482,8 +482,11 @@ function listMatch(matchs) {
 
         const endplayplace = rowelement.querySelector(".finalenr");
         endplayplace.textContent = match.endplayplace || "-";
-        endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
-
+            if(match.endplay){
+                //denne kan kun trykkes på om det er en sluttspilkamp
+                endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
+            }
+            
         rowelement.querySelector(".endplay").textContent = match.endplay || "-";
         rowelement.querySelector(".type").textContent = match.typematch || "-";
         rowelement.querySelector(".matchnr").textContent = match.nr || "-";
