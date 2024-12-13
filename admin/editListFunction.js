@@ -60,6 +60,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     const input = document.createElement("input");
     input.type = type;
     input.value = currentValue;
+    input.style.position = "relative";
     input.style.zIndex = "10";
     
     if(type == "datetime-local"){
