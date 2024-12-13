@@ -305,7 +305,7 @@ function convertArrayToOptions(array, textKey, valueKey) {
     return options;
 }
 
-function formatIsoDate(isoDate){
+function formatIsoDateValue(isoDate){
 
 // Konverter til Date-objekt
 const matchDate = new Date(isoDate);
@@ -320,4 +320,15 @@ const minutes = String(matchDate.getUTCMinutes()).padStart(2, "0");
 // Sett sammen datoen i ønsket format
 const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
 return formattedDate;
+}
+
+function formatIsoDateName(isoDate){
+
+    const matchDate = new Date(match.time);
+        const day = String(matchDate.getUTCDate()).padStart(2, "0");
+        const month = matchDate.toLocaleString("no-NO", { month: "short", timeZone: "UTC" }).replace('.', '');
+        const hours = String(matchDate.getUTCHours()).padStart(2, "0");
+        const minutes = String(matchDate.getUTCMinutes()).padStart(2, "0");
+        const formattedTime = `${day}.${month} ${hours}:${minutes}`;
+return matchDate;
 }

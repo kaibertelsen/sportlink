@@ -69,7 +69,6 @@ function triggerEditInput(cell, item, field,type, tabelid) {
         input.classList.add("standardinputfield");
     }
 
-    
     if (type === "number") {
         currentValue = 
         input.value = parseFloat(currentValue.replace(/[^0-9.-]/g, "")) || 0; //kun tall
@@ -94,13 +93,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
             }
 
             if(type == "datetime-local"){
-            // Format the time field using UTC
-            const matchDate = new Date(newValue);
-            const day = String(matchDate.getUTCDate()).padStart(2, "0");
-            const month = matchDate.toLocaleString("no-NO", { month: "short", timeZone: "UTC" }).replace('.', '');
-            const hours = String(matchDate.getUTCHours()).padStart(2, "0");
-            const minutes = String(matchDate.getUTCMinutes()).padStart(2, "0");
-            cell.textContent = `${day}.${month} ${hours}:${minutes}`;
+            cell.textContent = formatIsoDateName(isoDate);
             cell.dataset.date = newValue;
             }else{
             cell.textContent = newValue;

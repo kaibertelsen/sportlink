@@ -404,17 +404,9 @@ function listMatch(matchs) {
     for (let match of filteredMatches) {
         const rowelement = nodeelement.cloneNode(true);
 
-        // Format the time field using UTC
-        const matchDate = new Date(match.time);
-        const day = String(matchDate.getUTCDate()).padStart(2, "0");
-        const month = matchDate.toLocaleString("no-NO", { month: "short", timeZone: "UTC" }).replace('.', '');
-        const hours = String(matchDate.getUTCHours()).padStart(2, "0");
-        const minutes = String(matchDate.getUTCMinutes()).padStart(2, "0");
-        const formattedTime = `${day}.${month} ${hours}:${minutes}`;
-
         const Timeelement = rowelement.querySelector(".time")
-        Timeelement.textContent = formattedTime || "Ukjent startdato";
-        Timeelement.dataset.date = formatIsoDate(match.time);
+        Timeelement.textContent = formatIsoDateName(isoDate) || "Ukjent startdato";
+        Timeelement.dataset.date = formatIsoDateValue(match.time);
         Timeelement.addEventListener("click", () => triggerEditInput(Timeelement, match, "time", "datetime-local", tabelid));
         
         
