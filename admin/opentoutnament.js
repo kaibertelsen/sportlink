@@ -426,7 +426,14 @@ function listMatch(matchs) {
         
         rowelement.querySelector(".division").textContent = match.divisionname || "Ukjent divisjon";
         rowelement.querySelector(".groupname").textContent = match.groupname || "-";
-        rowelement.querySelector(".team1name").textContent = match.team1name || match.placeholderteam1 || "-";
+
+        const teamName1 = rowelement.querySelector(".team1name");
+        // Finn alle team som tilhører match.division
+        const teamsInDivision = gTeams.filter(team => team.division === match.division);
+        let TeamOptions = convertArrayToOptions(teamsInDivision,"name","airtable");
+        teamName1.textContent = match.team1name || match.placeholderteam1 || "-";
+        teamName1.addEventListener("click", () => triggerEditDropdown(teamName1, match, "team1", TeamOptions, tabelid));
+
 
         if (match.team1clublogo) {
             rowelement.querySelector(".team1logo").src = match.team1clublogo;
