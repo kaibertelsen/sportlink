@@ -104,6 +104,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
             
             savedata[field] = newValue;
             updateRowData(item.airtable, savedata,tabelid);
+            controllAction(item, newValue, field, tabelid, cell);
         }
 
         // Fjern input-feltet og vis cellen med den opprinnelige display-verdi
