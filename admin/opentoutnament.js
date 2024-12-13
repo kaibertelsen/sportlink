@@ -431,8 +431,15 @@ function listMatch(matchs) {
         if (match.team1clublogo) {
             rowelement.querySelector(".team1logo").src = match.team1clublogo;
         }
-        rowelement.querySelector(".goalteam1").textContent = match.goalteam1 || "-";
-        rowelement.querySelector(".goalteam2").textContent = match.goalteam2 || "-";
+        
+        const goal1 = rowelement.querySelector(".goalteam1");
+        goal1.textContent = match.goalteam1 || "-";
+        goal1.addEventListener("click", () => triggerEditInput(goal1, match, "goalteam1", "number", tabelid));
+
+        const goal2 = rowelement.querySelector(".goalteam2");
+        goal2.textContent = match.goalteam2 || "-";
+        goal2.addEventListener("click", () => triggerEditInput(goal2, match, "goalteam2", "number", tabelid));
+
 
         if (match.team2clublogo) {
             rowelement.querySelector(".team2logo").src = match.team2clublogo;
@@ -450,6 +457,8 @@ function listMatch(matchs) {
         const openButton = rowelement.querySelector(".infobutton");
         openButton.addEventListener("click", () => {
             const allInfoMatch = rowelement.querySelector(".allinfomatch");
+            //starter skjult
+            allInfoMatch.style.display === "none";
             if (allInfoMatch) {
                 if (allInfoMatch.style.display === "block") {
                     // Skjul med fade ut først
