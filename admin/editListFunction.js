@@ -92,7 +92,10 @@ function triggerEditInput(cell, item, field,type, tabelid) {
             //innholdet er forandret
             let savedata = {};
             if (newValue !== "") {
+                if(type === "number"){
                 newValue = parseFloat(newValue.replace(/[^0-9.-]/g, "")) || 0;
+                }
+
             } else {
                 newValue = ""; // Behold tom verdi
             }
@@ -327,7 +330,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
             // Oppdater også teamId og team1name lokalt
             item.team1 = [team.airtable];
             item.team1name = team.name;
-            
+
             }else if (field === "team2"){
             item.team2 = [team.airtable];
             item.team2name = team.name;
