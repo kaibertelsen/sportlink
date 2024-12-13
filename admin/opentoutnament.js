@@ -440,28 +440,29 @@ function listMatch(matchs) {
             const allInfoMatch = rowelement.querySelector(".allinfomatch");
             if (allInfoMatch) {
                 if (allInfoMatch.style.display === "block") {
-                    // Skjul med animasjon
-                    const currentHeight = allInfoMatch.offsetHeight + "px"; // Få nåværende høyde
-                    allInfoMatch.style.height = currentHeight; // Sett eksplisitt høyde
-                    allInfoMatch.style.transition = "height 0.3s ease-in-out";
-                    requestAnimationFrame(() => {
-                        allInfoMatch.style.height = "0";
-                    });
+                    // Skjul med fade ut først
+                    allInfoMatch.style.transition = "opacity 0.3s ease-in-out";
+                    allInfoMatch.style.opacity = "0";
         
-                    // Etter høydeanimasjon, fade ut
+                    // Etter fade, reduser høyden
                     setTimeout(() => {
-                        allInfoMatch.style.transition = "opacity 0.3s ease-in-out";
-                        allInfoMatch.style.opacity = "0";
-                    }, 300); // Match høydeovergangsvarighet
+                        allInfoMatch.style.transition = "height 0.3s ease-in-out";
+                        const currentHeight = allInfoMatch.offsetHeight + "px"; // Få nåværende høyde
+                        allInfoMatch.style.height = currentHeight; // Sett eksplisitt høyde før overgang
+                        requestAnimationFrame(() => {
+                            allInfoMatch.style.height = "0";
+                        });
         
-                    setTimeout(() => {
-                        allInfoMatch.style.display = "none";
-                    }, 600); // Kombinert høyde + fade-varighet
+                        // Etter høydeanimasjon, skjul elementet
+                        setTimeout(() => {
+                            allInfoMatch.style.display = "none";
+                        }, 300); // Match høydeovergangsvarighet
+                    }, 300); // Match fade-varighet
         
                     openButton.classList.remove("open");
                     openButton.classList.add("close");
                 } else {
-                    // Vis med animasjon
+                    // Vis med animasjon: først høyde, så fade inn
                     allInfoMatch.style.display = "block";
                     const targetHeight = allInfoMatch.scrollHeight + "px"; // Få innholdshøyde
                     allInfoMatch.style.height = "0"; // Start fra null høyde
@@ -482,6 +483,7 @@ function listMatch(matchs) {
                 }
             }
         });
+        
         
 
         
