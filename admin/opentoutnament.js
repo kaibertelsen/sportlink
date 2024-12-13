@@ -456,7 +456,7 @@ function listMatch(matchs) {
                         // Etter høydeanimasjon, skjul elementet
                         setTimeout(() => {
                             allInfoMatch.style.display = "none";
-                        }, 300); // Match høydeovergangsvarighet
+                        }, 400); // Match høydeovergangsvarighet
                     }, 300); // Match fade-varighet
         
                     openButton.classList.remove("open");
