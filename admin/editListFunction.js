@@ -60,7 +60,13 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     const input = document.createElement("input");
     input.type = type;
     input.value = currentValue;
-    input.classList.add("standardinputfield");
+    
+    if(type == "date"){
+        input.classList.add("dateholder");
+    }else{
+        input.classList.add("standardinputfield");
+    }
+
     
     if (type === "number") {
         currentValue = 
