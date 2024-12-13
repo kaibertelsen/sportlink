@@ -428,9 +428,11 @@ function listMatch(matchs) {
         rowelement.querySelector(".groupname").textContent = match.groupname || "-";
 
         const teamName1 = rowelement.querySelector(".team1name");
-        // Finn alle team som tilhører match.division
-        const teamsInDivision = gTeams.filter(team => team.division === match.division);
-        let TeamOptions = convertArrayToOptions(teamsInDivision,"name","airtable");
+        // Finn alle team som tilhører match.division og eventuelt match.group
+        const teamsInDivisionAndGroup = gTeams.filter(team => {
+            return team.division === match.division && (!match.group || team.group === match.group);
+        });
+        let TeamOptions = convertArrayToOptions(teamsInDivisionAndGroup,"name","airtable");
         teamName1.textContent = match.team1name || match.placeholderteam1 || "-";
         teamName1.addEventListener("click", () => triggerEditDropdown(teamName1, match, "team1", TeamOptions, tabelid));
 
