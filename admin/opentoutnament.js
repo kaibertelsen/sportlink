@@ -443,14 +443,21 @@ function listMatch(matchs) {
                     // Skjul med animasjon
                     const currentHeight = allInfoMatch.offsetHeight + "px"; // Få nåværende høyde
                     allInfoMatch.style.height = currentHeight; // Sett eksplisitt høyde
-                    allInfoMatch.style.transition = "height 0.3s ease-in-out, opacity 0.3s ease-in-out";
+                    allInfoMatch.style.transition = "height 0.3s ease-in-out";
                     requestAnimationFrame(() => {
                         allInfoMatch.style.height = "0";
-                        allInfoMatch.style.opacity = "0";
                     });
+        
+                    // Etter høydeanimasjon, fade ut
+                    setTimeout(() => {
+                        allInfoMatch.style.transition = "opacity 0.3s ease-in-out";
+                        allInfoMatch.style.opacity = "0";
+                    }, 300); // Match høydeovergangsvarighet
+        
                     setTimeout(() => {
                         allInfoMatch.style.display = "none";
-                    }, 300); // Match overgangsvarighet
+                    }, 600); // Kombinert høyde + fade-varighet
+        
                     openButton.classList.remove("open");
                     openButton.classList.add("close");
                 } else {
@@ -459,16 +466,23 @@ function listMatch(matchs) {
                     const targetHeight = allInfoMatch.scrollHeight + "px"; // Få innholdshøyde
                     allInfoMatch.style.height = "0"; // Start fra null høyde
                     allInfoMatch.style.opacity = "0";
-                    allInfoMatch.style.transition = "height 0.3s ease-in-out, opacity 0.3s ease-in-out";
+                    allInfoMatch.style.transition = "height 0.3s ease-in-out";
                     requestAnimationFrame(() => {
                         allInfoMatch.style.height = targetHeight;
-                        allInfoMatch.style.opacity = "1";
                     });
+        
+                    // Etter høydeanimasjon, fade inn
+                    setTimeout(() => {
+                        allInfoMatch.style.transition = "opacity 0.3s ease-in-out";
+                        allInfoMatch.style.opacity = "1";
+                    }, 300); // Match høydeovergangsvarighet
+        
                     openButton.classList.remove("close");
                     openButton.classList.add("open");
                 }
             }
         });
+        
 
         
 
