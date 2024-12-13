@@ -436,14 +436,35 @@ function listMatch(matchs) {
         rowelement.querySelector(".matchnr").textContent = match.nr || "-";
 
         const openButton = rowelement.querySelector(".infobutton");
-        // Add click event listener to toggle `.allinfomatch` styles
         openButton.addEventListener("click", () => {
             const allInfoMatch = rowelement.querySelector(".allinfomatch");
             if (allInfoMatch) {
-                // Toggle between `grid` and `none`
-                allInfoMatch.style.display = allInfoMatch.style.display === "grid" ? "none" : "grid";
+                if (allInfoMatch.style.display === "grid") {
+                    // Hide with animation
+                    allInfoMatch.style.transition = "opacity 0.3s ease, height 0.3s ease";
+                    allInfoMatch.style.opacity = "0";
+                    allInfoMatch.style.height = "0";
+                    setTimeout(() => {
+                        allInfoMatch.style.display = "none";
+                    }, 300); // Match the transition duration
+                    openButton.classList.remove("open");
+                    openButton.classList.add("close");
+                } else {
+                    // Show with animation
+                    allInfoMatch.style.display = "grid"; // Ensure element is visible before animating
+                    allInfoMatch.style.opacity = "0";
+                    allInfoMatch.style.height = "0";
+                    allInfoMatch.style.transition = "opacity 0.3s ease, height 0.3s ease";
+                    setTimeout(() => {
+                        allInfoMatch.style.opacity = "1";
+                        allInfoMatch.style.height = "auto"; // Expand to full height
+                    }, 0);
+                    openButton.classList.remove("close");
+                    openButton.classList.add("open");
+                }
             }
         });
+        
 
         // Append the row to the list
         list.appendChild(rowelement);
