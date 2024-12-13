@@ -327,11 +327,11 @@ function controllAction(item, newValue, field, tabelid, cell) {
             // Oppdater også teamId og team1name lokalt
             item.team1 = [team.airtable];
             item.team1name = team.name;
-            logoclassElement = "team1logo";
+            logoclassElement = ".team1logo";
             }else if (field === "team2"){
             item.team2 = [team.airtable];
             item.team2name = team.name;
-            logoclassElement = "team2logo";
+            logoclassElement = ".team2logo";
             }
 
             // Sett team logo hvis tilgjengelig
