@@ -417,7 +417,7 @@ function listMatch(matchs) {
         
         const date = new Date(match.time);
         Timeelement.dataset.date = date.toISOString().slice(0, 16);
-        Timeelement.addEventListener("click", () => triggerEditInput(Timeelement, match, "time", "date", tabelid));
+        Timeelement.addEventListener("click", () => triggerEditInput(Timeelement, match, "time", "datetime-local", tabelid));
         
         
         rowelement.querySelector(".division").textContent = match.divisionname || "Ukjent divisjon";

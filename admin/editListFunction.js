@@ -46,7 +46,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
 
     //henter tekstverdien
     let currentValue = cell.textContent.trim();
-    if(type == "date"){
+    if(type == "datetime-local"){
         currentValue = cell.dataset.date || cell.textContent.trim();
     }
 
@@ -62,7 +62,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     input.value = currentValue;
     input.style.zIndex = "10";
     
-    if(type == "date"){
+    if(type == "datetime-local"){
         input.classList.add("dateholder");
     }else{
         input.classList.add("standardinputfield");
@@ -92,7 +92,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
                 newValue = parseFloat(newValue.replace(/[^0-9.-]/g, "")) || 0;
             }
 
-            if(type == "date"){
+            if(type == "datetime-local"){
             // Format the time field using UTC
             const matchDate = new Date(newValue);
             const day = String(matchDate.getUTCDate()).padStart(2, "0");
