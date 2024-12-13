@@ -442,10 +442,10 @@ function listMatch(matchs) {
 
         const ResultStatus = rowelement.querySelector(".resultstatus");
         if(match.goalteam1 && match.goalteam2){
-            ResultStatus.textContent = "Ikke spilt";
-        }else{
-            ResultStatus.classList.add("played");
             ResultStatus.textContent = "Resultat";
+            ResultStatus.classList.add("played");
+        }else{
+            ResultStatus.textContent = "Ikke spilt";
         }
 
 
