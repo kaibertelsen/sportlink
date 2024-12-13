@@ -307,12 +307,12 @@ function controllAction(item, newValue, field, tabelid, cell) {
         const rowelement = cell.parentElement.parentElement;
         const ResultStatus = rowelement.querySelector(".resultstatus");
 
-        if(match.goalteam1 && match.goalteam2){
-            ResultStatus.textContent = "Ikke spilt";
-            ResultStatus.classList.remove("");
-        }else{
-            ResultStatus.classList.add("played");
-            ResultStatus.textContent = "Resultat"
+        if (newValue || newValue === 0) {
+            ResultStatus.classList.add("played"); // Legg til klassen "played"
+            ResultStatus.textContent = "Resultat"; // Sett teksten til "Resultat"
+        } else {
+            ResultStatus.textContent = "Ikke spilt"; // Sett teksten til "Ikke spilt"
+            ResultStatus.classList.remove("played"); // Fjern klassen "played"
         }
 
     }
