@@ -439,7 +439,7 @@ function listMatch(matchs) {
         openButton.addEventListener("click", () => {
             const allInfoMatch = rowelement.querySelector(".allinfomatch");
             if (allInfoMatch) {
-                if (allInfoMatch.style.display === "grid") {
+                if (allInfoMatch.style.display === "block") {
                     // Skjul med animasjon
                     const currentHeight = allInfoMatch.offsetHeight + "px"; // Få nåværende høyde
                     allInfoMatch.style.height = currentHeight; // Sett eksplisitt høyde
