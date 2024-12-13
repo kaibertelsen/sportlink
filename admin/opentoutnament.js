@@ -468,10 +468,22 @@ function listMatch(matchs) {
         teamName2.textContent = match.team2name || match.placeholderteam2 || "-";
         teamName2.addEventListener("click", () => triggerEditDropdown(teamName2, match, "team2", TeamOptions, tabelid));
 
-        rowelement.querySelector(".field").textContent = match.fieldname || "-";
-        rowelement.querySelector(".location").textContent = match.location || "-";
-        rowelement.querySelector(".refereename").textContent = match.refereename || "-";
-        rowelement.querySelector(".finalenr").textContent = match.endplayplace || "-";
+        const fieldName = rowelement.querySelector(".field");
+        fieldName.textContent = match.fieldname || "-";
+        fieldName.addEventListener("click", () => triggerEditInput(fieldName, match, "fieldname", "text", tabelid));
+
+        const loaction = rowelement.querySelector(".location");
+        loaction.textContent = match.location || "-";
+        loaction.addEventListener("click", () => triggerEditInput(loaction, match, "location", "text", tabelid));
+
+        const refereeName = rowelement.querySelector(".refereename");
+        refereeName.textContent = match.refereename || "-";
+        refereeName.addEventListener("click", () => triggerEditInput(refereeName, match, "refereename", "text", tabelid));
+
+        const endplayplace = rowelement.querySelector(".finalenr");
+        endplayplace.textContent = match.endplayplace || "-";
+        endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
+
         rowelement.querySelector(".endplay").textContent = match.endplay || "-";
         rowelement.querySelector(".type").textContent = match.typematch || "-";
         rowelement.querySelector(".matchnr").textContent = match.nr || "-";
