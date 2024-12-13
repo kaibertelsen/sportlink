@@ -211,6 +211,8 @@ function rutingArrayName(tabelid){
         return gTeam;
     }else if (tabelid == "tblY9xnfQ1y8dXTaA"){
         return gDivision;
+    }else if (tabelid == "tblrHBFa60aIdqkUu"){
+        return gMatchs;
     }
     return [];
 
