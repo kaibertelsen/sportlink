@@ -46,6 +46,9 @@ function triggerEditInput(cell, item, field,type, tabelid) {
 
     //henter tekstverdien
     let currentValue = cell.textContent.trim();
+    if(type == "date"){
+        currentValue = cell.dataset.date || cell.textContent.trim();
+    }
 
     // Hindre flere input-felt
     if (cell.querySelector("input")) return;
@@ -82,7 +85,19 @@ function triggerEditInput(cell, item, field,type, tabelid) {
                 newValue = parseFloat(newValue.replace(/[^0-9.-]/g, "")) || 0;
             }
 
+            if(type == "date"){
+            // Format the time field using UTC
+            const matchDate = new Date(newValue);
+            const day = String(matchDate.getUTCDate()).padStart(2, "0");
+            const month = matchDate.toLocaleString("no-NO", { month: "short", timeZone: "UTC" }).replace('.', '');
+            const hours = String(matchDate.getUTCHours()).padStart(2, "0");
+            const minutes = String(matchDate.getUTCMinutes()).padStart(2, "0");
+            cell.textContent = `${day}.${month} ${hours}:${minutes}`;
+            cell.dataset.date = newValue;
+            }else{
             cell.textContent = newValue;
+            }
+            
             savedata[field] = newValue;
             updateRowData(item.airtable, savedata,tabelid);
         }

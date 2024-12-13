@@ -393,6 +393,8 @@ function listMatch(matchs) {
     const list = document.getElementById("matchlistholder");
     list.replaceChildren(); // Clear previous content
 
+    let tabelid = "tblrHBFa60aIdqkUu";
+
     // Update row counter
     list.parentElement.querySelector(".rowcounter").textContent = `${filteredMatches.length} stk.`;
 
@@ -410,8 +412,12 @@ function listMatch(matchs) {
         const minutes = String(matchDate.getUTCMinutes()).padStart(2, "0");
         const formattedTime = `${day}.${month} ${hours}:${minutes}`;
 
-        rowelement.querySelector(".time").textContent = formattedTime || "Ukjent startdato";
-
+        const Timeelement = rowelement.querySelector(".time")
+        Timeelement.textContent = formattedTime || "Ukjent startdato";
+        Timeelement.dataset = match.time;
+        Timeelement.addEventListener("click", () => triggerEditInput(Timeelement, match, "time", "date", tabelid));
+        
+        
         rowelement.querySelector(".division").textContent = match.divisionname || "Ukjent divisjon";
         rowelement.querySelector(".groupname").textContent = match.groupname || "-";
         rowelement.querySelector(".team1name").textContent = match.team1name || match.placeholderteam1 || "-";
