@@ -427,13 +427,14 @@ function listMatch(matchs) {
         rowelement.querySelector(".division").textContent = match.divisionname || "Ukjent divisjon";
         rowelement.querySelector(".groupname").textContent = match.groupname || "-";
 
-        const teamName1 = rowelement.querySelector(".team1name");
+        
         // Finn alle team som tilhører match.division og eventuelt match.group
         const teamsInDivisionAndGroup = gTeam.filter(team => {
             return team.division === match.division && (!match.group || team.group === match.group);
         });
-
         let TeamOptions = convertArrayToOptions(teamsInDivisionAndGroup,"name","airtable");
+        
+        const teamName1 = rowelement.querySelector(".team1name");
         teamName1.textContent = match.team1name || match.placeholderteam1 || "-";
         teamName1.addEventListener("click", () => triggerEditDropdown(teamName1, match, "team1", TeamOptions, tabelid));
 
@@ -463,7 +464,10 @@ function listMatch(matchs) {
             rowelement.querySelector(".team2logo").src = match.team2clublogo;
         }
 
-        rowelement.querySelector(".team2name").textContent = match.team2name || match.placeholderteam2 || "-";
+        const teamName2 = rowelement.querySelector(".team2name")
+        teamName2.textContent = match.team2name || match.placeholderteam2 || "-";
+        teamName2.addEventListener("click", () => triggerEditDropdown(teamName2, match, "team2", TeamOptions, tabelid));
+
         rowelement.querySelector(".field").textContent = match.fieldname || "-";
         rowelement.querySelector(".location").textContent = match.location || "-";
         rowelement.querySelector(".refereename").textContent = match.refereename || "-";
