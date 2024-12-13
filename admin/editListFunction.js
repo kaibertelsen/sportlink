@@ -91,8 +91,10 @@ function triggerEditInput(cell, item, field,type, tabelid) {
         if (newValue !== currentValue) {
             //innholdet er forandret
             let savedata = {};
-            if (type === "number") {
+            if (newValue !== "") {
                 newValue = parseFloat(newValue.replace(/[^0-9.-]/g, "")) || 0;
+            } else {
+                newValue = ""; // Behold tom verdi
             }
 
             if(type == "datetime-local"){
