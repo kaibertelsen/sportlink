@@ -455,10 +455,11 @@ function listMatch(matchs) {
         rowelement.querySelector(".matchnr").textContent = match.nr || "-";
 
         const openButton = rowelement.querySelector(".infobutton");
+        const allInfoMatch = rowelement.querySelector(".allinfomatch");
+        //starter skjult
+        allInfoMatch.style.display === "none";
+
         openButton.addEventListener("click", () => {
-            const allInfoMatch = rowelement.querySelector(".allinfomatch");
-            //starter skjult
-            allInfoMatch.style.display === "none";
             if (allInfoMatch) {
                 if (allInfoMatch.style.display === "block") {
                     // Skjul med fade ut først

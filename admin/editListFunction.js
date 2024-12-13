@@ -70,7 +70,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     }
 
     if (type === "number") {
-        currentValue = 
+        input.style.maxWidth = "100px";
         input.value = parseFloat(currentValue.replace(/[^0-9.-]/g, "")) || 0; //kun tall
     }
 
