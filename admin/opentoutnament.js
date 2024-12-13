@@ -116,7 +116,11 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
             endDate.dataset.date = formatIsoDateValue(tournament.enddate);
             endDate.addEventListener("click", () => triggerEditInput(endDate, tournament, "enddate", "datetime-local", tabelid));
 
-    tournamentinfoheader.querySelector(".eventname").textContent = tournament.organizername[0] || "Ukjent Arrangement";
+    const eventName = tournamentinfoheader.querySelector(".eventname");
+            eventName.textContent = tournament.organizername[0] || "Ukjent Arrangement";
+            let Organizeroptions = convertArrayToOptions(gOrganizer,"name","airtable");
+            eventName.addEventListener("click", () => triggerEditDropdown(eventName, tournament, "organizer", Organizeroptions, tabelid));
+
     tournamentinfoheader.querySelector(".username").textContent = tournament.username || "";
 
     const switsj = tournamentinfoheader.querySelector(".merkibj");
