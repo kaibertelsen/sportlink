@@ -302,5 +302,18 @@ function controllAction(item, newValue, field, tabelid, cell) {
             team.clubname = item.name;
             team.clublogo = item.logo;
         }
+    } else if(tabelid === "tblrHBFa60aIdqkUu" && field === "goalteam2" || field === "goalteam2" ){
+        //sette 
+        const rowelement = cell.parentElement.parentElement;
+        const ResultStatus = rowelement.querySelector(".resultstatus");
+
+        if(match.goalteam1 && match.goalteam2){
+            ResultStatus.textContent = "Ikke spilt";
+            ResultStatus.classList.remove("");
+        }else{
+            ResultStatus.classList.add("played");
+            ResultStatus.textContent = "Resultat"
+        }
+
     }
 }

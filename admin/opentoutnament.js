@@ -440,15 +440,15 @@ function listMatch(matchs) {
         goal2.textContent = match.goalteam2 || "-";
         goal2.addEventListener("click", () => triggerEditInput(goal2, match, "goalteam2", "number", tabelid));
 
-        if(match.goalteam1 && match.goalteam1){
-            rowelement.querySelector(".resultstatus").textContent = "Ikke spilt";
+        const ResultStatus = rowelement.querySelector(".resultstatus");
+        if(match.goalteam1 && match.goalteam2){
+            ResultStatus.textContent = "Ikke spilt";
         }else{
-            rowelement.querySelector(".resultstatus").textContent = "Resultat";
+            ResultStatus.classList.add("played");
+            ResultStatus.textContent = "Resultat";
         }
 
 
-
-        
         if (match.team2clublogo) {
             rowelement.querySelector(".team2logo").src = match.team2clublogo;
         }
