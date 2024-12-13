@@ -280,6 +280,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
         // Oppdater også clubid og clubname lokalt
         item.club = [clubitem.airtable];
         item.clubname = clubitem.name;
+        item.clublogo = clubitem.logo;
 
         // Sett team logo hvis tilgjengelig
         if (clubitem.logo) {
