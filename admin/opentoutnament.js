@@ -414,9 +414,7 @@ function listMatch(matchs) {
 
         const Timeelement = rowelement.querySelector(".time")
         Timeelement.textContent = formattedTime || "Ukjent startdato";
-        
-        const date = new Date(match.time);
-        Timeelement.dataset.date = date.toISOString().slice(0, 16);
+        Timeelement.dataset.date = formatIsoDate(match.time);
         Timeelement.addEventListener("click", () => triggerEditInput(Timeelement, match, "time", "datetime-local", tabelid));
         
         
