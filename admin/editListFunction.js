@@ -93,7 +93,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
             }
 
             if(type == "datetime-local"){
-            cell.textContent = formatIsoDateName(isoDate);
+            cell.textContent = formatIsoDateName(newValue);
             cell.dataset.date = newValue;
             }else{
             cell.textContent = newValue;
