@@ -106,7 +106,12 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
     );
 
     tournamentinfoheader.querySelector(".tournamenticon").src = tournament.icon || "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
-    tournamentinfoheader.querySelector(".sportname").textContent = tournament.sportname[0] || "Ukjent sport";
+    const SportName = tournamentinfoheader.querySelector(".sportname");
+            SportName.textContent = tournament.sportname[0] || "Ukjent sport";
+            let SportOptions = convertArrayToOptions(gSport,"name","airtable");
+            SportName.addEventListener("click", () => triggerEditDropdown(SportName, tournament, "sport", SportOptions, tabelid));
+
+
     const startDate = tournamentinfoheader.querySelector(".startdate");
             startDate.textContent = formatIsoDateName(tournament.startdate) || "Ukjent startdato";
             startDate.dataset.date = formatIsoDateValue(tournament.startdate);
