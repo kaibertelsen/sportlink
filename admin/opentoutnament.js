@@ -501,7 +501,7 @@ function listMatch(matchs) {
         const volleyballDivbox = allInfoMatch.querySelector(".volleyballresults");
         volleyballDivbox.style.display = "none";
 
-        if (activetournament.sport === "recSCesi2BGmCyivZ") {
+        if (activetournament.sport[0] === "recSCesi2BGmCyivZ") {
             // Det er volleyball
             volleyballDivbox.style.display = "flex";
 
