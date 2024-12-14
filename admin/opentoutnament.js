@@ -550,12 +550,7 @@ function listMatch(matchs) {
                 match.goalteam2 = teamBWins
 
                 
-            } else {
-                // Bruk resultat fra andre nøkler
-                const goalTeam1 = match.goalteam1 || "-";
-                const goalTeam2 = match.goalteam2 || "-";
-                result.textContent = `Resultat: ${goalTeam1}-${goalTeam2}`;
-            }
+            } 
         }
         //
         
