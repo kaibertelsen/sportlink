@@ -486,7 +486,7 @@ function listMatch(matchs) {
                 //denne kan kun trykkes på om det er en sluttspilkamp
                 endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
             }
-            
+
         rowelement.querySelector(".endplay").textContent = match.endplay || "-";
         rowelement.querySelector(".type").textContent = match.typematch || "-";
         rowelement.querySelector(".matchnr").textContent = match.nr || "-";
@@ -495,6 +495,71 @@ function listMatch(matchs) {
         const allInfoMatch = rowelement.querySelector(".allinfomatch");
         //starter skjult
         allInfoMatch.style.display = "none";
+
+
+    // Sjekk hvilken sport det er
+        const volleyballDivbox = allInfoMatch.querySelector(".volleyballresults");
+        volleyballDivbox.style.display = "none";
+
+        if (activetournament.sport === "recSCesi2BGmCyivZ") {
+            // Det er volleyball
+            volleyballDivbox.style.display = "flex";
+
+            const settAa = volleyballDivbox.querySelector(".settaa");
+            settAa.textContent = match.settaa || "-";
+            const settAb = volleyballDivbox.querySelector(".settab");
+            settAb.textContent = match.settab || "-";
+
+            const settBa = volleyballDivbox.querySelector(".settba");
+            settBa.textContent = match.settba || "-";
+            const settBb = volleyballDivbox.querySelector(".settbb");
+            settBb.textContent = match.settbb || "-";
+
+            const settCa = volleyballDivbox.querySelector(".settca");
+            settCa.textContent = match.settca || "-";
+            const settCb = volleyballDivbox.querySelector(".settcb");
+            settCb.textContent = match.settcb || "-";
+
+            // Sjekk om det finnes noen settverdier
+            const hasSetValues = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
+                .some(value => value && value.trim() !== "");
+
+            if (hasSetValues) {
+                // Regne ut stillingen basert på settverdiene
+                const sets = [
+                    { teamA: match.settaa, teamB: match.settab },
+                    { teamA: match.settba, teamB: match.settbb },
+                    { teamA: match.settca, teamB: match.settcb },
+                ];
+
+                let teamAWins = 0;
+                let teamBWins = 0;
+
+                sets.forEach(set => {
+                    const teamA = parseInt(set.teamA) || 0;
+                    const teamB = parseInt(set.teamB) || 0;
+
+                    if (teamA > teamB) {
+                        teamAWins++;
+                    } else if (teamB > teamA) {
+                        teamBWins++;
+                    }
+                });
+
+                match.goalteam1 = teamAWins;
+                match.goalteam2 = teamBWins
+
+                
+            } else {
+                // Bruk resultat fra andre nøkler
+                const goalTeam1 = match.goalteam1 || "-";
+                const goalTeam2 = match.goalteam2 || "-";
+                result.textContent = `Resultat: ${goalTeam1}-${goalTeam2}`;
+            }
+        }
+        //
+        
+
 
         openButton.addEventListener("click", () => {
             if (allInfoMatch) {
