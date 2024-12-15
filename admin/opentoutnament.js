@@ -499,7 +499,9 @@ function listMatch(matchs) {
 
     // Sjekk hvilken sport det er
         const volleyballDivbox = allInfoMatch.querySelector(".volleyballresults");
+        const icehockeyDivbox = allInfoMatch.querySelector(".icehockey");
         volleyballDivbox.style.display = "none";
+        icehockeyDivbox.style.display = "none";
 
         if (activetournament.sport[0] === "recSCesi2BGmCyivZ") {
             // Det er volleyball
@@ -559,6 +561,22 @@ function listMatch(matchs) {
                 match.goalteam1 = teamAWins;
                 match.goalteam2 = teamBWins
             } 
+        }else if(activetournament.sport[0] === "reca0jxxTQAtlUTNu"){
+        // det er icehockey
+        icehockeyDivbox.style.display = "flex";
+        const switsjOvertime = icehockeyDivbox.querySelector(".overtime");
+            if(match.overtime){
+                switsjOvertime.checked = true;
+            }else{
+                switsjOvertime.checked = false; 
+            }
+
+        const switsjshootout = icehockeyDivbox.querySelector(".shootout");
+            if(match.shootout){
+                switsjshootout.checked = true;
+            }else{
+                switsjshootout.checked = false; 
+            }
         }
         //
         
