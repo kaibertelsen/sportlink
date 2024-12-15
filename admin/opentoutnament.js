@@ -507,18 +507,28 @@ function listMatch(matchs) {
 
             const settAa = volleyballDivbox.querySelector(".settaa");
             settAa.textContent = match.settaa || "-";
+            settAa.addEventListener("click", () => triggerEditInput(settAa, match, "settaa", "number", tabelid));
+
             const settAb = volleyballDivbox.querySelector(".settab");
             settAb.textContent = match.settab || "-";
+            settAb.addEventListener("click", () => triggerEditInput(settAb, match, "settab", "number", tabelid));
 
             const settBa = volleyballDivbox.querySelector(".settba");
             settBa.textContent = match.settba || "-";
+            settBa.addEventListener("click", () => triggerEditInput(settBa, match, "settba", "number", tabelid));
+
             const settBb = volleyballDivbox.querySelector(".settbb");
             settBb.textContent = match.settbb || "-";
+            settBb.addEventListener("click", () => triggerEditInput(settBb, match, "settbb", "number", tabelid));
+
 
             const settCa = volleyballDivbox.querySelector(".settca");
             settCa.textContent = match.settca || "-";
+            settCa.addEventListener("click", () => triggerEditInput(settCa, match, "settca", "number", tabelid));
+
             const settCb = volleyballDivbox.querySelector(".settcb");
             settCb.textContent = match.settcb || "-";
+            settCb.addEventListener("click", () => triggerEditInput(settCb, match, "settcb", "number", tabelid));
 
             // Sjekk om det finnes noen settverdier
             const hasSetValues = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
@@ -548,8 +558,6 @@ function listMatch(matchs) {
 
                 match.goalteam1 = teamAWins;
                 match.goalteam2 = teamBWins
-
-                
             } 
         }
         //
