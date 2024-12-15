@@ -558,8 +558,8 @@ function listMatch(matchs) {
                     }
                 });
 
-                match.goalteam1 = teamAWins;
-                match.goalteam2 = teamBWins
+                goal1.textContent = teamAWins;
+                goal2.textContent = teamBWins;
             } 
         }else if(activetournament.sport[0] === "reca0jxxTQAtlUTNu"){
         // det er icehockey
@@ -579,8 +579,6 @@ function listMatch(matchs) {
             }
         }
         //
-        
-
 
         openButton.addEventListener("click", () => {
             if (allInfoMatch) {
@@ -629,10 +627,6 @@ function listMatch(matchs) {
             }
         });
         
-        
-
-        
-
         // Append the row to the list
         list.appendChild(rowelement);
     }
