@@ -18,8 +18,12 @@ function emtyTurnamentLists(){
 
 }
 
-function updateThisTournament(){
-    GETairtable(baseId,"tblGhVlhWETNvhrWN",activetournament.airtable,"responseThisTournament")
+function updateThisTournament(list){
+    GETairtable(baseId,"tblGhVlhWETNvhrWN",activetournament.airtable,"responseThisTournament");
+    //kopier loading holder i toppen av listen
+    const nodeelement = document.getElementById("elementlibrary").querySelector(".loadingholder");
+    const loadingelement = nodeelement.cloneNode(true);
+    list.prepend(loadingelement);
 }
 
 function responseThisTournament(data){

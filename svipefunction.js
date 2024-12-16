@@ -148,7 +148,7 @@ scrollElement.addEventListener("touchmove", (e) => {
   if (isAtTop && pullDistance > 50 && !isRefreshing) {
     isRefreshing = true;
     console.log("Oppdatering startet!");
-    updateThisTournament()
+    updateThisTournament(scrollElement);
     isRefreshing = false;
   }
 });
