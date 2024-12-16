@@ -350,6 +350,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 if(newValue){
                     item.team1 = "";
                     item.team1name = "";
+                    cell.parentElement.parentElement.querySelector(".team1name").textContent = "ingenlag";
                 }else{
                 item.team1 = [team.airtable];
                 item.team1name = team.name;
@@ -358,6 +359,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 if(newValue){
                     item.team2 = "";
                     item.team2name = "";
+                    cell.parentElement.parentElement.querySelector(".team2name").textContent = "ingenlag";
                 }else{
                 item.team2 = [team.airtable];
                 item.team2name = team.name;
