@@ -123,76 +123,58 @@ swipeWrapper.addEventListener('touchend', handleTouchEnd);
 // Initial update
 updateSlidePosition();
 
-
 function setupPullToRefresh(scrollElement, updateFunction) {
-    let isAtTop = false; // Sjekk om vi er på toppen
-    let touchStartY = 0; // Startpunkt for touch
-    let pullTimeout = null; // Timeout for å spore holdetiden
-    let isPulling = false; // Indikerer om brukeren drar
-    let pullDistance = 0; // Lagre hvor langt brukeren drar
-  
-    scrollElement.addEventListener("scroll", () => {
-      // Sjekk om vi er på toppen
-      isAtTop = scrollElement.scrollTop === 0;
-    });
-  
-    scrollElement.addEventListener("touchstart", (e) => {
-      // Registrer startpunktet for touch
-      touchStartY = e.touches[0].clientY;
-      pullDistance = 0; // Tilbakestill trekkavstand
-      isPulling = false; // Tilbakestill pulling status
-      clearTimeout(pullTimeout); // Avbryt eventuell eksisterende timeout
-    });
-  
-    scrollElement.addEventListener("touchmove", (e) => {
-      // Beregn trekkets lengde
-      const touchMoveY = e.touches[0].clientY;
-      pullDistance = touchMoveY - touchStartY;
-  
-      // Start en timeout hvis brukeren er på toppen og drar mer enn 50px
-      if (isAtTop && pullDistance > 50 && !isPulling) {
-        isPulling = true;
-        pullTimeout = setTimeout(() => {
-          isPulling = false; // Timeout fullført, venter på touchend
-        }, 2000); // 2 sekunder
-      }
-    });
-  
-    scrollElement.addEventListener("touchend", () => {
-      // Når brukeren slipper, sjekk om timeout er fullført og trekkavstanden var stor nok
-      if (isAtTop && pullDistance > 50 && !isPulling) {
-        console.log("Oppdatering startet for:", scrollElement.id);
-        updateFunction(scrollElement); // Kjør spesifikk oppdateringsfunksjon
-      }
-  
-      // Tilbakestill variabler
-      clearTimeout(pullTimeout);
-      isPulling = false;
-      pullDistance = 0;
-    });
-  }
+  let isAtTop = false; // Sjekk om vi er på toppen
+  let touchStartY = 0; // Startpunkt for touch
+  let pullDistance = 0; // Lagre hvor langt brukeren drar
 
-  // Oppdateringsfunksjoner for hver liste
+  scrollElement.addEventListener("scroll", () => {
+    // Sjekk om vi er på toppen
+    isAtTop = scrollElement.scrollTop === 0;
+  });
+
+  scrollElement.addEventListener("touchstart", (e) => {
+    // Registrer startpunktet for touch
+    touchStartY = e.touches[0].clientY;
+    pullDistance = 0; // Tilbakestill trekkavstand
+  });
+
+  scrollElement.addEventListener("touchmove", (e) => {
+    // Beregn trekkets lengde
+    const touchMoveY = e.touches[0].clientY;
+    pullDistance = touchMoveY - touchStartY;
+  });
+
+  scrollElement.addEventListener("touchend", () => {
+    // Trigger oppdatering hvis vi er på toppen og brukeren drar ned
+    if (isAtTop && pullDistance > 50) {
+      console.log("Oppdatering startet for:", scrollElement.id);
+      updateFunction(scrollElement); // Kjør spesifikk oppdateringsfunksjon
+    }
+
+    // Tilbakestill variabler
+    pullDistance = 0;
+  });
+}
+
+// Oppdateringsfunksjoner for hver liste
 function updateTeamsList(element) {
-    console.log("Oppdaterer teams list:", element.id);
-    
-  }
-  
-  function updateMatchList(element) {
-    console.log("Oppdaterer match list:", element.id);
-    
-  }
-  
-  function updateEndPlayList(element) {
-    console.log("Oppdaterer end play list:", element.id);
-    
-  }
-  
-  // Sett opp pull-to-refresh for hver liste
-  setupPullToRefresh(document.getElementById("teamslistholder"), updateTeamsList);
-  setupPullToRefresh(document.getElementById("matchlistholder"), updateMatchList);
-  setupPullToRefresh(document.getElementById("endplaylist"), updateEndPlayList);
-  
+  console.log("Oppdaterer teams list:", element.id);
+  // Legg til logikk for å oppdatere teamslistholder
+}
 
+function updateMatchList(element) {
+  console.log("Oppdaterer match list:", element.id);
+  // Legg til logikk for å oppdatere matchlistholder
+}
 
+function updateEndPlayList(element) {
+  console.log("Oppdaterer end play list:", element.id);
+  // Legg til logikk for å oppdatere endplaylist
+}
+
+// Sett opp pull-to-refresh for hver liste
+setupPullToRefresh(document.getElementById("teamslistholder"), updateTeamsList);
+setupPullToRefresh(document.getElementById("matchlistholder"), updateMatchList);
+setupPullToRefresh(document.getElementById("endplaylist"), updateEndPlayList);
 
