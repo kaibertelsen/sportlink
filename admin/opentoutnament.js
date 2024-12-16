@@ -460,7 +460,7 @@ function listMatch(matchs) {
             }
 
             if(teamshaveNoGroup){
-            const Division = gDivision.find(item => item.airtable === match.division);
+            const Division = gDivision.find(item => item.airtable === match.division[0]);
             let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
             groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
             }
