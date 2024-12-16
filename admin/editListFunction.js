@@ -366,8 +366,8 @@ function controllAction(item, newValue, field, tabelid, cell) {
             let teamBWins = 0;
 
             sets.forEach(set => {
-                const teamA = parseInt(set.teamA) || 0;
-                const teamB = parseInt(set.teamB) || 0;
+                const teamA = parseInt(set.teamA) || "";
+                const teamB = parseInt(set.teamB) || "";
 
                 if (teamA > teamB) {
                     teamAWins++;
@@ -379,6 +379,16 @@ function controllAction(item, newValue, field, tabelid, cell) {
             const resultholder = findParentWithResultatCell(cell,".resultatcell");
             resultholder.querySelector(".goalteam1").textContent = teamAWins;
             resultholder.querySelector(".goalteam2").textContent = teamBWins;
+            const resultlable = resultholder.querySelector(".resultstatus")
+            if(teamAWins && teamBWins){
+            resultlable.textContent = "Resultat";
+            resultlable.classList.add("played");
+            }else{
+                resultlable.textContent = "Ikke spilt";
+                resultlable.classList.remove("played");
+            }
+
+            
     }
 }
 
