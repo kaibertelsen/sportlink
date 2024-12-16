@@ -136,7 +136,7 @@ function onAppResume() {
   if(isInTurnament){
     updateThisTournament(null);
   }else{
-    getTournament(member.klient);
+    getTournament(clientID);
   }
 }
 
