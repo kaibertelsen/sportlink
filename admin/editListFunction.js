@@ -211,7 +211,7 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
 function triggerEditCheckbox(cell,item,field,tabelid){
     let savedata = {};
     const status = cell.checked; 
-    savedata[field] = [status];
+    savedata[field] = status;
     updateRowData(item.airtable, savedata,tabelid);
 }
 
