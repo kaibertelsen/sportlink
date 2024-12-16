@@ -28,15 +28,7 @@ function rawdatacleaner(data){
 //
 async function Getlistairtable(baseId,tableId,body,id){
     let token = MemberStack.getToken();
-    console.log(
-        `https://expoapi-zeta.vercel.app/api/search?baseId=${baseId}&tableId=${tableId}&token=${token}`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: body
-          });
-          
+
     let response = await fetch(`https://expoapi-zeta.vercel.app/api/search?baseId=${baseId}&tableId=${tableId}&token=${token}`, {
       method: "POST",
       headers: {
