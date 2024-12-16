@@ -522,34 +522,49 @@ function listMatch(matchs) {
         refereeName.textContent = match.refereename || "-";
         refereeName.addEventListener("click", () => triggerEditInput(refereeName, match, "refereename", "text", tabelid));
 
+
         const endplayplace = rowelement.querySelector(".finalenr");
-        endplayplace.textContent = match.endplayplace || "-";
-        if(match.endplay){
+        const typeMatch = rowelement.querySelector(".type");
+        const endplay = rowelement.querySelector(".endplay");
+        const matchnr = rowelement.querySelector(".matchnr");
+
+        if(match.group){
+            // kampen har en gruppe og sluttspilldelen skal skjules
+            endplayplace.style.display = "none";
+            typeMatch.style.display = "none";
+            endplay.style.display = "none";
+            matchnr.style.display = "none";
+        }else{
+            endplayplace.textContent = match.endplayplace || "-";
+            if(match.endplay){
                 //denne kan kun trykkes på om det er en sluttspilkamp
                 endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
-        }
+            }
 
-        let MatchTypeoptions = [
+            let MatchTypeoptions = [
             { text: "Gruppekamp", value: "group" },
             { text: "Åttendedelsfinale", value: "eighthfinale" },
             { text: "Kvartfinale", value: "quarterfinale" },
             { text: "Semifinale", value: "semifinale" },
             { text: "Finale", value: "finale" }
              ];
+            typeMatch.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
+            if(match.endplay){
+                //denne kan kun trykkes på om det er en sluttspilkamp
+                endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
+            }
 
-        const typeMatch = rowelement.querySelector(".type")
-        typeMatch.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
-
-        
-        if(!match.group){
+            typeMatch.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
             typeMatch.addEventListener("click", () => triggerEditDropdown(typeMatch, match, "typematch", MatchTypeoptions, tabelid));
+            endplay.textContent = match.endplay || "-";
+            matchnr.textContent = match.nr || "-";
         }
 
 
-        const endplay = rowelement.querySelector(".endplay")
-        endplay.textContent = match.endplay || "-";
-
-        rowelement.querySelector(".matchnr").textContent = match.nr || "-";
+        
+        
+        
+        
 
         const openButton = rowelement.querySelector(".infobutton");
         const allInfoMatch = rowelement.querySelector(".allinfomatch");
