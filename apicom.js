@@ -93,6 +93,7 @@ async function PATCHairtable(baseId,tableId,itemId,body,id){
 async function GETairtable(baseId,tableId,itemId,id){
         
         let token = MemberStack.getToken();
+        console.log("url1"+`https://expoapi-zeta.vercel.app/api/row?baseId=${baseId}&tableId=${tableId}&rowId=${itemId}&token=${token}`);
         let response = await fetch(`https://expoapi-zeta.vercel.app/api/row?baseId=${baseId}&tableId=${tableId}&rowId=${itemId}&token=${token}`);
         if (!response.ok) {
             throw new Error(`HTTP-feil! status: ${response.status} - ${response.statusText}`);
