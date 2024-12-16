@@ -471,6 +471,7 @@ function listMatch(matchs) {
             return team.division === match.division && (!match.group || team.group === match.group);
         });
         let TeamOptions = convertArrayToOptions(teamsInDivisionAndGroup,"name","airtable");
+        TeamOptions.unshift({text:"Ingen lag",value:null});
         
         const teamName1 = rowelement.querySelector(".team1name");
         teamName1.textContent = match.team1name || match.placeholderteam1 || "-";
