@@ -123,14 +123,35 @@ swipeWrapper.addEventListener('touchend', handleTouchEnd);
 // Initial update
 updateSlidePosition();
 
+//trigger for når en åpner appen igjen så oppdater tournament
+function handleAppVisibility() {
+  if (document.visibilityState === "visible") {
+    console.log("Webappen er synlig igjen!");
+    onAppResume(); // Kall funksjonen du vil kjøre når appen vises
+  }
+}
+
+function onAppResume() {
+  console.log("Oppdaterer innhold ved gjenåpning...");
+  // Legg inn logikk for oppdatering her
+}
+
+// Legg til eventlistener for visibilitychange
+document.addEventListener("visibilitychange", handleAppVisibility);
+
+
 function setupPullToRefresh(scrollElement, updateFunction) {
   let isAtTop = false; // Sjekk om vi er på toppen
   let touchStartY = 0; // Startpunkt for touch
   let pullDistance = 0; // Lagre hvor langt brukeren drar
 
-  scrollElement.addEventListener("scroll", () => {
+  // Bekreft hvem som har scroll-ansvar
+  const scrollParent = scrollElement.parentElement; // Finn foreldreelementet
+  console.log("Scroll Parent:", scrollParent);
+
+  scrollParent.addEventListener("scroll", () => {
     // Sjekk om vi er på toppen
-    isAtTop = scrollElement.scrollTop === 0;
+    isAtTop = scrollParent.scrollTop === 0;
   });
 
   scrollElement.addEventListener("touchstart", (e) => {
@@ -160,21 +181,17 @@ function setupPullToRefresh(scrollElement, updateFunction) {
 // Oppdateringsfunksjoner for hver liste
 function updateTeamsList(element) {
   console.log("Oppdaterer teams list:", element.id);
-  // Legg til logikk for å oppdatere teamslistholder
 }
 
 function updateMatchList(element) {
   console.log("Oppdaterer match list:", element.id);
-  // Legg til logikk for å oppdatere matchlistholder
 }
 
 function updateEndPlayList(element) {
   console.log("Oppdaterer end play list:", element.id);
-  // Legg til logikk for å oppdatere endplaylist
 }
 
 // Sett opp pull-to-refresh for hver liste
 setupPullToRefresh(document.getElementById("teamslistholder"), updateTeamsList);
 setupPullToRefresh(document.getElementById("matchlistholder"), updateMatchList);
 setupPullToRefresh(document.getElementById("endplaylist"), updateEndPlayList);
-
