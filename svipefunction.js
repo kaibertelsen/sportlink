@@ -123,11 +123,13 @@ swipeWrapper.addEventListener('touchend', handleTouchEnd);
 // Initial update
 updateSlidePosition();
 
-//oppdatere tournament ved scrolling
+
 const scrollElement = document.getElementById("matchlistholder");
 let isAtTop = false; // Sjekk om vi er på toppen
 let touchStartY = 0; // Startpunkt for touch
-let isRefreshing = false; // For å hindre flere triggere samtidig
+let pullTimeout = null; // Timeout for å spore holdetiden
+let isPulling = false; // Indikerer om brukeren drar
+let pullDistance = 0; // Lagre hvor langt brukeren drar
 
 scrollElement.addEventListener("scroll", () => {
   // Sjekk om vi er på toppen
@@ -137,20 +139,37 @@ scrollElement.addEventListener("scroll", () => {
 scrollElement.addEventListener("touchstart", (e) => {
   // Registrer startpunktet for touch
   touchStartY = e.touches[0].clientY;
+  pullDistance = 0; // Tilbakestill trekkavstand
+  isPulling = false; // Tilbakestill pulling status
+  clearTimeout(pullTimeout); // Avbryt eventuell eksisterende timeout
 });
 
 scrollElement.addEventListener("touchmove", (e) => {
   // Beregn trekkets lengde
   const touchMoveY = e.touches[0].clientY;
-  const pullDistance = touchMoveY - touchStartY;
+  pullDistance = touchMoveY - touchStartY;
 
-  // Trigger oppdatering hvis vi er på toppen og brukeren drar ned
-  if (isAtTop && pullDistance > 50 && !isRefreshing) {
-    isRefreshing = true;
-    console.log("Oppdatering startet!");
-    updateThisTournament(scrollElement);
-    isRefreshing = false;
+  // Start en timeout hvis brukeren er på toppen og drar mer enn 50px
+  if (isAtTop && pullDistance > 50 && !isPulling) {
+    isPulling = true;
+    pullTimeout = setTimeout(() => {
+      isPulling = false; // Timeout fullført, venter på touchend
+    }, 2000); // 2 sekunder
   }
 });
+
+scrollElement.addEventListener("touchend", () => {
+  // Når brukeren slipper, sjekk om timeout er fullført og trekkavstanden var stor nok
+  if (isAtTop && pullDistance > 50 && !isPulling) {
+    console.log("Oppdatering startet!");
+    updateThisTournament(scrollElement);
+  }
+
+  // Tilbakestill variabler
+  clearTimeout(pullTimeout);
+  isPulling = false;
+  pullDistance = 0;
+});
+
 
 
