@@ -534,20 +534,18 @@ function listMatch(matchs) {
             { text: "Finale", value: "finale" }
              ];
 
-        const typeMatech = rowelement.querySelector(".type")
-        typeMatech.textContent = MatchTypeoptions.find(option => option.value === match.typematch) || "-";
+        const typeMatch = rowelement.querySelector(".type")
+        typeMatch.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
+
         
         if(!match.group){
-           typeMatech.addEventListener("click", () => triggerEditDropdown(typeMatech, match, "typematch", MatchTypeoptions, tabelid));
+            typeMatch.addEventListener("click", () => triggerEditDropdown(typeMatch, match, "typematch", MatchTypeoptions, tabelid));
         }
 
 
         const endplay = rowelement.querySelector(".endplay")
         endplay.textContent = match.endplay || "-";
 
-
-
-        
         rowelement.querySelector(".matchnr").textContent = match.nr || "-";
 
         const openButton = rowelement.querySelector(".infobutton");
