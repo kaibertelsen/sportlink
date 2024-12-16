@@ -139,45 +139,48 @@ function onAppResume() {
 // Legg til eventlistener for visibilitychange
 document.addEventListener("visibilitychange", handleAppVisibility);
 
-
+//oppdaterer når en scroller til toppen
 function setupPullToRefresh(scrollElement, updateFunction) {
-  let isAtTop = false; // Sjekk om vi er på toppen
-  let touchStartY = 0; // Startpunkt for touch
-  let pullDistance = 0; // Lagre hvor langt brukeren drar
+  const scrollParent = findScrollableParent(scrollElement); // Finn scrollelementet
+  let isAtTop = false;
+  let touchStartY = 0;
+  let pullDistance = 0;
 
-  // Bekreft hvem som har scroll-ansvar
-  const scrollParent = scrollElement.parentElement; // Finn foreldreelementet
-  console.log("Scroll Parent:", scrollParent);
-
+  // Legg til scroll-hendelse på scrollelementet
   scrollParent.addEventListener("scroll", () => {
-    // Sjekk om vi er på toppen
     isAtTop = scrollParent.scrollTop === 0;
+    console.log(`Er vi på toppen av ${scrollParent.id || "et anonymt element"}?`, isAtTop);
   });
 
+  // Touch-hendelser på selve listholderen
   scrollElement.addEventListener("touchstart", (e) => {
-    // Registrer startpunktet for touch
     touchStartY = e.touches[0].clientY;
-    pullDistance = 0; // Tilbakestill trekkavstand
+    pullDistance = 0;
   });
 
   scrollElement.addEventListener("touchmove", (e) => {
-    // Beregn trekkets lengde
     const touchMoveY = e.touches[0].clientY;
     pullDistance = touchMoveY - touchStartY;
   });
 
   scrollElement.addEventListener("touchend", () => {
-    // Trigger oppdatering hvis vi er på toppen og brukeren drar ned
     if (isAtTop && pullDistance > 50) {
       console.log("Oppdatering startet for:", scrollElement.id);
-      updateFunction(scrollElement); // Kjør spesifikk oppdateringsfunksjon
+      updateFunction(scrollElement);
     }
-
-    // Tilbakestill variabler
-    pullDistance = 0;
+    pullDistance = 0; // Tilbakestill trekkavstanden
   });
 }
-
+function findScrollableParent(element) {
+  while (element && element !== document.body) {
+    const overflowY = window.getComputedStyle(element).overflowY;
+    if (overflowY === "scroll" || overflowY === "auto") {
+      return element; // Returner første foreldreelement med scroll-ansvar
+    }
+    element = element.parentElement; // Fortsett oppover i DOM-treet
+  }
+  return document.body; // Fall tilbake til document.body som siste utvei
+}
 // Oppdateringsfunksjoner for hver liste
 function updateTeamsList(element) {
   console.log("Oppdaterer teams list:", element.id);
@@ -191,7 +194,8 @@ function updateEndPlayList(element) {
   console.log("Oppdaterer end play list:", element.id);
 }
 
-// Sett opp pull-to-refresh for hver liste
+// Sett opp Pull-to-Refresh for hver liste
 setupPullToRefresh(document.getElementById("teamslistholder"), updateTeamsList);
 setupPullToRefresh(document.getElementById("matchlistholder"), updateMatchList);
 setupPullToRefresh(document.getElementById("endplaylist"), updateEndPlayList);
+
