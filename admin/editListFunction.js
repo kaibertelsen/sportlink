@@ -350,7 +350,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 if(!newValue){
                     item.team1 = "";
                     item.team1name = "";
-                    cell.parentElement.parentElement.querySelector(".team1name").textContent = "ingenlag";
+                    //cell.parentElement.parentElement.querySelector(".team1name").textContent = "ingenlag";
                 }else{
                 item.team1 = [team.airtable];
                 item.team1name = team.name;
@@ -359,7 +359,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 if(!newValue){
                     item.team2 = "";
                     item.team2name = "";
-                    cell.parentElement.parentElement.querySelector(".team2name").textContent = "ingenlag";
+                    //cell.parentElement.parentElement.querySelector(".team2name").textContent = "ingenlag";
                 }else{
                 item.team2 = [team.airtable];
                 item.team2name = team.name;
@@ -369,8 +369,6 @@ function controllAction(item, newValue, field, tabelid, cell) {
             // Sett team logo hvis tilgjengelig
             if (team?.clublogo) {
                 cell.parentElement.parentElement.querySelector(".teamlogo").src = team.clublogo;
-            }else{
-                cell.parentElement.parentElement.querySelector(".teamlogo").src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
             }
 
             if(!newValue){
