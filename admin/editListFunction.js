@@ -373,6 +373,13 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 cell.parentElement.parentElement.querySelector(".teamlogo").src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
             }
 
+            if(!newValue){
+             //bygg listen på nytt
+            listMatch(gMatchs);
+            }
+
+
+
     }else if(tabelid === "tblrHBFa60aIdqkUu" && (field === "settaa" || field === "settab" || field === "settba" || field === "settbb" || field === "settca" || field === "settcb") ){
         //settverdiene settes i panelet
         item[field] = newValue;
