@@ -182,9 +182,9 @@ function generateVolleyballPointToTeams(data) {
 
             if (setsAvailable) {
                 // Beregn poeng basert på settscore
-
-                        let akey = setKeys+"a";
-                        let bkey = setKeys+"b";
+                        for(let set of setKeys){
+                        let akey = set+"a";
+                        let bkey = set+"b";
                         
                         let team1SetScore = match[akey];
                         let team2SetScore = match[bkey];
@@ -204,7 +204,7 @@ function generateVolleyballPointToTeams(data) {
                         } else if (team2SetScore > team1SetScore) {
                             team2SetsWon++;
                         }
-                    
+                    }
                 
 
                 // Tildel kamp-poeng basert på antall sett vunnet
