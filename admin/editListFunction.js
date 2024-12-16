@@ -433,7 +433,7 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         //bygg listen på nytt
         listMatch(gMatchs);
     }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "group"){
-        //dette er divisjon på laget som settes
+        //dette er fruppe
         
         // Finn clubitem
         const Group = gGroups.find(item => item.airtable === newValue);

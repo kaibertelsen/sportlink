@@ -459,13 +459,12 @@ function listMatch(matchs) {
                 teamshaveNoGroup = false;;
             }
 
-            if(teamshaveNoGroup){
-                let Division
-                if(match?.division){
-                    //kan kun velge grupper dersom divisjon er valgt
-                    Division = gDivision.find(item => item.airtable === match.division);
-                    let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
-                    groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
+            if(teamshaveNoGroup && match?.division ){
+                //kan kun velge grupper dersom divisjon er valgt
+                let Division = gDivision.find(item => item.airtable === match.division);
+                if(Division){
+                let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
+                groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
                 }
             }
         }
