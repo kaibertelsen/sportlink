@@ -342,5 +342,46 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 cell.parentElement.parentElement.querySelector(".teamlogo").src = team.clublogo;
             }
 
+    }else if(tabelid === "tblrHBFa60aIdqkUu" && (field === "settaa" || field === "settab" || field === "settba" || field === "settbb" || field === "settca" || field === "settcb") ){
+        //settverdiene settes i panelet
+        item[field] = newValue;
+
+            // Regne ut stillingen basert på settverdiene
+            const sets = [
+                { teamA: item.settaa, teamB: item.settab },
+                { teamA: item.settba, teamB: item.settbb },
+                { teamA: item.settca, teamB: item.settcb },
+            ];
+
+            let teamAWins = 0;
+            let teamBWins = 0;
+
+            sets.forEach(set => {
+                const teamA = parseInt(set.teamA) || 0;
+                const teamB = parseInt(set.teamB) || 0;
+
+                if (teamA > teamB) {
+                    teamAWins++;
+                } else if (teamB > teamA) {
+                    teamBWins++;
+                }
+            });
+
+            const resultholder = findParentWithResultatCell(cell,"resultatcell");
+            resultholder.querySelector(".goalteam1").textContent = teamAWins;
+            resultholder.querySelector(".goalteam2").textContent = teamBWins;
     }
 }
+
+
+
+function findParentWithResultatCell(element,className) {
+    while (element) {
+      // Sjekk om elementet inneholder et barn med klassen "resultatcell"
+      if (element.querySelector(className)) {
+        return element; // Returner det første foreldreelementet som oppfyller betingelsen
+      }
+      element = element.parentElement; // Fortsett oppover i DOM-treet
+    }
+    return null; // Returner null hvis ingen foreldre matcher
+  }
