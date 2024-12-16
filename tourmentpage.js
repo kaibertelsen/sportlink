@@ -20,7 +20,7 @@ function emtyTurnamentLists(){
 
 function updateThisTournament(list){
     //trigges fra oppdatering internt i listene
-    GETairtable(baseId,"tblGhVlhWETNvhrWN",activetournament.airtable,"responseThisTournament");
+    GETairtable(baseId,"tblGhVlhWETNvhrWN",activetournament.airtable,"responseThisTournament",true);
     //kopier loading holder i toppen av listen
     const nodeelement = document.getElementById("elementlibrary").querySelector(".loadingholder");
 
