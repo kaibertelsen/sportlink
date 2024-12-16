@@ -530,10 +530,10 @@ function listMatch(matchs) {
 
         if(match.group == ""){
             // kampen har en gruppe og sluttspilldelen skal skjules
-            endplayplace.style.display = "none";
-            typeMatch.style.display = "none";
-            endplay.style.display = "none";
-            matchnr.style.display = "none";
+            endplayplace.parentElement.style.display = "none";
+            typeMatch.parentElement.style.display = "none";
+            endplay.parentElement.style.display = "none";
+            matchnr.parentElement.style.display = "none";
         }else{
             endplayplace.textContent = match.endplayplace || "-";
             if(match.endplay){
