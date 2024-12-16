@@ -459,7 +459,7 @@ function listMatch(matchs) {
                 teamshaveNoGroup = false;;
             }
 
-            if(teamshaveNoGroup){}
+            if(teamshaveNoGroup){
             let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
             groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
             }
