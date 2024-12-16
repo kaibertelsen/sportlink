@@ -460,9 +460,13 @@ function listMatch(matchs) {
             }
 
             if(teamshaveNoGroup){
-            const Division = gDivision.find(item => item.airtable === match.division[0]);
-            let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
-            groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
+                let Division
+                if(match?.division){
+                    //kan kun velge grupper dersom divisjon er valgt
+                    Division = gDivision.find(item => item.airtable === match.division);
+                    let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
+                    groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
+                }
             }
         }
 
