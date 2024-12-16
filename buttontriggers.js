@@ -10,7 +10,6 @@ document.getElementById('headermaillogo').onclick = function() {
 }
 
 
-
 // on turneringspage
 document.getElementById('tabeltabbutton').onclick = function() {
     markActiveButton(document.getElementById('tabeltabbutton'));
@@ -37,10 +36,12 @@ document.getElementById('buttontoturnament').onclick = function() {
     document.getElementById('tabtoturnering').click();
     }
 }
-   
-document.getElementById('admincreateturnamentbutton').onclick = function() {
-    startCreateTurnament();
+
+document.getElementById('updatetournamentlogobutton').onclick = function() {
+    //update this tournament
+updateThisTournament();
 };
+
 
 document.getElementById('buttonthisteam').onclick = function() {
     if(previouspage == "match"){

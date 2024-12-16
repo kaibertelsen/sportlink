@@ -122,3 +122,5 @@ swipeWrapper.addEventListener('touchend', handleTouchEnd);
 
 // Initial update
 updateSlidePosition();
+
+

@@ -11,5 +11,9 @@ function ruteresponse(data,id){
         responseSportlist(data);
     }else if(id == "responseCreateTournament"){
         responseCreateTournament(data);
+    }else if(id == "responseThisTournament"){
+        responseThisTournament(data);
     }
+
+    
 }

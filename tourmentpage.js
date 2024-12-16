@@ -18,6 +18,14 @@ function emtyTurnamentLists(){
 
 }
 
+function updateThisTournament(){
+    GETairtable(baseId,"tblGhVlhWETNvhrWN",activetournament.airtable,"responseThisTournament")
+}
+
+function responseThisTournament(data){
+    console.log(data);
+}
+
 
 function loadTourment(data){
     //for å gå videre i tab systemet
