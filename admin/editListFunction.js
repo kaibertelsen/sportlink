@@ -381,14 +381,23 @@ function controllAction(item, newValue, field, tabelid, cell) {
             resultholder.querySelector(".goalteam2").textContent = teamBWins;
             const resultlable = resultholder.querySelector(".resultstatus")
             if(teamAWins && teamBWins){
-            resultlable.textContent = "Resultat";
-            resultlable.classList.add("played");
+                resultlable.textContent = "Resultat";
+                resultlable.classList.add("played");
             }else{
                 resultlable.textContent = "Ikke spilt";
                 resultlable.classList.remove("played");
             }
 
             
+    }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "division"){
+        //dette er divisjon på laget som settes
+        
+        // Finn clubitem
+        const Division = gDivision.find(item => item.airtable === newValue);
+
+        // Oppdater også clubid og clubname lokalt
+        item.division = [Division.airtable];
+        item.divisionname = Division.name;
     }
 }
 

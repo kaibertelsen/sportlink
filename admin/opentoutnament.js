@@ -432,8 +432,14 @@ function listMatch(matchs) {
         Timeelement.dataset.date = formatIsoDateValue(match.time);
         Timeelement.addEventListener("click", () => triggerEditInput(Timeelement, match, "time", "datetime-local", tabelid));
         
+        const divisionName = rowelement.querySelector(".division")
+        divisionName.textContent = match.divisionname || "Ukjent divisjon";
+        if(!match.groupname && !match.teamName1 && !match.teamName1){
+            //hvis ikke gruppe eller team er valgt er satt skal en kunne hvelge divisjon
+        let Divisionoptions = convertArrayToOptions(gDivision,"name","airtable");
+        divisionName.addEventListener("click", () => triggerEditDropdown(divisionName, match, "division", Divisionoptions, tabelid));
+        }
         
-        rowelement.querySelector(".division").textContent = match.divisionname || "Ukjent divisjon";
         rowelement.querySelector(".groupname").textContent = match.groupname || "-";
 
         
