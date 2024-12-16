@@ -355,6 +355,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 }else{
                 item.team1 = [team.airtable];
                 item.team1name = team.name;
+                item.team1clublogo = team.clublogo;
                 }
             }else if (field === "team2"){
                 if(!newValue){
@@ -365,6 +366,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 }else{
                 item.team2 = [team.airtable];
                 item.team2name = team.name;
+                item.team2clublogo = team.clublogo;
                 }
             }
 
