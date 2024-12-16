@@ -195,8 +195,8 @@ function generateVolleyballPointToTeams(data) {
                         team2.points.setsAgainst += team1SetScore;
 
                         // Oppdater settresultater
-                        team1.points.goalsetScores.push({ setKey, team1SetScore, team2SetScore });
-                        team2.points.goalsetScores.push({ setKey, team2SetScore, team1SetScore });
+                        team1.points.goalsetScores.push({ set, team1SetScore, team2SetScore });
+                        team2.points.goalsetScores.push({ set, team2SetScore, team1SetScore });
 
                         // Beregn antall sett vunnet
                         if (team1SetScore > team2SetScore) {
