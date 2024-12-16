@@ -465,7 +465,6 @@ function listMatch(matchs) {
             }
         }
 
-        
         // Finn alle team som tilhører match.division og eventuelt match.group
         const teamsInDivisionAndGroup = gTeam.filter(team => {
             return team.division === match.division && (!match.group || team.group === match.group);
@@ -520,13 +519,47 @@ function listMatch(matchs) {
 
         const endplayplace = rowelement.querySelector(".finalenr");
         endplayplace.textContent = match.endplayplace || "-";
-            if(match.endplay){
+        if(match.endplay){
                 //denne kan kun trykkes på om det er en sluttspilkamp
                 endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
-            }
+        }
 
-        rowelement.querySelector(".endplay").textContent = match.endplay || "-";
-        rowelement.querySelector(".type").textContent = match.typematch || "-";
+        const typeMatech = rowelement.querySelector(".type")
+        typeMatech.textContent = match.typematch || "-";
+        //sjekke at det ikke er en gruppekamp
+        if(!match.group){
+           let options = [
+                    {
+                    text:"Gruppekamp",
+                    value:"group"
+                    },{
+                    text:"Åttendedelsfinale",
+                    value:"eighthfinale"
+                    },
+                    {
+                    text:"Kvartfinale",
+                    value:"quarterfinale"
+                    },
+                    {
+                    text:"Semifinale",
+                    value:"semifinale"
+                    },
+                    {
+                    text:"Finale",
+                    value:"finale"
+                    }
+           ];
+           typeMatech.addEventListener("click", () => triggerEditDropdown(typeMatech, match, "typematch", options, tabelid));
+
+        }
+
+
+        const endplay = rowelement.querySelector(".endplay")
+        endplay.textContent = match.endplay || "-";
+
+
+
+        
         rowelement.querySelector(".matchnr").textContent = match.nr || "-";
 
         const openButton = rowelement.querySelector(".infobutton");

@@ -413,6 +413,13 @@ function controllAction(item, newValue, field, tabelid, cell) {
 
         //bygg listen på nytt
         listMatch(gMatchs);
+    }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "typematch"){
+        //dette type kamp settes
+   
+        // Oppdater også clubid og clubname lokalt
+        item.typematch = newValue;
+        //bygg listen på nytt
+        listMatch(gMatchs);
     }
 }
 
