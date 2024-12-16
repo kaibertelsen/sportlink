@@ -173,7 +173,13 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
             let newText = selectedOption.text;
             let savedata = {};
             cell.textContent = newText;
-            savedata[field] = [newValue];
+            if(field == "typematch"){
+                savedata[field] = newValue;
+            }else{
+                savedata[field] = [newValue];
+            }
+
+            
             updateRowData(item.airtable, savedata,tabelid);
             //oppdater evt. ander felt/ iconer på samme rad
 
