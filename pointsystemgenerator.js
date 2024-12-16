@@ -186,8 +186,8 @@ function generateVolleyballPointToTeams(data) {
                         let akey = set+"a";
                         let bkey = set+"b";
                         
-                        let team1SetScore = match[akey];
-                        let team2SetScore = match[bkey];
+                        let team1SetScore = parseInt(match[akey]) || 0;
+                        let team2SetScore = parseInt(match[bkey]) || 0;
                         // Summer sett-poeng til `setsFor` og `setsAgainst`
                         team1.points.setsFor += team1SetScore;
                         team1.points.setsAgainst += team2SetScore;
