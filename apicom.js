@@ -28,6 +28,15 @@ function rawdatacleaner(data){
 //
 async function Getlistairtable(baseId,tableId,body,id){
     let token = MemberStack.getToken();
+    console.log(
+        `https://expoapi-zeta.vercel.app/api/search?baseId=${baseId}&tableId=${tableId}&token=${token}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: body
+          });
+          
     let response = await fetch(`https://expoapi-zeta.vercel.app/api/search?baseId=${baseId}&tableId=${tableId}&token=${token}`, {
       method: "POST",
       headers: {
@@ -91,17 +100,15 @@ async function PATCHairtable(baseId,tableId,itemId,body,id){
 }
     
 async function GETairtable(baseId,tableId,itemId,id){
-        
+
         let token = MemberStack.getToken();
-        console.log("url1"+`https://expoapi-zeta.vercel.app/api/row?baseId=${baseId}&tableId=${tableId}&rowId=${itemId}&token=${token}`);
         let response = await fetch(`https://expoapi-zeta.vercel.app/api/row?baseId=${baseId}&tableId=${tableId}&rowId=${itemId}&token=${token}`);
         if (!response.ok) {
             throw new Error(`HTTP-feil! status: ${response.status} - ${response.statusText}`);
             }else {
             let data = await response.json();
             apireturn({success: true, data: data, id: id});
-        }
-        
+        }   
 }
 
 async function POSTairtableMulti(baseId, tableId, body) {
