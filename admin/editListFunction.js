@@ -187,7 +187,7 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
             //oppdater evt. ander felt/ iconer på samme rad
 
             //send denne til kontroll for unik action 
-            controllAction(item,newValue,field,tabelid,cell);
+            controllAction(item,newValue,field,tabelid,cell,options);
         }
 
         // Fjern dropdown og vis cellen med den opprinnelige display-verdi
@@ -288,7 +288,7 @@ console.log(data);
 }
 
 
-function controllAction(item, newValue, field, tabelid, cell) {
+function controllAction(item, newValue, field, tabelid, cell,options) {
     if (tabelid === "tbl3ta1WZBr6wKPSp" && field === "club") {
         // Dette er lagtabellen som oppdaterer club
         
@@ -449,9 +449,13 @@ function controllAction(item, newValue, field, tabelid, cell) {
    
         // Oppdater også clubid og clubname lokalt
         item.typematch = newValue;
-        //bygg listen på nytt
-        listMatch(gMatchs);
-    }
+        // Finn option som matcher newValue
+        let matchingOption = options.find(option => option.value === newValue);
+
+        if (matchingOption) {
+            cell.textContent = matchingOption.text;
+        } 
+     }
 }
 
 

@@ -526,33 +526,19 @@ function listMatch(matchs) {
                 endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
         }
 
-        const typeMatech = rowelement.querySelector(".type")
-        typeMatech.textContent = match.typematch || "-";
-        //sjekke at det ikke er en gruppekamp
-        if(!match.group){
-           let options = [
-                    {
-                    text:"Gruppekamp",
-                    value:"group"
-                    },{
-                    text:"Åttendedelsfinale",
-                    value:"eighthfinale"
-                    },
-                    {
-                    text:"Kvartfinale",
-                    value:"quarterfinale"
-                    },
-                    {
-                    text:"Semifinale",
-                    value:"semifinale"
-                    },
-                    {
-                    text:"Finale",
-                    value:"finale"
-                    }
-           ];
-           typeMatech.addEventListener("click", () => triggerEditDropdown(typeMatech, match, "typematch", options, tabelid));
+        let MatchTypeoptions = [
+            { text: "Gruppekamp", value: "group" },
+            { text: "Åttendedelsfinale", value: "eighthfinale" },
+            { text: "Kvartfinale", value: "quarterfinale" },
+            { text: "Semifinale", value: "semifinale" },
+            { text: "Finale", value: "finale" }
+             ];
 
+        const typeMatech = rowelement.querySelector(".type")
+        typeMatech.textContent = options.find(option => option.value === match.typematch) || "-";
+        
+        if(!match.group){
+           typeMatech.addEventListener("click", () => triggerEditDropdown(typeMatech, match, "typematch", MatchTypeoptions, tabelid));
         }
 
 
