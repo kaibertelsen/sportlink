@@ -123,4 +123,34 @@ swipeWrapper.addEventListener('touchend', handleTouchEnd);
 // Initial update
 updateSlidePosition();
 
+//oppdatere tournament ved scrolling
+const scrollElement = document.getElementById("matchlistholder");
+let isAtTop = false; // Sjekk om vi er på toppen
+let touchStartY = 0; // Startpunkt for touch
+let isRefreshing = false; // For å hindre flere triggere samtidig
+
+scrollElement.addEventListener("scroll", () => {
+  // Sjekk om vi er på toppen
+  isAtTop = scrollElement.scrollTop === 0;
+});
+
+scrollElement.addEventListener("touchstart", (e) => {
+  // Registrer startpunktet for touch
+  touchStartY = e.touches[0].clientY;
+});
+
+scrollElement.addEventListener("touchmove", (e) => {
+  // Beregn trekkets lengde
+  const touchMoveY = e.touches[0].clientY;
+  const pullDistance = touchMoveY - touchStartY;
+
+  // Trigger oppdatering hvis vi er på toppen og brukeren drar ned
+  if (isAtTop && pullDistance > 50 && !isRefreshing) {
+    isRefreshing = true;
+    console.log("Oppdatering startet!");
+    updateThisTournament()
+    isRefreshing = false;
+  }
+});
+
 
