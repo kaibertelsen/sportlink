@@ -133,7 +133,8 @@ function handleAppVisibility() {
 
 function onAppResume() {
   console.log("Oppdaterer innhold ved gjenåpning...");
-  // Legg inn logikk for oppdatering her
+
+  updateThisTournament(null);
 }
 
 // Legg til eventlistener for visibilitychange
@@ -165,7 +166,6 @@ function setupPullToRefresh(scrollElement, updateFunction) {
 
   scrollElement.addEventListener("touchend", () => {
     if (isAtTop && pullDistance > 50) {
-      console.log("Oppdatering startet for:", scrollElement.id);
       updateFunction(scrollElement);
     }
     pullDistance = 0; // Tilbakestill trekkavstanden
@@ -183,14 +183,17 @@ function findScrollableParent(element) {
 }
 // Oppdateringsfunksjoner for hver liste
 function updateTeamsList(element) {
+  updateThisTournament(element);
   console.log("Oppdaterer teams list:", element.id);
 }
 
 function updateMatchList(element) {
+  updateThisTournament(element);
   console.log("Oppdaterer match list:", element.id);
 }
 
 function updateEndPlayList(element) {
+  updateThisTournament(element);
   console.log("Oppdaterer end play list:", element.id);
 }
 

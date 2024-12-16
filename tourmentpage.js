@@ -21,24 +21,38 @@ function emtyTurnamentLists(){
 function updateThisTournament(list){
     GETairtable(baseId,"tblGhVlhWETNvhrWN",activetournament.airtable,"responseThisTournament");
     //kopier loading holder i toppen av listen
+    if(list){
     const nodeelement = document.getElementById("elementlibrary").querySelector(".loadingholder");
     const loadingelement = nodeelement.cloneNode(true);
     list.prepend(loadingelement);
+    }   
 }
 
 function responseThisTournament(data){
-    console.log(data);
-    loadTourment(data.fields)
+    //trigges fra oppdatering internt i listene
+    activetournament = data.fields;
+    loadTourmentHeader(activetournament);
+    listDivision(activetournament);
+    loadeLists(data);
 }
 
 function loadTourment(data){
+    //trigges fra listen på forsiden
+
     //for å gå videre i tab systemet
     document.getElementById('tabtoturnering').click();
+    //start match window
+    document.getElementById('matchtabbutton').click();
+
     activetournament = data
     loadTourmentHeader(data);
     listDivision(data);
-    
-    
+    loadeLists(data);
+
+}
+
+
+function loadeLists(data){
     matches = makeObjectFromAirtableJSON(data, "matchjson");
     if(matches){listmatch(matches,"dato",true);}
 
@@ -49,9 +63,9 @@ function loadTourment(data){
     endplay = endplayConverter(data);
     if(endplay){listendplay(matches,endplay);}
 
-    //start match window
-    document.getElementById('matchtabbutton').click();
 }
+
+
 
 function loadTourmentHeader(data){
 
