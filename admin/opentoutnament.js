@@ -474,7 +474,7 @@ function listMatch(matchs) {
         TeamOptions.unshift({text:"Ingen lag",value:""});
         
         const teamName1 = rowelement.querySelector(".team1name");
-        teamName1.textContent = match.team1name || match.placeholderteam1 || "-";
+        teamName1.textContent = match.team1name || match.placeholderteam1 || "Ingen lag";
         teamName1.addEventListener("click", () => triggerEditDropdown(teamName1, match, "team1", TeamOptions, tabelid));
 
 
@@ -504,7 +504,7 @@ function listMatch(matchs) {
         }
 
         const teamName2 = rowelement.querySelector(".team2name")
-        teamName2.textContent = match.team2name || match.placeholderteam2 || "-";
+        teamName2.textContent = match.team2name || match.placeholderteam2 || "Ingen lag";
         teamName2.addEventListener("click", () => triggerEditDropdown(teamName2, match, "team2", TeamOptions, tabelid));
 
         const fieldName = rowelement.querySelector(".field");
