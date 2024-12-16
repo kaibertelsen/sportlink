@@ -26,16 +26,30 @@ function rawdatacleaner(data){
     return array;
 }
 //
-async function Getlistairtable(baseId,tableId,body,id){
-    let token = MemberStack.getToken();
+async function Getlistairtable(baseId,tableId,body,id,public){
 
-    let response = await fetch(`https://expoapi-zeta.vercel.app/api/search?baseId=${baseId}&tableId=${tableId}&token=${token}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: body
-    });
+    let response;
+        if(public){
+            response = await fetch(`https://expoapi-zeta.vercel.app/api/search?baseId=${baseId}&tableId=${tableId}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: body
+            });
+        }else{
+            let token = MemberStack.getToken();
+
+            response = await fetch(`https://expoapi-zeta.vercel.app/api/search?baseId=${baseId}&tableId=${tableId}&token=${token}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: body
+            });
+            
+        }
+
 
     if (!response.ok) {
     throw new Error(`HTTP-feil! status: ${response.status} - ${response.statusText}`);
@@ -91,10 +105,16 @@ async function PATCHairtable(baseId,tableId,itemId,body,id){
         }
 }
     
-async function GETairtable(baseId,tableId,itemId,id){
+async function GETairtable(baseId,tableId,itemId,id,public){
 
-        //let token = MemberStack.getToken();
-        let response = await fetch(`https://expoapi-zeta.vercel.app/api/row?baseId=${baseId}&tableId=${tableId}&rowId=${itemId}`);
+    let response;
+
+        if(public){
+            response = await fetch(`https://expoapi-zeta.vercel.app/api/row?baseId=${baseId}&tableId=${tableId}&rowId=${itemId}`);
+        }else{
+            let token = MemberStack.getToken();
+            response = await fetch(`https://expoapi-zeta.vercel.app/api/row?baseId=${baseId}&tableId=${tableId}&rowId=${itemId}&token=${token}`);
+        }
         if (!response.ok) {
             throw new Error(`HTTP-feil! status: ${response.status} - ${response.statusText}`);
             }else {

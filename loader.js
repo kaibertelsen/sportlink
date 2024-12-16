@@ -36,6 +36,7 @@ cdnScripts.reduce((promise, script) => {
     return promise.then(() => loadScript(script));
 }, Promise.resolve()).then(() => {
     console.log("All scripts loaded");
+    getTournament("recCdECitGpKE2O1F");
 }).catch(error => {
     console.error(error);
 });
