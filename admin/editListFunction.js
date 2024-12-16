@@ -367,7 +367,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
             }
 
             // Sett team logo hvis tilgjengelig
-            if (team.clublogo && newValue) {
+            if (team?.clublogo && newValue) {
                 cell.parentElement.parentElement.querySelector(".teamlogo").src = team.clublogo;
             }
 
