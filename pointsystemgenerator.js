@@ -174,17 +174,19 @@ function generateVolleyballPointToTeams(data) {
             const team2Score = match.goalteam2;
 
             // Sjekk om settscore er tilgjengelig
-            const setKeys = ["sett1", "sett2", "sett3"];
+            const setKeys = ["setta", "settb", "settc"];
             let team1SetsWon = 0;
             let team2SetsWon = 0;
             let setsAvailable = setKeys.some(setKey => match[setKey]); // Sjekk om noen settdata finnes
 
             if (setsAvailable) {
                 // Beregn poeng basert på settscore
-                for (let setKey of setKeys) {
-                    if (match[setKey]) {
-                        //const [team1SetScore, team2SetScore] = match[setKey].split("-").map(Number);
 
+                        let akey = setKeys+"a";
+                        let bkey = setKeys+"b";
+                        
+                        let team1SetScore = match[akey];
+                        let team2SetScore = match[bkey];
                         // Summer sett-poeng til `setsFor` og `setsAgainst`
                         team1.points.setsFor += team1SetScore;
                         team1.points.setsAgainst += team2SetScore;
@@ -201,8 +203,8 @@ function generateVolleyballPointToTeams(data) {
                         } else if (team2SetScore > team1SetScore) {
                             team2SetsWon++;
                         }
-                    }
-                }
+                    
+                
 
                 // Tildel kamp-poeng basert på antall sett vunnet
                 if (team1SetsWon > team2SetsWon) {
