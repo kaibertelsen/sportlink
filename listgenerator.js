@@ -9,7 +9,7 @@ function listTournament(tournament) {
         rowelement.dataset.sport = item.sport[0];
         rowelement.dataset.organizer = item.organizer[0];
         rowelement.onclick = function() {
-            loadTourment(item);
+            loadTourment(item.airtable);
         };
 
         const nameelement = rowelement.querySelector(".turnname");

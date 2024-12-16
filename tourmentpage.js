@@ -60,9 +60,15 @@ function responseThisTournament(data){
     isInTurnament = true;
 }
 
-function loadTourment(data){
+function loadTourment(tournamentid){
     //trigges fra listen på forsiden
+        // Finn turneringen i "tournaments" arrayen basert på airtable feltet
+        const data = tournament.find(thistournament => thistournament.airtable === tournamentid);
 
+        if (!data) {
+            console.warn(`Turneringen med ID ${tournamentid} ble ikke funnet.`);
+            return; // Stopp funksjonen hvis turneringen ikke finnes
+        }
     //for å gå videre i tab systemet
     document.getElementById('tabtoturnering').click();
     //start match window
