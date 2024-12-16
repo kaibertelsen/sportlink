@@ -145,34 +145,40 @@ document.addEventListener("visibilitychange", handleAppVisibility);
 
 //oppdaterer når en scroller til toppen
 function setupPullToRefresh(scrollElement, updateFunction) {
-  const scrollParent = findScrollableParent(scrollElement); // Finn scrollelementet
-  let isAtTop = false;
-  let touchStartY = 0;
-  let pullDistance = 0;
-
-  // Legg til scroll-hendelse på scrollelementet
-  scrollParent.addEventListener("scroll", () => {
-    isAtTop = scrollParent.scrollTop === 0;
-    console.log(`Er vi på toppen av ${scrollParent.id || "et anonymt element"}?`, isAtTop);
-  });
-
-  // Touch-hendelser på selve listholderen
-  scrollElement.addEventListener("touchstart", (e) => {
-    touchStartY = e.touches[0].clientY;
-    pullDistance = 0;
-  });
-
-  scrollElement.addEventListener("touchmove", (e) => {
-    const touchMoveY = e.touches[0].clientY;
-    pullDistance = touchMoveY - touchStartY;
-  });
-
-  scrollElement.addEventListener("touchend", () => {
-    if (isAtTop && pullDistance > 50) {
-      updateFunction(scrollElement);
-    }
-    pullDistance = 0; // Tilbakestill trekkavstanden
-  });
+  function setupPullToRefresh(scrollElement, updateFunction) {
+    const scrollParent = findScrollableParent(scrollElement); // Finn scrollelementet
+    let isAtTop = false; // Om brukeren er på toppen av scrollen
+    let touchStartY = 0; // Startpunkt for touch
+    let pullDistance = 0; // Lagre trekkavstanden
+  
+    // Legg til scroll-hendelse på scrollelementet for å sjekke om vi er på toppen
+    scrollParent.addEventListener("scroll", () => {
+      isAtTop = scrollParent.scrollTop === 0; // Oppdater status for topp-posisjon
+    });
+  
+    // Registrer startpunkt for brukeren når de begynner å dra
+    scrollElement.addEventListener("touchstart", (e) => {
+      touchStartY = e.touches[0].clientY;
+      pullDistance = 0; // Tilbakestill trekkavstanden
+    });
+  
+    // Beregn hvor langt brukeren drar ned
+    scrollElement.addEventListener("touchmove", (e) => {
+      if (isAtTop) { // Bare beregn trekkavstand hvis vi er på toppen
+        const touchMoveY = e.touches[0].clientY;
+        pullDistance = touchMoveY - touchStartY;
+      }
+    });
+  
+    // Sjekk om trekkavstanden er nok til å trigge oppdatering
+    scrollElement.addEventListener("touchend", () => {
+      if (isAtTop && pullDistance > 50) { // Krever både at vi er på toppen og at brukeren har dratt ned
+        console.log("Oppdatering trigget!");
+        updateFunction(scrollElement); // Kjør oppdateringsfunksjonen
+      }
+      pullDistance = 0; // Tilbakestill trekkavstanden
+    });
+  }
 }
 function findScrollableParent(element) {
   while (element && element !== document.body) {
