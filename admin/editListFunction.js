@@ -398,6 +398,9 @@ function controllAction(item, newValue, field, tabelid, cell) {
         // Oppdater også clubid og clubname lokalt
         item.division = [Division.airtable];
         item.divisionname = Division.name;
+
+        //bygg listen på nytt
+        listMatch(matchs);
     }
 }
 

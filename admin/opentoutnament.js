@@ -434,7 +434,7 @@ function listMatch(matchs) {
         
         const divisionName = rowelement.querySelector(".division")
         divisionName.textContent = match.divisionname || "Ukjent divisjon";
-        if(!match.groupname && !match.teamName1 && !match.teamName1){
+        if(!match.groupname || !match.teamName1 || !match.teamName1){
             //hvis ikke gruppe eller team er valgt er satt skal en kunne hvelge divisjon
         let Divisionoptions = convertArrayToOptions(gDivision,"name","airtable");
         divisionName.addEventListener("click", () => triggerEditDropdown(divisionName, match, "division", Divisionoptions, tabelid));
