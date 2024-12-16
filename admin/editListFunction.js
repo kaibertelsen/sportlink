@@ -350,6 +350,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 if(!newValue){
                     item.team1 = "";
                     item.team1name = "";
+                    item.team1clublogo = "";
                     //cell.parentElement.parentElement.querySelector(".team1name").textContent = "ingenlag";
                 }else{
                 item.team1 = [team.airtable];
@@ -359,6 +360,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 if(!newValue){
                     item.team2 = "";
                     item.team2name = "";
+                    item.team2clublogo = "";
                     //cell.parentElement.parentElement.querySelector(".team2name").textContent = "ingenlag";
                 }else{
                 item.team2 = [team.airtable];
