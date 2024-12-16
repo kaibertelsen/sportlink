@@ -133,8 +133,11 @@ function handleAppVisibility() {
 
 function onAppResume() {
   console.log("Oppdaterer innhold ved gjenåpning...");
-
-  updateThisTournament(null);
+  if(isInTurnament){
+    updateThisTournament(null);
+  }else{
+    getTournament(member.klient);
+  }
 }
 
 // Legg til eventlistener for visibilitychange

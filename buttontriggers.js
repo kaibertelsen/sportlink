@@ -3,6 +3,7 @@ document.getElementById('buttontoallturnering').onclick = function() {
     document.getElementById('taballturnering').click();
     //tøm listene i konkuransen
     emtyTurnamentLists();
+    isInTurnament = false;
 }
          
 document.getElementById('headermaillogo').onclick = function() {

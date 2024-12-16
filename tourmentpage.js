@@ -31,7 +31,7 @@ function updateThisTournament(list){
 function responseThisTournament(data){
     //trigges fra oppdatering internt i listene
     activetournament = data.fields;
-    
+
     // Finn turneringen i tournament-arrayen
     const tournamentIndex = tournaments.findIndex(
         (tournament) => tournament.id === activetournament.id
@@ -48,6 +48,7 @@ function responseThisTournament(data){
     loadTourmentHeader(activetournament);
     listDivision(activetournament);
     loadeLists(activetournament);
+    isInTurnament = true;
 }
 
 function loadTourment(data){
@@ -62,6 +63,7 @@ function loadTourment(data){
     loadTourmentHeader(data);
     listDivision(data);
     loadeLists(data);
+    isInTurnament = true;
 
 }
 
