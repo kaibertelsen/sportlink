@@ -24,8 +24,8 @@ function updateThisTournament(){
 
 function responseThisTournament(data){
     console.log(data);
+    loadTourment(data.fields)
 }
-
 
 function loadTourment(data){
     //for å gå videre i tab systemet
