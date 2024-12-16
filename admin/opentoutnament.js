@@ -113,11 +113,20 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
 
 
     const startDate = tournamentinfoheader.querySelector(".startdate");
-            startDate.textContent = formatIsoDateName(tournament.startdate) || "Ukjent startdato";
+            if(tournament.startdate){
+                startDate.textContent = formatIsoDateName(tournament.startdate);
+            }else{
+                startDate.textContent = "Ukjent startdato";
+            }
             startDate.dataset.date = formatIsoDateValue(tournament.startdate);
             startDate.addEventListener("click", () => triggerEditInput(startDate, tournament, "startdate", "datetime-local", tabelid));
+    
     const endDate = tournamentinfoheader.querySelector(".enddate");
-            endDate.textContent = formatIsoDateName(tournament.enddate) || "Ukjent sluttdato";
+            if(tournament.enddate){
+               endDate.textContent = formatIsoDateName(tournament.enddate)
+            }else{
+                endDate.textContent = "Ukjent sluttdato";
+            }
             endDate.dataset.date = formatIsoDateValue(tournament.enddate);
             endDate.addEventListener("click", () => triggerEditInput(endDate, tournament, "enddate", "datetime-local", tabelid));
 
