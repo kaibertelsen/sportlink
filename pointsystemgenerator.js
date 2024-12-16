@@ -183,7 +183,7 @@ function generateVolleyballPointToTeams(data) {
                 // Beregn poeng basert på settscore
                 for (let setKey of setKeys) {
                     if (match[setKey]) {
-                        const [team1SetScore, team2SetScore] = match[setKey].split("-").map(Number);
+                        //const [team1SetScore, team2SetScore] = match[setKey].split("-").map(Number);
 
                         // Summer sett-poeng til `setsFor` og `setsAgainst`
                         team1.points.setsFor += team1SetScore;

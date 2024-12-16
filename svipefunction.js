@@ -145,7 +145,6 @@ document.addEventListener("visibilitychange", handleAppVisibility);
 
 //oppdaterer når en scroller til toppen
 function setupPullToRefresh(scrollElement, updateFunction) {
-  function setupPullToRefresh(scrollElement, updateFunction) {
     const scrollParent = findScrollableParent(scrollElement); // Finn scrollelementet
     let isAtTop = false; // Om brukeren er på toppen av scrollen
     let touchStartY = 0; // Startpunkt for touch
@@ -178,8 +177,8 @@ function setupPullToRefresh(scrollElement, updateFunction) {
       }
       pullDistance = 0; // Tilbakestill trekkavstanden
     });
-  }
 }
+
 function findScrollableParent(element) {
   while (element && element !== document.body) {
     const overflowY = window.getComputedStyle(element).overflowY;
