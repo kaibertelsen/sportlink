@@ -293,7 +293,7 @@ function viewMatch(match){
      matchsettholder.querySelector(".settba").textContent = match.settba || "-";
      matchsettholder.querySelector(".settbb").textContent = match.settbb || "-";
      matchsettholder.querySelector(".settca").textContent = match.settca || "-";
-     matchsettholder.querySelector(".settca").textContent = match.settcb || "-";
+     matchsettholder.querySelector(".settcb").textContent = match.settcb || "-";
 
      let setsAvailable = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
      .some(value => value && value.trim() !== "");
