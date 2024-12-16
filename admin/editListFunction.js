@@ -347,7 +347,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
             let logoclassElement = ""
             if(field === "team1"){
             // Oppdater også teamId og team1name lokalt
-                if(newValue){
+                if(!newValue){
                     item.team1 = "";
                     item.team1name = "";
                     cell.parentElement.parentElement.querySelector(".team1name").textContent = "ingenlag";
@@ -356,7 +356,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 item.team1name = team.name;
                 }
             }else if (field === "team2"){
-                if(newValue){
+                if(!newValue){
                     item.team2 = "";
                     item.team2name = "";
                     cell.parentElement.parentElement.querySelector(".team2name").textContent = "ingenlag";
