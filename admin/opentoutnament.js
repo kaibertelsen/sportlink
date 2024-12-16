@@ -528,7 +528,7 @@ function listMatch(matchs) {
         const endplay = rowelement.querySelector(".endplay");
         const matchnr = rowelement.querySelector(".matchnr");
 
-        if(match.group){
+        if(match.group == ""){
             // kampen har en gruppe og sluttspilldelen skal skjules
             endplayplace.style.display = "none";
             typeMatch.style.display = "none";
