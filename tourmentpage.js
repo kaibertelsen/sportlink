@@ -31,6 +31,20 @@ function updateThisTournament(list){
 function responseThisTournament(data){
     //trigges fra oppdatering internt i listene
     activetournament = data.fields;
+    
+    // Finn turneringen i tournament-arrayen
+    const tournamentIndex = tournaments.findIndex(
+        (tournament) => tournament.id === activetournament.id
+    );
+
+    if (tournamentIndex !== -1) {
+        // Oppdater turneringen i arrayen
+        tournaments[tournamentIndex] = { ...tournaments[tournamentIndex], ...activetournament };
+        console.log("Tournament oppdatert:", tournaments[tournamentIndex]);
+    } else {
+        console.warn("Turneringen ble ikke funnet i arrayen.");
+    }
+
     loadTourmentHeader(activetournament);
     listDivision(activetournament);
     loadeLists(activetournament);
