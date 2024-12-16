@@ -173,10 +173,11 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
             let newText = selectedOption.text;
             let savedata = {};
             cell.textContent = newText;
+            
             if(field == "typematch"){
-                savedata[field] = newValue;
+                savedata[field] = newValue || null;
             }else{
-                savedata[field] = [newValue];
+                savedata[field] = [newValue] || null;
             }
 
             
@@ -344,16 +345,25 @@ function controllAction(item, newValue, field, tabelid, cell) {
             let logoclassElement = ""
             if(field === "team1"){
             // Oppdater også teamId og team1name lokalt
-            item.team1 = [team.airtable];
-            item.team1name = team.name;
-
+                if(newValue){
+                    item.team1 = "";
+                    item.team1name = "";
+                }else{
+                item.team1 = [team.airtable];
+                item.team1name = team.name;
+                }
             }else if (field === "team2"){
-            item.team2 = [team.airtable];
-            item.team2name = team.name;
+                if(newValue){
+                    item.team2 = "";
+                    item.team2name = "";
+                }else{
+                item.team2 = [team.airtable];
+                item.team2name = team.name;
+                }
             }
 
             // Sett team logo hvis tilgjengelig
-            if (team.clublogo) {
+            if (team.clublogo && newValue) {
                 cell.parentElement.parentElement.querySelector(".teamlogo").src = team.clublogo;
             }
 
