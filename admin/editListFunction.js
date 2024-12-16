@@ -211,7 +211,7 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
 function triggerEditCheckbox(cell,item,field,tabelid){
     let savedata = {};
     const status = cell.checked; 
-    [field] = [status];
+    savedata[field] = [status];
     updateRowData(item.airtable, savedata,tabelid);
 }
 
@@ -296,7 +296,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
             cell.parentElement.parentElement.querySelector(".teamlogo").src = clubitem.logo;
         }
 
-    } else if (tabelid === "tbl3ta1WZBr6wKPSp" && field === "division") {
+    }else if(tabelid === "tbl3ta1WZBr6wKPSp" && field === "division") {
         // Finn divisjon
         const divisjon = gDivision.find(item => item.airtable === newValue);
 
@@ -304,7 +304,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
         item.divisjon = [divisjon.airtable];
         item.divisionname = divisjon.name;
 
-    } else if (tabelid === "tblqf56gcQaGJsBcl" && field === "name") {
+    }else if(tabelid === "tblqf56gcQaGJsBcl" && field === "name") {
         // Oppdater alle lag som er med i denne klubben
         
         // Finn alle lag i gTeam som tilhører denne klubben
@@ -318,7 +318,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
             team.clubname = item.name;
             team.clublogo = item.logo;
         }
-    } else if(tabelid === "tblrHBFa60aIdqkUu" && (field === "goalteam1" || field === "goalteam2") ){
+    }else if(tabelid === "tblrHBFa60aIdqkUu" && (field === "goalteam1" || field === "goalteam2") ){
         //sette 
         const rowelement = cell.parentElement.parentElement;
         const ResultStatus = rowelement.querySelector(".resultstatus");
