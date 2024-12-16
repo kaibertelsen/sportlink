@@ -177,7 +177,8 @@ function generateVolleyballPointToTeams(data) {
             const setKeys = ["setta", "settb", "settc"];
             let team1SetsWon = 0;
             let team2SetsWon = 0;
-            let setsAvailable = setKeys.some(setKey => match[setKey]); // Sjekk om noen settdata finnes
+            let setsAvailable = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
+            .some(value => value && value.trim() !== "");
 
             if (setsAvailable) {
                 // Beregn poeng basert på settscore
