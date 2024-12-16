@@ -175,9 +175,11 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
             cell.textContent = newText;
             
             if(field == "typematch"){
-                savedata[field] = newValue || null;
+                savedata[field] = newValue;;
+            }else if (newValue == ""){
+                savedata[field] == null;
             }else{
-                savedata[field] = [newValue] || null;
+                savedata[field] = [newValue];
             }
 
             
