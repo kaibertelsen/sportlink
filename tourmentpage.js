@@ -19,24 +19,32 @@ function emtyTurnamentLists(){
 }
 
 function updateThisTournament(list){
+    //trigges fra oppdatering internt i listene
     GETairtable(baseId,"tblGhVlhWETNvhrWN",activetournament.airtable,"responseThisTournament");
     //kopier loading holder i toppen av listen
-    if(list){
     const nodeelement = document.getElementById("elementlibrary").querySelector(".loadingholder");
-    const loadingelement = nodeelement.cloneNode(true);
-    list.prepend(loadingelement);
-    }   
+
+    if(list){
+        const loadingelement = nodeelement.cloneNode(true);
+        list.prepend(loadingelement);
+    }else{
+        const loadingelement1 = nodeelement.cloneNode(true);
+        document.getElementById("teamslistholder").prepend(loadingelement1);
+
+        const loadingelement2 = nodeelement.cloneNode(true);
+        document.getElementById("matchlistholder").prepend(loadingelement2);
+
+        const loadingelement3 = nodeelement.cloneNode(true);
+        document.getElementById("endplaylist").prepend(loadingelement3);
+    }
 }
 
 function responseThisTournament(data){
-    //trigges fra oppdatering internt i listene
     activetournament = data.fields;
-
     // Finn turneringen i tournament-arrayen
     const tournamentIndex = tournament.findIndex(
         (thistournament) => thistournament.id === activetournament.id
     );
-
     if (tournamentIndex !== -1) {
         // Oppdater turneringen i arrayen
         tournament[tournamentIndex] = { ...tournament[tournamentIndex], ...activetournament };
