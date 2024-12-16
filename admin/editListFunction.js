@@ -400,7 +400,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
         item.divisionname = Division.name;
 
         //bygg listen på nytt
-        listMatch(matchs);
+        listMatch(gMatchs);
     }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "group"){
         //dette er divisjon på laget som settes
         
@@ -412,7 +412,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
         item.groupname = Group.name;
 
         //bygg listen på nytt
-        listMatch(matchs);
+        listMatch(gMatchs);
     }
 }
 

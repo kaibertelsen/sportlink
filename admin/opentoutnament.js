@@ -446,12 +446,23 @@ function listMatch(matchs) {
         
         const groupName = rowelement.querySelector(".groupname")
         groupName.textContent = match.groupname || "-";
-        if(!match.endplay || !match.type){
-            //skal kunne velges om det ikke er en slutspillkamp
-            //finne divisjon
+        if(!match.endplay || !match.type ){
+            //skal kunne velges om det ikke er en slutspillkamp og ikke er lag meg grupper
+            
             const Division = gDivision.find(item => item.airtable === match.division);
+            //tilhører teamene en gruppe
+            let teamshaveNoGroup = true;
+            const team1 = gTeam.find(item => item.airtable === match.team1);
+            const team2 = gTeam.find(item => item.airtable === match.team2);
+
+            if(team1.group || team2.group){
+                teamshaveNoGroup = false;;
+            }
+
+            if(teamshaveNoGroup){}
             let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
             groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
+            }
         }
 
         
