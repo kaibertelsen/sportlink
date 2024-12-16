@@ -126,42 +126,37 @@ function listmatch(data, grouptype, scroll) {
                 divisionlable.style.display = "none";
             }
         
-            const settlist = matchelement.querySelector(".settlist");
-            const setKeys = ["sett1", "sett2", "sett3"];
-            const hasRequiredSetScores = match.sett1 && match.sett2;
+             // Sjekk om det finnes noen settverdier
+             const hasSetValues = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
+             .some(value => value && value.trim() !== "");
         
-            if (hasRequiredSetScores) {
-                settlist.style.display = "grid";
-                const settdivnode = settlist.querySelector(".settdiv");
-                let columnCount = 0;
-                let team1SetsWon = 0;
-                let team2SetsWon = 0;
-        
-                for (let i = 0; i < setKeys.length; i++) {
-                    if (match[setKeys[i]]) {
-                        const settdiv = settdivnode.cloneNode(true);
-                        const setttextlable = settdiv.querySelector(".setttextlable");
-                        setttextlable.textContent = match[setKeys[i]];
-        
-                        const [team1Score, team2Score] = match[setKeys[i]].split('-').map(Number);
-                        if (team1Score > team2Score) team1SetsWon++;
-                        else if (team2Score > team1Score) team2SetsWon++;
-        
-                        settlist.appendChild(settdiv);
-                        columnCount++;
+             if (hasSetValues) {
+                // Regne ut stillingen basert på settverdiene
+                const sets = [
+                    { teamA: match.settaa, teamB: match.settab },
+                    { teamA: match.settba, teamB: match.settbb },
+                    { teamA: match.settca, teamB: match.settcb },
+                ];
+
+                let teamAWins = 0;
+                let teamBWins = 0;
+
+                sets.forEach(set => {
+                    const teamA = parseInt(set.teamA) || 0;
+                    const teamB = parseInt(set.teamB) || 0;
+
+                    if (teamA > teamB) {
+                        teamAWins++;
+                    } else if (teamB > teamA) {
+                        teamBWins++;
                     }
-                }
-        
-                settdivnode.remove();
-                settlist.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
-        
-                match.goalteam1 = team1SetsWon;
-                match.goalteam2 = team2SetsWon;
+                });
+
+                match.goalteam1 = teamAWins;
+                match.goalteam2 = teamBWins;
             } 
 
-            settlist.style.display = "none";
             
-        
             const resultlable = matchelement.querySelector(".resultlable");
             if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
                 resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
