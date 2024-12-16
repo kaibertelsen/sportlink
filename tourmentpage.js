@@ -33,7 +33,7 @@ function responseThisTournament(data){
     activetournament = data.fields;
     loadTourmentHeader(activetournament);
     listDivision(activetournament);
-    loadeLists(data);
+    loadeLists(activetournament);
 }
 
 function loadTourment(data){
