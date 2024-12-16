@@ -367,7 +367,7 @@ function controllAction(item, newValue, field, tabelid, cell) {
                 }
             });
 
-            const resultholder = findParentWithResultatCell(cell,"resultatcell");
+            const resultholder = findParentWithResultatCell(cell,".resultatcell");
             resultholder.querySelector(".goalteam1").textContent = teamAWins;
             resultholder.querySelector(".goalteam2").textContent = teamBWins;
     }
