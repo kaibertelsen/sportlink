@@ -177,7 +177,7 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
             if(field == "typematch"){
                 savedata[field] = newValue;;
             }else if (newValue == ""){
-                savedata[field] == null;
+                savedata[field] = null;
             }else{
                 savedata[field] = [newValue];
             }
