@@ -535,7 +535,7 @@ function listMatch(matchs) {
              ];
 
         const typeMatech = rowelement.querySelector(".type")
-        typeMatech.textContent = options.find(option => option.value === match.typematch) || "-";
+        typeMatech.textContent = MatchTypeoptions.find(option => option.value === match.typematch) || "-";
         
         if(!match.group){
            typeMatech.addEventListener("click", () => triggerEditDropdown(typeMatech, match, "typematch", MatchTypeoptions, tabelid));
