@@ -24,6 +24,7 @@ function updateThisTournament(list){
     //kopier loading holder i toppen av listen
     const nodeelement = document.getElementById("elementlibrary").querySelector(".loadingholder");
 
+    //sette på loader animation
     if(list){
         const loadingelement = nodeelement.cloneNode(true);
         list.prepend(loadingelement);
@@ -43,7 +44,7 @@ function responseThisTournament(data){
     activetournament = data.fields;
     // Finn turneringen i tournament-arrayen
     const tournamentIndex = tournament.findIndex(
-        (thistournament) => thistournament.id === activetournament.id
+        (thistournament) => thistournament.airtable === activetournament.airtable
     );
     if (tournamentIndex !== -1) {
         // Oppdater turneringen i arrayen
