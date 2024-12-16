@@ -208,6 +208,15 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
     });
 }
 
+function triggerEditCheckbox(cell,item,field,tabelid){
+    let savedata = {};
+    const status = cell.checked; 
+    [field] = [status];
+    updateRowData(item.airtable, savedata,tabelid);
+}
+
+
+
 /// feller for alle typer inputs
 function rutingArrayName(tabelid){
     if(tabelid == "tblGhVlhWETNvhrWN"){

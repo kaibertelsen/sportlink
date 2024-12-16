@@ -562,21 +562,23 @@ function listMatch(matchs) {
                 goal2.textContent = teamBWins;
             } 
         }else if(activetournament.sport[0] === "reca0jxxTQAtlUTNu"){
-        // det er icehockey
-        icehockeyDivbox.style.display = "flex";
-        const switsjOvertime = icehockeyDivbox.querySelector(".overtime");
-            if(match.overtime){
-                switsjOvertime.checked = true;
-            }else{
-                switsjOvertime.checked = false; 
-            }
+            // det er icehockey
+            icehockeyDivbox.style.display = "flex";
 
-        const switsjshootout = icehockeyDivbox.querySelector(".shootout");
-            if(match.shootout){
-                switsjshootout.checked = true;
-            }else{
-                switsjshootout.checked = false; 
-            }
+            const switsjOvertime = icehockeyDivbox.querySelector(".overtime");
+            switsjOvertime.checked = !!match.overtime; // Konverter til boolean for sikkerhet
+            
+            // Legg til eventlistener for å håndtere klikk
+            switsjOvertime.addEventListener("change", () => {
+                triggerEditCheckbox(switsjOvertime,match,"overtime",tabelid);
+            });
+
+            const switsjshootout = icehockeyDivbox.querySelector(".shootout");
+            switsjshootout.checked = !!match.overtime;
+            
+            switsjshootout.addEventListener("change", () => {
+                triggerEditCheckbox(switsjshootout,match,"shootout",tabelid);
+            });
         }
         //
 
