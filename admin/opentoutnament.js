@@ -291,6 +291,8 @@ function listDivision(divisions) {
     defaultOptionMatch.textContent = "Alle divisjoner";
     divisionSelectorMatch.appendChild(defaultOptionMatch);
 
+    gGroups = [];
+
     for (let division of divisions) {
         const rowelement = nodeelement.cloneNode(true);
         const divisionName = rowelement.querySelector(".name")
@@ -303,6 +305,7 @@ function listDivision(divisions) {
             const groupElement = groupNode.cloneNode(true);
             groupElement.querySelector(".groupname").textContent = group.name;
             groupNode.parentElement.appendChild(groupElement);
+            gGroups.push(group);
         });
         groupNode.style.display = "none";
 
@@ -424,6 +427,7 @@ function listMatch(matchs) {
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".matchrow");
 
+    
     for (let match of filteredMatches) {
         const rowelement = nodeelement.cloneNode(true);
 
@@ -440,7 +444,15 @@ function listMatch(matchs) {
         divisionName.addEventListener("click", () => triggerEditDropdown(divisionName, match, "division", Divisionoptions, tabelid));
         }
         
-        rowelement.querySelector(".groupname").textContent = match.groupname || "-";
+        const groupName = rowelement.querySelector(".groupname")
+        groupName.textContent = match.groupname || "-";
+        if(!match.endplay || !match.type){
+            //skal kunne velges om det ikke er en slutspillkamp
+            //finne divisjon
+            const Division = gDivision.find(item => item.airtable === match.division);
+            let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
+            groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
+        }
 
         
         // Finn alle team som tilhører match.division og eventuelt match.group

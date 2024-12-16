@@ -401,6 +401,18 @@ function controllAction(item, newValue, field, tabelid, cell) {
 
         //bygg listen på nytt
         listMatch(matchs);
+    }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "group"){
+        //dette er divisjon på laget som settes
+        
+        // Finn clubitem
+        const Group = gGroups.find(item => item.airtable === newValue);
+
+        // Oppdater også clubid og clubname lokalt
+        item.group = [Group.airtable];
+        item.groupname = Group.name;
+
+        //bygg listen på nytt
+        listMatch(matchs);
     }
 }
 
