@@ -185,23 +185,12 @@ function respondPublish(data){
     activetournament = tournament;
 }
 
-function divisionSelectorChange(selectorId) {
+function divisionSelectorChange() {
     
-    // Find the selected division ID
-    let divId = "";
-    let listTeamsObject = false;
-    if (selectorId === "groupSelectorTeam") {
-        // Check division value on the team page
-        divId = document.getElementById("divisionSelectorTeam").value;
-        listTeamsObject = true;
-    } else {
-        // Check division value on the match page
-        divId = document.getElementById("divisionSelectorMatch").value;
-        listTeamsObject = false;
-    }
+    let divId = document.getElementById("divisionSelector").value;
 
     // Populate the groupSelector dropdown
-    const groupSelector = document.getElementById(selectorId);
+    const groupSelector = document.getElementById("groupSelector");
 
     if (divId === "") {
         // Hide group selector if no division is selected
@@ -241,14 +230,8 @@ function divisionSelectorChange(selectorId) {
         });
     }
 
-
-    if(listTeamsObject){
-    // Update the team list
         listTeams(gTeam);
-    }else{
         listMatch(gMatchs); 
-    }
-   
 }
 
 function groupSelectorChange(){
