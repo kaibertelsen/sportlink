@@ -542,13 +542,17 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         //team 1 velger
         const teamName1 = rowelement.querySelector(".team1name");
         teamName1.textContent = match.team1name || match.placeholderteam1 || "Ingen lag";
+        if(TeamOptions.length >1){
         teamName1.addEventListener("click", () => triggerEditDropdown(teamName1, match, "team1", TeamOptions, tabelid));
+        }
         if (match.team1clublogo) {rowelement.querySelector(".team1logo").src = match.team1clublogo};
         
         // Team 2 velger
         const teamName2 = rowelement.querySelector(".team2name")
         teamName2.textContent = match.team2name || match.placeholderteam2 || "Ingen lag";
+        if(TeamOptions.length >1){
         teamName2.addEventListener("click", () => triggerEditDropdown(teamName2, match, "team2", TeamOptions, tabelid));
+        }
         if (match.team2clublogo) {rowelement.querySelector(".team2logo").src = match.team2clublogo};
 
         //Scorfelt1
