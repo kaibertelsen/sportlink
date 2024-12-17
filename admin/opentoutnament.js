@@ -866,17 +866,17 @@ function newMatchresponse(data) {
         console.error("Klonbart matchrow-element ikke funnet.");
         return;
     }
-    if(data.fields?.divisjon){
-        data.fields.divisjon = data.fields.divisjon[0];
-        }else{
-        data.fields.divisjon = "";
-        }
+    if(data.fields?.division){
+        data.fields.division = data.fields.division[0];
+    }else{
+        data.fields.division = "";
+    }
     
     //konverterer group
     if(data.fields?.group){
-    data.fields.group = data.fields.group[0];
+        data.fields.group = data.fields.group[0];
     }else{
-    data.fields.group = "";
+        data.fields.group = "";
     }
     gMatchs.push(data.fields);
 
