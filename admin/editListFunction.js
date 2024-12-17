@@ -430,9 +430,8 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         item.division = Division.airtable;
         item.divisionname = Division.name;
 
-         //row trenger å kjøres en oppdatering på
-         const rowelement = cell.parentElement.parentElement;
-         makeMatchrow(rowelement,item,tabelid,true);
+        //row trenger å kjøres en oppdatering på
+        makeNewUpdateRowMatch(item,tabelid,cell);
          
     }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "group"){
         //dette er gruppe
@@ -446,8 +445,7 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
             item.groupname = ""
         }
         //row trenger å kjøres en oppdatering på
-        const rowelement = cell.parentElement.parentElement;
-        makeMatchrow(rowelement,item,tabelid,true);
+        makeNewUpdateRowMatch(item,tabelid,cell);
 
 
     }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "typematch"){
@@ -475,4 +473,17 @@ function findParentWithResultatCell(element,className) {
       element = element.parentElement; // Fortsett oppover i DOM-treet
     }
     return null; // Returner null hvis ingen foreldre matcher
+  }
+
+  function makeNewUpdateRowMatch(item,tabelid,cell){
+
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".matchrow");
+    const newRow = makeMatchrow(nodeelement,item,tabelid,false);
+
+    //row trenger å kjøres en oppdatering på
+    const rowelement = cell.parentElement.parentElement;
+    rowelement.parentElement.insertBefore(newRow, rowelement.nextSibling);
+    rowelement.remove();
+
   }
