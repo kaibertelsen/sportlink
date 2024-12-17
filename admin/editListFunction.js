@@ -175,7 +175,7 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
             cell.textContent = newText;
             
             if(field == "typematch" || field == "endplay"){
-                savedata[field] = newValue;;
+                savedata[field] = newValue;
             }else if (newValue == ""){
                 savedata[field] = null;
             }else{
@@ -345,7 +345,7 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
                     item.team1clublogo = "";
                     //cell.parentElement.parentElement.querySelector(".team1name").textContent = "ingenlag";
                 }else{
-                item.team1 = [team.airtable];
+                item.team1 = team.airtable;
                 item.team1name = team.name;
                 item.team1clublogo = team.clublogo;
                 }
@@ -356,7 +356,7 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
                     item.team2clublogo = "";
                     //cell.parentElement.parentElement.querySelector(".team2name").textContent = "ingenlag";
                 }else{
-                item.team2 = [team.airtable];
+                item.team2 = team.airtable;
                 item.team2name = team.name;
                 item.team2clublogo = team.clublogo;
                 }
