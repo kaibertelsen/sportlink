@@ -274,22 +274,14 @@ function listDivision(divisions) {
     const nodeelement = elementlibrary.querySelector(".divisionrow");
 
     // Clear and prepare selectors
-    const divisionSelectorTeam = document.getElementById("divisionSelectorTeam");
-    const divisionSelectorMatch = document.getElementById("divisionSelectorMatch");
-    divisionSelectorTeam.replaceChildren();
-    divisionSelectorMatch.replaceChildren();
+    const divisionSelector = document.getElementById("divisionSelector");
+    divisionSelector.replaceChildren();
 
     // Add default option "Alle divisjoner"
     const defaultOptionTeam = document.createElement("option");
     defaultOptionTeam.value = "";
     defaultOptionTeam.textContent = "Alle divisjoner";
-    divisionSelectorTeam.appendChild(defaultOptionTeam);
-
-    const defaultOptionMatch = document.createElement("option");
-    defaultOptionMatch.value = "";
-    defaultOptionMatch.textContent = "Alle divisjoner";
-    divisionSelectorMatch.appendChild(defaultOptionMatch);
-
+    divisionSelector.appendChild(defaultOptionTeam);
     gGroups = [];
 
     for (let division of divisions) {
@@ -325,12 +317,8 @@ function listDivision(divisions) {
         const optionTeam = document.createElement("option");
         optionTeam.value = division.airtable;
         optionTeam.textContent = division.name || "Ukjent navn";
-        divisionSelectorTeam.appendChild(optionTeam);
+        divisionSelector.appendChild(optionTeam);
 
-        const optionMatch = document.createElement("option");
-        optionMatch.value = division.airtable;
-        optionMatch.textContent = division.name || "Ukjent navn";
-        divisionSelectorMatch.appendChild(optionMatch);
     }
 }
 
