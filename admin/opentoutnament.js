@@ -868,6 +868,8 @@ function newMatchresponse(data) {
     }
     if(data.fields?.group){
     data.fields.group = data.fields.group[0];
+    }else{
+    data.fields.group = "";
     }
     gMatchs.push(data.fields);
 
@@ -907,7 +909,7 @@ function createNewMatch(){
         tournament:[activetournament.airtable],
         typematch:typematch,
         division:[divisionId],
-        group:groupId,
+        group:groupId
     }
     const cleanedMatch = removeEmtyValuForSave(saveobject);
 
