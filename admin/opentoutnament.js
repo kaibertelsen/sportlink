@@ -404,12 +404,14 @@ function listMatch(matchs) {
     // Get selected values from division and group selectors
     const divisionValue = document.getElementById("divisionSelectorMatch").value;
     const groupValue = document.getElementById("groupSelectorMatch").value;
+    const typeValue = document.getElementById("typeSelectorMatch").value;
 
     // Filter matches based on selected division and group
     const filteredMatches = matchs.filter(match => {
         const matchesDivision = !divisionValue || match.division === divisionValue;
         const matchesGroup = !groupValue || match.group === groupValue;
-        return matchesDivision && matchesGroup;
+        const matchesType = !typeValue || match.type === typeValue;
+        return matchesDivision && matchesGroup && matchesType;
     });
 
     // Sort matches by time
@@ -542,7 +544,7 @@ function listMatch(matchs) {
             }
 
             let MatchTypeoptions = [
-            { text: "Gruppekamp", value: "group" },
+            { text: "Gruppekamp", value: "" },
             { text: "Åttendedelsfinale", value: "eighthfinale" },
             { text: "Kvartfinale", value: "quarterfinale" },
             { text: "Semifinale", value: "semifinale" },
@@ -561,10 +563,7 @@ function listMatch(matchs) {
         }
 
 
-        
-        
-        
-        
+
 
         const openButton = rowelement.querySelector(".infobutton");
         const allInfoMatch = rowelement.querySelector(".allinfomatch");
