@@ -799,7 +799,7 @@ function copyMatch(button, match, tabelid) {
                 value !== null &&              // Ikke null
                 value !== undefined &&         // Ikke undefined
                 value !== "" &&                // Ikke tom streng
-                !(Array.isArray(value) && value.length === 0) // Ikke tom array
+                !(Array.isArray(value) && (value.length === 0 || (value.length === 1 && value[0] === ""))) // Ikke tom array eller array med en tom streng
             );
         })
     );
