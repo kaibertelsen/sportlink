@@ -59,9 +59,7 @@ function openTournament(Tournamentid){
     document.getElementById("matchlistholder").replaceChildren();
 
     //skjul gruppeselectorer
-    document.getElementById("groupSelectorTeam").style.display = "none";
-    document.getElementById("groupSelectorMatch").style.display = "none";
-
+    document.getElementById("groupSelector").style.display = "none";
 }
 
 function responsGetTournament(data) {
