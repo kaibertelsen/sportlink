@@ -565,6 +565,7 @@ function listMatch(matchs) {
 
         const openButton = rowelement.querySelector(".infobutton");
         const allInfoMatch = rowelement.querySelector(".allinfomatch");
+        const contentinfomatch = allInfoMatch.querySelector(".contentinfomatch");
         //starter skjult
         allInfoMatch.style.display = "none";
 
@@ -703,11 +704,11 @@ function listMatch(matchs) {
         
     
        // Finn synlige child-elementer (ikke display: none)
-        const visibleChildren = Array.from(allInfoMatch.children).filter(
+        const visibleChildren = Array.from(contentinfomatch.children).filter(
         (child) => window.getComputedStyle(child).display !== "none"
         );
         const columnCount = Math.ceil(Math.sqrt(visibleChildren.length));
-        allInfoMatch.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
+        contentinfomatch.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
   
 
         // button panel
