@@ -504,6 +504,12 @@ function makeMatchrow(nodeelement,match,tabelid){
         goal2.addEventListener("click", () => triggerEditInput(goal2, match, "goalteam2", "number", tabelid));
 
         const ResultStatus = rowelement.querySelector(".resultstatus");
+
+        if(match.matchtype){
+            //finalekamp
+            ResultStatus.style.backgroundColor = "#ffb700";
+        }
+
         if(match.goalteam1 && match.goalteam2){
             ResultStatus.textContent = "Resultat";
             ResultStatus.classList.add("played");
