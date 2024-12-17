@@ -1,4 +1,8 @@
 
+document.getElementById('matchtabbutton').onclick = function() {
+    listMatch(gMatchs); 
+}
+
 function loadTurnamentSelector(tournaments) {
     // Finn dropdown-elementet
     const selector = document.getElementById("tournamentSelector");
@@ -752,8 +756,6 @@ function copyMatch(button, match) {
 
     console.log("Raden ble kopiert og lagt til under originalen.");
 }
-
-
 
 function matchdeletedresponse(data){
    console.log(data);
