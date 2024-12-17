@@ -792,8 +792,20 @@ function copyMatch(button, match, tabelid) {
         typematch: match.typematch
     };
 
+    // Fjern nøkler med tomme verdier, inkludert tomme arrays
+    const cleanedMatch = Object.fromEntries(
+        Object.entries(newMatch).filter(([_, value]) => {
+            return (
+                value !== null &&              // Ikke null
+                value !== undefined &&         // Ikke undefined
+                value !== "" &&                // Ikke tom streng
+                !(Array.isArray(value) && value.length === 0) // Ikke tom array
+            );
+        })
+    );
+
     // Opprett en ny kamp på server
-    POSTairtable(baseId, tabelid, JSON.stringify(newMatch), "newMatchresponse");
+    POSTairtable(baseId, tabelid, JSON.stringify(cleanedMatch), "newMatchresponse");
 }
 
 function newMatchresponse(data) {
