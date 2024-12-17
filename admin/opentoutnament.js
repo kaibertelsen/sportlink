@@ -473,6 +473,7 @@ function makeMatchrow(nodeelement,match,tabelid){
                 let Division = gDivision.find(item => item.airtable === match.division);
                 if(Division){
                 let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
+                Groupoptions.push({text:"Ingen gruppe",value:""});
                 groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
                 }
             }
@@ -542,7 +543,6 @@ function makeMatchrow(nodeelement,match,tabelid){
             endplayplace.parentElement.style.display = "none";
             typeMatch.parentElement.style.display = "none";
             endplay.parentElement.style.display = "none";
-            matchnr.parentElement.style.display = "none";
         }else{
             endplayplace.textContent = match.endplayplace || "-";
             if(match.endplay){
@@ -747,7 +747,6 @@ function makeMatchrow(nodeelement,match,tabelid){
 
 }
 
-
 function copyMatch(button, match, tabelid) {
     // Finn den nåværende raden (rowelement) ved å gå oppover i DOM
     const rowelement = button.parentElement.parentElement.parentElement;
@@ -834,7 +833,6 @@ function newMatchresponse(data) {
     // Klikk på infoknappen i den nye raden
     newRow.querySelector(".infobutton").click();
 }
-
 
 function matchdeletedresponse(data){
    console.log(data);
