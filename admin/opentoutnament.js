@@ -720,7 +720,8 @@ function listMatch(matchs) {
         deletebutton.onclick = function () {
             const confirmation = window.confirm("Ønsker du å slette denne kampen?");
             if (confirmation) {
-                DELETEairtable(baseId,tabelid,match.airtable,"matchdeletedresponse")
+                DELETEairtable(baseId,tabelid,match.airtable,"matchdeletedresponse");
+                rowelement.remove();
             } else {
             console.log("Sletting avbrutt.");
             }
