@@ -479,10 +479,13 @@ function makeNewUpdateRowMatch(item,tabelid,cell){
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".matchrow");
-    const newRow = makeMatchrow(nodeelement,item,tabelid,false);
-
-    //row trenger å kjøres en oppdatering på
+    let open = false;
     const rowelement = cell.parentElement.parentElement;
+    if(rowelement.querySelector(".allinfomatch").style.display === "block"){
+        open = true;  
+    }
+    const newRow = makeMatchrow(nodeelement,item,tabelid,open);
+    //row trenger å kjøres en oppdatering på
     rowelement.parentElement.insertBefore(newRow, rowelement.nextSibling);
     rowelement.remove();
 
