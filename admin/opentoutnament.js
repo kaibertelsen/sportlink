@@ -713,30 +713,48 @@ function listMatch(matchs) {
         // button panel
         const deletebutton = rowelement.querySelector(".deletebutton");
         deletebutton.onclick = function () {
-
-        const confirmation = window.confirm("Ønsker du å slette denne kampen?");
-        if (confirmation) {
-            DELETEairtable(baseId,tabelid,match.airtable,"matchdeletedresponse")
-        } else {
-        console.log("Sletting avbrutt.");
+            const confirmation = window.confirm("Ønsker du å slette denne kampen?");
+            if (confirmation) {
+                DELETEairtable(baseId,tabelid,match.airtable,"matchdeletedresponse")
+            } else {
+            console.log("Sletting avbrutt.");
+            }
         }
-};
 
-
-
-
+        const duplicatebutton = rowelement.querySelector(".duplicate");
+        duplicatebutton.onclick = function () {
+            const confirmation = window.confirm("Ønsker du å kopiere denne kampen?");
+            if (confirmation) {
+            copyMatch(duplicatebutton,match); 
+            } else {
+            console.log("Kopiering avbrutt.");
+            }
+        };
 
         // Append the row to the list
         list.appendChild(rowelement);
     }
 }
 
+function copyMatch(button, match) {
+    // Finn den nåværende raden (rowelement) ved å gå oppover i DOM
+    const rowelement = button.parentElement.parentElement.parentElement;
 
-function matchdeletedresponse(data){
-   console.log(data);
+    // Klon raden (inkludert dens innhold)
+    const newRow = rowelement.cloneNode(true);
+
+    // Oppdater eventuelle verdier i match-objektet for den nye raden hvis nødvendig
+    // For eksempel: match.id eller annen unik informasjon kan endres her
+
+    // Legg til den nye raden rett etter den opprinnelige raden
+    rowelement.parentElement.insertBefore(newRow, rowelement.nextSibling);
+
+    console.log("Raden ble kopiert og lagt til under originalen.");
 }
 
 
 
-
+function matchdeletedresponse(data){
+   console.log(data);
+}
 
