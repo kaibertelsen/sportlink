@@ -438,8 +438,15 @@ function listMatch(matchs) {
     }
 }
 
-function makeMatchrow(nodeelement,match,tabelid){
-        const rowelement = nodeelement.cloneNode(true);
+function makeMatchrow(nodeelement,match,tabelid,update){
+        let rowelement; 
+
+        if(update){
+            rowelement = nodeelement;
+        }else{
+            rowelement = nodeelement.cloneNode(true);
+        }
+        
         const Timeelement = rowelement.querySelector(".time")
         Timeelement.textContent = formatIsoDateName(match.time) || "Ukjent startdato";
         Timeelement.dataset.date = formatIsoDateValue(match.time);
@@ -462,13 +469,11 @@ function makeMatchrow(nodeelement,match,tabelid){
             let Division = gDivision.find(item => item.airtable === match.division);
             let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
             
-
             //sjekker teamene er på kampen og at det stemmer
             const team1 = gTeam.find(item => item.airtable === match.team1);
             const team2 = gTeam.find(item => item.airtable === match.team2);
 
-
-            if(team1 || team2){
+            if(team1 && team2){
             //to lag lagt til kampen
                 if(team1.group == team2.group){
                 //samme gruppe på begge
