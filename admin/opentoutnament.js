@@ -368,7 +368,12 @@ function listTeams(teams) {
         DivisionName.textContent = team.divisionname || "Ukjent divisjon";
         DivisionName.addEventListener("click", () => triggerEditDropdown(DivisionName, team, "division", Divisionoptions, tabelid));
 
-        rowelement.querySelector(".groupname").textContent = team.groupname || "-";
+        const groupName = rowelement.querySelector(".groupname")
+        groupName.textContent = team.groupname || "-";
+        let Division = gDivision.find(item => item.airtable === team.division);
+        let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
+        Groupoptions.push({text:"Ingen gruppe",value:""});
+        groupName.addEventListener("click", () => triggerEditDropdown(groupName, team, "division",Groupoptions , tabelid));
 
         // Append the row to the list
         list.appendChild(rowelement);
