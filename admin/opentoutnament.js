@@ -822,6 +822,8 @@ function newMatchresponse(data) {
         return;
     }
 
+    gMatchs.push(data.fields);
+
     // Opprett ny rad basert på responsdata
     const newRow = makeMatchrow(nodeelement, data.fields, "tblrHBFa60aIdqkUu");
 
