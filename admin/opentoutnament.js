@@ -511,14 +511,33 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             //legger til for å fjerne kamp fra gruppe
             Groupoptions.push({text:"Ingen gruppe",value:""});
             groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));  
-            }
+        }
 
-        // Finn alle team som tilhører match.division og eventuelt match.group
-        const teamsInDivisionAndGroup = gTeam.filter(team => {
-            return team.division === match.division && (!match.group || team.group === match.group);
-        });
-        let TeamOptions = convertArrayToOptions(teamsInDivisionAndGroup,"name","airtable");
+        //Finne aktuelle team å velge til kampen
+        let TeamOptions = [];
+        let teamsInDivisionAndGroup = [];
+        if(match.team1 || match.team1){
+            //det er et av teamene som er lagt inn i kampen
+            let teamObject;
+            if(match.team1){
+                //hente opplysninger om divisjon og evt grupper fra team 1
+                teamObject = gTeam.find(item => item.airtable === match.team1);
+            }else{
+                //hente opplysninger om divisjon og evt grupper fra team 2
+                teamObject = gTeam.find(item => item.airtable === match.team2);
+            }
+            teamsInDivisionAndGroup = gTeam.filter(team => {
+                return team.division === teamObject.division && (!teamObject.group || team.group === teamObject.group);
+            });
+        }else{
+            // ingen team er lagt til kampen finn alle team som tilhører match.division og eventuelt match.group
+            teamsInDivisionAndGroup = gTeam.filter(team => {
+                return team.division === match.division && (!match.group || team.group === match.group);
+            });
+        }
+        TeamOptions = convertArrayToOptions(teamsInDivisionAndGroup,"name","airtable");
         TeamOptions.unshift({text:"Ingen lag",value:""});
+
 
         //team 1 velger
         const teamName1 = rowelement.querySelector(".team1name");
