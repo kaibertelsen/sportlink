@@ -23,6 +23,8 @@ function ruteresponse(data,id){
         responsklient(data);
     }else if(id == "respondsaveToServer"){
         respondsaveToServer(data);
+    }else if(id == "matchdeletedresponse"){
+        matchdeletedresponse(data);
     }
     
     

@@ -563,8 +563,6 @@ function listMatch(matchs) {
         }
 
 
-
-
         const openButton = rowelement.querySelector(".infobutton");
         const allInfoMatch = rowelement.querySelector(".allinfomatch");
         //starter skjult
@@ -703,13 +701,31 @@ function listMatch(matchs) {
             }
         });
         
+
+        const deletebutton = allIrowelementnfoMatch.querySelector(".deletebutton");
+        deletebutton.onclick = function () {
+
+        const confirmation = window.confirm("Ønsker du å slette denne kampen?");
+        if (confirmation) {
+            DELETEairtable(baseId,tabelid,match.airtable,"matchdeletedresponse")
+        } else {
+        console.log("Sletting avbrutt.");
+        }
+};
+
+
+
+
+
         // Append the row to the list
         list.appendChild(rowelement);
     }
 }
 
 
-
+function matchdeletedresponse(data){
+   console.log(data);
+}
 
 
 
