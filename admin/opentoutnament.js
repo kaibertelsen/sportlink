@@ -1,4 +1,5 @@
 var copyMatchElementholder;
+var alertMessage;
 document.getElementById('matchtabbutton').onclick = function() {
     listMatch(gMatchs); 
 }
@@ -432,9 +433,15 @@ function listMatch(matchs) {
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".matchrow");
-
+    alertMessage = [];
     for (let match of filteredMatches) {
         list.appendChild(makeMatchrow(nodeelement,match,tabelid));
+    }
+
+    //alert om noen kamper har lag med forskjellige grupper/ divisjoner
+    if(alertMessage.length>0){
+        alert(alertMessage);
+        alertMessage = [];
     }
 }
 
@@ -479,7 +486,8 @@ function makeMatchrow(nodeelement,match,tabelid,update){
                 //samme gruppe på begge
                 Groupoptions = [{text:team1.groupname,value:team1.group}];
                 } else{
-                    alert("Lagene tilhører to forskjellige grupper!");
+                    let thisMessage = "Lagene på kamp nr:" + match.nr+ "tilhører forskjellige grupper";
+                    alertMessage.push(thisMessage);
                 }
             }else if(team1){
                 //bare team 1
