@@ -414,7 +414,7 @@ function listMatch(matchs) {
     const filteredMatches = matchs.filter(match => {
         const matchesDivision = !divisionValue || match.division === divisionValue;
         const matchesGroup = !groupValue || match.group === groupValue;
-        const matchesType = !typeValue || match.type === typeValue;
+        const matchesType = !typeValue || match.typematch === typeValue;
         return matchesDivision && matchesGroup && matchesType;
     });
 
