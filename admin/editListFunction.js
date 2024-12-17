@@ -174,7 +174,7 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
             let savedata = {};
             cell.textContent = newText;
             
-            if(field == "typematch"){
+            if(field == "typematch" || field == "endplay"){
                 savedata[field] = newValue;;
             }else if (newValue == ""){
                 savedata[field] = null;
