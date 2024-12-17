@@ -701,6 +701,11 @@ function listMatch(matchs) {
             }
         });
         
+        // Finn antall elementer i allInfoMatch
+        const childCount = allInfoMatch.children.length;
+        const columnCount = Math.ceil(Math.sqrt(childCount));
+        allInfoMatch.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
+
 
         const deletebutton = allIrowelementnfoMatch.querySelector(".deletebutton");
         deletebutton.onclick = function () {
