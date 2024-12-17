@@ -901,7 +901,7 @@ function createNewMatch(){
     //finne divisjonsid, gruppeide, kamptype,klient,tounering,
     let divisionId = document.getElementById("divisionSelector").value;
     let groupId = document.getElementById("groupSelector").value;
-    let typematch = document.getElementById("typeSelectorMatch").value;
+    let typematch = document.getElementById("typeSelector").value;
 
     let saveobject = {
         tournament:[activetournament.airtable],
