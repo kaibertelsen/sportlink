@@ -633,7 +633,7 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         matchnr.textContent = match.nr || "-";
 
         //om det er valgt gruppe i kampen
-        if(match.group || !match.endplay){
+        if(match.group && !match.endplay){
             // kampen har en gruppe og sluttspilldelen skal skjules
             endplayplace.parentElement.style.display = "none";
             typeMatch.parentElement.style.display = "none";
