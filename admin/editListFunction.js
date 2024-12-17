@@ -329,16 +329,8 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         }
     }else if(tabelid === "tblrHBFa60aIdqkUu" && (field === "goalteam1" || field === "goalteam2") ){
         //sette 
-        const rowelement = cell.parentElement.parentElement;
-        const ResultStatus = rowelement.querySelector(".resultstatus");
-
-        if (newValue || newValue === 0) {
-            ResultStatus.classList.add("played"); // Legg til klassen "played"
-            ResultStatus.textContent = "Resultat"; // Sett teksten til "Resultat"
-        } else {
-            ResultStatus.textContent = "Ikke spilt"; // Sett teksten til "Ikke spilt"
-            ResultStatus.classList.remove("played"); // Fjern klassen "played"
-        }
+      //row trenger å kjøres en oppdatering på
+      makeNewUpdateRowMatch(item,tabelid,cell);
 
     }else if(tabelid === "tblrHBFa60aIdqkUu" && (field === "team1" || field === "team2") ){
     //lag forandres på kamp
@@ -370,56 +362,17 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
                 }
             }
 
-            // Sett team logo hvis tilgjengelig
-            if (team?.clublogo) {
-                cell.parentElement.parentElement.querySelector(".teamlogo").src = team.clublogo;
-            }
-
-            if(!newValue){
-             //bygg listen på nytt
-            listMatch(gMatchs);
-            }
+            //row trenger å kjøres en oppdatering på
+            makeNewUpdateRowMatch(item,tabelid,cell);
 
 
 
     }else if(tabelid === "tblrHBFa60aIdqkUu" && (field === "settaa" || field === "settab" || field === "settba" || field === "settbb" || field === "settca" || field === "settcb") ){
         //settverdiene settes i panelet
         item[field] = newValue;
-
-            // Regne ut stillingen basert på settverdiene
-            const sets = [
-                { teamA: item.settaa, teamB: item.settab },
-                { teamA: item.settba, teamB: item.settbb },
-                { teamA: item.settca, teamB: item.settcb },
-            ];
-
-            let teamAWins = 0;
-            let teamBWins = 0;
-
-            sets.forEach(set => {
-                const teamA = parseInt(set.teamA) || "";
-                const teamB = parseInt(set.teamB) || "";
-
-                if (teamA > teamB) {
-                    teamAWins++;
-                } else if (teamB > teamA) {
-                    teamBWins++;
-                }
-            });
-
-            const resultholder = findParentWithResultatCell(cell,".resultatcell");
-            resultholder.querySelector(".goalteam1").textContent = teamAWins;
-            resultholder.querySelector(".goalteam2").textContent = teamBWins;
-            const resultlable = resultholder.querySelector(".resultstatus")
-            if(teamAWins && teamBWins){
-                resultlable.textContent = "Resultat";
-                resultlable.classList.add("played");
-            }else{
-                resultlable.textContent = "Ikke spilt";
-                resultlable.classList.remove("played");
-            }
-
-            
+        //row trenger å kjøres en oppdatering på
+        makeNewUpdateRowMatch(item,tabelid,cell);
+ 
     }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "division"){
         //dette er divisjon på laget som settes
         
@@ -450,18 +403,12 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
 
     }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "typematch"){
         //dette type kamp settes
-   
-        // Oppdater også clubid og clubname lokalt
+         // Oppdater også clubid
         item.typematch = newValue;
-        // Finn option som matcher newValue
-        let matchingOption = options.find(option => option.value === newValue);
-
-        if (matchingOption) {
-            cell.textContent = matchingOption.text;
-        } 
+        //row trenger å kjøres en oppdatering på
+        makeNewUpdateRowMatch(item,tabelid,cell);
      }
 }
-
 
 
 function findParentWithResultatCell(element,className) {
