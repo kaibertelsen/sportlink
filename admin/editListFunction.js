@@ -433,17 +433,20 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         //bygg listen på nytt
         listMatch(gMatchs);
     }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "group"){
-        //dette er fruppe
+        //dette er gruppe
         
-        // Finn clubitem
+        
         const Group = gGroups.find(item => item.airtable === newValue);
-
         // Oppdater også clubid og clubname lokalt
+        if(Group){
         item.group = [Group.airtable];
         item.groupname = Group.name;
+        }else{
+            item.group = "";
+            item.groupname = ""
+        }
 
-        //bygg listen på nytt
-        listMatch(gMatchs);
+
     }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "typematch"){
         //dette type kamp settes
    
