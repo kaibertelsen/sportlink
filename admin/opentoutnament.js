@@ -912,7 +912,7 @@ function createNewMatch(){
     const cleanedMatch = removeEmtyValuForSave(saveobject);
 
     // Opprett en ny kamp på server
-    POSTairtable(baseId, tabelid, JSON.stringify(cleanedMatch), "newMatchresponse");
+    POSTairtable(baseId, "tblrHBFa60aIdqkUu", JSON.stringify(cleanedMatch), "newMatchresponse");
 }
 
 function removeEmtyValuForSave(array){
