@@ -566,7 +566,12 @@ function makeMatchrow(nodeelement,match,tabelid,update){
         //finalekamp farge og tekst
         if(match.typematch){
             ResultStatus.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
-            ResultStatus.style.backgroundColor = "#ffb700";
+            // Legg til border med farge og størrelse
+            ResultStatus.style.borderColor = "#ffb700"; // Border-farge
+            ResultStatus.style.borderWidth = "2px";     // Border-størrelse
+            ResultStatus.style.borderStyle = "solid";   // Border-stil
+        }else{
+            ResultStatus.style.borderStyle = "none";   // Border-stil
         }
         //bane tekst
         const fieldName = rowelement.querySelector(".field");
