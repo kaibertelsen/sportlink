@@ -777,7 +777,7 @@ function copyMatch(button, match, tabelid) {
     const newMatch = {
         division: [match.division],
         endplay: match.endplay,
-        endplayplace: match.endplayplace,
+        endplayplace: Number(match.endplayplace) || null,
         field: [match.field],
         fieldname: match.fieldname,
         group: [match.group],
