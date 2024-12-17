@@ -431,7 +431,7 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         item.divisionname = Division.name;
 
          //row trenger å kjøres en oppdatering på
-         const rowelement = findParentWithResultatCell(cell.parentElement,".matchrow");
+         const rowelement = findParentWithResultatCell(cell,".matchrow");
          makeMatchrow(rowelement,item,tabelid,true);
          
     }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "group"){
@@ -446,7 +446,7 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
             item.groupname = ""
         }
         //row trenger å kjøres en oppdatering på
-        const rowelement = findParentWithResultatCell(cell.parentElement,".matchrow");
+        const rowelement = findParentWithResultatCell(cell,".matchrow");
         makeMatchrow(rowelement,item,tabelid,true);
 
 
