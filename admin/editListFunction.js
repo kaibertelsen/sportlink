@@ -427,7 +427,7 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         const Division = gDivision.find(item => item.airtable === newValue);
 
         // Oppdater også clubid og clubname lokalt
-        item.division = [Division.airtable];
+        item.division = Division.airtable;
         item.divisionname = Division.name;
 
          //row trenger å kjøres en oppdatering på
