@@ -519,16 +519,25 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         if(match.team1 || match.team1){
             //det er et av teamene som er lagt inn i kampen
             let teamObject;
-            if(match.team1){
-                //hente opplysninger om divisjon og evt grupper fra team 1
-                teamObject = gTeam.find(item => item.airtable === match.team1);
+            if(match.typematch){
+                //er det en finalekamp alle team i denne divisjon
+                teamsInDivisionAndGroup = gTeam.filter(team => {
+                    return team.division === match.division;
+                });
+
             }else{
-                //hente opplysninger om divisjon og evt grupper fra team 2
-                teamObject = gTeam.find(item => item.airtable === match.team2);
+
+                if(match.team1){
+                    //hente opplysninger om divisjon og evt grupper fra team 1
+                    teamObject = gTeam.find(item => item.airtable === match.team1);
+                }else{
+                    //hente opplysninger om divisjon og evt grupper fra team 2
+                    teamObject = gTeam.find(item => item.airtable === match.team2);
+                }
+                teamsInDivisionAndGroup = gTeam.filter(team => {
+                    return team.division === teamObject.division && (!teamObject.group || team.group === teamObject.group);
+                });
             }
-            teamsInDivisionAndGroup = gTeam.filter(team => {
-                return team.division === teamObject.division && (!teamObject.group || team.group === teamObject.group);
-            });
         }else{
             // ingen team er lagt til kampen finn alle team som tilhører match.division og eventuelt match.group
             teamsInDivisionAndGroup = gTeam.filter(team => {
