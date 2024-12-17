@@ -707,7 +707,7 @@ function listMatch(matchs) {
         allInfoMatch.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
 
 
-        const deletebutton = allIrowelementnfoMatch.querySelector(".deletebutton");
+        const deletebutton = rowelement.querySelector(".deletebutton");
         deletebutton.onclick = function () {
 
         const confirmation = window.confirm("Ønsker du å slette denne kampen?");
