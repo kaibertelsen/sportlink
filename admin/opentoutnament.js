@@ -504,7 +504,6 @@ function makeMatchrow(nodeelement,match,tabelid){
         goal2.addEventListener("click", () => triggerEditInput(goal2, match, "goalteam2", "number", tabelid));
 
         const ResultStatus = rowelement.querySelector(".resultstatus");
-
         let MatchTypeoptions = [
             { text: "Gruppekamp", value: "" },
             { text: "Åttendedelsfinale", value: "eighthfinale" },
@@ -546,11 +545,17 @@ function makeMatchrow(nodeelement,match,tabelid){
         refereeName.textContent = match.refereename || "-";
         refereeName.addEventListener("click", () => triggerEditInput(refereeName, match, "refereename", "text", tabelid));
 
+        const typeMatch = rowelement.querySelector(".type");
+        typeMatch.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
+       
+        const endplay = rowelement.querySelector(".endplay");
+        endplay.textContent = match.endplay || "-";
 
         const endplayplace = rowelement.querySelector(".finalenr");
-        const typeMatch = rowelement.querySelector(".type");
-        const endplay = rowelement.querySelector(".endplay");
+        endplayplace.textContent = match.endplayplace || "-";
+
         const matchnr = rowelement.querySelector(".matchnr");
+        matchnr.textContent = match.nr || "-";
 
         if(match.group){
             // kampen har en gruppe og sluttspilldelen skal skjules
@@ -558,31 +563,24 @@ function makeMatchrow(nodeelement,match,tabelid){
             typeMatch.parentElement.style.display = "none";
             endplay.parentElement.style.display = "none";
         }else{
-            endplayplace.textContent = match.endplayplace || "-";
+            //sluttspil A eller B
+            const endplayOptions = [{text:"A",value:"A"},{text:"B",value:"B"},{text:"Ingen",value:""}];
+            endplay.addEventListener("click", () => triggerEditDropdown(endplay, match, "endplay", endplayOptions, tabelid));
+            
+            //finalenr
             if(match.endplay){
-                //denne kan kun trykkes på om det er en sluttspilkamp
-                endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
-            }
-            typeMatch.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
-
-            if(match.endplay){
-                //denne kan kun trykkes på om det er en sluttspilkamp
                 endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
             }
 
-            typeMatch.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
+            //type kamp åttendedels,kvart,semi,finale 
             typeMatch.addEventListener("click", () => triggerEditDropdown(typeMatch, match, "typematch", MatchTypeoptions, tabelid));
-            endplay.textContent = match.endplay || "-";
-            matchnr.textContent = match.nr || "-";
         }
-
 
         const openButton = rowelement.querySelector(".infobutton");
         const allInfoMatch = rowelement.querySelector(".allinfomatch");
         const contentinfomatch = allInfoMatch.querySelector(".contentinfomatch");
         //starter skjult
         allInfoMatch.style.display = "none";
-
 
     // Sjekk hvilken sport det er
         const volleyballDivbox = allInfoMatch.querySelector(".volleyballresults");
