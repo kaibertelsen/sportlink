@@ -438,11 +438,18 @@ function listMatch(matchs) {
         list.appendChild(makeMatchrow(nodeelement,match,tabelid));
     }
 
-    //alert om noen kamper har lag med forskjellige grupper/ divisjoner
-    if(alertMessage.length>0){
-        alert(alertMessage);
+    // Sjekk om det finnes meldinger i alertMessage
+    if (alertMessage.length > 0) {
+        // Kombiner alle meldingene med linjeskift
+        const alertText = alertMessage.join("\n");
+        
+        // Vis alert med linjeskift mellom hver melding
+        alert(alertText);
+
+        // Tøm arrayet
         alertMessage = [];
     }
+
 }
 
 function makeMatchrow(nodeelement,match,tabelid,update){
@@ -482,13 +489,23 @@ function makeMatchrow(nodeelement,match,tabelid,update){
 
             if(team1 && team2){
             //to lag lagt til kampen
-                if(team1.group == team2.group){
-                //samme gruppe på begge
-                Groupoptions = [{text:team1.groupname,value:team1.group}];
-                } else{
-                    let thisMessage = "Lagene på kamp nr:" + match.nr+ "tilhører forskjellige grupper";
+            const rowelement = button.parentElement.parentElement.parentElement; // Referanse til raden
+
+                if (team1.group == team2.group) {
+                    // Samme gruppe på begge lag
+                    Groupoptions = [{ text: team1.groupname, value: team1.group }];
+
+                    // Fjern border fra raden
+                    rowelement.style.border = "none";
+                } else {
+                    // Lagene tilhører forskjellige grupper
+                    let thisMessage = "Lagene på kamp nr: " + match.nr + " tilhører forskjellige grupper.";
                     alertMessage.push(thisMessage);
+
+                    // Legg til rød border med 2px på raden
+                    rowelement.style.border = "2px solid red";
                 }
+
             }else if(team1){
                 //bare team 1
                 Groupoptions = [{text:team1.groupname,value:team1.group}];
