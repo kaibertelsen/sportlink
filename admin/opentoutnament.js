@@ -599,7 +599,8 @@ function makeMatchrow(nodeelement,match,tabelid,update){
         //Finalenummer
         const endplayplace = rowelement.querySelector(".finalenr");
         endplayplace.textContent = match.endplayplace || "-";
-
+        endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
+        
         //Kampnummer
         const matchnr = rowelement.querySelector(".matchnr");
         matchnr.textContent = match.nr || "-";
