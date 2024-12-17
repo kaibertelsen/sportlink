@@ -550,7 +550,7 @@ function makeMatchrow(nodeelement,match,tabelid,update){
         //Result lable
         const ResultStatus = rowelement.querySelector(".resultstatus");
         let MatchTypeoptions = [
-            { text: "Gruppekamp", value: "" },
+            { text: "Ingen", value: "" },
             { text: "Åttendedelsfinale", value: "eighthfinale" },
             { text: "Kvartfinale", value: "quarterfinale" },
             { text: "Semifinale", value: "semifinale" },
