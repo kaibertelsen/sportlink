@@ -452,14 +452,9 @@ function listMatch(matchs) {
 
 }
 
-function makeMatchrow(nodeelement,match,tabelid,update){
-        let rowelement; 
-
-        if(update){
-            rowelement = nodeelement;
-        }else{
-            rowelement = nodeelement.cloneNode(true);
-        }
+function makeMatchrow(nodeelement,match,tabelid,startopen){
+        let rowelement = nodeelement.cloneNode(true);
+        
         
         const Timeelement = rowelement.querySelector(".time")
         Timeelement.textContent = formatIsoDateName(match.time) || "Ukjent startdato";
@@ -629,7 +624,11 @@ function makeMatchrow(nodeelement,match,tabelid,update){
         const allInfoMatch = rowelement.querySelector(".allinfomatch");
         const contentinfomatch = allInfoMatch.querySelector(".contentinfomatch");
         //starter skjult
-        allInfoMatch.style.display = "none";
+        if(startopen){
+        allInfoMatch.style.display = "block";
+        }else{
+        allInfoMatch.style.display = "none"; 
+        }
 
     // Sjekk hvilken sport det er
         const volleyballDivbox = allInfoMatch.querySelector(".volleyballresults");

@@ -473,9 +473,9 @@ function findParentWithResultatCell(element,className) {
       element = element.parentElement; // Fortsett oppover i DOM-treet
     }
     return null; // Returner null hvis ingen foreldre matcher
-  }
+}
 
-  function makeNewUpdateRowMatch(item,tabelid,cell){
+function makeNewUpdateRowMatch(item,tabelid,cell){
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".matchrow");
