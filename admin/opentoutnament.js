@@ -433,10 +433,13 @@ function listMatch(matchs) {
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".matchrow");
 
-    
     for (let match of filteredMatches) {
-        const rowelement = nodeelement.cloneNode(true);
+        list.appendChild(makeMatchrow(nodeelement,match,tabelid));
+    }
+}
 
+function makeMatchrow(nodeelement,match,tabelid){
+        const rowelement = nodeelement.cloneNode(true);
         const Timeelement = rowelement.querySelector(".time")
         Timeelement.textContent = formatIsoDateName(match.time) || "Ukjent startdato";
         Timeelement.dataset.date = formatIsoDateValue(match.time);
@@ -731,32 +734,33 @@ function listMatch(matchs) {
         duplicatebutton.onclick = function () {
             const confirmation = window.confirm("Ønsker du å kopiere denne kampen?");
             if (confirmation) {
-            copyMatch(duplicatebutton,match); 
+            copyMatch(duplicatebutton,match,tabelid); 
             } else {
             console.log("Kopiering avbrutt.");
             }
         };
 
-        // Append the row to the list
-        list.appendChild(rowelement);
-    }
+    return rowelement
+
+
+
+
 }
 
-function copyMatch(button, match) {
+
+function copyMatch(button, match,tabelid) {
     // Finn den nåværende raden (rowelement) ved å gå oppover i DOM
     const rowelement = button.parentElement.parentElement.parentElement;
 
-    // Klon raden (inkludert dens innhold)
-    const newRow = rowelement.cloneNode(true);
-
-    // Oppdater eventuelle verdier i match-objektet for den nye raden hvis nødvendig
-    // For eksempel: match.id eller annen unik informasjon kan endres her
-
+    // Kopier match-objektet og fjern "airtable"-nøkkelen
+    const newMatch = { ...match }; // Lag en kopi av match-objektet
+    delete newMatch.airtable; // Fjern nøkkelen "airtable"
+    const newRow = makeMatchrow(rowelement,newMatch,tabelid);
+    
     // Legg til den nye raden rett etter den opprinnelige raden
     rowelement.parentElement.insertBefore(newRow, rowelement.nextSibling);
-
-    console.log("Raden ble kopiert og lagt til under originalen.");
 }
+
 
 function matchdeletedresponse(data){
    console.log(data);
