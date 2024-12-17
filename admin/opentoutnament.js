@@ -373,7 +373,7 @@ function listTeams(teams) {
         let Division = gDivision.find(item => item.airtable === team.division);
         let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
         Groupoptions.push({text:"Ingen gruppe",value:""});
-        groupName.addEventListener("click", () => triggerEditDropdown(groupName, team, "division",Groupoptions , tabelid));
+        groupName.addEventListener("click", () => triggerEditDropdown(groupName, team, "group",Groupoptions , tabelid));
 
         // Append the row to the list
         list.appendChild(rowelement);
