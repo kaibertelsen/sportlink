@@ -253,13 +253,9 @@ function divisionSelectorChange(selectorId) {
    
 }
 
-function groupSelectorChange(listName){
-    if(listName == "Match"){
+function groupSelectorChange(){
         listMatch(gMatchs);
-    }else{
         listTeams(gTeam)
-
-    }
 }
 
 function findGroupByDivision(divisionId) {
@@ -342,8 +338,8 @@ function listDivision(divisions) {
 
 function listTeams(teams) {
     // Get selected values from division and group selectors
-    const divisionValue = document.getElementById("divisionSelectorTeam").value;
-    const groupValue = document.getElementById("groupSelectorTeam").value;
+    const divisionValue = document.getElementById("divisionSelector").value;
+    const groupValue = document.getElementById("groupSelector").value;
 
     // Filter teams based on selected division and group
     const filteredTeams = teams.filter(team => {
@@ -407,9 +403,9 @@ function listTeams(teams) {
 
 function listMatch(matchs) {
     // Get selected values from division and group selectors
-    const divisionValue = document.getElementById("divisionSelectorMatch").value;
-    const groupValue = document.getElementById("groupSelectorMatch").value;
-    const typeValue = document.getElementById("typeSelectorMatch").value;
+    const divisionValue = document.getElementById("divisionSelector").value;
+    const groupValue = document.getElementById("groupSelector").value;
+    const typeValue = document.getElementById("typeSelector").value;
 
     // Filter matches based on selected division and group
     const filteredMatches = matchs.filter(match => {
