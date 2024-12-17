@@ -497,26 +497,31 @@ function makeMatchrow(nodeelement,match,tabelid){
         });
         let TeamOptions = convertArrayToOptions(teamsInDivisionAndGroup,"name","airtable");
         TeamOptions.unshift({text:"Ingen lag",value:""});
-        
+
+        //team 1 velger
         const teamName1 = rowelement.querySelector(".team1name");
         teamName1.textContent = match.team1name || match.placeholderteam1 || "Ingen lag";
         teamName1.addEventListener("click", () => triggerEditDropdown(teamName1, match, "team1", TeamOptions, tabelid));
-
-
-        if (match.team1clublogo) {
-            rowelement.querySelector(".team1logo").src = match.team1clublogo;
-        }
+        if (match.team1clublogo) {rowelement.querySelector(".team1logo").src = match.team1clublogo};
         
+        // Team 2 velger
+        const teamName2 = rowelement.querySelector(".team2name")
+        teamName2.textContent = match.team2name || match.placeholderteam2 || "Ingen lag";
+        teamName2.addEventListener("click", () => triggerEditDropdown(teamName2, match, "team2", TeamOptions, tabelid));
+        if (match.team2clublogo) {rowelement.querySelector(".team2logo").src = match.team2clublogo};
+
+        //Scorfelt1
         const goal1 = rowelement.querySelector(".goalteam1");
         goal1.textContent = match.goalteam1 || "-";
         goal1.addEventListener("click", () => triggerEditInput(goal1, match, "goalteam1", "number", tabelid));
 
+        //Scorfelt2
         const goal2 = rowelement.querySelector(".goalteam2");
         goal2.textContent = match.goalteam2 || "-";
         goal2.addEventListener("click", () => triggerEditInput(goal2, match, "goalteam2", "number", tabelid));
 
+        //Result lable
         const ResultStatus = rowelement.querySelector(".resultstatus");
-        
         let MatchTypeoptions = [
             { text: "Gruppekamp", value: "" },
             { text: "Åttendedelsfinale", value: "eighthfinale" },
@@ -539,13 +544,9 @@ function makeMatchrow(nodeelement,match,tabelid){
             ResultStatus.style.backgroundColor = "#ffb700";
         }
 
-        if (match.team2clublogo) {
-            rowelement.querySelector(".team2logo").src = match.team2clublogo;
-        }
+      
 
-        const teamName2 = rowelement.querySelector(".team2name")
-        teamName2.textContent = match.team2name || match.placeholderteam2 || "Ingen lag";
-        teamName2.addEventListener("click", () => triggerEditDropdown(teamName2, match, "team2", TeamOptions, tabelid));
+        
 
         const fieldName = rowelement.querySelector(".field");
         fieldName.textContent = match.fieldname || "-";
