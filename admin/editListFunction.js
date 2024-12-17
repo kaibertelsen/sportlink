@@ -430,12 +430,12 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         item.division = [Division.airtable];
         item.divisionname = Division.name;
 
-        //bygg listen på nytt
-        listMatch(gMatchs);
+         //row trenger å kjøres en oppdatering på
+         const rowelement = findParentWithResultatCell(cell.parentElement,"matchrow");
+         makeMatchrow(rowelement,item,tabelid,true);
+         
     }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "group"){
         //dette er gruppe
-        
-        
         const Group = gGroups.find(item => item.airtable === newValue);
         // Oppdater også clubid og clubname lokalt
         if(Group){
@@ -445,6 +445,9 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
             item.group = "";
             item.groupname = ""
         }
+        //row trenger å kjøres en oppdatering på
+        const rowelement = findParentWithResultatCell(cell.parentElement,"matchrow");
+        makeMatchrow(rowelement,item,tabelid,true);
 
 
     }else if(tabelid === "tblrHBFa60aIdqkUu" && field === "typematch"){
