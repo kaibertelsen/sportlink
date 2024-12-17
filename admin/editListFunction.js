@@ -422,12 +422,34 @@ function findParentWithResultatCell(element,className) {
     return null; // Returner null hvis ingen foreldre matcher
 }
 
+
+
+function findParentWithClass(element, className) {
+    while (element) {
+        // Sjekk om elementet selv har klassen
+        if (element.classList && element.classList.contains(className)) {
+            return element; // Returnerer elementet hvis det har klassen
+        }
+
+        // Sjekk om elementet inneholder et barn med klassen
+        if (element.querySelector && element.querySelector(`.${className}`)) {
+            return element; // Returnerer elementet hvis det inneholder et barn med klassen
+        }
+
+        // Fortsett oppover i DOM-treet
+        element = element.parentElement;
+    }
+    return null; // Returnerer null hvis ingen elementer matcher
+}
+
+
+
 function makeNewUpdateRowMatch(item,tabelid,cell){
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".matchrow");
     let open = false;
-    const rowelement = cell.parentElement.parentElement;
+    const rowelement = findParentWithClass(cell, "standardlistrow");
     if(rowelement.querySelector(".allinfomatch").style.display === "block"){
         open = true;  
     }
