@@ -701,12 +701,16 @@ function listMatch(matchs) {
             }
         });
         
-        // Finn antall elementer i allInfoMatch
-        const childCount = allInfoMatch.children.length;
-        const columnCount = Math.ceil(Math.sqrt(childCount));
+    
+       // Finn synlige child-elementer (ikke display: none)
+        const visibleChildren = Array.from(allInfoMatch.children).filter(
+        (child) => window.getComputedStyle(child).display !== "none"
+        );
+        const columnCount = Math.ceil(Math.sqrt(visibleChildren.length));
         allInfoMatch.style.gridTemplateColumns = `repeat(${columnCount}, 1fr)`;
+  
 
-
+        // button panel
         const deletebutton = rowelement.querySelector(".deletebutton");
         deletebutton.onclick = function () {
 
