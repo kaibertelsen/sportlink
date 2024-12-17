@@ -564,8 +564,7 @@ function makeMatchrow(nodeelement,match,tabelid,update){
             ResultStatus.textContent = "Ikke spilt";
         }
         //finalekamp farge og tekst
-        if(match.matchtype){
-            
+        if(match.typematch){
             ResultStatus.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
             ResultStatus.style.backgroundColor = "#ffb700";
         }
