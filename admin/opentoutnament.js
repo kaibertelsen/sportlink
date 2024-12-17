@@ -909,7 +909,7 @@ function createNewMatch(){
         tournament:[activetournament.airtable],
         typematch:typematch,
         division:[divisionId],
-        group:groupId
+        group:[groupId]
     }
     const cleanedMatch = removeEmtyValuForSave(saveobject);
 
