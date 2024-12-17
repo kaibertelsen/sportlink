@@ -905,8 +905,14 @@ function createNewMatch(){
     let groupId = document.getElementById("groupSelector").value;
     let typematch = document.getElementById("typeSelector").value;
 
+     // Legg til dagens dato og klokkeslett
+     const now = new Date();
+     const time = now.toISOString().slice(0, 16); 
+
+
     let saveobject = {
         tournament:[activetournament.airtable],
+        time:time,
         typematch:typematch,
         division:[divisionId],
         group:[groupId]
