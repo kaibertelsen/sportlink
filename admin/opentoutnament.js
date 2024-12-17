@@ -455,27 +455,39 @@ function makeMatchrow(nodeelement,match,tabelid){
         
         const groupName = rowelement.querySelector(".groupname")
         groupName.textContent = match.groupname || "-";
-        if(!match.endplay || !match.type ){
-            //skal kunne velges om det ikke er en slutspillkamp og ikke er lag meg grupper
+
+        //Gruppevelger
+        if(!match.endplay || !match.type || match.division){
+            //skal kunne velges om det ikke er en slutspillkamp og divisjon er valgt
+            let Division = gDivision.find(item => item.airtable === match.division);
+            let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
             
-            
-            //tilhører teamene en gruppe
-            let teamshaveNoGroup = true;
+
+            //sjekker teamene er på kampen og at det stemmer
             const team1 = gTeam.find(item => item.airtable === match.team1);
             const team2 = gTeam.find(item => item.airtable === match.team2);
 
-            if(team1?.group || team2?.group){
-                teamshaveNoGroup = false;;
+
+            if(team1 || team2){
+            //to lag lagt til kampen
+                if(team1.group == team2.group){
+                //samme gruppe på begge
+                Groupoptions = [{text:team1.groupname,value:team1.group}];
+                } else{
+                    alert("Lagene tilhører to forskjellige grupper!");
+                }
+            }else if(team1){
+                //bare team 1
+                Groupoptions = [{text:team1.groupname,value:team1.group}];
+            }else if(team2){
+                //bare team 2
+                Groupoptions = [{text:team2.groupname,value:team2.group}];
             }
 
-            if(teamshaveNoGroup && match?.division ){
-                //kan kun velge grupper dersom divisjon er valgt
-                let Division = gDivision.find(item => item.airtable === match.division);
-                if(Division){
-                let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
-                Groupoptions.push({text:"Ingen gruppe",value:""});
-                groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
-                }
+            //legger til for å fjerne kamp fra gruppe
+            Groupoptions.push({text:"Ingen gruppe",value:""});
+            groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
+                
             }
         }
 
@@ -504,6 +516,7 @@ function makeMatchrow(nodeelement,match,tabelid){
         goal2.addEventListener("click", () => triggerEditInput(goal2, match, "goalteam2", "number", tabelid));
 
         const ResultStatus = rowelement.querySelector(".resultstatus");
+        
         let MatchTypeoptions = [
             { text: "Gruppekamp", value: "" },
             { text: "Åttendedelsfinale", value: "eighthfinale" },
@@ -519,8 +532,9 @@ function makeMatchrow(nodeelement,match,tabelid){
             ResultStatus.textContent = "Ikke spilt";
         }
 
+        //finalekamp farge og tekst
         if(match.matchtype){
-            //finalekamp
+            
             ResultStatus.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
             ResultStatus.style.backgroundColor = "#ffb700";
         }
