@@ -486,10 +486,8 @@ function makeMatchrow(nodeelement,match,tabelid){
 
             //legger til for å fjerne kamp fra gruppe
             Groupoptions.push({text:"Ingen gruppe",value:""});
-            groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));
-                
+            groupName.addEventListener("click", () => triggerEditDropdown(groupName, match, "group", Groupoptions, tabelid));  
             }
-        }
 
         // Finn alle team som tilhører match.division og eventuelt match.group
         const teamsInDivisionAndGroup = gTeam.filter(team => {
@@ -536,42 +534,44 @@ function makeMatchrow(nodeelement,match,tabelid){
         }else{
             ResultStatus.textContent = "Ikke spilt";
         }
-
         //finalekamp farge og tekst
         if(match.matchtype){
             
             ResultStatus.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
             ResultStatus.style.backgroundColor = "#ffb700";
         }
-
-      
-
-        
-
+        //bane tekst
         const fieldName = rowelement.querySelector(".field");
         fieldName.textContent = match.fieldname || "-";
         fieldName.addEventListener("click", () => triggerEditInput(fieldName, match, "fieldname", "text", tabelid));
 
+        //lokasjonstekst
         const loaction = rowelement.querySelector(".location");
         loaction.textContent = match.location || "-";
         loaction.addEventListener("click", () => triggerEditInput(loaction, match, "location", "text", tabelid));
 
+        //Dommer tekst
         const refereeName = rowelement.querySelector(".refereename");
         refereeName.textContent = match.refereename || "-";
         refereeName.addEventListener("click", () => triggerEditInput(refereeName, match, "refereename", "text", tabelid));
 
+        //Type kamp text
         const typeMatch = rowelement.querySelector(".type");
         typeMatch.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
        
+        //Sluttspill text
         const endplay = rowelement.querySelector(".endplay");
         endplay.textContent = match.endplay || "-";
 
+        //Finalenummer
         const endplayplace = rowelement.querySelector(".finalenr");
         endplayplace.textContent = match.endplayplace || "-";
 
+        //Kampnummer
         const matchnr = rowelement.querySelector(".matchnr");
         matchnr.textContent = match.nr || "-";
 
+        //om det er valgt gruppe i kampen
         if(match.group){
             // kampen har en gruppe og sluttspilldelen skal skjules
             endplayplace.parentElement.style.display = "none";
