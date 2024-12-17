@@ -1,4 +1,4 @@
-
+var copyMatchElementholder;
 document.getElementById('matchtabbutton').onclick = function() {
     listMatch(gMatchs); 
 }
@@ -748,17 +748,77 @@ function makeMatchrow(nodeelement,match,tabelid){
 }
 
 
-function copyMatch(button, match,tabelid) {
+function copyMatch(button, match, tabelid) {
     // Finn den nåværende raden (rowelement) ved å gå oppover i DOM
     const rowelement = button.parentElement.parentElement.parentElement;
 
-    // Kopier match-objektet og fjern "airtable"-nøkkelen
-    const newMatch = { ...match }; // Lag en kopi av match-objektet
-    delete newMatch.airtable; // Fjern nøkkelen "airtable"
-    const newRow = makeMatchrow(rowelement,newMatch,tabelid);
-    
-    // Legg til den nye raden rett etter den opprinnelige raden
+    // Simuler klikk på infoknapp
+    rowelement.querySelector(".infobutton").click();
+
+    // Finn elementet som skal klones
+    const elementlibrary = document.getElementById("elementlibrary");
+    if (!elementlibrary) {
+        console.error("Elementlibrary ikke funnet.");
+        return;
+    }
+
+    const nodeelement = elementlibrary.querySelector(".copywait");
+    if (!nodeelement) {
+        console.error("Klonbart element ikke funnet i elementlibrary.");
+        return;
+    }
+
+    // Klon og legg det inn i DOM
+    const newRow = nodeelement.cloneNode(true);
     rowelement.parentElement.insertBefore(newRow, rowelement.nextSibling);
+    copyMatchElementholder = newRow;
+
+    // Kopier info fra match-objektet
+    const newMatch = {
+        division: [match.division],
+        endplay: match.endplay,
+        endplayplace: match.endplayplace,
+        field: [match.field],
+        fieldname: match.fieldname,
+        group: [match.group],
+        location: match.location,
+        placeholderteam1: match.placeholderteam1,
+        placeholderteam2: match.placeholderteam2,
+        refereename: match.refereename,
+        team1: [match.team1],
+        team2: [match.team2],
+        time: match.time || new Date().toISOString(), // Fallback hvis tid ikke er definert
+        tournament: [match.tournament],
+        typematch: match.typematch
+    };
+
+    // Opprett en ny kamp på server
+    POSTairtable(baseId, tabelid, JSON.stringify(newMatch), "newMatchresponse");
+}
+
+function newMatchresponse(data) {
+    // Sjekk for nødvendige elementer
+    const elementlibrary = document.getElementById("elementlibrary");
+    if (!elementlibrary) {
+        console.error("Elementlibrary ikke funnet ved respons.");
+        return;
+    }
+
+    const nodeelement = elementlibrary.querySelector(".matchrow");
+    if (!nodeelement) {
+        console.error("Klonbart matchrow-element ikke funnet.");
+        return;
+    }
+
+    // Opprett ny rad basert på responsdata
+    const newRow = makeMatchrow(nodeelement, data.fields, "tblrHBFa60aIdqkUu");
+
+    // Erstatt midlertidig placeholder med den nye raden
+    copyMatchElementholder.parentElement.insertBefore(newRow, copyMatchElementholder.nextSibling);
+    copyMatchElementholder.remove();
+
+    // Klikk på infoknappen i den nye raden
+    newRow.querySelector(".infobutton").click();
 }
 
 
