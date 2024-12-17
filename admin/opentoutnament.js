@@ -894,6 +894,7 @@ function createNewMatch(){
   const list = document.getElementById("matchlistholder");
 
   const newRow = nodeelement.cloneNode(true);
+  newRow.querySelector(".copytext").textContent = "Oppretter kamp";
   list.prepend(newRow);
   copyMatchElementholder = newRow;
 
