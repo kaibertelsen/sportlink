@@ -4,6 +4,11 @@ document.getElementById('matchtabbutton').onclick = function() {
     listMatch(gMatchs); 
 }
 
+document.getElementById('createNewMatch').onclick = function() {
+    createNewMatch(); 
+}
+
+
 function loadTurnamentSelector(tournaments) {
     // Finn dropdown-elementet
     const selector = document.getElementById("tournamentSelector");
@@ -890,3 +895,46 @@ function matchdeletedresponse(data){
    console.log(data);
 }
 
+function createNewMatch(){
+
+  // Finn elementet som skal klones
+  const elementlibrary = document.getElementById("elementlibrary");
+  const nodeelement = elementlibrary.querySelector(".copywait");
+  const list = document.getElementById("matchlistholder");
+
+  const newRow = nodeelement.cloneNode(true);
+  list.prepend(newRow);
+  copyMatchElementholder = newRow;
+
+    //finne divisjonsid, gruppeide, kamptype,klient,tounering,
+    let divisionId = document.getElementById("divisionSelector").value;
+    let groupId = document.getElementById("groupSelector").value;
+    let typematch = document.getElementById("typeSelectorMatch").value;
+
+    let saveobject = {
+        tournament:[activetournament.airtable],
+        typematch:typematch,
+        division:[divisionId],
+        group:groupId,
+    }
+    const cleanedMatch = removeEmtyValuForSave(saveobject);
+
+    // Opprett en ny kamp på server
+    POSTairtable(baseId, tabelid, JSON.stringify(cleanedMatch), "newMatchresponse");
+}
+
+
+function removeEmtyValuForSave(array){
+ // Fjern nøkler med tomme verdier, inkludert tomme arrays
+ let cleanedMatch = Object.fromEntries(
+    Object.entries(array).filter(([_, value]) => {
+        return (
+            value !== null &&              // Ikke null
+            value !== undefined &&         // Ikke undefined
+            value !== "" &&                // Ikke tom streng
+            !(Array.isArray(value) && (value.length === 0 || (value.length === 1 && value[0] === ""))) // Ikke tom array eller array med en tom streng
+         );
+        })
+    );
+    return cleanedMatch;
+}
