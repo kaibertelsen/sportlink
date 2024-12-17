@@ -468,8 +468,8 @@ function makeMatchrow(nodeelement,match,tabelid,update){
         
         const divisionName = rowelement.querySelector(".division")
         divisionName.textContent = match.divisionname || "Ukjent divisjon";
-        if(!match.groupname || !match.teamName1 || !match.teamName1){
-            //hvis ikke gruppe eller team er valgt er satt skal en kunne hvelge divisjon
+        if(!match.groupname || !match.team1 || !match.team2){
+            //hvis ikke gruppe eller team er valgt skal en kunne velge divisjon
         let Divisionoptions = convertArrayToOptions(gDivision,"name","airtable");
         divisionName.addEventListener("click", () => triggerEditDropdown(divisionName, match, "division", Divisionoptions, tabelid));
         }
@@ -489,8 +489,7 @@ function makeMatchrow(nodeelement,match,tabelid,update){
 
             if(team1 && team2){
             //to lag lagt til kampen
-            const rowelement = button.parentElement.parentElement.parentElement; // Referanse til raden
-
+            
                 if (team1.group == team2.group) {
                     // Samme gruppe på begge lag
                     Groupoptions = [{ text: team1.groupname, value: team1.group }];
