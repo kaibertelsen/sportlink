@@ -478,7 +478,7 @@ function makeMatchrow(nodeelement,match,tabelid,update){
         groupName.textContent = match.groupname || "-";
 
         //Gruppevelger
-        if(!match.endplay || !match.type || match.division){
+        if(!match.endplay && !match.type && match.division){
             //skal kunne velges om det ikke er en slutspillkamp og divisjon er valgt
             let Division = gDivision.find(item => item.airtable === match.division);
             let Groupoptions = convertArrayToOptions(Division.group,"name","airtable");
@@ -600,7 +600,7 @@ function makeMatchrow(nodeelement,match,tabelid,update){
         const endplayplace = rowelement.querySelector(".finalenr");
         endplayplace.textContent = match.endplayplace || "-";
         endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
-        
+
         //Kampnummer
         const matchnr = rowelement.querySelector(".matchnr");
         matchnr.textContent = match.nr || "-";
