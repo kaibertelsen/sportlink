@@ -468,7 +468,7 @@ function makeMatchrow(nodeelement,match,tabelid,update){
         
         const divisionName = rowelement.querySelector(".division")
         divisionName.textContent = match.divisionname || "Ukjent divisjon";
-        if(!match.groupname || !match.team1 || !match.team2){
+        if(!match.groupname && !match.team1 && !match.team2){
             //hvis ikke gruppe eller team er valgt skal en kunne velge divisjon
         let Divisionoptions = convertArrayToOptions(gDivision,"name","airtable");
         divisionName.addEventListener("click", () => triggerEditDropdown(divisionName, match, "division", Divisionoptions, tabelid));
@@ -568,7 +568,7 @@ function makeMatchrow(nodeelement,match,tabelid,update){
             ResultStatus.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
             // Legg til border med farge og størrelse
             ResultStatus.style.borderColor = "#ffb700"; // Border-farge
-            ResultStatus.style.borderWidth = "2px";     // Border-størrelse
+            ResultStatus.style.borderWidth = "1px";     // Border-størrelse
             ResultStatus.style.borderStyle = "solid";   // Border-stil
         }else{
             ResultStatus.style.borderStyle = "none";   // Border-stil
