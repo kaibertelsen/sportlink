@@ -873,7 +873,9 @@ function newMatchresponse(data) {
         console.error("Klonbart matchrow-element ikke funnet.");
         return;
     }
-
+    if(data.fields?.group){
+    data.fields.group = data.fields.group[0];
+    }
     gMatchs.push(data.fields);
 
     // Opprett ny rad basert på responsdata
