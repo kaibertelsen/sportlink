@@ -505,10 +505,13 @@ function makeMatchrow(nodeelement,match,tabelid){
 
         const ResultStatus = rowelement.querySelector(".resultstatus");
 
-        if(match.matchtype){
-            //finalekamp
-            ResultStatus.style.backgroundColor = "#ffb700";
-        }
+        let MatchTypeoptions = [
+            { text: "Gruppekamp", value: "" },
+            { text: "Åttendedelsfinale", value: "eighthfinale" },
+            { text: "Kvartfinale", value: "quarterfinale" },
+            { text: "Semifinale", value: "semifinale" },
+            { text: "Finale", value: "finale" }
+            ];
 
         if(match.goalteam1 && match.goalteam2){
             ResultStatus.textContent = "Resultat";
@@ -517,6 +520,11 @@ function makeMatchrow(nodeelement,match,tabelid){
             ResultStatus.textContent = "Ikke spilt";
         }
 
+        if(match.matchtype){
+            //finalekamp
+            ResultStatus.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
+            ResultStatus.style.backgroundColor = "#ffb700";
+        }
 
         if (match.team2clublogo) {
             rowelement.querySelector(".team2logo").src = match.team2clublogo;
@@ -555,15 +563,8 @@ function makeMatchrow(nodeelement,match,tabelid){
                 //denne kan kun trykkes på om det er en sluttspilkamp
                 endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
             }
-
-            let MatchTypeoptions = [
-            { text: "Gruppekamp", value: "" },
-            { text: "Åttendedelsfinale", value: "eighthfinale" },
-            { text: "Kvartfinale", value: "quarterfinale" },
-            { text: "Semifinale", value: "semifinale" },
-            { text: "Finale", value: "finale" }
-             ];
             typeMatch.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
+
             if(match.endplay){
                 //denne kan kun trykkes på om det er en sluttspilkamp
                 endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
