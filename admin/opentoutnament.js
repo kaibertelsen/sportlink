@@ -847,16 +847,7 @@ function copyMatch(button, match, tabelid) {
     };
 
     // Fjern nøkler med tomme verdier, inkludert tomme arrays
-    const cleanedMatch = Object.fromEntries(
-        Object.entries(newMatch).filter(([_, value]) => {
-            return (
-                value !== null &&              // Ikke null
-                value !== undefined &&         // Ikke undefined
-                value !== "" &&                // Ikke tom streng
-                !(Array.isArray(value) && (value.length === 0 || (value.length === 1 && value[0] === ""))) // Ikke tom array eller array med en tom streng
-            );
-        })
-    );
+    const cleanedMatch = removeEmtyValuForSave(newMatch);
 
     // Opprett en ny kamp på server
     POSTairtable(baseId, tabelid, JSON.stringify(cleanedMatch), "newMatchresponse");
@@ -922,7 +913,6 @@ function createNewMatch(){
     // Opprett en ny kamp på server
     POSTairtable(baseId, tabelid, JSON.stringify(cleanedMatch), "newMatchresponse");
 }
-
 
 function removeEmtyValuForSave(array){
  // Fjern nøkler med tomme verdier, inkludert tomme arrays
