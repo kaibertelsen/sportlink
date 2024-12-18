@@ -1011,7 +1011,7 @@ if(data.fields?.group){
 gTeam.push(data.fields);
 
 // Opprett ny rad basert på responsdata
-const newRow = makeTeamrow(nodeelement, data.fields, "tblrHBFa60aIdqkUu");
+const newRow = makeTeamrow(nodeelement, data.fields, "tbl3ta1WZBr6wKPSp");
 
 // Erstatt midlertidig placeholder med den nye raden
 copyTeamElementholder.parentElement.insertBefore(newRow, copyTeamElementholder.nextSibling);
