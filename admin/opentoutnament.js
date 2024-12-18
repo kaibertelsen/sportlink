@@ -1,4 +1,5 @@
 var copyMatchElementholder;
+var copyTeamElementholder;
 var alertMessage;
 document.getElementById('matchtabbutton').onclick = function() {
     listMatch(gMatchs); 
@@ -345,8 +346,14 @@ function listTeams(teams) {
     const nodeelement = elementlibrary.querySelector(".teamrow");
 
     for (let team of filteredTeams) {
-        const rowelement = nodeelement.cloneNode(true);
 
+        let teamrow = makeTeamrow(nodeelement,team,tabelid);
+        const rowelement = nodeelement.cloneNode(true);
+        list.appendChild(rowelement);
+    }
+}
+function makeTeamrow(nodeelement,team,tabelid){
+    let rowelement = nodeelement.cloneNode(true);
         // Set team logo if available
         if (team.clublogo) {
             rowelement.querySelector(".teamlogo").src = team.clublogo;
@@ -379,9 +386,8 @@ function listTeams(teams) {
             groupName.addEventListener("click", () => triggerEditDropdown(groupName, team, "group",Groupoptions , tabelid));
         }
         
-        // Append the row to the list
-        list.appendChild(rowelement);
-    }
+    return rowelement;
+    
 }
 
 function listMatch(matchs) {
@@ -952,4 +958,68 @@ function removeEmtyValuForSave(array){
         })
     );
     return cleanedMatch;
+}
+
+function createNewTeam(){
+
+  // Finn elementet som skal klones
+  const elementlibrary = document.getElementById("elementlibrary");
+  const nodeelement = elementlibrary.querySelector(".copywait");
+  const list = document.getElementById("teamlistholder");
+
+  const newRow = nodeelement.cloneNode(true);
+  newRow.querySelector(".copytext").textContent = "Oppretter lag";
+  list.prepend(newRow);
+  copyTeamElementholder = newRow;
+
+    //finne divisjonsid, gruppeide,tounering,
+    let divisionId = document.getElementById("divisionSelector").value;
+    let groupId = document.getElementById("groupSelector").value;
+
+
+    let saveobject = {
+        tournament:[activetournament.airtable],
+        name:"Nytt lag",
+        division:[divisionId],
+        group:[groupId]
+    }
+    const cleanedMatch = removeEmtyValuForSave(saveobject);
+
+    // Opprett en ny lag på server
+    POSTairtable(baseId, "tbl3ta1WZBr6wKPSp", JSON.stringify(cleanedMatch), "newTeamresponse");
+
+}
+
+
+function newTeamresponse(data){
+
+// Sjekk for nødvendige elementer
+const elementlibrary = document.getElementById("elementlibrary");
+const nodeelement = elementlibrary.querySelector(".teamrow");
+
+if(data.fields?.division){
+    data.fields.division = data.fields.division[0];
+}else{
+    data.fields.division = "";
+}
+
+//konverterer group
+if(data.fields?.group){
+    data.fields.group = data.fields.group[0];
+}else{
+    data.fields.group = "";
+}
+gTeam.push(data.fields);
+
+// Opprett ny rad basert på responsdata
+const newRow = makeTeamrow(nodeelement, data.fields, "tblrHBFa60aIdqkUu");
+
+// Erstatt midlertidig placeholder med den nye raden
+copyMatchElementholder.parentElement.insertBefore(newRow, copyMatchElementholder.nextSibling);
+copyMatchElementholder.remove();
+
+// Klikk på infoknappen i den nye raden
+newRow.querySelector(".infobutton").click();
+
+
 }

@@ -27,6 +27,8 @@ function ruteresponse(data,id){
         matchdeletedresponse(data);
     }else if(id == "newMatchresponse"){
         newMatchresponse(data);
+    }else if(id == "newTeamresponse"){
+        newTeamresponse(data);
     }
     
     
