@@ -8,7 +8,9 @@ document.getElementById('createNewMatch').onclick = function() {
     createNewMatch(); 
 }
 
-
+document.getElementById('createNewTeam').onclick = function() {
+    createNewTeam(); 
+}
 function loadTurnamentSelector(tournaments) {
     // Finn dropdown-elementet
     const selector = document.getElementById("tournamentSelector");
