@@ -839,7 +839,7 @@ function copyMatch(button, match, tabelid) {
     // Klon og legg det inn i DOM
     const newRow = nodeelement.cloneNode(true);
     rowelement.parentElement.insertBefore(newRow, rowelement.nextSibling);
-    copyMatchElementholder = newRow;
+    copyTeamElementholder = newRow;
 
     // Kopier info fra match-objektet
     const newMatch = {
@@ -919,7 +919,7 @@ function createNewMatch(){
   const newRow = nodeelement.cloneNode(true);
   newRow.querySelector(".copytext").textContent = "Oppretter kamp";
   list.prepend(newRow);
-  copyMatchElementholder = newRow;
+  copyTeamElementholder = newRow;
 
     //finne divisjonsid, gruppeide, kamptype,klient,tounering,
     let divisionId = document.getElementById("divisionSelector").value;
