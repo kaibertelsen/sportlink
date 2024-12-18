@@ -1017,8 +1017,4 @@ const newRow = makeTeamrow(nodeelement, data.fields, "tblrHBFa60aIdqkUu");
 copyTeamElementholder.parentElement.insertBefore(newRow, copyTeamElementholder.nextSibling);
 copyTeamElementholder.remove();
 
-// Klikk på infoknappen i den nye raden
-newRow.querySelector(".infobutton").click();
-
-
 }
