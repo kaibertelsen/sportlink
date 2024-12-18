@@ -347,9 +347,8 @@ function listTeams(teams) {
 
     for (let team of filteredTeams) {
 
-        let teamrow = makeTeamrow(nodeelement,team,tabelid);
-        const rowelement = nodeelement.cloneNode(true);
-        list.appendChild(rowelement);
+        const teamrow = makeTeamrow(nodeelement,team,tabelid);
+        list.appendChild(teamrow);
     }
 }
 function makeTeamrow(nodeelement,team,tabelid){
