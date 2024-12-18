@@ -919,7 +919,7 @@ function createNewMatch(){
   const newRow = nodeelement.cloneNode(true);
   newRow.querySelector(".copytext").textContent = "Oppretter kamp";
   list.prepend(newRow);
-  copyTeamElementholder = newRow;
+  copyMatchElementholder = newRow;
 
     //finne divisjonsid, gruppeide, kamptype,klient,tounering,
     let divisionId = document.getElementById("divisionSelector").value;
@@ -1014,8 +1014,8 @@ gTeam.push(data.fields);
 const newRow = makeTeamrow(nodeelement, data.fields, "tblrHBFa60aIdqkUu");
 
 // Erstatt midlertidig placeholder med den nye raden
-copyMatchElementholder.parentElement.insertBefore(newRow, copyMatchElementholder.nextSibling);
-copyMatchElementholder.remove();
+copyTeamElementholder.parentElement.insertBefore(newRow, copyTeamElementholder.nextSibling);
+copyTeamElementholder.remove();
 
 // Klikk på infoknappen i den nye raden
 newRow.querySelector(".infobutton").click();
