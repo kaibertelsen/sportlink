@@ -291,6 +291,10 @@ function listDivision(divisions) {
         });
         groupNode.style.display = "none";
 
+        //add nwe group
+        const addnewbutton = rowelement.querySelector(".newgroup");
+        addnewbutton.addEventListener("click",() => creatNewGroup(divisjon));
+
         // Add endplay
         const endNode = rowelement.querySelector(".endplay");
         division.endplay.forEach(endplay => {
@@ -989,7 +993,6 @@ function createNewTeam(){
 
 }
 
-
 function newTeamresponse(data){
 
 // Sjekk for nødvendige elementer
@@ -1016,5 +1019,13 @@ const newRow = makeTeamrow(nodeelement, data.fields, "tbl3ta1WZBr6wKPSp");
 // Erstatt midlertidig placeholder med den nye raden
 copyTeamElementholder.parentElement.insertBefore(newRow, copyTeamElementholder.nextSibling);
 copyTeamElementholder.remove();
+
+}
+
+function creatNewGroup(divisjon){
+console.log("New group",divisjon);
+    //finne høyeste tall i grunnene i denne divisjonen
+
+//let saveObject={name:}}
 
 }
