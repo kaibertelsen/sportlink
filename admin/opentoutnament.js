@@ -293,7 +293,7 @@ function listDivision(divisions) {
 
         //add nwe group
         const addnewbutton = rowelement.querySelector(".newgroup");
-        addnewbutton.addEventListener("click",() => creatNewGroup(division));
+        addnewbutton.addEventListener("click",() => createNewGroup(division));
 
         // Add endplay
         const endNode = rowelement.querySelector(".endplay");
