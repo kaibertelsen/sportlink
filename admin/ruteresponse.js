@@ -29,6 +29,8 @@ function ruteresponse(data,id){
         newMatchresponse(data);
     }else if(id == "newTeamresponse"){
         newTeamresponse(data);
+    }else if(id == "newGroupResponse"){
+        newGroupResponse(data);
     }
     
     

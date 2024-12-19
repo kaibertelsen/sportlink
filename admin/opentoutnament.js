@@ -1022,10 +1022,46 @@ copyTeamElementholder.remove();
 
 }
 
-function creatNewGroup(divisjon){
-console.log("New group",divisjon);
-    //finne høyeste tall i grunnene i denne divisjonen
+function createNewGroup(divisjon) {
+    console.log("New group", divisjon);
 
-//let saveObject={name:}}
+    // Finn høyeste tall i gruppene i denne divisjonen
+    let higestGroupnr = 0;
+    let baseName = "G"; // Standard base-navn for grupper
 
+    for (let group of divisjon.group) {
+        // Finn navnet uten tall (base-navnet)
+        const nameWithoutNumber = group.name.replace(/\d+/g, ""); // Fjerner tall fra navnet
+
+        // Hvis dette er første gruppe, sett baseName
+        if (!baseName) {
+            baseName = nameWithoutNumber;
+        }
+
+        // Finn tall i group.name (sett 0 hvis ingen tall finnes)
+        const numberMatch = group.name.match(/\d+/); // Henter første tall fra navnet
+        const thisNumber = numberMatch ? parseInt(numberMatch[0]) : 0;
+
+        // Oppdater høyeste gruppenummer
+        if (higestGroupnr < thisNumber) {
+            higestGroupnr = thisNumber;
+        }
+    }
+
+    // Generer nytt gruppenavn
+    const newGroupName = `${baseName}${higestGroupnr + 1}`;
+
+    // Opprett nytt objekt for lagring
+    const saveObject = {
+        name: newGroupName,
+        division: divisjon.airtableId, // Antatt ID for divisjonen
+    };
+
+    console.log("Lagrer ny gruppe:", saveObject);
+
+    // Opprett gruppen på server (eller annen ønsket handling)
+    POSTairtable(baseId, "tblq6O7fjqtz5ZOae", JSON.stringify(saveObject), "newGroupResponse");
+}
+function newGroupResponse(data){
+    console.log(data);
 }
