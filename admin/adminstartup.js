@@ -79,7 +79,7 @@ loadTurnamentSelector(gTournament);
 
 function userFilterTournaqment(data){
 
-    console.log(member);
+    console.log(memberData);
 
    
 
