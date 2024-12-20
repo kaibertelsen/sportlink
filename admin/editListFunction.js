@@ -71,7 +71,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
 
     // Spesifikk behandling for nummer
         if (type === "number") {
-            input.style.maxWidth = "100px";
+            input.style.maxWidth = "60px";
             input.value = currentValue
                 ? parseFloat(currentValue.replace(/[^0-9.-]/g, "")) || 0 // Kun tall
                 : null; // Null hvis currentValue er tomt
