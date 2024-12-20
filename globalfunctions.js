@@ -45,12 +45,6 @@ function generateSharingLink(teamid) {
     const baseUrl = "https://sportlink.app"; // Basen for URL-en
     const sharingLink = `${baseUrl}?tournamentid=${activetournament.airtable}&teamid=${teamid}`;
     
-    // Vis den genererte lenken på skjermen (valgfritt)
-    const linkDisplay = document.getElementById("generatedLink");
-    linkDisplay.textContent = sharingLink;
-    linkDisplay.style.color = "blue";
-    linkDisplay.style.textDecoration = "underline";
-
     // Kopier lenken til utklippstavlen
     navigator.clipboard.writeText(sharingLink)
         .then(() => {
