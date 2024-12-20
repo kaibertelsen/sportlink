@@ -271,7 +271,34 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
                 if (goal1) goal1.style.color = "gray";
             }
         }
+
+        //hvis det foreligger resultat i en finalekamp
+        if(typematch == "finale" && (matchData.goalteam1 && matchData.goalteam2)){
+
+            const teamnamevinner = matchElement.querySelector(".teamnamevinner");
+            const winnerlogo = matchElement.querySelector(".winnerlogo");
+
+            let teamname = "-";
+            let teamLogo = "";
+            if(matchData.goalteam1>matchData.goalteam2){
+                //lag1 har vunnet
+                winnerlogo.src = matchData.team1clublogo;
+                teamnamevinner.textContent = matchData.team1name;
+
+            }else if(matchData.goalteam1<matchData.goalteam2){
+                //lag2 har vunnet
+                winnerlogo.src = matchData.team2clublogo;
+                teamnamevinner.textContent = matchData.team2name;
+            }
+        }
     });
+
+
+    
+
+
+
+
 
     // Funksjon for å lage initialer
     function createInitials(name, existingInitials) {
