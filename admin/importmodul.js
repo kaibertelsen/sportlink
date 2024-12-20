@@ -98,6 +98,7 @@ function responseCreatTurnament(data) {
     // Send til `multisave`
     multisave(formattedDivisions, baseId, "tblY9xnfQ1y8dXTaA", "responsCreatDivisions");
 }
+
 function setPointIcon(name) {
     // Marker punkt
     const pointholderpanel = document.getElementById("pointholderpanel");

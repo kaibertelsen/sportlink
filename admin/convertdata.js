@@ -120,7 +120,10 @@ function controllTeam(data) {
         // Valider Klubb
         let clubid = "";
         if (team.Klubb) {
-            const clubExists = gClub.some(club => club.name.toLowerCase() === team.Klubb.toLowerCase());
+            const clubExists = gClub.some(club => 
+                club.name.toLowerCase().trim() === team.Klubb.toLowerCase().trim()
+            );
+            
             if (!clubExists) {
                 // Generer en alfabetisk liste over mulige klubber
                 const availableClubs = gClub
