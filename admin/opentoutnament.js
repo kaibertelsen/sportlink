@@ -659,9 +659,10 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             placeholdertext1.parentElement.style.display = "block";
             placeholdertext2.parentElement.style.display = "block";
 
+            groupName.parentElement.style.display = "none";
+
             placeholdertext1.addEventListener("click", () => triggerEditInput(placeholdertext1, match, "placeholderteam1", "text", tabelid));
             placeholdertext2.addEventListener("click", () => triggerEditInput(placeholdertext2, match, "placeholderteam2", "text", tabelid));
-
         }
 
         //om det er valgt gruppe i kampen
