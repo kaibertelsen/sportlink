@@ -173,7 +173,6 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
     );
     
 
-
     // Hent alle elementer med klassen "endplaymatch" i eighthFinalElement
     const endplayMatches = eighthFinalElement.querySelectorAll(".endplaymatch");
 
@@ -182,7 +181,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         // Finn match hvor `index + startIndex` tilsvarer `endplayplace`
         let matchData = filteredMatches.find(match => Number(match.endplayplace) === index + startIndex);
         if(typematch == "finale"){
-            matchData = filteredMatches;
+            matchData = filteredMatches[0];
         }
         
         if (!matchData) return; // Hopp over hvis ingen kamp er funnet
