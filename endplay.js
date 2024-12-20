@@ -75,9 +75,11 @@ function listendplay(data, divisjon) {
                             contentholderlist.style.paddingBottom = "10px";
                         }, 0);
                     } else {
-                        contentholderlist.style.transition = "opacity 0.5s ease-in-out, height 0.5s ease-in-out";
+                        contentholderlist.style.transition = "opacity 0.5s ease-in-out, height 0.5s ease-in-out, padding 0.5s ease-in-out";
                         contentholderlist.style.opacity = "0";
                         contentholderlist.style.height = "0px";
+                        contentholderlist.style.paddingTop = "0px";
+                        contentholderlist.style.paddingBottom = "0px";
                     }
                 });
 
