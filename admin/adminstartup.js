@@ -25,14 +25,19 @@ var baseId = "appxPi2CoLTlsa3qL";
 //lists
 var Organizerlist;
 
-
+document.getElementById(".tabselectorholder").style.display = "none";
 
 
 MemberStack.onReady.then(function(member) {
     if (member.loggedIn){
     
         memberData = member;
+        document.getElementById(".tabselectorholder").style.display = "inline-block";
 
+    }else{
+        //trykk på loginknapp
+        document.getElementById(".loggintabbutton").click();
+        document.getElementById(".tabselectorholder").style.display = "none";
     }
 }
 );
