@@ -652,8 +652,6 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
 
         }
 
-
-
         //om det er valgt gruppe i kampen
         if(match.group && !match.endplay){
             // kampen har en gruppe og sluttspilldelen skal skjules
@@ -1087,7 +1085,7 @@ function createNewGroup(divisjon,rowelement) {
     // Opprett nytt objekt for lagring
     const saveObject = {
         name: newGroupName,
-        division: divisjon.airtableId, // Antatt ID for divisjonen
+        division: divisjon.airtable, // Antatt ID for divisjonen
     };
 
     copyDivisionElement = rowelement;
