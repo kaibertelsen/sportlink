@@ -969,10 +969,11 @@ function createNewMatch(){
   list.prepend(newRow);
   copyMatchElementholder = newRow;
 
-    //finne divisjonsid, gruppeide, kamptype,klient,tounering,
+    //finne divisjonsid, gruppeide, kamptype, sluttspill, klient,tounering,
     let divisionId = document.getElementById("divisionSelector").value;
     let groupId = document.getElementById("groupSelector").value;
     let typematch = document.getElementById("typeSelector").value;
+    let endplay = document.getElementById("endplaySelector").value;
 
      // Legg til dagens dato og klokkeslett
      const now = new Date();
@@ -984,7 +985,8 @@ function createNewMatch(){
         time:time,
         typematch:typematch,
         division:[divisionId],
-        group:[groupId]
+        group:[groupId],
+        endplay:endplay
     }
     const cleanedMatch = removeEmtyValuForSave(saveobject);
 
