@@ -253,6 +253,11 @@ function groupSelectorChange(){
         listTeams(gTeam)
 }
 
+function endplaySelectorChange(){
+    listMatch(gMatchs);
+}
+
+
 function findGroupByDivision(divisionId) {
     // Find the division object in `gDivision` array by `divisionId`
     let division = gDivision.find(div => div.airtable === divisionId);
@@ -409,13 +414,15 @@ function listMatch(matchs) {
     const divisionValue = document.getElementById("divisionSelector").value;
     const groupValue = document.getElementById("groupSelector").value;
     const typeValue = document.getElementById("typeSelector").value;
+    const endplayValue = document.getElementById("endplaySelector").value;
 
     // Filter matches based on selected division and group
     const filteredMatches = matchs.filter(match => {
         const matchesDivision = !divisionValue || match.division === divisionValue;
         const matchesGroup = !groupValue || match.group === groupValue;
         const matchesType = !typeValue || match.typematch === typeValue;
-        return matchesDivision && matchesGroup && matchesType;
+        const endplay = !endplayValue || match.endplay === endplayValue;
+        return matchesDivision && matchesGroup && matchesType && endplay;
     });
 
     // Sort matches by time
