@@ -1090,7 +1090,7 @@ function createNewGroup(divisjon,rowelement) {
     // Opprett nytt objekt for lagring
     const saveObject = {
         name: newGroupName,
-        division: divisjon.airtable, // Antatt ID for divisjonen
+        division: [divisjon.airtable]
     };
 
     copyDivisionElement = rowelement;
