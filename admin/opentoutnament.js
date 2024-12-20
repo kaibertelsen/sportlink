@@ -659,7 +659,7 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             placeholdertext1.parentElement.style.display = "block";
             placeholdertext2.parentElement.style.display = "block";
 
-            groupName.parentElement.style.display = "none";
+            
 
             placeholdertext1.addEventListener("click", () => triggerEditInput(placeholdertext1, match, "placeholderteam1", "text", tabelid));
             placeholdertext2.addEventListener("click", () => triggerEditInput(placeholdertext2, match, "placeholderteam2", "text", tabelid));
@@ -680,6 +680,8 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             if(match.endplay){
                 endplayplace.addEventListener("click", () => triggerEditInput(endplayplace, match, "endplayplace", "number", tabelid));
             }
+            //gruppetekst skal skjules
+            groupName.parentElement.style.display = "none";
 
             //type kamp åttendedels,kvart,semi,finale 
             typeMatch.addEventListener("click", () => triggerEditDropdown(typeMatch, match, "typematch", MatchTypeoptions, tabelid));
