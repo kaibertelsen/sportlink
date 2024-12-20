@@ -936,6 +936,13 @@ function newMatchresponse(data) {
     }else{
         data.fields.division = "";
     }
+
+     //konverterer divisjonsname
+    if(data.fields?.divisionname){
+        data.fields.divisionname = data.fields.divisionname[0];
+    }else{
+        data.fields.divisionname = "";
+    }
     
     //konverterer group
     if(data.fields?.group){
@@ -943,6 +950,20 @@ function newMatchresponse(data) {
     }else{
         data.fields.group = "";
     }
+
+    //konverterer tournament
+    if(data.fields?.tournament){
+        data.fields.tournament = data.fields.tournament[0];
+    }else{
+        data.fields.tournament = "";
+    }
+
+
+
+
+
+
+
     gMatchs.push(data.fields);
 
     // Opprett ny rad basert på responsdata
