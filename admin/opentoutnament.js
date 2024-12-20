@@ -277,11 +277,11 @@ function listDivision(divisions) {
     gGroups = [];
 
     for (let division of divisions) {
-         list.appendChild(makeDivisionRow(division));
+         list.appendChild(makeDivisionRow(nodeelement,division));
     }
 }
 
-function makeDivisionRow(division){
+function makeDivisionRow(nodeelement,division){
 
     const rowelement = nodeelement.cloneNode(true);
     const divisionName = rowelement.querySelector(".name")
@@ -1096,6 +1096,7 @@ function createNewGroup(divisjon,rowelement) {
     // Opprett gruppen på server (eller annen ønsket handling)
     POSTairtable(baseId, "tblq6O7fjqtz5ZOae", JSON.stringify(saveObject), "newGroupResponse");
 }
+
 function newGroupResponse(data) {
     console.log(data);
 

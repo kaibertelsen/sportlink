@@ -43,8 +43,6 @@ document.getElementById("tournamenttabbuttonHeader").addEventListener("click", f
 });
 
 
-
-
 function startUpAdmin(){
     GETairtable(baseId,"tblbg3RRnKTDBaoeP","recCdECitGpKE2O1F","responsklient")
 
@@ -56,15 +54,22 @@ function startUpAdmin(){
     */
 }
 
-
 function responsklient(data){
     let klient = data.fields;
     activeklient = klient;
+
+   
 
     gSport = convertJSONrow(activeklient.sportjson);
     gOrganizer = convertJSONrow(activeklient.organizerjson);
     gClub = convertJSONrow(activeklient.clubjson);
     gTournament = convertJSONrow(activeklient.tournamentjson);
+
+
+    //filtrer turneringer på brukerrettigheter
+
+    gTournament = 
+
 
     listOrganizer(gOrganizer);
     listClub(gClub);
@@ -75,6 +80,13 @@ loadTurnamentSelector(gTournament);
 
 }
 
+function userFilterTournaqment(data){
+
+    console.log(data);
+    for(let tounament of data){
+
+    }
+}
 
 function getSportlist(){
     var body = airtablebodylistAND({section:1});
