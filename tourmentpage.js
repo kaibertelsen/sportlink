@@ -9,7 +9,26 @@ function getTournamentresponse(data){
     listSports(tournament);
     //sorter på dato
     listTournament(sortDateArray(tournament,"startdate"));
+
+    goToObjectShareKey();
 }
+function goToObjectShareKey(){
+
+    //sjekk om det foreligger noen nøkler i url
+    let keys = getQueryParams();
+
+    if(keys?.teamid && keys?.tournamentid){
+        //det er lag som er delt gå til lag
+        
+        loadTourment(keys.tournamentid);
+        document.getElementById("tournamenttabbutton").click();
+     
+        //åpne lag
+        let team = teams.find(item => item.airtable === keys.teamid);
+        viewteam(team);
+    }
+}
+
 
 function emtyTurnamentLists(){
 

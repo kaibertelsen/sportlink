@@ -55,6 +55,17 @@ function generateSharingLink(teamid) {
         });
 }
 
+function getQueryParams() {
+    // Hent hele query-delen av URL-en
+    const params = new URLSearchParams(window.location.search);
+
+    // Hent spesifikke nøkler
+    const tournamentid = params.get("tournamentid");
+    const teamid = params.get("teamid");
+
+    // Returner som et objekt
+    return { tournamentid, teamid };
+}
 
 
 function markActiveButton(button) {
