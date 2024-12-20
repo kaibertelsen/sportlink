@@ -122,7 +122,7 @@ function listendplay(data, divisjon) {
                     let endplayDivname = finalElement.querySelector(".divisionnamemidle");
                     if (endplayDivname) endplayDivname.textContent = division.name;
                     
-                    loadEndplaysection(finalElement, filteredMatches, "finale",endplayname, 1);
+                    loadEndplaysection(finalElement, filteredMatches, "finale",endplayname,division, 1);
                 }
                 // Skjul spesifikke elementer i quarterFinalElement og quarterFinalBottomElement
                 if (finalecount === 4) {
