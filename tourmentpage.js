@@ -21,7 +21,7 @@ function goToObjectShareKey(){
         //det er lag som er delt gå til lag
         
         loadTourment(keys.tournamentid);
-        document.getElementById("tournamenttabbutton").click();
+        document.getElementById("tabtoturnering").click();
      
         //åpne lag
         let team = teams.find(item => item.airtable === keys.teamid);
