@@ -68,9 +68,11 @@ function listendplay(data, divisjon) {
                   header.addEventListener("click", () => {
                     if (contentholderlist.style.height === "0px") {
                         setTimeout(() => {
-                            contentholderlist.style.transition = "opacity 0.5s ease-in-out, height 0.5s ease-in-out";
+                            contentholderlist.style.transition = "opacity 0.5s ease-in-out, height 0.5s ease-in-out, padding 0.5s ease-in-out";
                             contentholderlist.style.opacity = "1";
                             contentholderlist.style.height = contentholderlist.scrollHeight + "px";
+                            contentholderlist.style.paddingTop = "10px";
+                            contentholderlist.style.paddingBottom = "10px";
                         }, 0);
                     } else {
                         contentholderlist.style.transition = "opacity 0.5s ease-in-out, height 0.5s ease-in-out";
