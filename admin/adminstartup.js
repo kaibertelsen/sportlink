@@ -96,9 +96,15 @@ function userFilterTournament(data) {
             }
         }
 
+        //skjul knapper
+        document.getElementById("clubtabbutton").style.display = "none";
+        document.getElementById("organizertabbutton").style.display = "none";
         return newArray; // Returner filtrert array
     } else {
         // R: Returner tom array eller annen ønsket standard
+        //skjul knapper
+        document.getElementById("clubtabbutton").style.display = "none";
+        document.getElementById("organizertabbutton").style.display = "none";
         return [];
     }
 }
