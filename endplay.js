@@ -175,7 +175,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
 
     // Hent alle elementer med klassen "endplaymatch" i eighthFinalElement
     const endplayMatches = eighthFinalElement.querySelectorAll(".endplaymatch");
-
+    
     // Loop gjennom hvert "endplaymatch"-element
     endplayMatches.forEach((matchElement, index) => {
         // Finn match hvor `index + startIndex` tilsvarer `endplayplace`
@@ -273,13 +273,11 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         }
 
         //hvis det foreligger resultat i en finalekamp
-        if(typematch == "finale"){
+        if(typematch == "finale" && (matchData.goalteam1 && matchData.goalteam2)){
+            const winner = eighthFinalElement.querySelectorAll(".winner");
+            const teamnamevinner = winner.querySelector(".teamnamevinner");
+            const winnerlogo = winner.querySelector(".winnerlogo");
 
-            const teamnamevinner = eighthFinalElement.querySelector(".teamnamevinner");
-            const winnerlogo = eighthFinalElement.querySelector(".winnerlogo");
-
-            let teamname = "-";
-            let teamLogo = "";
             if(matchData.goalteam1>matchData.goalteam2){
                 //lag1 har vunnet
                 winnerlogo.src = matchData.team1clublogo;
