@@ -113,8 +113,8 @@ function listendplay(data, divisjon) {
                 if (eighthFinalBottomElement) loadEndplaysection(eighthFinalBottomElement, filteredMatches, "eighthfinale",endplayname, 5);
                 if (quarterFinalElement) loadEndplaysection(quarterFinalElement, filteredMatches,"quarterfinale",endplayname,  1);
                 if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches, "quarterfinale",endplayname, 3);
-                if (semiFinalElement) loadEndplaysection(semiFinalElement, filteredMatches, "semifinal", endplayname,1);
-                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, "semifinal",endplayname, 2);
+                if (semiFinalElement) loadEndplaysection(semiFinalElement, filteredMatches, "semifinale", endplayname,1);
+                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, "semifinale",endplayname, 2);
                 if (finalElement) {
                     let endplayNamef = finalElement.querySelector(".endplaynamemidle");
                     if (endplayNamef) endplayNamef.textContent = endplayname;
