@@ -70,7 +70,7 @@ function listendplay(data, divisjon) {
                         setTimeout(() => {
                             contentholderlist.style.transition = "opacity 0.5s ease-in-out, height 0.5s ease-in-out, padding 0.5s ease-in-out";
                             contentholderlist.style.opacity = "1";
-                            contentholderlist.style.height = contentholderlist.scrollHeight + "px";
+                            contentholderlist.style.height = (contentholderlist.scrollHeight+20) + "px";
                             contentholderlist.style.paddingTop = "10px";
                             contentholderlist.style.paddingBottom = "10px";
                         }, 0);
