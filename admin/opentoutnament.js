@@ -1018,20 +1018,22 @@ function createNewMatch(){
     POSTairtable(baseId, "tblrHBFa60aIdqkUu", JSON.stringify(cleanedMatch), "newMatchresponse");
 }
 
-function removeEmtyValuForSave(array){
- // Fjern nøkler med tomme verdier, inkludert tomme arrays
- let cleanedMatch = Object.fromEntries(
-    Object.entries(array).filter(([_, value]) => {
-        return (
-            value !== null &&              // Ikke null
-            value !== undefined &&         // Ikke undefined
-            value !== "" &&                // Ikke tom streng
-            !(Array.isArray(value) && (value.length === 0 || (value.length === 1 && value[0] === ""))) // Ikke tom array eller array med en tom streng
-         );
+function removeEmtyValuForSave(array) {
+    return Object.fromEntries(
+        Object.entries(array).filter(([_, value]) => {
+            return (
+                value !== null &&              // Ikke null
+                value !== undefined &&         // Ikke undefined
+                value !== "" &&                // Ikke tom streng
+                !(Array.isArray(value) && (    // Ikke tom array eller array med kun tomme eller ugyldige verdier
+                    value.length === 0 || 
+                    value.every(v => v === undefined || v === null || v === "")
+                ))
+            );
         })
     );
-    return cleanedMatch;
 }
+
 
 function createNewTeam(){
 
