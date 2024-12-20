@@ -105,7 +105,7 @@ function listendplay(data, divisjon) {
                     : null;
 
                 let semiFinalElement = elementLibrary.querySelector(".semi1")?.cloneNode(true);
-                let semiFinalBottomElement = elementLibrary.querySelector(".semi.bottom")?.cloneNode(true);
+                let semiFinalBottomElement = elementLibrary.querySelector(".semi1.bottom")?.cloneNode(true);
                 let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
 
                 // Last inn kamper i hvert element
