@@ -274,7 +274,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         }
 
         //hvis det foreligger resultat i en finalekamp
-        if(typematch == "finale" && (matchData.goalteam1 && matchData.goalteam2)){
+        if(typematch == "finale"){
             const winner = eighthFinalElement.querySelectorAll(".winner");
             const teamnamevinner = winner.querySelector(".teamnamevinner");
             const winnerlogo = winner.querySelector(".winnerlogo");
