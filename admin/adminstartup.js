@@ -109,7 +109,6 @@ function userFilterTournament(data) {
     }
 }
 
-
 function getSportlist(){
     var body = airtablebodylistAND({section:1});
     Getlistairtable(baseId,"tbl2FRAzV1Ze5DdYh",body,"responseSportlist");

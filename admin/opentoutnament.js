@@ -356,12 +356,12 @@ function listTeams(teams) {
 
     for (let team of filteredTeams) {
 
-        const teamrow = makeTeamrow(nodeelement,team,tabelid);
+        const teamrow = makeTeamrow(nodeelement,team,Cluboptions,Divisionoptions,tabelid);
         list.appendChild(teamrow);
     }
 }
 
-function makeTeamrow(nodeelement,team,tabelid){
+function makeTeamrow(nodeelement,team,Cluboptions,Divisionoptions,tabelid){
     let rowelement = nodeelement.cloneNode(true);
         // Set team logo if available
         if (team.clublogo) {
