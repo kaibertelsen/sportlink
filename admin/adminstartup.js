@@ -27,6 +27,9 @@ var Organizerlist;
 
 document.getElementById("tabselectorholder").style.display = "none";
 
+document.getElementById("logoutbutton").addEventListener("click", function () {
+    document.getElementById("loggintabbutton").click();
+});
 
 MemberStack.onReady.then(function(member) {
     if (member.loggedIn){
