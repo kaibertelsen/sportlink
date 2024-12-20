@@ -40,7 +40,6 @@ function sortArrayABC(Array,key) {
     return false;
 }
 
-// Funksjon for å generere delingslink
 function generateSharingLink(keys) {
     const baseUrl = "https://sportlink.app"; // Basen for URL-en
 
@@ -50,18 +49,34 @@ function generateSharingLink(keys) {
     // Generer den fullstendige delingslinken
     const sharingLink = `${baseUrl}?${queryParams}`;
 
-    // Kopier lenken til utklippstavlen
-    navigator.clipboard.writeText(sharingLink)
-        .then(() => {
-            alert("Delingslinken er kopiert til utklippstavlen!");
+    // Sjekk om Web Share API er tilgjengelig
+    if (navigator.share) {
+        navigator.share({
+            title: "Del lenke fra SportLink",
+            text: "Sjekk ut denne lenken fra SportLink!",
+            url: sharingLink
         })
-        .catch(err => {
-            console.error("Kunne ikke kopiere lenken: ", err);
+        .then(() => {
+            console.log("Deling fullført!");
+        })
+        .catch((err) => {
+            console.error("Deling feilet: ", err);
         });
+    } else {
+        // Fallback: Kopier lenken til utklippstavlen
+        navigator.clipboard.writeText(sharingLink)
+            .then(() => {
+                alert("Delingslinken er kopiert til utklippstavlen!");
+            })
+            .catch((err) => {
+                console.error("Kunne ikke kopiere lenken: ", err);
+            });
+    }
 
     // Returner lenken (valgfritt, for videre bruk)
     return sharingLink;
 }
+
 
 
 function getQueryParams() {
