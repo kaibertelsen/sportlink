@@ -165,7 +165,7 @@ function controllTeam(data) {
 }
 
 function controllMatch(data1, data2) {
-    const validMatchTypes = ["eighthfinale", "quarterfinale", "semifinale", "finale"];
+    const validMatchTypes = ["eighthfinale", "quarterfinale", "semifinale","bronzefinal", "finale"];
     const validatedMatches = [];
     
     // Kontroll for Kamper-arket (data1)
