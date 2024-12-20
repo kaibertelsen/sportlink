@@ -104,7 +104,7 @@ function listendplay(data, divisjon) {
                     ? elementLibrary.querySelector(".quarterfinalelement.bottom")?.cloneNode(true)
                     : null;
 
-                let semiFinalElement = elementLibrary.querySelector(".semi")?.cloneNode(true);
+                let semiFinalElement = elementLibrary.querySelector(".semi1")?.cloneNode(true);
                 let semiFinalBottomElement = elementLibrary.querySelector(".semi.bottom")?.cloneNode(true);
                 let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
 
