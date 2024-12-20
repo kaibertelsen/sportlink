@@ -59,12 +59,12 @@ let keys = {page:"team",tournamentid:activetournament.airtable,teamid:activeteam
 generateSharingLink(keys);
 });
 
-document.getElementById("shareMatcButton").addEventListener("click", () => {
+document.getElementById("shareMatchButton").addEventListener("click", () => {
     let keys = {page:"match",tournamentid:activetournament.airtable,matchid:activematch.airtable}
     generateSharingLink(keys);
 });
 
-document.getElementById("shareTournamentButton").addEventListener("click", () => {
+document.getElementById("sharetornamentbutton").addEventListener("click", () => {
     const activeDivision = getActiveDivisionFilter();
     let keys = {page:"tournament",tournamentid:activetournament.airtable,division:activeDivision}
     generateSharingLink(keys);
