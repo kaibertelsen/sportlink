@@ -66,6 +66,6 @@ document.getElementById("shareMatchButton").addEventListener("click", () => {
 
 document.getElementById("sharetornamentbutton").addEventListener("click", () => {
     const activeDivision = getActiveDivisionFilter();
-    let keys = {page:"tournament",tournamentid:activetournament.airtable,division:activeDivision}
+    let keys = {page:"tournament",tournamentid:activetournament.airtable,divisionid:activeDivision}
     generateSharingLink(keys);
 });
