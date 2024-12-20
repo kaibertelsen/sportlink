@@ -40,7 +40,26 @@ function sortArrayABC(Array,key) {
     return false;
 }
 
+// Funksjon for å generere delingslink
+function generateSharingLink(teamid) {
+    const baseUrl = "https://sportlink.app"; // Basen for URL-en
+    const sharingLink = `${baseUrl}?tournamentid=${activetournament.airtable}&teamid=${teamid}`;
+    
+    // Vis den genererte lenken på skjermen (valgfritt)
+    const linkDisplay = document.getElementById("generatedLink");
+    linkDisplay.textContent = sharingLink;
+    linkDisplay.style.color = "blue";
+    linkDisplay.style.textDecoration = "underline";
 
+    // Kopier lenken til utklippstavlen
+    navigator.clipboard.writeText(sharingLink)
+        .then(() => {
+            alert("Delingslinken er kopiert til utklippstavlen!");
+        })
+        .catch(err => {
+            console.error("Kunne ikke kopiere lenken: ", err);
+        });
+}
 
 
 

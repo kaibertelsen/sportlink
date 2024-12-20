@@ -8,6 +8,8 @@ function getTeamresponse(data){
     listteams(teams);
 }
 
+
+
 function listteams(data) {
     const activeDivision = getActiveDivisionFilter();
 
@@ -156,6 +158,11 @@ function loadPointsToviewer(rowelement,team,range,solo){
 
 
 function viewteam(team) {
+
+    // Legg til klikkhendelse på knappen
+    document.getElementById("shareTeamButton").addEventListener("click", () => {
+        generateSharingLink(team.airtable);
+    });
 
     // Oppdater header-informasjon
     const teamheader = document.getElementById("headerwrapperteam");
