@@ -166,8 +166,19 @@ function listendplay(data, divisjon) {
 
 
 function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayName, startIndex) {
-    // Filtrer matcher basert på typematch
-    let filteredMatches = typematch === "" ? listMatches : listMatches.filter(match => match.typematch === typematch);
+   
+    // Filtrer matcher basert på typematch og endplayname
+        let filteredMatches = listMatches.filter(match => {
+            // Hvis typematch er tom, ignorér typematch-filteret
+            let typematchFilter = typematch === "" || match.typematch === typematch;
+
+            // Sjekk at endplayname matcher
+            let endplaynameFilter = match.endplayname === endplayname;
+
+            // Returnér kun de matchene som oppfyller begge kriteriene
+            return typematchFilter && endplaynameFilter;
+        });
+
 
     // Hent alle elementer med klassen "endplaymatch" i eighthFinalElement
     const endplayMatches = eighthFinalElement.querySelectorAll(".endplaymatch");
