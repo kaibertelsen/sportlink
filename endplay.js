@@ -185,6 +185,19 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
             matchData = filteredMatches[0];
         }
         
+        const finalename = matchElement.querySelector(".finalename");
+
+        const matchTypeMap = {
+            "eighthfinale": "8-delsfinale",
+            "quarterfinale": "Kvartfinale",
+            "semifinale": "Semifinale",
+            "finale": "Finale"
+        };
+
+        finalename.textContent = matchTypeMap[typematch];
+
+
+
         if (!matchData) return; // Hopp over hvis ingen kamp er funnet
 
         // Sjekk om match har riktig `endplayName`
@@ -205,17 +218,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         const goal2 = matchElement.querySelector(".goal2");
         const datelable = matchElement.querySelector(".datelable");
         const lablemidt = matchElement.querySelector(".lablemidt");
-        const finalename = matchElement.querySelector(".finalename");
-
-        const matchTypeMap = {
-            "eighthfinale": "8-delsfinale",
-            "quarterfinale": "Kvartfinale",
-            "semifinale": "Semifinale",
-            "finale": "Finale"
-        };
-
-
-        finalename.textContent = matchTypeMap[typematch];
+      
 
         // Oppdater logoer (kun hvis det finnes en verdi)
         if (logo1 && matchData.team1clublogo) logo1.src = matchData.team1clublogo;
