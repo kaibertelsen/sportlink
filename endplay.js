@@ -109,12 +109,12 @@ function listendplay(data, divisjon) {
                 let finalElement = elementLibrary.querySelector(".finale")?.cloneNode(true);
 
                 // Last inn kamper i hvert element
-                if (eighthFinalElement) loadEndplaysection(eighthFinalElement, filteredMatches,"eighthfinale",endplayname,  1);
-                if (eighthFinalBottomElement) loadEndplaysection(eighthFinalBottomElement, filteredMatches, "eighthfinale",endplayname, 5);
-                if (quarterFinalElement) loadEndplaysection(quarterFinalElement, filteredMatches,"quarterfinale",endplayname,  1);
-                if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches, "quarterfinale",endplayname, 3);
-                if (semiFinalElement) loadEndplaysection(semiFinalElement, filteredMatches, "semifinale", endplayname,1);
-                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, "semifinale",endplayname, 2);
+                if (eighthFinalElement) loadEndplaysection(eighthFinalElement, filteredMatches,"eighthfinale",endplayname,division,  1);
+                if (eighthFinalBottomElement) loadEndplaysection(eighthFinalBottomElement, filteredMatches, "eighthfinale",endplayname,division, 5);
+                if (quarterFinalElement) loadEndplaysection(quarterFinalElement, filteredMatches,"quarterfinale",endplayname,division,  1);
+                if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches, "quarterfinale",endplayname,division, 3);
+                if (semiFinalElement) loadEndplaysection(semiFinalElement, filteredMatches, "semifinale", endplayname,division,1);
+                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, "semifinale",endplayname,division, 2);
                 if (finalElement) {
                     let endplayNamef = finalElement.querySelector(".endplaynamemidle");
                     if (endplayNamef) endplayNamef.textContent = endplayname;
@@ -165,11 +165,12 @@ function listendplay(data, divisjon) {
 
 
 
-function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayName, startIndex) {
+function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayName,division, startIndex) {
    
     let filteredMatches = listMatches.filter(match => 
         (typematch === "" || match.typematch === typematch) &&
-        (endplayName === "" || match.endplay === endplayName)
+        (endplayName === "" || match.endplay === endplayName) &&
+        (division === "" || match.division === division.airtable)
     );
     
 
