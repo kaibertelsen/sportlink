@@ -66,7 +66,7 @@ function responsklient(data){
   
     //filtrer turneringer på brukerrettigheter
 
-    gTournament = userFilterTournaqment(convertJSONrow(activeklient.tournamentjson));
+    gTournament = userFilterTournament(convertJSONrow(activeklient.tournamentjson));
 
     listOrganizer(gOrganizer);
     listClub(gClub);
@@ -77,17 +77,32 @@ loadTurnamentSelector(gTournament);
 
 }
 
-function userFilterTournaqment(data){
-
+function userFilterTournament(data) {
     console.log(memberData);
 
-   
+    if (memberData.membership.id === "676520755bf8160002a7ca21") {
+        // SA: Returner data ufiltrert
+        return data;
+    } else if (memberData.membership.id === "67651e7bbeae7a0002c4ea53") {
+        // TA: Filtrer basert på memberData.airtable
+        let newArray = [];
 
-    for(let tounament of data){
+        for (let tournament of data) {
+            // Sjekk om verdien i memberData.airtable finnes i tournament.user-arrayen
+            if (tournament.user && Array.isArray(tournament.user)) {
+                if (tournament.user.includes(memberData.airtable)) {
+                    newArray.push(tournament); // Legg til turneringen hvis den matcher
+                }
+            }
+        }
 
+        return newArray; // Returner filtrert array
+    } else {
+        // R: Returner tom array eller annen ønsket standard
+        return [];
     }
-    return data;
 }
+
 
 function getSportlist(){
     var body = airtablebodylistAND({section:1});
