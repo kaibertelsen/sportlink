@@ -224,8 +224,6 @@ function triggerEditCheckbox(cell,item,field,tabelid){
     updateRowData(item.airtable, savedata,tabelid);
 }
 
-
-
 /// feller for alle typer inputs
 function rutingArrayName(tabelid){
     if(tabelid == "tblGhVlhWETNvhrWN"){
@@ -407,7 +405,12 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         item.typematch = newValue;
         //row trenger å kjøres en oppdatering på
         makeNewUpdateRowMatch(item,tabelid,cell);
-     }
+    }else if(tabelid === "tblrHBFa60aIdqkUu" && (field === "placeholderteam1" || field === "placeholderteam2")  ){
+        //dette placholdertext som settes
+        
+        //row trenger å kjøres en oppdatering på
+        makeNewUpdateRowMatch(item,tabelid,cell);
+    }
 }
 
 
