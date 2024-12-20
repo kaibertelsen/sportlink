@@ -2,6 +2,7 @@ var copyMatchElementholder;
 var copyTeamElementholder;
 var copyDivisionElement;
 var alertMessage;
+
 document.getElementById('matchtabbutton').onclick = function() {
     listMatch(gMatchs); 
 }
@@ -43,7 +44,6 @@ function loadTurnamentSelector(tournaments) {
 
 }
 
-// Funksjon som kjøres når en turnering velges
 function onTournamentSelected(airtableId, tournamentName) {
     console.log("Valgt turnering:", tournamentName, "med Airtable ID:", airtableId);
     openTournament(airtableId);
@@ -360,6 +360,7 @@ function listTeams(teams) {
         list.appendChild(teamrow);
     }
 }
+
 function makeTeamrow(nodeelement,team,tabelid){
     let rowelement = nodeelement.cloneNode(true);
         // Set team logo if available
@@ -624,6 +625,34 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         //Kampnummer
         const matchnr = rowelement.querySelector(".matchnr");
         matchnr.textContent = match.nr || "-";
+
+
+        
+        //plaseholdertxet1
+        const placeholdertext1 = rowelement.querySelector(".team1placeholder");
+        placeholdertext1.style.display = "none";
+        
+       
+
+        //plaseholdertxet1
+        const placeholdertext2 = rowelement.querySelector(".team2placeholder");
+        placeholdertext2.style.display = "none";
+        
+        
+        if(match.typematch){
+            //det er en finalekamp hvis plasholders
+            placeholdertext1.textContent =  match.placeholderteam1 || "-";
+            placeholdertext2.textContent =  match.placeholderteam2 || "-";
+
+            placeholdertext1.style.display = "block";
+            placeholdertext2.style.display = "block";
+
+            placeholdertext1.addEventListener("click", () => triggerEditInput(placeholdertext1, match, "placeholderteam1", "text", tabelid));
+            placeholdertext2.addEventListener("click", () => triggerEditInput(placeholdertext2, match, "placeholderteam2", "text", tabelid));
+
+        }
+
+
 
         //om det er valgt gruppe i kampen
         if(match.group && !match.endplay){
