@@ -110,11 +110,11 @@ function listendplay(data, divisjon) {
 
                 // Last inn kamper i hvert element
                 if (eighthFinalElement) loadEndplaysection(eighthFinalElement, filteredMatches,"eighthfinale",endplayname,  1);
-                if (eighthFinalBottomElement) loadEndplaysection(eighthFinalBottomElement, filteredMatches, "eighthfinalebottom",endplayname, 5);
+                if (eighthFinalBottomElement) loadEndplaysection(eighthFinalBottomElement, filteredMatches, "eighthfinale",endplayname, 5);
                 if (quarterFinalElement) loadEndplaysection(quarterFinalElement, filteredMatches,"quarterfinale",endplayname,  1);
-                if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches, "quarterfinalebottom",endplayname, 3);
+                if (quarterFinalBottomElement) loadEndplaysection(quarterFinalBottomElement, filteredMatches, "quarterfinale",endplayname, 3);
                 if (semiFinalElement) loadEndplaysection(semiFinalElement, filteredMatches, "semifinal", endplayname,1);
-                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, "semifinalbottom",endplayname, 2);
+                if (semiFinalBottomElement) loadEndplaysection(semiFinalBottomElement, filteredMatches, "semifinal",endplayname, 2);
                 if (finalElement) {
                     let endplayNamef = finalElement.querySelector(".endplaynamemidle");
                     if (endplayNamef) endplayNamef.textContent = endplayname;
