@@ -63,13 +63,10 @@ function responsklient(data){
     gSport = convertJSONrow(activeklient.sportjson);
     gOrganizer = convertJSONrow(activeklient.organizerjson);
     gClub = convertJSONrow(activeklient.clubjson);
-    gTournament = convertJSONrow(activeklient.tournamentjson);
-
-
+  
     //filtrer turneringer på brukerrettigheter
 
-    gTournament = 
-
+    gTournament = userFilterTournaqment(convertJSONrow(activeklient.tournamentjson));
 
     listOrganizer(gOrganizer);
     listClub(gClub);
@@ -82,10 +79,14 @@ loadTurnamentSelector(gTournament);
 
 function userFilterTournaqment(data){
 
-    console.log(data);
+    console.log(member);
+
+   
+
     for(let tounament of data){
 
     }
+    return data;
 }
 
 function getSportlist(){
