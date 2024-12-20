@@ -284,7 +284,7 @@ function viewMatch(match){
 
 
     const textturnamentname = header.querySelector(".turnamentname");
-    if(textturnamentname){textturnamentname.textContent = match.tournament};
+    if(textturnamentname){textturnamentname.textContent = match.tournamentname};
     
     const matchsettholder = document.getElementById("thismatchsett");
     
