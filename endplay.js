@@ -173,7 +173,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
             let typematchFilter = typematch === "" || match.typematch === typematch;
 
             // Sjekk at endplayname matcher
-            let endplaynameFilter = match.endplayname === endplayName;
+            let endplaynameFilter = endplayName === "" || match.endplay;
 
             // Returnér kun de matchene som oppfyller begge kriteriene
             return typematchFilter && endplaynameFilter;
