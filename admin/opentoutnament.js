@@ -1111,6 +1111,9 @@ function createNewGroup(divisjon,rowelement) {
 
 function newGroupResponse(data) {
     console.log(data);
+    // Sjekk for nødvendige elementer
+const elementlibrary = document.getElementById("elementlibrary");
+const nodeelement = elementlibrary.querySelector(".divisionrow");
 
     // Oppdater divisjon
     const newGroup = data.fields;
@@ -1128,9 +1131,10 @@ function newGroupResponse(data) {
     if (!division.group) {
         division.group = []; // Sørg for at group finnes
     }
+
     division.group.push(newGroup); // Legg til den nye gruppen i divisjonen
 
-    const newRow = makeDivisionRow(division);
+    const newRow = makeDivisionRow(nodeelement,division);
 
     // Oppdater elementet inne i kopien med klassen "name" med det nye navnet
     const nameElement = newRow.querySelector(".name");
