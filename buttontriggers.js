@@ -52,3 +52,20 @@ document.getElementById('buttonthisteam').onclick = function() {
     }
 }
 
+
+
+document.getElementById("shareTeamButton").addEventListener("click", () => {
+let keys = {page:"team",tournamentid:activetournament.airtable,teamid:activeteam.airtable}
+generateSharingLink(keys);
+});
+
+document.getElementById("shareMatcButton").addEventListener("click", () => {
+    let keys = {page:"match",tournamentid:activetournament.airtable,matchid:activematch.airtable}
+    generateSharingLink(keys);
+});
+
+document.getElementById("shareTournamentButton").addEventListener("click", () => {
+    const activeDivision = getActiveDivisionFilter();
+    let keys = {page:"tournament",tournamentid:activetournament.airtable,division:activeDivision}
+    generateSharingLink(keys);
+});

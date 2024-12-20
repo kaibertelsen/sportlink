@@ -12,22 +12,85 @@ function getTournamentresponse(data){
 
     goToObjectShareKey();
 }
-function goToObjectShareKey(){
+function goToObjectShareKey() {
+    // Sjekk om det foreligger noen nøkler i URL
+    const keys = getQueryParams();
 
-    //sjekk om det foreligger noen nøkler i url
-    let keys = getQueryParams();
+    // Sjekk om "page" er definert
+    if (!keys?.page) {
+        console.error("Page-parameteren mangler i URL-en.");
+        return;
+    }
 
-    if(keys?.teamid && keys?.tournamentid){
-        //det er lag som er delt gå til lag
-        
-        loadTourment(keys.tournamentid);
-        document.getElementById("tabtoturnering").click();
-     
-        //åpne lag
-        let team = teams.find(item => item.airtable === keys.teamid);
-        viewteam(team);
+    // Håndtering for "team"
+    if (keys.page === "team") {
+        if (keys.tournamentid && keys.teamid) {
+            // Last turneringen
+            loadTourment(keys.tournamentid);
+
+            // Naviger til "Turnering" tab
+            document.getElementById("tabtoturnering").click();
+
+            // Trykk på tabellknappen
+            document.getElementById("tabeltabbutton").click();
+
+            // Finn laget basert på "teamid"
+            const team = teams.find(item => item.airtable === keys.teamid);
+
+            // Vis laget dersom det finnes
+            if (team) {
+                viewteam(team);
+            } else {
+                console.error("Team ikke funnet for teamid:", keys.teamid);
+            }
+        } else {
+            console.error("Mangler tournamentid eller teamid i URL-en.");
+        }
+    }
+    // Håndtering for "match"
+    else if (keys.page === "match") {
+        if (keys.tournamentid && keys.matchid) {
+            // Last turneringen
+            loadTourment(keys.tournamentid);
+
+            // Naviger til "Turnering" tab
+            document.getElementById("tabtoturnering").click();
+
+            // Trykk på kampknappen
+            document.getElementById("matchtabbutton").click();
+
+            // Finn kampen basert på "matchid"
+            const match = matches.find(item => item.airtable === keys.matchid);
+
+            // Vis kampen dersom den finnes
+            if (match) {
+                viewMatch(match);
+            } else {
+                console.error("Match ikke funnet for matchid:", keys.matchid);
+            }
+        } else {
+            console.error("Mangler tournamentid eller matchid i URL-en.");
+        }
+    }
+    // Håndtering for "tournament"
+    else if (keys.page === "tournament") {
+        if (keys.tournamentid) {
+            // Last turneringen
+            loadTourment(keys.tournamentid);
+            if(keys.divisionid){
+                //klikk på divisjonsknappen
+                let divbuttonid = "di" + keys.divisionid;
+                document.getElementById(divbuttonid).click();
+            }
+        } else {
+            console.error("Mangler tournamentid i URL-en.");
+        }
+    } else {
+        console.error(`Ukjent page-verdi: ${keys.page}`);
     }
 }
+
+
 
 
 function emtyTurnamentLists(){

@@ -159,11 +159,7 @@ function loadPointsToviewer(rowelement,team,range,solo){
 
 function viewteam(team) {
 
-    // Legg til klikkhendelse på knappen
-    document.getElementById("shareTeamButton").addEventListener("click", () => {
-        generateSharingLink(team.airtable);
-    });
-
+    activeteam = team;
     // Oppdater header-informasjon
     const teamheader = document.getElementById("headerwrapperteam");
     teamheader.querySelector(".teamnameheader").textContent = team.name || "Ukjent lag";

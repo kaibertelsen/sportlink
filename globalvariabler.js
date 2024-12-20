@@ -1,6 +1,8 @@
 var baseId = "appxPi2CoLTlsa3qL";
 var tournament;
 var activetournament;
+var activeteam;
+var activematch;
 var matches;
 var endplay;
 var teams;

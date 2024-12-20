@@ -41,10 +41,15 @@ function sortArrayABC(Array,key) {
 }
 
 // Funksjon for å generere delingslink
-function generateSharingLink(teamid) {
+function generateSharingLink(keys) {
     const baseUrl = "https://sportlink.app"; // Basen for URL-en
-    const sharingLink = `${baseUrl}?tournamentid=${activetournament.airtable}&teamid=${teamid}`;
-    
+
+    // Bygg query-parametere fra keys-objektet
+    const queryParams = new URLSearchParams(keys).toString();
+
+    // Generer den fullstendige delingslinken
+    const sharingLink = `${baseUrl}?${queryParams}`;
+
     // Kopier lenken til utklippstavlen
     navigator.clipboard.writeText(sharingLink)
         .then(() => {
@@ -53,19 +58,28 @@ function generateSharingLink(teamid) {
         .catch(err => {
             console.error("Kunne ikke kopiere lenken: ", err);
         });
+
+    // Returner lenken (valgfritt, for videre bruk)
+    return sharingLink;
 }
+
 
 function getQueryParams() {
     // Hent hele query-delen av URL-en
     const params = new URLSearchParams(window.location.search);
 
-    // Hent spesifikke nøkler
-    const tournamentid = params.get("tournamentid");
-    const teamid = params.get("teamid");
+    // Opprett et objekt for å lagre alle nøkkel-verdi-par
+    const queryParams = {};
 
-    // Returner som et objekt
-    return { tournamentid, teamid };
+    // Iterer gjennom alle parametere i URL-en
+    for (const [key, value] of params.entries()) {
+        queryParams[key] = value;
+    }
+
+    // Returner objektet med alle nøklene
+    return queryParams;
 }
+
 
 
 function markActiveButton(button) {

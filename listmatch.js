@@ -212,7 +212,7 @@ function listmatch(data, grouptype, scroll) {
 }
 
 function viewMatch(match){
-
+    activematch = match;
     const header = document.getElementById("headerwrappermatch");
    
     // Oppdater lagnavn eller bruk plassholdere
