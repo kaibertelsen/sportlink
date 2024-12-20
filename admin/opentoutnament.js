@@ -7,6 +7,11 @@ document.getElementById('matchtabbutton').onclick = function() {
     listMatch(gMatchs); 
 }
 
+document.getElementById('teamtabbutton').onclick = function() {
+    listTeams(gTeam); 
+}
+
+
 document.getElementById('createNewMatch').onclick = function() {
     createNewMatch(); 
 }
