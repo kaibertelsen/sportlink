@@ -1,5 +1,6 @@
 var copyMatchElementholder;
 var copyTeamElementholder;
+var copyDivisionElement;
 var alertMessage;
 document.getElementById('matchtabbutton').onclick = function() {
     listMatch(gMatchs); 
@@ -276,45 +277,49 @@ function listDivision(divisions) {
     gGroups = [];
 
     for (let division of divisions) {
-        const rowelement = nodeelement.cloneNode(true);
-        const divisionName = rowelement.querySelector(".name")
-        divisionName.textContent = division.name || "Ukjent navn";
-        divisionName.addEventListener("click", () => triggerEditInput(divisionName, division, "name", "text", tabelid));
-
-        // Add groups
-        const groupNode = rowelement.querySelector(".group");
-        division.group.forEach(group => {
-            const groupElement = groupNode.cloneNode(true);
-            groupElement.querySelector(".groupname").textContent = group.name;
-            groupNode.parentElement.appendChild(groupElement);
-            gGroups.push(group);
-        });
-        groupNode.style.display = "none";
-
-        //add nwe group
-        const addnewbutton = rowelement.querySelector(".newgroup");
-        addnewbutton.addEventListener("click",() => createNewGroup(division));
-
-        // Add endplay
-        const endNode = rowelement.querySelector(".endplay");
-        division.endplay.forEach(endplay => {
-            const endElement = endNode.cloneNode(true);
-            endElement.querySelector(".endname").textContent = endplay.endplayname;
-            endElement.querySelector(".endcount").textContent = endplay.finalecount;
-            endNode.parentElement.appendChild(endElement);
-        });
-        endNode.style.display = "none";
-
-        // Add row to list
-        list.appendChild(rowelement);
-
-        // Populate selectors with options
-        const optionTeam = document.createElement("option");
-        optionTeam.value = division.airtable;
-        optionTeam.textContent = division.name || "Ukjent navn";
-        divisionSelector.appendChild(optionTeam);
-
+         list.appendChild(makeDivisionRow(division));
     }
+}
+
+function makeDivisionRow(division){
+
+    const rowelement = nodeelement.cloneNode(true);
+    const divisionName = rowelement.querySelector(".name")
+    divisionName.textContent = division.name || "Ukjent navn";
+    divisionName.addEventListener("click", () => triggerEditInput(divisionName, division, "name", "text", tabelid));
+
+    // Add groups
+    const groupNode = rowelement.querySelector(".group");
+    division.group.forEach(group => {
+        const groupElement = groupNode.cloneNode(true);
+        groupElement.querySelector(".groupname").textContent = group.name;
+        groupNode.parentElement.appendChild(groupElement);
+        gGroups.push(group);
+    });
+    groupNode.style.display = "none";
+
+    //add new group
+    const addnewbutton = rowelement.querySelector(".newgroup");
+    addnewbutton.addEventListener("click",() => createNewGroup(division,rowelement));
+
+    // Add endplay
+    const endNode = rowelement.querySelector(".endplay");
+    division.endplay.forEach(endplay => {
+        const endElement = endNode.cloneNode(true);
+        endElement.querySelector(".endname").textContent = endplay.endplayname;
+        endElement.querySelector(".endcount").textContent = endplay.finalecount;
+        endNode.parentElement.appendChild(endElement);
+    });
+    endNode.style.display = "none";
+
+    // Populate selectors with options
+    const optionTeam = document.createElement("option");
+    optionTeam.value = division.airtable;
+    optionTeam.textContent = division.name || "Ukjent navn";
+    divisionSelector.appendChild(optionTeam);
+    
+    return rowelement;
+
 }
 
 function listTeams(teams) {
@@ -1022,8 +1027,7 @@ copyTeamElementholder.remove();
 
 }
 
-function createNewGroup(divisjon) {
-    console.log("New group", divisjon);
+function createNewGroup(divisjon,rowelement) {
 
     // Finn høyeste tall i gruppene i denne divisjonen
     let higestGroupnr = 0;
@@ -1057,11 +1061,44 @@ function createNewGroup(divisjon) {
         division: divisjon.airtableId, // Antatt ID for divisjonen
     };
 
+    copyDivisionElement = rowelement;
     console.log("Lagrer ny gruppe:", saveObject);
 
     // Opprett gruppen på server (eller annen ønsket handling)
     POSTairtable(baseId, "tblq6O7fjqtz5ZOae", JSON.stringify(saveObject), "newGroupResponse");
 }
-function newGroupResponse(data){
+function newGroupResponse(data) {
     console.log(data);
+
+    // Oppdater divisjon
+    const newGroup = data.fields;
+
+    // Finn riktig divisjon i gDivision basert på newGroup.division[0]
+    const divisionId = newGroup.division[0];
+    const division = gDivision.find(div => div.airtable === divisionId);
+
+    if (!division) {
+        console.error("Divisjon ikke funnet:", divisionId);
+        return;
+    }
+
+    // Oppdater divisjonsobjektet
+    if (!division.group) {
+        division.group = []; // Sørg for at group finnes
+    }
+    division.group.push(newGroup); // Legg til den nye gruppen i divisjonen
+
+    const newRow = makeDivisionRow(division);
+
+    // Oppdater elementet inne i kopien med klassen "name" med det nye navnet
+    const nameElement = newRow.querySelector(".name");
+    if (nameElement) {
+        nameElement.textContent = newGroup.name;
+    }
+
+    // Erstatt midlertidig placeholder med den nye raden
+    copyDivisionElement.parentElement.insertBefore(newRow, copyDivisionElement.nextSibling);
+    copyDivisionElement.remove();
+
+    console.log("Ny gruppe lagt til og placeholder fjernet.");
 }
