@@ -205,6 +205,13 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         const goal2 = matchElement.querySelector(".goal2");
         const datelable = matchElement.querySelector(".datelable");
         const lablemidt = matchElement.querySelector(".lablemidt");
+        const finalename = matchElement.querySelector(".finalename");
+
+
+
+
+        finalename.textContent = typematch;
+
 
         // Oppdater logoer (kun hvis det finnes en verdi)
         if (logo1 && matchData.team1clublogo) logo1.src = matchData.team1clublogo;
