@@ -406,8 +406,6 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         //row trenger å kjøres en oppdatering på
         makeNewUpdateRowMatch(item,tabelid,cell);
     }else if(tabelid === "tblrHBFa60aIdqkUu" && (field === "placeholderteam1" || field === "placeholderteam2")  ){
-        //dette placholdertext som settes
-        
         //row trenger å kjøres en oppdatering på
         makeNewUpdateRowMatch(item,tabelid,cell);
     }
@@ -424,7 +422,6 @@ function findParentWithResultatCell(element,className) {
     }
     return null; // Returner null hvis ingen foreldre matcher
 }
-
 
 
 function findParentWithClass(element, className) {

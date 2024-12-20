@@ -875,7 +875,7 @@ function copyMatch(button, match, tabelid) {
     // Klon og legg det inn i DOM
     const newRow = nodeelement.cloneNode(true);
     rowelement.parentElement.insertBefore(newRow, rowelement.nextSibling);
-    copyTeamElementholder = newRow;
+    copyMatchElementholder = newRow;
 
     // Kopier info fra match-objektet
     const newMatch = {
