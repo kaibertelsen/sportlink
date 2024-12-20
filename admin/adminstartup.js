@@ -50,7 +50,6 @@ document.getElementById("tournamenttabbuttonHeader").addEventListener("click", f
     listTournament(gTournament);
 });
 
-
 function startUpAdmin(){
     GETairtable(baseId,"tblbg3RRnKTDBaoeP","recCdECitGpKE2O1F","responsklient")
 
@@ -87,7 +86,9 @@ loadTurnamentSelector(gTournament);
 
 function userFilterTournament(data) {
     console.log(memberData);
-
+    if(!memberData?.membership){
+        document.getElementById("logoutbutton").click();
+    }else{
     if (memberData.membership.id === "676520755bf8160002a7ca21") {
         // SA: Returner data ufiltrert
         return data;
@@ -115,6 +116,7 @@ function userFilterTournament(data) {
         document.getElementById("organizertabbutton").style.display = "none";
         return [];
     }
+}
 }
 
 function getSportlist(){
