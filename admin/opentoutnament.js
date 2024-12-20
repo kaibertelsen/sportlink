@@ -630,13 +630,13 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         
         //plaseholdertxet1
         const placeholdertext1 = rowelement.querySelector(".team1placeholder");
-        placeholdertext1.style.display = "none";
+        placeholdertext1.parentElement.style.display = "none";
         
        
 
         //plaseholdertxet1
         const placeholdertext2 = rowelement.querySelector(".team2placeholder");
-        placeholdertext2.style.display = "none";
+        placeholdertext2.parentElement.style.display = "none";
         
         
         if(match.typematch){
@@ -644,8 +644,8 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             placeholdertext1.textContent =  match.placeholderteam1 || "-";
             placeholdertext2.textContent =  match.placeholderteam2 || "-";
 
-            placeholdertext1.style.display = "block";
-            placeholdertext2.style.display = "block";
+            placeholdertext1.parentElement.style.display = "block";
+            placeholdertext2.parentElement.style.display = "block";
 
             placeholdertext1.addEventListener("click", () => triggerEditInput(placeholdertext1, match, "placeholderteam1", "text", tabelid));
             placeholdertext2.addEventListener("click", () => triggerEditInput(placeholdertext2, match, "placeholderteam2", "text", tabelid));
