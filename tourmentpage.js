@@ -192,7 +192,13 @@ function adjustSwipeContainer() {
 
     if (headerWrapper && swipeContainerList) {
         const headerHeight = headerWrapper.offsetHeight; // Hent høyden på headerwrapper
-        swipeContainerList.style.marginTop = `calc(${headerHeight}px + env(safe-area-inset-top))`;
+        const safeAreaInsetTop = parseInt(getComputedStyle(document.documentElement).getPropertyValue('env(safe-area-inset-top)')) || 0; // Hent safe area top, fallback til 0
+
+        // Beregn total margin-top
+        const marginTop = headerHeight + safeAreaInsetTop;
+
+        // Sett margin-top som utregnet verdi
+        swipeContainerList.style.marginTop = `${marginTop}px`;
     }
 }
 
