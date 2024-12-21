@@ -179,18 +179,25 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         (division === "" || match.division === division.airtable)
     );
     
-  
+    //sjekke om det er finale eller bronsefinale, da skal det kun kjøres en gang
+
 
     // Hent alle elementer med klassen "endplaymatch" i eighthFinalElement
     const endplayMatches = eighthFinalElement.querySelectorAll(".endplaymatch");
     
     // Loop gjennom hvert "endplaymatch"-element
-    endplayMatches.forEach((matchElement, index) => {
+    for(var index = 0;index<endplayMatches.length;index++) {
+        let matchElement = endplayMatches[index];
         // Finn match hvor `index + startIndex` tilsvarer `endplayplace`
         let matchData = filteredMatches.find(match => Number(match.endplayplace) === index + startIndex);
         if(typematch == "finale"){
+            matchElement = endplayMatches[0];
             matchData = filteredMatches[0];
+            index ++
+
         }else if (typematch == "bronzefinale") {
+            matchElement = endplayMatches[1];
+            index ++
             // Da er det bare én kamp
             matchData = filteredMatches[0];
             
@@ -206,8 +213,6 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
             textholder.style.bottom = "auto";
         }
         
-        if (!matchData) return; // Hopp over hvis ingen kamp er funnet
-        
         const finalename = matchElement.querySelector(".finalename");
 
         const matchTypeMap = {
@@ -222,7 +227,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
 
 
 
-        
+        if (!matchData) return; // Hopp over hvis ingen kamp er funnet
 
         // Sjekk om match har riktig `endplayName`
         if (matchData.endplay !== endplayName) return;
@@ -328,7 +333,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
                 teamnamevinner.textContent = matchData.team2name;
             }
         }
-    });
+    };
 
 
     
