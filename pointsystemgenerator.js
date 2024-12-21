@@ -159,7 +159,7 @@ function generateVolleyballPointToTeams(data) {
 
     // Oppdater poengstatistikk basert på kamper
     for (let match of matches) {
-        if (match.typematch || typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
+        if (match.endplay || typeof match.goalteam1 === "undefined" || typeof match.goalteam2 === "undefined") {
             continue;
             }
 
