@@ -38,6 +38,7 @@ MemberStack.onReady.then(function(member) {
         memberData = member;
         document.getElementById("tabselectorholder").style.display = "inline-block";
         isLoggedIn = true;
+        startUpAdmin();
 
     }else{
         isLoggedIn = false;
@@ -348,7 +349,12 @@ function listClub(clubs) {
         const ClubName = rowelement.querySelector(".name")
         ClubName.textContent = club.name || "-";
         ClubName.addEventListener("click", () => triggerEditInput(ClubName, club, "name", "text",tabelid));
-
+        
+        let sportOptions = convertArrayToOptions(gSport,"name","airtable");
+        
+        const Sportname = rowelement.querySelector(".sportname")
+        Sportname.textContent = club.sportname || "-";
+        Sportname.addEventListener("click", () => triggerEditDropdown(Sportname, club, "sport", sportOptions, tabelid));
 
         rowelement.querySelector(".contry").textContent = club.contry || "Norge";
 
