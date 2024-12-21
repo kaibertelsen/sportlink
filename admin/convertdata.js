@@ -283,7 +283,7 @@ function convertJSONrow(data) {
         return data.map(item => {
             // Fjern ekstra escape-tegn fra JSON-strengen
             const sanitizedItem = item.replace(/\\\"/g, '"').replace(/\\\\/g, '\\');
-            
+            console.log(sanitizedItem);
             // Parse JSON-strengen
             return JSON.parse(sanitizedItem);
         });
