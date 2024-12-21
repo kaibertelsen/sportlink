@@ -129,9 +129,10 @@ function listmatch(data, grouptype, scroll) {
                 divisionlable.style.display = "none";
             }
         
-             // Sjekk om det finnes noen settverdier
-             const hasSetValues = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
-             .some(value => value && value.trim() !== "");
+                // Sjekk om det finnes noen settverdier
+                const hasSetValues = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
+                .some(value => value != null && value.toString().trim() !== "");
+
         
              if (hasSetValues) {
                 // Regne ut stillingen basert på settverdiene
