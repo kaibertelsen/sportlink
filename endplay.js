@@ -179,6 +179,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         (division === "" || match.division === division.airtable)
     );
     
+  
 
     // Hent alle elementer med klassen "endplaymatch" i eighthFinalElement
     const endplayMatches = eighthFinalElement.querySelectorAll(".endplaymatch");
@@ -205,6 +206,8 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
             textholder.style.bottom = "auto";
         }
         
+        if (!matchData) return; // Hopp over hvis ingen kamp er funnet
+        
         const finalename = matchElement.querySelector(".finalename");
 
         const matchTypeMap = {
@@ -219,7 +222,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
 
 
 
-        if (!matchData) return; // Hopp over hvis ingen kamp er funnet
+        
 
         // Sjekk om match har riktig `endplayName`
         if (matchData.endplay !== endplayName) return;
