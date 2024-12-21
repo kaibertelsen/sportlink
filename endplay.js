@@ -127,6 +127,8 @@ function listendplay(data, divisjon) {
                     if (endplayDivname) endplayDivname.textContent = division.name;
                     
                     loadEndplaysection(finalElement, filteredMatches, "finale",endplayname,division, 1);
+                    //hvis det er bronsefinale
+                    loadEndplaysection(finalElement, filteredMatches, "bronzefinale",endplayname,division, 2);
                 }
                 // Skjul spesifikke elementer i quarterFinalElement og quarterFinalBottomElement
                 if (finalecount === 4) {
@@ -187,6 +189,20 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         let matchData = filteredMatches.find(match => Number(match.endplayplace) === index + startIndex);
         if(typematch == "finale"){
             matchData = filteredMatches[0];
+        }else if (typematch == "bronzefinale") {
+            // Da er det bare én kamp
+            matchData = filteredMatches[0];
+            
+            // Synliggjør denne kampenholderen
+            eighthFinalElement.querySelector(".bronzeholder").style.display = "flex";
+            
+            // Sett sluttspilltekst til en annen posisjon
+            let textholder = eighthFinalElement.querySelector(".enplaytext");
+            textholder.style.position = "absolute"; // Sørg for at den kan flyttes med topp/venstre/høyre/bunn
+            textholder.style.left = "auto";
+            textholder.style.right = "35px";
+            textholder.style.top = "-100px";
+            textholder.style.bottom = "auto";
         }
         
         const finalename = matchElement.querySelector(".finalename");
@@ -195,6 +211,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
             "eighthfinale": "8-delsfinale",
             "quarterfinale": "Kvartfinale",
             "semifinale": "Semifinale",
+            "bronzefinale": "Bronsefinale",
             "finale": "Finale"
         };
 
