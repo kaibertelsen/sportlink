@@ -180,8 +180,11 @@ function loadTourment(tournamentid){
     loadeLists(data);
     isInTurnament = true;
 
-    adjustSwipeContainer();
+   // Kjør funksjonen etter 1 sekund
+setTimeout(adjustSwipeContainer, 1000);
 }
+// Juster på nytt hvis størrelsen endres (valgfritt)
+window.addEventListener("resize", adjustSwipeContainer);
 
 function adjustSwipeContainer() {
     const headerWrapper = document.getElementById("headerwrapper");
