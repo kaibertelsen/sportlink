@@ -21,6 +21,7 @@ var sTeams;
 var memberData;
 var klientId = "recCdECitGpKE2O1F";
 var baseId = "appxPi2CoLTlsa3qL";
+var isLoggedIn = false;
 
 //lists
 var Organizerlist;
@@ -36,8 +37,10 @@ MemberStack.onReady.then(function(member) {
     
         memberData = member;
         document.getElementById("tabselectorholder").style.display = "inline-block";
+        isLoggedIn = true;
 
     }else{
+        isLoggedIn = false;
         //trykk på loginknapp
         document.getElementById("loggintabbutton").click();
         document.getElementById("tabselectorholder").style.display = "none";
@@ -51,14 +54,11 @@ document.getElementById("tournamenttabbuttonHeader").addEventListener("click", f
 });
 
 function startUpAdmin(){
-    GETairtable(baseId,"tblbg3RRnKTDBaoeP","recCdECitGpKE2O1F","responsklient")
 
+    if(isLoggedIn){
+    GETairtable(baseId,"tblbg3RRnKTDBaoeP","recCdECitGpKE2O1F","responsklient")
     document.getElementById("tournamentinfopage").style.display = "none";
-    /*
-    getSportlist()
-    getOrganizerlist();
-    getClublist();
-    */
+    }
 }
 
 function responsklient(data){
