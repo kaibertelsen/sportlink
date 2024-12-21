@@ -95,6 +95,7 @@ function listmatch(data, grouptype, scroll) {
                     "eighthfinale": "ÅF",
                     "quarterfinale": "KF",
                     "semifinale": "SF",
+                    "bronzefinale":"BF",
                     "finale": "F"
                 };
         
@@ -251,6 +252,7 @@ function viewMatch(match){
             "eighthfinale": "8-delsfinale",
             "quarterfinale": "Kvartfinale",
             "semifinale": "Semifinale",
+            "bronzefinale": "Bronsefinale",
             "finale": "Finale"
         };
 

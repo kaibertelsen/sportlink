@@ -272,6 +272,7 @@ function viewteam(team) {
                 "eighthfinale": "ÅF",
                 "quarterfinale": "KF",
                 "semifinale": "SF",
+                "bronzefinale":"BF",
                 "finale": "F"
             };
 
