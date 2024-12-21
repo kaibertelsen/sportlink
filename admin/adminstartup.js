@@ -329,11 +329,18 @@ function formatDate(dateString) {
 
 
 function listClub(clubs) {
- 
+    // Sorter clubs alfabetisk etter club.name
+    clubs.sort((a, b) => {
+        const nameA = a.name?.toLowerCase() || ""; // Håndter undefined eller null
+        const nameB = b.name?.toLowerCase() || "";
+        return nameA.localeCompare(nameB);
+    });
+
     const list = document.getElementById("clublistholder");
     list.replaceChildren(); // Fjern tidligere innhold
 
-    list.parentElement.querySelector(".rowcounter").textContent = clubs.length+" stk.";
+    // Oppdater antall rader i overskriften
+    list.parentElement.querySelector(".rowcounter").textContent = `${clubs.length} stk.`;
 
     let tabelid = "tblqf56gcQaGJsBcl";
     const elementlibrary = document.getElementById("elementlibrary");
@@ -342,25 +349,36 @@ function listClub(clubs) {
     for (let club of clubs) {
         const rowelement = nodeelement.cloneNode(true);
 
-        if(club.logo){
+        // Oppdater logo hvis den finnes
+        if (club.logo) {
             rowelement.querySelector(".teamlogo").src = club.logo;
         }
-        
-        const ClubName = rowelement.querySelector(".name")
-        ClubName.textContent = club.name || "-";
-        ClubName.addEventListener("click", () => triggerEditInput(ClubName, club, "name", "text",tabelid));
-        
-        let sportOptions = convertArrayToOptions(gSport,"name","airtable");
-        
-        const Sportname = rowelement.querySelector(".sportname")
-        Sportname.textContent = club.sportname || "-";
-        Sportname.addEventListener("click", () => triggerEditDropdown(Sportname, club, "sport", sportOptions, tabelid));
 
+        // Oppdater klubbnavn og legg til klikkhendelse for redigering
+        const ClubName = rowelement.querySelector(".name");
+        ClubName.textContent = club.name || "-";
+        ClubName.addEventListener("click", () =>
+            triggerEditInput(ClubName, club, "name", "text", tabelid)
+        );
+
+        // Konverter sport-array til alternativer for dropdown
+        let sportOptions = convertArrayToOptions(gSport, "name", "airtable");
+
+        // Oppdater sportsnavn og legg til klikkhendelse for redigering
+        const Sportname = rowelement.querySelector(".sportname");
+        Sportname.textContent = club.sportname || "-";
+        Sportname.addEventListener("click", () =>
+            triggerEditDropdown(Sportname, club, "sport", sportOptions, tabelid)
+        );
+
+        // Oppdater land (default til "Norge")
         rowelement.querySelector(".contry").textContent = club.contry || "Norge";
 
+        // Legg til raden i listen
         list.appendChild(rowelement);
     }
 }
+
 
 function listOrganizer(organizers) {
  
