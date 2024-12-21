@@ -158,8 +158,6 @@ function responseThisTournament(data){
         document.getElementById(buttonid).click();
         lastClickedDivisionButton = activDivisjon;
     }
-
-   
 }
 
 function loadTourment(tournamentid){

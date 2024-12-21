@@ -587,6 +587,7 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             { text: "Åttendedelsfinale", value: "eighthfinale" },
             { text: "Kvartfinale", value: "quarterfinale" },
             { text: "Semifinale", value: "semifinale" },
+            { text: "Bronsefinale", value: "bronzefinale" },
             { text: "Finale", value: "finale" }
             ];
 
