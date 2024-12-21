@@ -198,19 +198,26 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         }else if (typematch == "bronzefinale") {
             matchElement = endplayMatches[1];
             index ++
-            // Da er det bare én kamp
-            matchData = filteredMatches[0];
+            if (matchData.length > 0){
+                //er det ingen kamp registrert her
+                // Da er det bare én kamp
+                matchData = filteredMatches[0];
+                
+                // Synliggjør denne kampenholderen
+                eighthFinalElement.querySelector(".bronzeholder").style.display = "flex";
+                
+                // Sett sluttspilltekst til en annen posisjon
+                let textholder = eighthFinalElement.querySelector(".enplaytext");
+                textholder.style.position = "absolute"; // Sørg for at den kan flyttes med topp/venstre/høyre/bunn
+                textholder.style.left = "auto";
+                textholder.style.right = "35px";
+                textholder.style.top = "-100px";
+                textholder.style.bottom = "auto";
+            }else{
+                // ingen kamper registrert Stopp løkken
+                break;
+            }
             
-            // Synliggjør denne kampenholderen
-            eighthFinalElement.querySelector(".bronzeholder").style.display = "flex";
-            
-            // Sett sluttspilltekst til en annen posisjon
-            let textholder = eighthFinalElement.querySelector(".enplaytext");
-            textholder.style.position = "absolute"; // Sørg for at den kan flyttes med topp/venstre/høyre/bunn
-            textholder.style.left = "auto";
-            textholder.style.right = "35px";
-            textholder.style.top = "-100px";
-            textholder.style.bottom = "auto";
         }
         
         const finalename = matchElement.querySelector(".finalename");
@@ -334,11 +341,6 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
             }
         }
     };
-
-
-    
-
-
 
 
 
