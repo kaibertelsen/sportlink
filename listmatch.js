@@ -93,6 +93,7 @@ function listmatch(data, grouptype, scroll) {
             if (match.typematch) {
                 const matchTypeMap = {
                     "eighthfinale": "ÅF",
+                    "placementfinale":"PK",
                     "round2":"R2",
                     "quarterfinale": "KF",
                     "semifinale": "SF",
@@ -251,6 +252,7 @@ function viewMatch(match){
     if (match.typematch) {
         const matchTypeMap = {
             "round2":"Runde 2 kamper",
+            "placementfinale":"Plasserings kamp",
             "eighthfinale": "8-delsfinale",
             "quarterfinale": "Kvartfinale",
             "semifinale": "Semifinale",

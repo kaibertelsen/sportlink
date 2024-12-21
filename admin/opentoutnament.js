@@ -585,6 +585,7 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         let MatchTypeoptions = [
             { text: "Ingen", value: "" },
             { text: "Åttendedelsfinale", value: "eighthfinale" },
+            { text:"Plasseringskamp",value:"placementfinale"},
             { text: "Runde 2 kamper", value: "round2" },
             { text: "Kvartfinale", value: "quarterfinale" },
             { text: "Semifinale", value: "semifinale" },
