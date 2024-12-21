@@ -61,7 +61,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     input.type = type;
     input.value = currentValue;
     input.style.position = "relative";
-    input.style.zIndex = "10";
+    input.style.zIndex = "50";
     
     if(type == "datetime-local"){
         input.classList.add("dateholder");
