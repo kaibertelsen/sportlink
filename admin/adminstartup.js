@@ -38,7 +38,6 @@ MemberStack.onReady.then(function(member) {
         memberData = member;
         document.getElementById("tabselectorholder").style.display = "inline-block";
         isLoggedIn = true;
-        startUpAdmin();
 
     }else{
         isLoggedIn = false;
