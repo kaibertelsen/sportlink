@@ -136,10 +136,30 @@ function responseThisTournament(data){
         console.warn("Turneringen ble ikke funnet i arrayen.");
     }
 
+    //sjekker om det er en aktive divisjonsfilter
+    let updateDivisjonsfilter = false;
+    let activDivisjon;
+    if(lastClickedDivisionButton){
+        //det er et aktivt divisjonsfilter trykk på kanppen etter opplisting
+        updateDivisjonsfilter = true;
+        activDivisjon = lastClickedDivisionButton
+    }
+    
+
+
     loadTourmentHeader(activetournament);
     listDivision(activetournament);
     loadeLists(activetournament);
     isInTurnament = true;
+
+     //aktiver filter igjen
+     if(updateDivisjonsfilter){
+        let buttonid = "di" + activDivisjon;
+        document.getElementById(buttonid).click();
+        lastClickedDivisionButton = activDivisjon;
+    }
+
+   
 }
 
 function loadTourment(tournamentid){
