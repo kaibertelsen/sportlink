@@ -180,8 +180,18 @@ function loadTourment(tournamentid){
     loadeLists(data);
     isInTurnament = true;
 
+    adjustSwipeContainer();
 }
 
+function adjustSwipeContainer() {
+    const headerWrapper = document.getElementById("headerwrapper");
+    const swipeContainerList = document.querySelector(".swipe-container-list");
+
+    if (headerWrapper && swipeContainerList) {
+        const headerHeight = headerWrapper.offsetHeight; // Hent høyden på headerwrapper
+        swipeContainerList.style.marginTop = `calc(${headerHeight}px + env(safe-area-inset-top))`;
+    }
+}
 
 function loadeLists(data){
     matches = makeObjectFromAirtableJSON(data, "matchjson");
