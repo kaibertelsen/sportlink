@@ -198,7 +198,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         }else if (typematch == "bronzefinale") {
             matchElement = endplayMatches[1];
             index ++
-            if (matchData.length > 0){
+            if (filteredMatches.length > 0){
                 //er det ingen kamp registrert her
                 // Da er det bare én kamp
                 matchData = filteredMatches[0];
