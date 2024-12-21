@@ -189,17 +189,16 @@ window.addEventListener("resize", adjustSwipeContainer);
 function adjustSwipeContainer() {
     const headerWrapper = document.getElementById("headerwrapper");
     const swipeContainer = document.getElementById("swipe-container");
-    const swipeContainerList = swipeContainer.querySelector(".swipe-container-list");
 
-    if (headerWrapper && swipeContainerList) {
+    if (headerWrapper && swipeContainer) {
         const headerHeight = headerWrapper.offsetHeight; // Hent høyden på headerwrapper
         const safeAreaInsetTop = parseInt(getComputedStyle(document.documentElement).getPropertyValue('env(safe-area-inset-top)')) || 0; // Hent safe area top, fallback til 0
 
-        // Beregn total margin-top
-        const marginTop = headerHeight + safeAreaInsetTop+10;
+        // Beregn total padding-top
+        const paddingTop = headerHeight + safeAreaInsetTop + 10;
 
-        // Sett margin-top som utregnet verdi
-        swipeContainerList.style.marginTop = `${marginTop}px`;
+        // Sett padding-top som utregnet verdi
+        swipeContainer.style.paddingTop = `${paddingTop}px`;
     }
 }
 

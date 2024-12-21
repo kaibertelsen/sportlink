@@ -357,6 +357,8 @@ function listTeams(teams) {
 
     let tabelid = "tbl3ta1WZBr6wKPSp";
     let Cluboptions = convertArrayToOptions(gClub,"name","airtable");
+    Cluboptions.unshift({text:"Ingen klubb",value:""});
+
     let Divisionoptions = convertArrayToOptions(gDivision,"name","airtable");
     // Update row counter
     list.parentElement.querySelector(".rowcounter").textContent = `${filteredTeams.length} stk.`;
