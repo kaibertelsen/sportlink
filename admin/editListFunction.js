@@ -289,7 +289,7 @@ console.log(data);
 function controllAction(item, newValue, field, tabelid, cell,options) {
     if (tabelid === "tbl3ta1WZBr6wKPSp" && field === "club") {
         // Dette er lagtabellen som oppdaterer club
-        
+        if(!newValue){
         // Finn clubitem
         const clubitem = gClub.find(item => item.airtable === newValue);
 
@@ -302,6 +302,13 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         if (clubitem.logo) {
             cell.parentElement.parentElement.querySelector(".teamlogo").src = clubitem.logo;
         }
+    }else{
+            // Oppdater også clubid og clubname lokalt
+            item.club = "";
+            item.clubname = "";
+            item.clublogo = "";
+            cell.parentElement.parentElement.querySelector(".teamlogo").src = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";   
+    }
 
     }else if(tabelid === "tbl3ta1WZBr6wKPSp" && field === "division") {
         // Finn divisjon
