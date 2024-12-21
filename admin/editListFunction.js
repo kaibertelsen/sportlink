@@ -12,7 +12,7 @@ document.getElementById("organizerSearchField").addEventListener("input", functi
 });
 
 document.getElementById("clubSearchField").addEventListener("input", function () {
-    let keys = ["name"];
+    let keys = ["name","sportname"];
     const filterdata = filterSearchList(this.value, gClub, keys);
     listClub(filterdata);
 });
