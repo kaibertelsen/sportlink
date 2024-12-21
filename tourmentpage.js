@@ -188,14 +188,15 @@ window.addEventListener("resize", adjustSwipeContainer);
 
 function adjustSwipeContainer() {
     const headerWrapper = document.getElementById("headerwrapper");
-    const swipeContainerList = document.querySelector(".swipe-container-list");
+    const swipeContainer = document.getElementById("swipe-container");
+    const swipeContainerList = swipeContainer.querySelector(".swipe-container-list");
 
     if (headerWrapper && swipeContainerList) {
         const headerHeight = headerWrapper.offsetHeight; // Hent høyden på headerwrapper
         const safeAreaInsetTop = parseInt(getComputedStyle(document.documentElement).getPropertyValue('env(safe-area-inset-top)')) || 0; // Hent safe area top, fallback til 0
 
         // Beregn total margin-top
-        const marginTop = headerHeight + safeAreaInsetTop;
+        const marginTop = headerHeight + safeAreaInsetTop+10;
 
         // Sett margin-top som utregnet verdi
         swipeContainerList.style.marginTop = `${marginTop}px`;
