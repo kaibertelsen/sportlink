@@ -93,6 +93,7 @@ function listmatch(data, grouptype, scroll) {
             if (match.typematch) {
                 const matchTypeMap = {
                     "eighthfinale": "ÅF",
+                    "round2":"R2",
                     "quarterfinale": "KF",
                     "semifinale": "SF",
                     "bronzefinale":"BF",
@@ -249,6 +250,7 @@ function viewMatch(match){
     const endplayLable = header.querySelector(".endplaylablematch");
     if (match.typematch) {
         const matchTypeMap = {
+            "round2":"Runde 2 kamper",
             "eighthfinale": "8-delsfinale",
             "quarterfinale": "Kvartfinale",
             "semifinale": "Semifinale",
