@@ -195,7 +195,7 @@ function adjustSwipeContainer() {
         const safeAreaInsetTop = parseInt(getComputedStyle(document.documentElement).getPropertyValue('env(safe-area-inset-top)')) || 0; // Hent safe area top, fallback til 0
 
         // Beregn total padding-top
-        const paddingTop = headerHeight + safeAreaInsetTop;
+        const paddingTop = headerHeight;
 
         // Sett padding-top som utregnet verdi
         swipeContainer.style.paddingTop = `${paddingTop}px`;

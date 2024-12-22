@@ -38,7 +38,6 @@ function groupArraybyDate(matchs) {
     return grouparray;
 }
 
-
 // listmatch function adjusted to avoid scroll conflicts
 function listmatch(data, grouptype, scroll) {
     const activeDivision = getActiveDivisionFilter();
@@ -413,7 +412,6 @@ function viewMatch(match){
 
     document.getElementById("thismatchtabbutton").click();
 }
-
 
 function createICSFile(icon, match) {
     const startDate = new Date(match.time);
