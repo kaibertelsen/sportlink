@@ -12,6 +12,7 @@ function getTournamentresponse(data){
 
     goToObjectShareKey();
 }
+
 function goToObjectShareKey() {
     // Sjekk om det foreligger noen nøkler i URL
     const keys = getQueryParams();
@@ -89,9 +90,6 @@ function goToObjectShareKey() {
         console.error(`Ukjent page-verdi: ${keys.page}`);
     }
 }
-
-
-
 
 function emtyTurnamentLists(){
 
@@ -215,8 +213,6 @@ function loadeLists(data){
 
 }
 
-
-
 function loadTourmentHeader(data){
 
     const headerholder = document.getElementById("tourmentheader");
@@ -277,8 +273,6 @@ function makeDivisionArray(tournament){
   
     return divisionArray;
 }
-
-
 
 // Global variabel for å holde styr på siste trykte knapp
 let lastClickedDivisionButton = "";
