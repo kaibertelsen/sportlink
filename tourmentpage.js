@@ -179,7 +179,7 @@ function loadTourment(tournamentid){
     isInTurnament = true;
 
    // Kjør funksjonen etter 1 sekund
-setTimeout(adjustSwipeContainer, 1000);
+setTimeout(adjustSwipeContainer, 500);
 }
 // Juster på nytt hvis størrelsen endres (valgfritt)
 window.addEventListener("resize", adjustSwipeContainer);
@@ -190,10 +190,9 @@ function adjustSwipeContainer() {
 
     if (headerWrapper && swipeContainer) {
         const headerHeight = headerWrapper.offsetHeight; // Hent høyden på headerwrapper
-        const safeAreaInsetTop = parseInt(getComputedStyle(document.documentElement).getPropertyValue('env(safe-area-inset-top)')) || 0; // Hent safe area top, fallback til 0
-
+        
         // Beregn total padding-top
-        const paddingTop = headerHeight-safeAreaInsetTop;
+        const paddingTop = headerHeight;
 
         // Sett padding-top som utregnet verdi
         swipeContainer.style.paddingTop = `${paddingTop}px`;
