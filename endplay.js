@@ -156,7 +156,7 @@ function listendplay(data, divisjon) {
 
                 //sjekke om det er bronsefinale registrert og om ikke semiFinalElement er synlig
                 //da må tekstelementet fjernes
-                let isBronzfinalematchinThisEndplay = listMatches.filter(match => 
+                let isBronzfinalematchinThisEndplay = filteredMatches.filter(match => 
                     (match.typematch === "bronzefinale") &&
                     (match.endplay === endplayname) &&
                     (match.division === division.airtable)
