@@ -61,7 +61,14 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     input.type = type;
     input.value = currentValue;
     input.style.position = "relative";
-    input.style.zIndex = "10";
+    input.style.zIndex = "15";
+
+    if(field == "goalteam1" || field == "goalteam2"){
+        //de er inne i en beholder ekstra
+        cell.parentElement.parentElement.style.zIndex = "10";
+    }else{
+        cell.parentElement.style.zIndex = "10";
+    }
     
     if(type == "datetime-local"){
         input.classList.add("dateholder");
@@ -86,8 +93,18 @@ function triggerEditInput(cell, item, field,type, tabelid) {
 
     // Lagre endringer ved `blur`
     input.addEventListener("blur", () => {
+
+
+        if(field == "goalteam1" || field == "goalteam2"){
+            //de er inne i en beholder ekstra
+            cell.parentElement.parentElement.style.zIndex = "5";
+        }else{
+            cell.parentElement.style.zIndex = "5";
+        }
+
+
         let newValue = input.value.trim();
-       
+
         if (newValue !== currentValue) {
             //innholdet er forandret
             let savedata = {};
@@ -178,9 +195,9 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
         //sette cellen tilbake til normal z verdi
         if(field == "team1" || field == "team2"){
             //de er inne i en beholder ekstra
-            cell.parentElement.parentElement.style.zIndex = "10";
+            cell.parentElement.parentElement.style.zIndex = "5";
         }else{
-            cell.parentElement.style.zIndex = "10";
+            cell.parentElement.style.zIndex = "5";
         }
 
         const selectedOption = options.find(opt => opt.value.toString() === select.value);
