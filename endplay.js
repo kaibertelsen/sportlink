@@ -162,7 +162,7 @@ function listendplay(data, divisjon) {
                     (match.division === division.airtable)
                 );
 
-                if (isBronzfinalematchinThisEndplay > 0) {
+                if (isBronzfinalematchinThisEndplay.length > 0) {
                     // Det er bronsefinale
                 
                     // Sjekk om semiFinalElement er synlig
