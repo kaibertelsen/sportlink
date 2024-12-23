@@ -191,6 +191,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         eighthFinalElement.style.display = "none";
     }
 
+    let countMatches = 0;
 
     // Loop gjennom hvert "endplaymatch"-element
     for(var index = 0;index<endplayMatches.length;index++) {
@@ -201,10 +202,11 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
             matchElement = endplayMatches[0];
             matchData = filteredMatches[0];
             index ++
-
+            countMatches ++
         }else if (typematch == "bronzefinale") {
             matchElement = endplayMatches[1];
             index ++
+            countMatches ++
             if (filteredMatches.length > 0){
                 //er det ingen kamp registrert her
                 // Da er det bare én kamp
@@ -213,7 +215,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
                 // Synliggjør denne kampenholderen
                 eighthFinalElement.querySelector(".bronzeholder").style.display = "flex";
                 
-                // Sett sluttspilltekst til en annen posisjon
+                // Sett sluttspilltekst til en annen posisjon men sjekk om det er simifinaler her
                 let textholder = eighthFinalElement.querySelector(".enplaytext");
                 textholder.style.position = "absolute"; // Sørg for at den kan flyttes med topp/venstre/høyre/bunn
                 textholder.style.left = "auto";
@@ -241,7 +243,10 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
 
 
 
-        if (!matchData) return; // Hopp over hvis ingen kamp er funnet
+        if (!matchData) {
+            break; // Hopp over hvis ingen kamp er funnet
+        }
+        countMatches++
 
         // Sjekk om match har riktig `endplayName`
         if (matchData.endplay !== endplayName) return;
@@ -349,7 +354,9 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         }
     };
 
-
+    if(countMatches == 0){
+        eighthFinalElement.style.display = "none"; 
+    }
 
     function createInitials(name, existingInitials) {
         if (existingInitials) return existingInitials.toUpperCase();
