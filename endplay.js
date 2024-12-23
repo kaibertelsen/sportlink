@@ -153,6 +153,15 @@ function listendplay(data, divisjon) {
                     if (eighthFinalBottomElement) contentholderlist.appendChild(eighthFinalBottomElement);
                 }
 
+
+                //sjekke om det er bronsefinale registrert og om ikke semiFinalElement er synlig
+                //da må tekstelementet fjernes
+                let isBronzfinalematchinThisEndplay = listMatches.filter(match => 
+                    (match.typematch === "bronzefinale") &&
+                    (match.endplay === endplayname) &&
+                    (match.division === division.airtable)
+                );
+
                 if(activeDivision == ""){
                     contentholderlist.style.height = "0px";
                     contentholderlist.style.opacity = "0";
