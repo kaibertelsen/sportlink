@@ -115,8 +115,9 @@ function loadPointsToviewer(rowelement,team,range,solo){
 
    // Laglogo
    const logoteam = rowelement.querySelector(".clublogo");
-   logoteam.removeAttribute('srcset');
-   logoteam.src = team.clublogo;
+   if (team.clublogo) logoteam.src = team.clublogo;
+   //logoteam.removeAttribute('srcset');
+   //logoteam.src = team.clublogo;
 
    // Lagnavn
    const teamname = rowelement.querySelector(".teamnamelable");
