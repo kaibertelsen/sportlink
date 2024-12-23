@@ -176,7 +176,6 @@ function listendplay(data, divisjon) {
                     }
                 }
                 
-
                 if(activeDivision == ""){
                     contentholderlist.style.height = "0px";
                     contentholderlist.style.opacity = "0";
@@ -392,27 +391,23 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         let initials = "";
     
         if (words.length > 1) {
-            // Lag initialer fra første bokstav i hvert ord
-            initials = words.map(word => word[0]).join('').toUpperCase();
+            // Hvis siste ord er et tall, bruk det som det tredje tegnet
+            const lastWord = words[words.length - 1];
+            if (!isNaN(lastWord)) {
+                initials = words.slice(0, -1).map(word => word[0]).join('').toUpperCase() + lastWord;
+            } else {
+                // Lag initialer fra første bokstav i hvert ord
+                initials = words.map(word => word[0]).join('').toUpperCase();
+            }
         } else {
             // Bruk de første 3 tegnene i navnet
             initials = name.slice(0, 3).toUpperCase();
         }
     
-        // Sjekk om siste karakter i navnet er et tall
-        const lastChar = name[name.length - 1];
-        if (!isNaN(lastChar)) {
-            // Hvis det er et tall, legg det til som det tredje tegnet
-            if (initials.length === 2) {
-                initials += lastChar; // Legg til tallet hvis vi har to bokstaver
-            } else if (initials.length > 2) {
-                initials = initials.slice(0, 2) + lastChar; // Bytt ut tredje tegn med tallet
-            }
-        }
-    
         // Sørg for at initialene er nøyaktig 3 tegn
         return initials.slice(0, 3).toUpperCase();
     }
+    
     
     
 }
