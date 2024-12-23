@@ -342,7 +342,7 @@ function viewMatch(match){
         resultrapp.style.display = "none";
     }
     //sjekk at contentholder er 140 px pading
-    document.getElementById("matchcontentholder").style.paddingTop = "140px";
+    //document.getElementById("matchcontentholder").style.paddingTop = "140px";
 
     const updateTextContent = (selector, value) => {
         const element = matchinfo.querySelector(selector);
