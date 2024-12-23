@@ -177,7 +177,7 @@ function viewteam(team) {
     let grouplable = thismatchinfo.querySelector(".groupname");
     if(team.group){
         grouplable.textContent = team.groupname;
-        grouplable.parentElement.style.display = "flex";
+        grouplable.parentElement.style.display = "block";
     }else{
         grouplable.textContent = "";
         grouplable.parentElement.style.display = "none";
