@@ -145,10 +145,15 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
 
     const select = document.createElement("select");
     select.classList.add("standarddropdowninput");
+    select.style.zIndex = "15";
 
     //setter den valgte cellen foran de andre
-    cell.parentElement.style.zIndex = "10";
-
+    if(field == "team1" || field == "team1"){
+        //de er inne i en beholder ekstra
+        cell.parentElement.parentElement.style.zIndex = "10";
+    }else{
+        cell.parentElement.style.zIndex = "10";
+    }
     options.forEach(option => {
         const optionElement = document.createElement("option");
         optionElement.value = option.value;
@@ -170,7 +175,12 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
     // Lagre endringer ved `blur`
     select.addEventListener("blur", () => {
         //sette cellen tilbake til normal z verdi
-        cell.parentElement.style.zIndex = "5";
+        if(field == "team1" || field == "team1"){
+            //de er inne i en beholder ekstra
+            cell.parentElement.parentElement.style.zIndex = "10";
+        }else{
+            cell.parentElement.style.zIndex = "10";
+        }
 
         const selectedOption = options.find(opt => opt.value.toString() === select.value);
 
