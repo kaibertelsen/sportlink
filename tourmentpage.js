@@ -30,21 +30,22 @@ function goToObjectShareKey() {
             loadTourment(keys.tournamentid);
 
             // Naviger til "Turnering" tab
-            setTimeout(() => {
-                document.getElementById("tabtoturnering").click();
-            }, 1000);
+            document.getElementById("tabtoturnering").click()
             
             // Trykk på tabellknappen
             setTimeout(() => {
                 document.getElementById("tabeltabbutton").click()
-            }, 1000);
+            }, 900);
             
             // Finn laget basert på "teamid"
             const team = teams.find(item => item.airtable === keys.teamid);
 
             // Vis laget dersom det finnes
             if (team) {
-                viewteam(team);
+                setTimeout(() => {
+                    viewteam(team);
+                }, 1000);
+                
             } else {
                 console.error("Team ikke funnet for teamid:", keys.teamid);
             }
@@ -62,14 +63,21 @@ function goToObjectShareKey() {
             document.getElementById("tabtoturnering").click();
 
             // Trykk på kampknappen
-            document.getElementById("matchtabbutton").click();
+            
+              // Trykk på tabellknappen
+              setTimeout(() => {
+                document.getElementById("matchtabbutton").click();
+            }, 900);
 
             // Finn kampen basert på "matchid"
             const match = matches.find(item => item.airtable === keys.matchid);
 
             // Vis kampen dersom den finnes
             if (match) {
-                viewMatch(match);
+                setTimeout(() => {
+                    viewMatch(match);
+                }, 1000);
+                
             } else {
                 console.error("Match ikke funnet for matchid:", keys.matchid);
             }
