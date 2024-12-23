@@ -186,6 +186,12 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
     // Hent alle elementer med klassen "endplaymatch" i eighthFinalElement
     const endplayMatches = eighthFinalElement.querySelectorAll(".endplaymatch");
     
+    if(filteredMatches.length == 0 && typematch != "bronzefinale" && typematch != "finale"){
+        //det er ingen kamper så skjul hele endplay section
+        eighthFinalElement.style.display = "none";
+    }
+
+
     // Loop gjennom hvert "endplaymatch"-element
     for(var index = 0;index<endplayMatches.length;index++) {
         let matchElement = endplayMatches[index];
