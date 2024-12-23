@@ -145,7 +145,9 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
 
     const select = document.createElement("select");
     select.classList.add("standarddropdowninput");
-    
+    select.style.position = "relative";
+    select.style.zIndex = "10";
+
     options.forEach(option => {
         const optionElement = document.createElement("option");
         optionElement.value = option.value;
