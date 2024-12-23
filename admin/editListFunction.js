@@ -61,7 +61,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     input.type = type;
     input.value = currentValue;
     input.style.position = "relative";
-    input.style.zIndex = "50";
+    input.style.zIndex = "10";
     
     if(type == "datetime-local"){
         input.classList.add("dateholder");
@@ -145,8 +145,9 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
 
     const select = document.createElement("select");
     select.classList.add("standarddropdowninput");
-    select.style.position = "relative";
-    select.style.zIndex = "10";
+
+    //setter den valgte cellen foran de andre
+    cell.parentElement.style.zIndex = "10";
 
     options.forEach(option => {
         const optionElement = document.createElement("option");
@@ -168,6 +169,9 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
 
     // Lagre endringer ved `blur`
     select.addEventListener("blur", () => {
+        //sette cellen tilbake til normal z verdi
+        cell.parentElement.style.zIndex = "5";
+
         const selectedOption = options.find(opt => opt.value.toString() === select.value);
 
         if (selectedOption && selectedOption.text !== currentValue) {
@@ -184,7 +188,6 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
                 savedata[field] = [newValue];
             }
 
-            
             updateRowData(item.airtable, savedata,tabelid);
             //oppdater evt. ander felt/ iconer på samme rad
 
