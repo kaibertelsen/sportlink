@@ -162,11 +162,20 @@ function listendplay(data, divisjon) {
                     (match.division === division.airtable)
                 );
 
-                if(isBronzfinalematchinThisEndplay){
-
-                    console.log(isBronzfinalematchinThisEndplay);
-
+                if (isBronzfinalematchinThisEndplay > 0) {
+                    // Det er bronsefinale
+                
+                    // Sjekk om semiFinalElement er synlig
+                    const isSemiFinalVisible = semiFinalElement.style.display !== "none" && semiFinalElement.offsetParent !== null;
+                
+                    if (isSemiFinalVisible) {
+                        console.log("semiFinalElement er synlig");
+                    } else {
+                        let textholder = finalElement.querySelector(".enplaytext");
+                        textholder.style.display = "none";
+                    }
                 }
+                
 
                 if(activeDivision == ""){
                     contentholderlist.style.height = "0px";
