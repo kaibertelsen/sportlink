@@ -162,6 +162,12 @@ function listendplay(data, divisjon) {
                     (match.division === division.airtable)
                 );
 
+                if(isBronzfinalematchinThisEndplay){
+
+                    console.log(isBronzfinalematchinThisEndplay);
+
+                }
+
                 if(activeDivision == ""){
                     contentholderlist.style.height = "0px";
                     contentholderlist.style.opacity = "0";
