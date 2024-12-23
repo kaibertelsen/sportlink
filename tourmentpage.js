@@ -30,11 +30,15 @@ function goToObjectShareKey() {
             loadTourment(keys.tournamentid);
 
             // Naviger til "Turnering" tab
-            setTimeout(document.getElementById("tabtoturnering").click(), 1000);
+            setTimeout(() => {
+                document.getElementById("tabtoturnering").click();
+            }, 1000);
             
             // Trykk på tabellknappen
-            setTimeout(document.getElementById("tabeltabbutton").click(), 1000);
-           
+            setTimeout(() => {
+                document.getElementById("tabeltabbutton").click()
+            }, 1000);
+            
             // Finn laget basert på "teamid"
             const team = teams.find(item => item.airtable === keys.teamid);
 
