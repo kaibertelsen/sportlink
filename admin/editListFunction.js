@@ -145,6 +145,7 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
 
     const select = document.createElement("select");
     select.classList.add("standarddropdowninput");
+    select.style.position = "relative";
     select.style.zIndex = "15";
 
     //setter den valgte cellen foran de andre
