@@ -149,7 +149,7 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
     select.style.zIndex = "15";
 
     //setter den valgte cellen foran de andre
-    if(field == "team1" || field == "team1"){
+    if(field == "team1" || field == "team2"){
         //de er inne i en beholder ekstra
         cell.parentElement.parentElement.style.zIndex = "10";
     }else{
@@ -176,7 +176,7 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
     // Lagre endringer ved `blur`
     select.addEventListener("blur", () => {
         //sette cellen tilbake til normal z verdi
-        if(field == "team1" || field == "team1"){
+        if(field == "team1" || field == "team2"){
             //de er inne i en beholder ekstra
             cell.parentElement.parentElement.style.zIndex = "10";
         }else{
