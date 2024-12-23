@@ -179,7 +179,11 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         (division === "" || match.division === division.airtable)
     );
     
-    //sjekke om det er finale eller bronsefinale, da skal det kun kjøres en gang
+   //er det ikke noen kampen kan hele section hides
+   if(filteredMatches.length == 0){
+    //det er ingen kamper så skjul hele endplay section
+    eighthFinalElement.style.display = "none";
+   }
 
 
     // Hent alle elementer med klassen "endplaymatch" i eighthFinalElement
@@ -347,6 +351,9 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
     function createInitials(name, existingInitials) {
         if (existingInitials) return existingInitials.toUpperCase();
     
+        // Fjern mellomrom i starten og slutten av navnet
+        name = name.trim();
+    
         const words = name.split(' ');
         let initials = "";
     
@@ -372,6 +379,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         // Sørg for at initialene er nøyaktig 3 tegn
         return initials.slice(0, 3).toUpperCase();
     }
+    
     
 }
 
