@@ -301,9 +301,13 @@ function viewteam(team) {
                 resultlable.style.backgroundColor = "red";
             }
         } else {
-            resultlable.textContent = "Ikke spilt";
+            // om kampen ikke er spilt så sett dato og til i resultatfeltet
+            resultlable.innerHTML = formatdatetoDateAndTimeshortInToLines(match.time);
             resultlable.style.fontWeight = "normal";
             resultlable.style.backgroundColor = "transparent";
+            resultlable.style.textAlign = "center";
+            //skjul annen datoelement
+            matchelement.querySelector(".teamdatematch").style.display = "none";
         }
     }
 

@@ -142,4 +142,32 @@ function formatDate(dateString) {
     return formattedDateTime;
   }
 
-  
+  function formatdatetoDateAndTimeshortInToLines(dateString) {
+    const matchDate = new Date(dateString);
+
+    // Konverter til UTC-tid ved å bruke tidspunktet som UTC
+    const utcDate = new Date(
+        matchDate.getUTCFullYear(),
+        matchDate.getUTCMonth(),
+        matchDate.getUTCDate(),
+        matchDate.getUTCHours(),
+        matchDate.getUTCMinutes(),
+        matchDate.getUTCSeconds()
+    );
+
+    // Formatér dato i UTC
+    const formattedDate = utcDate.toLocaleDateString("no-NO", {
+        day: "numeric",
+        month: "short"
+    });
+
+    // Formatér tid i UTC
+    const formattedTime = utcDate.toLocaleTimeString("no-NO", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+    });
+
+    // Returnér resultatet med linjeskift
+    return `${formattedDate}\n${formattedTime}`;
+}
