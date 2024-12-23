@@ -180,10 +180,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
     );
     
    //er det ikke noen kampen kan hele section hides
-   if(filteredMatches.length == 0){
-    //det er ingen kamper så skjul hele endplay section
-    eighthFinalElement.style.display = "none";
-   }
+  
 
 
     // Hent alle elementer med klassen "endplaymatch" i eighthFinalElement
