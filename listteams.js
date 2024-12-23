@@ -306,6 +306,7 @@ function viewteam(team) {
             resultlable.style.fontWeight = "normal";
             resultlable.style.backgroundColor = "transparent";
             resultlable.style.textAlign = "center";
+            resultlable.style.fontSize = "12px";
             //skjul annen datoelement
             matchelement.querySelector(".teamdatematch").style.display = "none";
         }
