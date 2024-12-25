@@ -1091,10 +1091,19 @@ if(data.fields?.group){
 }else{
     data.fields.group = "";
 }
+
+ //konverterer tournament
+ if(data.fields?.tournament){
+    data.fields.tournament = data.fields.tournament[0];
+}else{
+    data.fields.tournament = "";
+}
+
+
 gTeam.push(data.fields);
 
 // Opprett ny rad basert på responsdata
-const newRow = makeTeamrow(nodeelement, data.fields, "tbl3ta1WZBr6wKPSp");
+const newRow = makeTeamrow(nodeelement, data.fields,[],[], "tbl3ta1WZBr6wKPSp");
 
 // Erstatt midlertidig placeholder med den nye raden
 copyTeamElementholder.parentElement.insertBefore(newRow, copyTeamElementholder.nextSibling);
