@@ -322,7 +322,7 @@ console.log(data);
 function controllAction(item, newValue, field, tabelid, cell,options) {
     if (tabelid === "tbl3ta1WZBr6wKPSp" && field === "club") {
         // Dette er lagtabellen som oppdaterer club
-        if(!newValue){
+        if (newValue !== "") {
         // Finn clubitem
         const clubitem = gClub.find(item => item.airtable === newValue);
 
