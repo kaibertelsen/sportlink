@@ -1102,8 +1102,15 @@ if(data.fields?.group){
 
 gTeam.push(data.fields);
 
+let Cluboptions = convertArrayToOptions(gClub,"name","airtable");
+Cluboptions.unshift({text:"Ingen klubb",value:""});
+
+let Divisionoptions = convertArrayToOptions(gDivision,"name","airtable");
+
+
+
 // Opprett ny rad basert på responsdata
-const newRow = makeTeamrow(nodeelement, data.fields,[],[], "tbl3ta1WZBr6wKPSp");
+const newRow = makeTeamrow(nodeelement, data.fields,Cluboptions,Divisionoptions, "tbl3ta1WZBr6wKPSp");
 
 // Erstatt midlertidig placeholder med den nye raden
 copyTeamElementholder.parentElement.insertBefore(newRow, copyTeamElementholder.nextSibling);
