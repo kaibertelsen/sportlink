@@ -77,12 +77,16 @@ function triggerEditInput(cell, item, field,type, tabelid) {
     }
 
     // Spesifikk behandling for nummer
+        // Spesifikk behandling for nummer
         if (type === "number") {
             input.style.maxWidth = "60px";
-            input.value = currentValue
-                ? parseFloat(currentValue.replace(/[^0-9.-]/g, "")) || 0 // Kun tall
-                : null; // Null hvis currentValue er tomt
+            if (currentValue === "-" || currentValue.trim() === "") {
+                input.value = null; // Sett til null hvis currentValue er "-" eller tom
+            } else {
+                input.value = parseFloat(currentValue.replace(/[^0-9.-]/g, "")) || 0; // Kun tall
+            }
         }
+
 
     // Skjul cellen
     cell.style.display = "none";
@@ -451,7 +455,6 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
     }
 }
 
-
 function findParentWithResultatCell(element,className) {
     while (element) {
       // Sjekk om elementet inneholder et barn med klassen "resultatcell"
@@ -462,7 +465,6 @@ function findParentWithResultatCell(element,className) {
     }
     return null; // Returner null hvis ingen foreldre matcher
 }
-
 
 function findParentWithClass(element, className) {
     while (element) {
@@ -481,7 +483,6 @@ function findParentWithClass(element, className) {
     }
     return null; // Returnerer null hvis ingen elementer matcher
 }
-
 
 function makeNewUpdateRowMatch(item,tabelid,cell){
 
