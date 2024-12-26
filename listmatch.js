@@ -225,11 +225,9 @@ function viewMatch(match){
     header.querySelector(".team2").textContent = team2Name;
 
     // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
-    const team1Logo = header.querySelector(".logoteam1");
-    const team2Logo = header.querySelector(".logoteam2");
-    if (match.team1clublogo) team1Logo.src = match.team1clublogo;
-    if (match.team2clublogo) team2Logo.src = match.team2clublogo;
-
+    header.querySelector(".logoteam1").src = match.team1clublogo || "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
+    header.querySelector(".logoteam2").src = match.team2clublogo || "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
+   
     const resultlable = header.querySelector(".resultlablemacth");
     let matchIsPlayed = false;
     if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
