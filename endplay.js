@@ -148,7 +148,7 @@ function listendplay(data, divisjon) {
                         }
 
                         if(semiFinalElement){
-                            let topWireElements = semiFinalBottomElement.querySelectorAll(".wiresystem.topp");
+                            let topWireElements = semiFinalBottomElement.querySelectorAll(".wiresystem.bottom");
                             topWireElements.forEach(el => (el.style.display = "none"));
                         }
                     }
