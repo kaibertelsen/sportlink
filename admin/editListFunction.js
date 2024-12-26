@@ -81,7 +81,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
         if (type === "number") {
             input.style.maxWidth = "60px";
             if (currentValue === "-" || currentValue.trim() === "") {
-                input.value = null; // Sett til null hvis currentValue er "-" eller tom
+                input.value = currentValue;
             } else {
                 input.value = parseFloat(currentValue.replace(/[^0-9.-]/g, "")) || 0; // Kun tall
             }
@@ -114,7 +114,11 @@ function triggerEditInput(cell, item, field,type, tabelid) {
             let savedata = {};
             if (newValue !== "") {
                 if(type === "number"){
-                newValue = parseFloat(newValue.replace(/[^0-9.-]/g, "")) || 0;
+                    if (currentValue === "-" || currentValue.trim() === "") {
+
+                    }else{
+                    newValue = parseFloat(newValue.replace(/[^0-9.-]/g, "")) || 0;
+                    }
                 }
 
             } else {
