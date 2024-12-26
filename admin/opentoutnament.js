@@ -796,7 +796,7 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
 
             if(match.team1name && match.team2name){
                 penaltyminteam1.addEventListener("click", () => triggerEditInput(penaltyminteam1, match, "penaltyminteam1", "number", tabelid));
-                penaltyminteam1.addEventListener("click", () => triggerEditInput(penaltyminteam2, match, "penaltyminteam2", "number", tabelid));
+                penaltyminteam2.addEventListener("click", () => triggerEditInput(penaltyminteam2, match, "penaltyminteam2", "number", tabelid));
             }
             
             
