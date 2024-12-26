@@ -131,15 +131,29 @@ function listendplay(data, divisjon) {
                     loadEndplaysection(finalElement, filteredMatches, "bronzefinale",endplayname,division, 2);
                 }
                 // Skjul spesifikke elementer i quarterFinalElement og quarterFinalBottomElement
-                if (finalecount === 4) {
+                if (finalecount <= 4) {
                     if (quarterFinalElement) {
                         let topWireElements = quarterFinalElement.querySelectorAll(".wiresystem.topp");
                         topWireElements.forEach(el => (el.style.display = "none"));
                     }
+            
                     if (quarterFinalBottomElement) {
                         let bottomWireElements = quarterFinalBottomElement.querySelectorAll(".wiresystem.bottom");
                         bottomWireElements.forEach(el => (el.style.display = "none"));
                     }
+                    if(finalecount <= 2){
+                        if(semiFinalElement){
+                            let topWireElements = semiFinalElement.querySelectorAll(".wiresystem.topp");
+                            topWireElements.forEach(el => (el.style.display = "none"));
+                        }
+
+                        if(semiFinalElement){
+                            let topWireElements = semiFinalBottomElement.querySelectorAll(".wiresystem.topp");
+                            topWireElements.forEach(el => (el.style.display = "none"));
+                        }
+                    }
+
+
                 }
 
                 // Legg til elementer i ønsket rekkefølge
