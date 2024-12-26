@@ -785,7 +785,7 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             } 
         }else if(activetournament.sport[0] === "reca0jxxTQAtlUTNu"){
             // det er icehockey
-            icehockeyDivbox.style.display = "flex";
+            icehockeyDivbox.style.display = "block";
 
             //utvisningsminutter
             const penaltyminteam1 = icehockeyDivbox.querySelector(".penaltyminteam1");
