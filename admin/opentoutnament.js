@@ -787,6 +787,25 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             // det er icehockey
             icehockeyDivbox.style.display = "flex";
 
+            //utvisningsminutter
+            const penaltyminteam1 = icehockeyDivbox.querySelector(".penaltyminteam1");
+            penaltyminteam1.textContent = match.penaltyminteam1 || "-";
+            const penaltyminteam2 = icehockeyDivbox.querySelector(".penaltyminteam2");
+            penaltyminteam2.textContent = match.penaltyminteam2 || "-";
+
+
+            if(match.team1name && match.team2name){
+                penaltyminteam1.addEventListener("click", () => triggerEditInput(penaltyminteam1, match, "penaltyminteam1", "number", tabelid));
+                penaltyminteam1.addEventListener("click", () => triggerEditInput(penaltyminteam2, match, "penaltyminteam2", "number", tabelid));
+            }
+            
+            
+
+
+
+
+
+
             const switsjOvertime = icehockeyDivbox.querySelector(".overtime");
             switsjOvertime.checked = !!match.overtime; // Konverter til boolean for sikkerhet
             
