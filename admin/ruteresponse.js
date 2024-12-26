@@ -31,6 +31,8 @@ function ruteresponse(data,id){
         newTeamresponse(data);
     }else if(id == "newGroupResponse"){
         newGroupResponse(data);
+    }else if(id == "teamdeletedresponse"){
+        teamdeletedresponse(data);
     }
     
     

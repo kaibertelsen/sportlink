@@ -406,6 +406,20 @@ function makeTeamrow(nodeelement,team,Cluboptions,Divisionoptions,tabelid){
             Groupoptions.push({text:"Ingen gruppe",value:""});
             groupName.addEventListener("click", () => triggerEditDropdown(groupName, team, "group",Groupoptions , tabelid));
         }
+
+        // button panel
+        const deletebutton = rowelement.querySelector(".deletebutton");
+        deletebutton.onclick = function () {
+            const confirmation = window.confirm("Ønsker du å slette dette laget?");
+            if (confirmation) {
+                DELETEairtable(baseId,tabelid,team.airtable,"teamdeletedresponse");
+                rowelement.remove();
+            } else {
+            console.log("Sletting avbrutt.");
+            }
+        }
+
+
         
     return rowelement;
     
@@ -987,7 +1001,17 @@ function newMatchresponse(data) {
 
 function matchdeletedresponse(data){
    console.log(data);
+   //fjerne lokalt 
+   gMatchs = gMatchs.filter(item => item.airtable !== data.fields.airtable);
 }
+
+function teamdeletedresponse(data) {
+    console.log(data);
+
+    // Finn og fjern objektet lokalt
+    gTeam = gTeam.filter(item => item.airtable !== data.fields.airtable);
+}
+
 
 function createNewMatch(){
 
