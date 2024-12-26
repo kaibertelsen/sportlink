@@ -164,9 +164,8 @@ function viewteam(team) {
     // Oppdater header-informasjon
     const teamheader = document.getElementById("headerwrapperteam");
     teamheader.querySelector(".teamnameheader").textContent = team.name || "Ukjent lag";
-    const teamLogo = teamheader.querySelector(".logoteam");
-    if (team.clublogo) teamLogo.src = team.clublogo;
-
+    teamheader.querySelector(".logoteam").src = team.clublogo || "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png"
+    
     const thismatchinfo = document.getElementById("thisteamhinfo");
     
     /*
