@@ -214,7 +214,7 @@ function viewteam(team) {
 
         //finne alle unike lokasjoner og last de inn i locationselector
         const locationselector = thisteammatchlist.querySelector("locationselector");
-
+        loadLocationSelector(filteredMatches,locationselector);
 
 
         listMatchesInTeamView(filteredMatches);
@@ -429,6 +429,37 @@ function listMatchesInTeamView(filteredMatches){
   }
 
 }
+
+function loadLocationSelector(Matchs,locationSelector) {
+    let uniclocations = [];
+
+    // Finn unike location-verdier
+    for (let match of Matchs) {
+        if (match.location && !uniclocations.includes(match.location)) {
+            uniclocations.push(match.location);
+        }
+    }
+
+    // Tøm eksisterende options
+    locationSelector.innerHTML = "";
+
+    // Legg til en standard tom option (valgfritt)
+    const defaultOption = document.createElement("option");
+    defaultOption.textContent = "Velg sted";
+    defaultOption.value = "";
+    locationSelector.appendChild(defaultOption);
+
+    // Legg til unike locations som options
+    for (let location of uniclocations) {
+        const option = document.createElement("option");
+        option.textContent = location;
+        option.value = location;
+        locationSelector.appendChild(option);
+    }
+}
+
+
+
 
 function findRankForTeam(team) {
     // Filtrer lagene basert på aktivt divisjonsfilter
