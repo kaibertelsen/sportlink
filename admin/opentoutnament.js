@@ -588,16 +588,17 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
 
         //Scorfelt1
         const goal1 = rowelement.querySelector(".goalteam1");
-        goal1.textContent = match.goalteam1 || "-";
-        if(match.team1name && match.team2name){
-        goal1.addEventListener("click", () => triggerEditInput(goal1, match, "goalteam1", "number", tabelid));
-        }
+        goal1.textContent = (match.goalteam1 === "" || match.goalteam1 === null) ? "-" : match.goalteam1;
+
         //Scorfelt2
         const goal2 = rowelement.querySelector(".goalteam2");
-        goal2.textContent = match.goalteam2 || "-";
+        goal2.textContent = (match.goalteam2 === "" || match.goalteam2 === null) ? "-" : match.goalteam2;
+
         if(match.team1name && match.team2name){
+        goal1.addEventListener("click", () => triggerEditInput(goal1, match, "goalteam1", "number", tabelid));
         goal2.addEventListener("click", () => triggerEditInput(goal2, match, "goalteam2", "number", tabelid));
         }
+        
         //Result lable
         const ResultStatus = rowelement.querySelector(".resultstatus");
         let MatchTypeoptions = [
