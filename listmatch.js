@@ -161,18 +161,21 @@ function listmatch(data, grouptype, scroll) {
 
             
             const resultlable = matchelement.querySelector(".resultlable");
-            if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
-                resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
-                resultlable.style.fontWeight = "bold";
-                resultlable.style.color = mapColors("main");
-                resultlable.style.fontSize = "16px";
-            } else {
+            if ((match.goalteam1 === "" || match.goalteam1 === null) || 
+            (match.goalteam2 === "" || match.goalteam2 === null)) {
                 resultlable.textContent = formatdatetoTime(match.time);
                 resultlable.style.fontWeight = "normal";
         
                 if (!firstUnplayedMatch) {
                     firstUnplayedMatch = matchelement;
                 }
+            } else {
+
+                resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
+                resultlable.style.fontWeight = "bold";
+                resultlable.style.color = mapColors("main");
+                resultlable.style.fontSize = "16px";
+
             }
         
             if (item.matches.indexOf(match) === item.matches.length - 1) {
