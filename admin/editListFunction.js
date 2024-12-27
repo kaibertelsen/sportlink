@@ -115,7 +115,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
             let savedata = {};
             if (newValue !== "") {
                 if(type === "number"){
-                    if (currentValue === "-" || currentValue.trim() === "") {
+                    if (newValue === "-" || newValue.trim() === "") {
                     }else{
                     newValue = parseFloat(newValue.replace(/[^0-9.-]/g, "")) || 0;
                     }
