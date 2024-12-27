@@ -613,13 +613,13 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             ];
 
         //om den er spilt eller ikke
-        if ((match.goalteam1 !== "" && match.goalteam1 !== "null") || 
-        (match.goalteam2 !== "" && match.goalteam2 !== "null")) {
+        if (match.goalteam1 || match.goalteam2) {
             ResultStatus.textContent = "Resultat";
             ResultStatus.classList.add("played");
         } else {
             ResultStatus.textContent = "Ikke spilt";
         }
+        
     
     
         //finalekamp farge og tekst
