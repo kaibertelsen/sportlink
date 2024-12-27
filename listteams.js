@@ -349,6 +349,7 @@ function listMatchesInTeamView(matchs,team){
     // Tøm eksisterende innhold i containeren
     teammatchlist.innerHTML = "";
 
+   
     // Filtrer kampene for laget
     const filteredMatchesTeam = matchs.filter(
         match => match.team1 === team.airtable || match.team2 === team.airtable
@@ -363,7 +364,8 @@ function listMatchesInTeamView(matchs,team){
     return location;
     });
 
-    
+     //oppdaterer counter
+     document.getElementById("countermatches").textContent = filteredMatches.length+" stk.";
 
   // Gå gjennom filtrerte kamper og legg til elementer
   for (let i = 0; i < filteredMatches.length; i++) {
