@@ -286,7 +286,18 @@ function viewteam(team) {
 
         // Oppdater resultater
         const resultlable = matchelement.querySelector(".resultlable");
-        if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
+        if ((match.goalteam1 === "" || match.goalteam1 === null) || 
+        (match.goalteam2 === "" || match.goalteam2 === null)) {
+            // om kampen ikke er spilt så sett dato og tid i resultatfeltet
+            resultlable.innerHTML = formatdatetoDateAndTimeshortInToLines(match.time);
+            resultlable.style.fontWeight = "normal";
+            resultlable.style.backgroundColor = "transparent";
+            resultlable.style.textAlign = "center";
+            resultlable.style.fontSize = "12px";
+            //skjul annen datoelement
+            matchelement.querySelector(".teamdatematch").style.display = "none";
+        } else {
+      
             resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
             resultlable.style.fontWeight = "bold";
 
@@ -300,15 +311,6 @@ function viewteam(team) {
             }else {
                 resultlable.style.backgroundColor = "red";
             }
-        } else {
-            // om kampen ikke er spilt så sett dato og til i resultatfeltet
-            resultlable.innerHTML = formatdatetoDateAndTimeshortInToLines(match.time);
-            resultlable.style.fontWeight = "normal";
-            resultlable.style.backgroundColor = "transparent";
-            resultlable.style.textAlign = "center";
-            resultlable.style.fontSize = "12px";
-            //skjul annen datoelement
-            matchelement.querySelector(".teamdatematch").style.display = "none";
         }
     }
 
