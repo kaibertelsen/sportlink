@@ -787,6 +787,15 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
 
                 goal1.textContent = teamAWins;
                 goal2.textContent = teamBWins;
+
+                //sett kampen som spilt
+                if (ResultStatus.textContent == "Ikke spilt") {
+                    ResultStatus.textContent = "Resultat";
+                    ResultStatus.classList.add("played");
+                }
+
+
+
             } 
         }else if(activetournament.sport[0] === "reca0jxxTQAtlUTNu"){
             // det er icehockey
