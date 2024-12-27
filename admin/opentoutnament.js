@@ -292,6 +292,9 @@ function endplaySelectorChange(){
     listMatch(gMatchs);
 }
 
+function locationSelectorChange(){
+    listMatch(gMatchs);
+}
 
 function findGroupByDivision(divisionId) {
     // Find the division object in `gDivision` array by `divisionId`
@@ -475,7 +478,7 @@ function listMatch(matchs) {
         const matchesType = !typeValue || match.typematch === typeValue;
         const endplay = !endplayValue || match.endplay === endplayValue;
         const location = !locationValue || match.location === locationValue;
-        return matchesDivision && matchesGroup && matchesType && endplay;
+        return matchesDivision && matchesGroup && matchesType && endplay &&location;
     });
 
     // Sort matches by time
