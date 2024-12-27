@@ -622,9 +622,6 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             }
         
         
-        
-    
-    
         //finalekamp farge og tekst
         if(match.typematch){
             ResultStatus.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
