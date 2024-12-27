@@ -230,15 +230,16 @@ function viewMatch(match){
    
     const resultlable = header.querySelector(".resultlablemacth");
     let matchIsPlayed = false;
-    if (typeof match.goalteam1 !== "undefined" && typeof match.goalteam2 !== "undefined") {
+    if ((match.goalteam1 === "" || match.goalteam1 === null) || 
+    (match.goalteam2 === "" || match.goalteam2 === null)) {
+        resultlable.textContent = formatdatetoTime(match.time);
+        resultlable.style.fontWeight = "normal";
+        resultlable.style.color = "white";
+    } else {
         resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
         resultlable.style.fontWeight = "bold";
         resultlable.style.color = mapColors("main");
         matchIsPlayed = true;
-    } else {
-        resultlable.textContent = formatdatetoTime(match.time);
-        resultlable.style.fontWeight = "normal";
-        resultlable.style.color = "white";
     }
    
     const divisionLabel = header.querySelector(".divisionlablematch");
