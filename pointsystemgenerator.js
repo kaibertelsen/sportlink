@@ -351,8 +351,9 @@ function generateIceHockeyPointsToTeams(data) {
             }else if (team1Score == team2Score) {
            
                 // Det er uavgjort
-                team2point = 1;
-                team1point = 1;
+                team1.points.points += 1; // 1 poeng for uavgjort
+                team2.points.points += 1; // 1 poeng for uavgjort
+                
             
             }
         }
