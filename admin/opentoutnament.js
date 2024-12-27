@@ -612,13 +612,15 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             { text: "Finale", value: "finale" }
             ];
 
-        //om den er spilt eller ikke
-        if (match.goalteam1 && match.goalteam2) {
+        
+            if ((match.goalteam1 !== "" && match.goalteam1 !== "null") || 
+            (match.goalteam2 !== "" && match.goalteam2 !== "null")) {
             ResultStatus.textContent = "Resultat";
             ResultStatus.classList.add("played");
-        } else {
-            ResultStatus.textContent = "Ikke spilt";
-        }
+            } else {
+                ResultStatus.textContent = "Ikke spilt";
+            }
+        
         
     
     
