@@ -465,7 +465,7 @@ function loadLocationSelector(Matchs,locationSelector) {
 
     // Legg til en standard tom option (valgfritt)
     const defaultOption = document.createElement("option");
-    defaultOption.textContent = "Velg sted";
+    defaultOption.textContent = "Alle lokasjoner";
     defaultOption.value = "";
     locationSelector.appendChild(defaultOption);
 
