@@ -273,6 +273,7 @@ function generateIceHockeyPointsToTeams(data) {
             goalsFor: 0,
             goalsAgainst: 0,
             goalDifference: 0,
+            penaltymin:0,
             points: 0
         };
     }
@@ -309,6 +310,12 @@ function generateIceHockeyPointsToTeams(data) {
             // Oppdater målforskjell
             team1.points.goalDifference = team1.points.goalsFor - team1.points.goalsAgainst;
             team2.points.goalDifference = team2.points.goalsFor - team2.points.goalsAgainst;
+
+            //oppdater utvisningsminutter
+            const penaltyminteam1 = match.penaltyminteam1 || 0;
+            const penaltyminteam2 = match.penaltyminteam2 || 0;
+            team1.points.penaltymin += penaltyminteam1;
+            team2.points.penaltymin += penaltyminteam2;
 
             // Sjekk om kampen gikk til overtid eller straffeslag
             const isOvertime = match.overtime || false;
