@@ -613,7 +613,7 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             ];
 
         //om den er spilt eller ikke
-        if (match.goalteam1 || match.goalteam2) {
+        if (match.goalteam1 && match.goalteam2) {
             ResultStatus.textContent = "Resultat";
             ResultStatus.classList.add("played");
         } else {
