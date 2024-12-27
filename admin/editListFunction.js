@@ -132,7 +132,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
             cell.textContent = newValue === "" ? "-" : newValue;
             }
             
-            savedata[field] = newValue || null;
+            savedata[field] = newValue === "" ? null : newValue;
             updateRowData(item.airtable, savedata,tabelid);
             controllAction(item, newValue, field, tabelid, cell);
         }
