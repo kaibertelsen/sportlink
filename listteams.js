@@ -213,12 +213,12 @@ function viewteam(team) {
         );
 
         //finne alle unike lokasjoner og last de inn i locationselector
-        const locationselector = thisteammatchlist.querySelector(".locationselector");
+        const locationselector = document.getElementById("locationSelector");
         if(locationselector){
         loadLocationSelector(filteredMatches,locationselector);
         }
 
-        listMatchesInTeamView(filteredMatches);
+        listMatchesInTeamView(filteredMatches,team);
             /*
         // Hent mal-elementet for kampvisning
         const elementlibrary = document.getElementById("elementlibrary");
@@ -323,10 +323,12 @@ function viewteam(team) {
     // Vis lagsiden
     document.getElementById("thisteamtabbutton").click();
 }
+function locationSelectorinTeamChange(){
+    listMatchesInTeamView(matches,activeteam);
+}
 
 
-
-function listMatchesInTeamView(filteredMatches){
+function listMatchesInTeamView(matchs,team){
 
     // Hent mal-elementet for kampvisning
     const elementlibrary = document.getElementById("elementlibrary");
@@ -344,10 +346,25 @@ function listMatchesInTeamView(filteredMatches){
     }
 
 
-  // Tøm eksisterende innhold i containeren
-  teammatchlist.innerHTML = "";
+    // Tøm eksisterende innhold i containeren
+    teammatchlist.innerHTML = "";
+
+    // Filtrer kampene for laget
+    const filteredMatchesTeam = matchs.filter(
+        match => match.team1 === team.airtable || match.team2 === team.airtable
+    );
+
+
+  //filtrer kamper på lokasjon om det er satt noe annen en "" i selector
+  const locationValue = document.getElementById("locationSelector").value;
+
+  const filteredMatches = filteredMatchesTeam.filter(match => {
+    const location = !locationValue || match.location === locationValue;
+    return location;
+    });
 
     
+
   // Gå gjennom filtrerte kamper og legg til elementer
   for (let i = 0; i < filteredMatches.length; i++) {
       const match = filteredMatches[i];
@@ -450,13 +467,20 @@ function loadLocationSelector(Matchs,locationSelector) {
     defaultOption.value = "";
     locationSelector.appendChild(defaultOption);
 
-    // Legg til unike locations som options
-    for (let location of uniclocations) {
-        const option = document.createElement("option");
-        option.textContent = location;
-        option.value = location;
-        locationSelector.appendChild(option);
+    //hvis det bare er et sted så skjul denne selectoren
+    if(uniclocations.length>1){
+        // Legg til unike locations som options
+        for (let location of uniclocations) {
+            const option = document.createElement("option");
+            option.textContent = location;
+            option.value = location;
+            locationSelector.appendChild(option);
+        }
+        locationSelector.style.display = "block"; 
+    }else{
+        locationSelector.style.display = "none"; 
     }
+   
 }
 
 
