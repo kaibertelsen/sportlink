@@ -598,7 +598,7 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         goal1.addEventListener("click", () => triggerEditInput(goal1, match, "goalteam1", "number", tabelid));
         goal2.addEventListener("click", () => triggerEditInput(goal2, match, "goalteam2", "number", tabelid));
         }
-        
+
         //Result lable
         const ResultStatus = rowelement.querySelector(".resultstatus");
         let MatchTypeoptions = [
@@ -612,12 +612,16 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             { text: "Finale", value: "finale" }
             ];
 
-        if(match.goalteam1 && match.goalteam2){
+        //om den er spilt eller ikke
+        if ((match.goalteam1 !== "" && match.goalteam1 !== "null") || 
+        (match.goalteam2 !== "" && match.goalteam2 !== "null")) {
             ResultStatus.textContent = "Resultat";
             ResultStatus.classList.add("played");
-        }else{
+        } else {
             ResultStatus.textContent = "Ikke spilt";
         }
+    
+    
         //finalekamp farge og tekst
         if(match.typematch){
             ResultStatus.textContent = MatchTypeoptions.find(option => option.value === match.typematch)?.text || "-";
@@ -790,9 +794,9 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
 
             //utvisningsminutter
             const penaltyminteam1 = icehockeyDivbox.querySelector(".penaltyminteam1");
-            penaltyminteam1.textContent = match.penaltyminteam1 || "-";
+            penaltyminteam1.textContent = (match.penaltyminteam1 === "" || match.penaltyminteam1 === null) ? "-" : match.penaltyminteam1;
             const penaltyminteam2 = icehockeyDivbox.querySelector(".penaltyminteam2");
-            penaltyminteam2.textContent = match.penaltyminteam2 || "-";
+            penaltyminteam2.textContent = (match.penaltyminteam2 === "" || match.penaltyminteam2 === null) ? "-" : match.penaltyminteam2;
 
 
             if(match.team1name && match.team2name){
