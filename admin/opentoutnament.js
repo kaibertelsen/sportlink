@@ -102,7 +102,42 @@ function responsGetTournament(data) {
     gMatchs = matchs;
     listMatch(matchs);
 
+    //list opp ale unike location i kampene
+    loadLocationSelector(gMatchs);
+
 }
+
+function loadLocationSelector(gMatchs) {
+    let uniclocations = [];
+
+    // Finn unike location-verdier
+    for (let match of gMatchs) {
+        if (match.location && !uniclocations.includes(match.location)) {
+            uniclocations.push(match.location);
+        }
+    }
+
+    // Hent select-elementet
+    const locationSelector = document.getElementById("locationSelector");
+
+    // Tøm eksisterende options
+    locationSelector.innerHTML = "";
+
+    // Legg til en standard tom option (valgfritt)
+    const defaultOption = document.createElement("option");
+    defaultOption.textContent = "Velg sted";
+    defaultOption.value = "";
+    locationSelector.appendChild(defaultOption);
+
+    // Legg til unike locations som options
+    for (let location of uniclocations) {
+        const option = document.createElement("option");
+        option.textContent = location;
+        option.value = location;
+        locationSelector.appendChild(option);
+    }
+}
+
 
 function updateTournamentInfo(tournament) {
 
@@ -431,6 +466,7 @@ function listMatch(matchs) {
     const groupValue = document.getElementById("groupSelector").value;
     const typeValue = document.getElementById("typeSelector").value;
     const endplayValue = document.getElementById("endplaySelector").value;
+    const locationValue = document.getElementById("locationSelector").value;
 
     // Filter matches based on selected division and group
     const filteredMatches = matchs.filter(match => {
@@ -438,6 +474,7 @@ function listMatch(matchs) {
         const matchesGroup = !groupValue || match.group === groupValue;
         const matchesType = !typeValue || match.typematch === typeValue;
         const endplay = !endplayValue || match.endplay === endplayValue;
+        const location = !locationValue || match.location === locationValue;
         return matchesDivision && matchesGroup && matchesType && endplay;
     });
 
