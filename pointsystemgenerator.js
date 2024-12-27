@@ -348,6 +348,12 @@ function generateIceHockeyPointsToTeams(data) {
                     team2.points.points += 3; // 3 poeng for seier i ordinær tid
                     team1.points.lost++;
                 }
+            }else if (team1Score == team2Score) {
+           
+                // Det er uavgjort
+                team2point = 1;
+                team1point = 1;
+            
             }
         }
     }
@@ -433,6 +439,7 @@ function pointGenerator(team1Score, team2Score,isOvertime,isShootout,sport) {
             team2point = 1; // 1 poeng for uavgjort
         }
     }else if(sport === "reca0jxxTQAtlUTNu"){
+        //hockey
         if (team1Score > team2Score) {
             if (isOvertime || isShootout) {
                 // Team 1 vinner i overtid/straffeslag
@@ -453,6 +460,12 @@ function pointGenerator(team1Score, team2Score,isOvertime,isShootout,sport) {
                 team2point = 3; // 3 poeng for seier i ordinær tid
                 team1point = 0;
             }
+        }else if (team1Score == team2Score) {
+           
+                // Det er uavgjort
+                team2point = 1;
+                team1point = 1;
+            
         }
     }else if(sport === "recSCesi2BGmCyivZ"){
         if (team1Score > team2Score) {
