@@ -138,6 +138,7 @@ function loadPointsToviewer(rowelement,team,range,solo){
        rowelement.querySelector(".ot").textContent = team.points.overtimeLosses;
        rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
        rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
+       rowelement.querySelector(".penaltymin").textContent = team.points.penaltymin;
        rowelement.querySelector(".points").textContent = team.points.points;
    }else{
         // standard Målstatistikk for fotball
@@ -145,8 +146,6 @@ function loadPointsToviewer(rowelement,team,range,solo){
         rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
         rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
         rowelement.querySelector(".points").textContent = team.points.points;
-        rowelement.querySelector(".penaltymin").textContent = team.points.penaltymin;
-        
    }
 
    if(solo){
