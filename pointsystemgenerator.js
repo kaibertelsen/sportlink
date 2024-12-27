@@ -314,8 +314,8 @@ function generateIceHockeyPointsToTeams(data) {
             //oppdater utvisningsminutter
             const penaltyminteam1 = match.penaltyminteam1 || 0;
             const penaltyminteam2 = match.penaltyminteam2 || 0;
-            team1.points.penaltymin += penaltyminteam1;
-            team2.points.penaltymin += penaltyminteam2;
+            team1.points.penaltymin += Number(penaltyminteam1);
+            team2.points.penaltymin += Number(penaltyminteam2);
 
             // Sjekk om kampen gikk til overtid eller straffeslag
             const isOvertime = match.overtime || false;

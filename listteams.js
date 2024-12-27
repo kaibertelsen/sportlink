@@ -145,6 +145,8 @@ function loadPointsToviewer(rowelement,team,range,solo){
         rowelement.querySelector(".goalsfa").textContent = `${team.points.goalsFor}-${team.points.goalsAgainst}`;
         rowelement.querySelector(".goaldifference").textContent = team.points.goalDifference;
         rowelement.querySelector(".points").textContent = team.points.points;
+        rowelement.querySelector(".penaltymin").textContent = team.points.penaltymin;
+        
    }
 
    if(solo){
