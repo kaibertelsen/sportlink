@@ -213,7 +213,7 @@ function viewteam(team) {
         );
 
         //finne alle unike lokasjoner og last de inn i locationselector
-        const locationselector = thisteammatchlist.querySelector("locationselector");
+        const locationselector = thisteammatchlist.querySelector(".locationselector");
         if(locationselector){
         loadLocationSelector(filteredMatches,locationselector);
         }
