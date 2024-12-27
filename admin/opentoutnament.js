@@ -799,12 +799,6 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
                 penaltyminteam2.addEventListener("click", () => triggerEditInput(penaltyminteam2, match, "penaltyminteam2", "number", tabelid));
             }
             
-            
-
-
-
-
-
 
             const switsjOvertime = icehockeyDivbox.querySelector(".overtime");
             switsjOvertime.checked = !!match.overtime; // Konverter til boolean for sikkerhet

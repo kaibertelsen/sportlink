@@ -81,6 +81,7 @@ function triggerEditInput(cell, item, field,type, tabelid) {
         if (type === "number") {
             input.style.maxWidth = "60px";
             if (currentValue === "-" || currentValue.trim() === "") {
+                currentValue = "";
                 input.value = currentValue;
             } else {
                 input.value = parseFloat(currentValue.replace(/[^0-9.-]/g, "")) || 0; // Kun tall
