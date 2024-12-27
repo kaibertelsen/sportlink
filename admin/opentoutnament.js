@@ -613,13 +613,14 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             ];
 
         
-            if ((match.goalteam1 !== "" && match.goalteam1 !== "null") || 
-            (match.goalteam2 !== "" && match.goalteam2 !== "null")) {
-            ResultStatus.textContent = "Resultat";
-            ResultStatus.classList.add("played");
+            if ((match.goalteam1 === "" || match.goalteam1 === null) || 
+            (match.goalteam2 === "" || match.goalteam2 === null)) {
+            ResultStatus.textContent = "Ikke spilt";
             } else {
-                ResultStatus.textContent = "Ikke spilt";
+                ResultStatus.textContent = "Resultat";
+                ResultStatus.classList.add("played");
             }
+        
         
         
     
