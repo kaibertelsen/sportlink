@@ -219,6 +219,10 @@ function listmatch(data, grouptype, scroll) {
 
 function viewMatch(match){
     activematch = match;
+
+    // Justering av headerhøyden og innholdet
+    setTimeout(adjustMatchContainer(), 500);
+
     const header = document.getElementById("headerwrappermatch");
    
     // Oppdater lagnavn eller bruk plassholdere
@@ -469,6 +473,17 @@ END:VCALENDAR
     icon.rel = "noopener noreferrer";
 }
 
+function adjustMatchContainer() {
+    const headerWrapper = document.getElementById("headerwrappermatch");
+    const swipeContainer = document.getElementById("matchcontentholder");
 
+    if (headerWrapper && swipeContainer) {
+        const headerHeight = headerWrapper.offsetHeight; // Hent høyden på headerwrapper
+        
+        // Beregn total padding-top
+        const paddingTop = headerHeight;
 
-
+        // Sett padding-top som utregnet verdi
+        swipeContainer.style.paddingTop = `${paddingTop}px`;
+    }
+}
