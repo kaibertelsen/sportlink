@@ -32,6 +32,13 @@ document.getElementById("logoutbutton").addEventListener("click", function () {
     document.getElementById("loggintabbutton").click();
 });
 
+document.getElementById("adminlogoreload").addEventListener("click", function () {
+    // Reload websiden
+    location.reload();
+});
+
+
+
 MemberStack.onReady.then(function(member) {
     if (member.loggedIn){
     
