@@ -47,7 +47,7 @@ MemberStack.onReady.then(function(member) {
         if (window.innerWidth > 480) { // Anta at desktop er bredere enn 768px
             document.getElementById("tabselectorholder").style.display = "inline-block";
         } else {
-            document.getElementById("tabselectorholder").style.display = "grid";
+            document.getElementById("tabselectorholder").style.display = "inline-flex";
         }
         isLoggedIn = true;
 
