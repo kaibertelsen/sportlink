@@ -317,7 +317,7 @@ function listMatchesInTeamView(matchs,team){
 
       // Oppdater resultater
       const resultlable = matchelement.querySelector(".resultlable");
-      if (!isThisMacthPlayed(matchData)) {
+      if (!isThisMacthPlayed(match)) {
           // om kampen ikke er spilt så sett dato og tid i resultatfeltet
           resultlable.innerHTML = formatdatetoDateAndTimeshortInToLines(match.time);
           resultlable.style.fontWeight = "normal";
