@@ -281,7 +281,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
 
 
         if (!matchData) {
-            matchElement.style.opacity = "0.5"
+            matchElement.parentElement.style.opacity = "0.1"
             break; // Hopp over hvis ingen kamp er funnet
         }
         countMatches++
