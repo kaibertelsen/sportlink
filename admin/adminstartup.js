@@ -36,7 +36,12 @@ MemberStack.onReady.then(function(member) {
     if (member.loggedIn){
     
         memberData = member;
-        document.getElementById("tabselectorholder").style.display = "inline-block";
+          // Sjekk om det er desktop- eller mobilvisning
+        if (window.innerWidth > 480) { // Anta at desktop er bredere enn 768px
+            document.getElementById("tabselectorholder").style.display = "inline-block";
+        } else {
+            document.getElementById("tabselectorholder").style.display = "grid";
+        }
         isLoggedIn = true;
 
     }else{
