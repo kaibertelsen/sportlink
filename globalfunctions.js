@@ -145,3 +145,15 @@ function mapColors(typeColor) {
         return "#000000";
     }
 }
+
+
+
+function isThisMacthPlayed(match){
+
+    if ((match.goalteam1 === "" || match.goalteam1 === null) || 
+    (match.goalteam2 === "" || match.goalteam2 === null)) {
+        return false;
+    } else {
+        return true;
+    }
+}

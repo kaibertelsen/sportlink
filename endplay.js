@@ -323,7 +323,7 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         }
 
         // Oppdater mål eller vis dato hvis ingen resultat
-        if (matchData.goalteam1 === undefined || matchData.goalteam2 === undefined) {
+        if (!isThisMacthPlayed(matchData)) {
             // Vis datelable og oppdater tekst
             if (datelable) {
                 const matchTime = new Date(matchData.time);
