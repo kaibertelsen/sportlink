@@ -479,12 +479,18 @@ function adjustMatchContainer() {
 
     if (headerWrapper && swipeContainer) {
         const headerHeight = headerWrapper.offsetHeight; // Hent høyden på headerwrapper
-        
-        // Beregn total padding-top
-        let paddingTop = headerHeight;
-        if(headerHeight<150){
-            paddingTop = 150;
+
+        // Hent safe area høyde (standard til 0 hvis ikke tilgjengelig)
+        const safeAreaInsetTop = parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue('--safe-area-inset-top') || 0
+        );
+
+        // Beregn total padding-top med justering for safe area
+        let paddingTop = headerHeight - safeAreaInsetTop;
+        if (paddingTop < 150) {
+            paddingTop = 150; // Minimum padding
         }
+
         // Sett padding-top som utregnet verdi
         swipeContainer.style.paddingTop = `${paddingTop}px`;
     }
