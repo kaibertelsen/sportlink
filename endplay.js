@@ -326,17 +326,8 @@ function loadEndplaysection(eighthFinalElement, listMatches, typematch, endplayN
         if (!isThisMacthPlayed(matchData)) {
             // Vis datelable og oppdater tekst
             if (datelable) {
-                const matchTime = new Date(matchData.time);
-
-                // Hent klokkeslett og dato hver for seg
-                const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false }; // Sikrer 24-timers format
-                const dateOptions = { day: '2-digit', month: 'short' }; // Sørger for korrekt datoformat
-
-                const timeString = matchTime.toLocaleTimeString('no-NO', timeOptions); // Format tid
-                const dateString = matchTime.toLocaleDateString('no-NO', dateOptions).replace('.', ''); // Format dato og fjern punktum
-
                 // Sett inn tid og dato på separate linjer
-                datelable.innerHTML = `${timeString}<br>${dateString}`;
+                datelable.innerHTML = formatdatetoDateAndTimeshortInToLines(matchData.time);
                 datelable.style.display = "block";
             }
 
