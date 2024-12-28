@@ -221,7 +221,7 @@ function viewMatch(match){
     activematch = match;
 
     // Justering av headerhøyden og innholdet
-    //setTimeout(adjustMatchContainer(), 500);
+    setTimeout(adjustMatchContainer, 500);
 
     const header = document.getElementById("headerwrappermatch");
    
@@ -481,8 +481,10 @@ function adjustMatchContainer() {
         const headerHeight = headerWrapper.offsetHeight; // Hent høyden på headerwrapper
         
         // Beregn total padding-top
-        const paddingTop = headerHeight;
-
+        let paddingTop = headerHeight;
+        if(headerHeight<150){
+            paddingTop = 150;
+        }
         // Sett padding-top som utregnet verdi
         swipeContainer.style.paddingTop = `${paddingTop}px`;
     }
