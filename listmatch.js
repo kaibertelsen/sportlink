@@ -221,7 +221,7 @@ function viewMatch(match){
     activematch = match;
 
     // Justering av headerhøyden og innholdet
-    setTimeout(adjustMatchContainer(), 500);
+    //setTimeout(adjustMatchContainer(), 500);
 
     const header = document.getElementById("headerwrappermatch");
    
