@@ -231,9 +231,10 @@ function viewMatch(match){
     header.querySelector(".team1").textContent = team1Name;
     header.querySelector(".team2").textContent = team2Name;
 
+    let emtyLogo = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
     // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
-    header.querySelector(".logoteam1").src = match.team1clublogo || "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
-    header.querySelector(".logoteam2").src = match.team2clublogo || "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
+    header.querySelector(".logoteam1").src = match.team1clublogo || emtyLogo;
+    header.querySelector(".logoteam2").src = match.team2clublogo || emtyLogo;
    
     const resultlable = header.querySelector(".resultlablemacth");
     let matchIsPlayed = false;
@@ -332,11 +333,9 @@ function viewMatch(match){
         //dette er ikke en sluttspilkamp
         resultrapp.querySelector(".notendplaymatch").style.display = "block";
         // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
-        const team1logo = resultrapp.querySelector(".team1logo");
-        const team2logo = resultrapp.querySelector(".team2logo");
-        if (match.team1clublogo) team1logo.src = match.team1clublogo;
-        if (match.team2clublogo) team2logo.src = match.team2clublogo;
-
+        resultrapp.querySelector(".team1logo").src = match.team1clublogo || emtyLogo;
+        resultrapp.querySelector(".team2logo").src = match.team2clublogo || emtyLogo;
+        
         let points = pointGenerator(match.goalteam1, match.goalteam2,match.overtime,match.shootout,activetournament.sport[0]);
         resultrapp.querySelector(".team1points").textContent = `${points?.team1point} poeng til ${match.team1name}`;
         resultrapp.querySelector(".team2points").textContent = `${points?.team2point} poeng til ${match.team2name}`;
