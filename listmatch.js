@@ -77,12 +77,12 @@ function listmatch(data, grouptype, scroll) {
                 const selectedValue = locationSelector.value;
 
                 // Kjør funksjonen med item.matches, matchList og valgt verdi
-                locationSelectorInMatchlistChange(item.matches, matchlist,matchholder, selectedValue);
+                locationSelectorInMatchlistChange(item.matches, matchlist,matchholder, selectedValue,firstUnplayedMatch);
             });
         }
 
 
-        //makeMatchInMatchHolder(item.matches,matchlist,matchholder);
+        //firstUnplayedMatch = makeMatchInMatchHolder(item.matches,matchlist,matchholder,firstUnplayedMatch);
         
         for (let match of item.matches) {
             const matchelement = matchholder.cloneNode(true);
@@ -234,7 +234,7 @@ function listmatch(data, grouptype, scroll) {
     
 }
 
-function makeMatchInMatchHolder(matches,matchlist,matchholder){
+function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch){
 
     const activeDivision = getActiveDivisionFilter();
 
@@ -356,7 +356,7 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder){
     
         matchlist.appendChild(matchelement);
     }
-
+    return firstUnplayedMatch;
 }
 
 function locationSelectorInMatchlistChange(matches, matchlist, matchholder, selectedValue) {
