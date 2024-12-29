@@ -371,13 +371,16 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
     return firstUnplayedMatch;
 }
 
-function locationSelectorInMatchlistChange(matches, matchlist, matchholder, selectedValue,firstUnplayedMatch) {
-    // Filtrer kamper basert på valgt verdi
-    const filteredMatches = matches.filter(match => match.location === selectedValue);
+function locationSelectorInMatchlistChange(matches, matchlist, matchholder, selectedValue, firstUnplayedMatch) {
+    // Hvis selectedValue er tomt, vis alle kamper
+    const filteredMatches = selectedValue === "" 
+        ? matches 
+        : matches.filter(match => match.location === selectedValue);
 
     // Kall funksjonen makeMatchInMatchHolder med de filtrerte kampene
-    makeMatchInMatchHolder(filteredMatches, matchlist, matchholder,firstUnplayedMatch);
+    makeMatchInMatchHolder(filteredMatches, matchlist, matchholder, firstUnplayedMatch);
 }
+
 
 function viewMatch(match){
     activematch = match;
