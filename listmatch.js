@@ -82,8 +82,8 @@ function listmatch(data, grouptype, scroll) {
         }
 
 
-        makeMatchInMatchHolder(item.matches,matchlist,matchholder);
-        /*
+        //makeMatchInMatchHolder(item.matches,matchlist,matchholder);
+        
         for (let match of item.matches) {
             const matchelement = matchholder.cloneNode(true);
             matchlist.appendChild(matchelement);
@@ -202,7 +202,7 @@ function listmatch(data, grouptype, scroll) {
         
             matchlist.appendChild(matchelement);
         }
-        */
+    
         
         matchholder.style.display = "none";
         list.appendChild(rowelement);
