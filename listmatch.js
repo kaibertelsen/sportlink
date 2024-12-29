@@ -82,8 +82,7 @@ function listmatch(data, grouptype, scroll) {
         }
 
 
-        //firstUnplayedMatch = makeMatchInMatchHolder(item.matches,matchlist,matchholder,firstUnplayedMatch);
-        
+        //firstUnplayedMatch = makeMatchInMatchHolder(item.matches,matchlist,matchholder,firstUnplayedMatch);  
         for (let match of item.matches) {
             const matchelement = matchholder.cloneNode(true);
             matchlist.appendChild(matchelement);
@@ -359,12 +358,12 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
     return firstUnplayedMatch;
 }
 
-function locationSelectorInMatchlistChange(matches, matchlist, matchholder, selectedValue) {
+function locationSelectorInMatchlistChange(matches, matchlist, matchholder, selectedValue,firstUnplayedMatch) {
     // Filtrer kamper basert på valgt verdi
     const filteredMatches = matches.filter(match => match.location === selectedValue);
 
     // Kall funksjonen makeMatchInMatchHolder med de filtrerte kampene
-    makeMatchInMatchHolder(filteredMatches, matchlist, matchholder);
+    makeMatchInMatchHolder(filteredMatches, matchlist, matchholder,firstUnplayedMatch);
 }
 
 function viewMatch(match){
