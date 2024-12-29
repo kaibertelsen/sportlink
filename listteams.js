@@ -366,7 +366,7 @@ function loadLocationSelector(Matchs,locationSelector) {
     locationSelector.appendChild(defaultOption);
 
     //hvis det bare er et sted så skjul denne selectoren
-    if(uniclocations.length>1){
+    
         // Legg til unike locations som options
         for (let location of uniclocations) {
             const option = document.createElement("option");
@@ -375,9 +375,6 @@ function loadLocationSelector(Matchs,locationSelector) {
             locationSelector.appendChild(option);
         }
         locationSelector.style.display = "block"; 
-    }else{
-        locationSelector.style.display = "none"; 
-    }
    
 }
 
