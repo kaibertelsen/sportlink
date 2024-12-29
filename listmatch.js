@@ -348,11 +348,11 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
             resultlable.style.fontSize = "16px";
 
         }
-    
+        /*
         if (item.matches.indexOf(match) === item.matches.length - 1) {
             matchelement.querySelector(".bordholder").style.borderBottom = 'none';
         }
-    
+        */
         matchlist.appendChild(matchelement);
     }
     return firstUnplayedMatch;
