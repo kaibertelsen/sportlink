@@ -69,6 +69,8 @@ function listmatch(data, grouptype, scroll) {
         //lokasjonsvelger
         const locationSelector = rowelement.querySelector(".locationselector");
         //last inn alle de forskjellige lokasjoner i denne gruppen
+        rowelement.querySelector(".countermatch").textContent = item.matches.length+" stk."
+        
         if(locationSelector){
             loadLocationSelector(item.matches,locationSelector);
                 // Legg til en change-eventlistener for locationSelector
@@ -247,6 +249,7 @@ function removeAllExceptSpecific(listElement, keepElement) {
 function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch){
 
     const activeDivision = getActiveDivisionFilter();
+    matchlist.parentElement.querySelector(".countermatch").textContent = matches.length+" stk.";
 
     removeAllExceptSpecific(matchlist, matchholder);
 

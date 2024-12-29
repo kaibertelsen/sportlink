@@ -365,8 +365,6 @@ function loadLocationSelector(Matchs,locationSelector) {
     defaultOption.value = "";
     locationSelector.appendChild(defaultOption);
 
-    //hvis det bare er et sted så skjul denne selectoren
-    
         // Legg til unike locations som options
         for (let location of uniclocations) {
             const option = document.createElement("option");
