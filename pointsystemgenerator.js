@@ -177,8 +177,8 @@ function generateVolleyballPointToTeams(data) {
             team1.points.played++;
             team2.points.played++;
 
-            const team1Score = match.goalteam1;
-            const team2Score = match.goalteam2;
+            const team1Score = Number(match.goalteam1);
+            const team2Score = Number(match.goalteam2);
 
             // Sjekk om settscore er tilgjengelig
             const setKeys = ["setta", "settb", "settc"];
