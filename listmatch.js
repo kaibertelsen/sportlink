@@ -232,10 +232,23 @@ function listmatch(data, grouptype, scroll) {
     
     
 }
+function removeAllExceptSpecific(listElement, keepElement) {
+    // Iterer over listen baklengs for å unngå problemer med indeksering ved fjerning
+    for (let i = listElement.children.length - 1; i >= 0; i--) {
+        const child = listElement.children[i];
+        // Sjekk om barnet ikke er det elementet som skal beholdes
+        if (child !== keepElement) {
+            listElement.removeChild(child);
+        }
+    }
+}
+
 
 function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch){
 
     const activeDivision = getActiveDivisionFilter();
+
+    removeAllExceptSpecific(matchlist, matchholder);
 
     for (let match of matches) {
         const matchelement = matchholder.cloneNode(true);
