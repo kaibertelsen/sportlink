@@ -106,8 +106,8 @@ function generateFotballPointToTeams(data) {
             team2.points.played++;
 
             // Bruk faktiske mål fra `goalteam1` og `goalteam2`
-            const team1Score = match.goalteam1;
-            const team2Score = match.goalteam2;
+            const team1Score = Number(match.goalteam1);
+            const team2Score = Number(match.goalteam2);
 
             // Oppdater mål for og mot
             team1.points.goalsFor += team1Score;
