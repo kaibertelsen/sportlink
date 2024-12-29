@@ -359,20 +359,24 @@ function loadLocationSelector(Matchs,locationSelector) {
     // Tøm eksisterende options
     locationSelector.innerHTML = "";
 
-    // Legg til en standard tom option (valgfritt)
+    if(uniclocations.length ==1){
+        //det er bare denne option ikke legg til standard
+    }else{
+    // Legg til en standard tom option
     const defaultOption = document.createElement("option");
     defaultOption.textContent = "Alle lokasjoner";
     defaultOption.value = "";
     locationSelector.appendChild(defaultOption);
+    }
+     // Legg til unike locations som options
+     for (let location of uniclocations) {
+         const option = document.createElement("option");
+         option.textContent = location;
+         option.value = location;
+         locationSelector.appendChild(option);
+     }
 
-        // Legg til unike locations som options
-        for (let location of uniclocations) {
-            const option = document.createElement("option");
-            option.textContent = location;
-            option.value = location;
-            locationSelector.appendChild(option);
-        }
-        locationSelector.style.display = "block"; 
+    locationSelector.style.display = "block"; 
    
 }
 
