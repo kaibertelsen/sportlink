@@ -67,7 +67,7 @@ function listmatch(data, grouptype, scroll) {
         const matchholder = rowelement.querySelector('.matchholder');
 
         //lokasjonsvelger
-        const locationSelector = rowelement.querySelector("locationselector");
+        const locationSelector = rowelement.querySelector(".locationselector");
         //last inn alle de forskjellige lokasjoner i denne gruppen
         if(locationSelector){
             loadLocationSelector(item.matches,locationSelector);
