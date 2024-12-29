@@ -66,6 +66,24 @@ function listmatch(data, grouptype, scroll) {
         const matchlist = rowelement.querySelector(".matchlist");
         const matchholder = rowelement.querySelector('.matchholder');
 
+        //lokasjonsvelger
+        const locationSelector = rowelement.querySelector("locationselector");
+        //last inn alle de forskjellige lokasjoner i denne gruppen
+        if(locationSelector){
+            loadLocationSelector(item.matches,locationSelector);
+                // Legg til en change-eventlistener for locationSelector
+            locationSelector.addEventListener("change", () => {
+                // Hent valgt verdi fra selectoren
+                const selectedValue = locationSelector.value;
+
+                // Kjør funksjonen med item.matches, matchList og valgt verdi
+                locationSelectorInMatchlistCange(item.matches, matchlist,matchholder, selectedValue);
+            });
+        }
+
+
+        makeMatchInMatchHolder(item.matches,matchlist,matchholder);
+        /*
         for (let match of item.matches) {
             const matchelement = matchholder.cloneNode(true);
             matchlist.appendChild(matchelement);
@@ -184,10 +202,9 @@ function listmatch(data, grouptype, scroll) {
         
             matchlist.appendChild(matchelement);
         }
+        */
         
-        
-
-        matchholder.remove();
+        matchholder.style.display = "none";
         list.appendChild(rowelement);
     }
 
@@ -215,6 +232,137 @@ function listmatch(data, grouptype, scroll) {
     
     
     
+}
+
+function makeMatchInMatchHolder(matches,matchlist,matchholder){
+
+    for (let match of matches) {
+        const matchelement = matchholder.cloneNode(true);
+        matchlist.appendChild(matchelement);
+        matchelement.style.display = "block";
+        matchelement.onclick = function() {
+            previouspage = "";
+            viewMatch(match);
+        };
+    
+        // Oppdater lagnavn eller bruk plassholdere
+        const team1Name = match.team1name || match.placeholderteam1 || "Unknown";
+        const team2Name = match.team2name || match.placeholderteam2 || "Unknown";
+        matchelement.querySelector(".team1").textContent = team1Name;
+        matchelement.querySelector(".team2").textContent = team2Name;
+    
+        // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
+        const team1Logo = matchelement.querySelector(".logoteam1");
+        const team2Logo = matchelement.querySelector(".logoteam2");
+        if (match.team1clublogo) team1Logo.src = match.team1clublogo;
+        if (match.team2clublogo) team2Logo.src = match.team2clublogo;
+    
+        // Oppdater sluttspillinformasjon hvis tilgjengelig
+        const endplayLable = matchelement.querySelector(".endplaylable");
+        if (match.typematch) {
+            const matchTypeMap = {
+                "eighthfinale": "ÅF",
+                "placementfinale":"PK",
+                "round2":"R2",
+                "quarterfinale": "KF",
+                "semifinale": "SF",
+                "bronzefinale":"BF",
+                "finale": "F"
+            };
+    
+            const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
+            endplayLable.textContent = `${endplayText} - ${match.endplay || ""}`;
+            endplayLable.style.display = "block";
+        } else {
+            endplayLable.style.display = "none";
+        }
+    
+        const divisionlable = matchelement.querySelector(".divisionlable");
+    
+        // Bestem tekstinnholdet basert på `activeDivision` og tilgjengelige data
+        let labelText;
+        if (activeDivision === "") {
+            // Når ingen divisjonsfilter er aktivt, inkluder både divisionname og groupname
+            labelText = `${match.divisionname || ""} ${match.groupname ? `- ${match.groupname}` : ""}`.trim();
+        } else {
+            // Når divisjonsfilter er aktivt, bruk kun groupname
+            labelText = match.groupname || "";
+        }
+    
+        // Sett tekst og stil hvis `labelText` har verdi, ellers skjul elementet
+        if (labelText) {
+            divisionlable.textContent = labelText;
+            divisionlable.style.color = mapColors("midlemain");
+            divisionlable.style.display = "block";
+        } else {
+            divisionlable.style.display = "none";
+        }
+    
+            // Sjekk om det finnes noen settverdier
+            const hasSetValues = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
+            .some(value => value != null && value.toString().trim() !== "");
+
+    
+         if (hasSetValues) {
+            // Regne ut stillingen basert på settverdiene
+            const sets = [
+                { teamA: match.settaa, teamB: match.settab },
+                { teamA: match.settba, teamB: match.settbb },
+                { teamA: match.settca, teamB: match.settcb },
+            ];
+
+            let teamAWins = 0;
+            let teamBWins = 0;
+
+            sets.forEach(set => {
+                const teamA = parseInt(set.teamA) || 0;
+                const teamB = parseInt(set.teamB) || 0;
+
+                if (teamA > teamB) {
+                    teamAWins++;
+                } else if (teamB > teamA) {
+                    teamBWins++;
+                }
+            });
+
+            match.goalteam1 = teamAWins;
+            match.goalteam2 = teamBWins;
+        } 
+
+        
+        const resultlable = matchelement.querySelector(".resultlable");
+        if ((match.goalteam1 === "" || match.goalteam1 === null) || 
+        (match.goalteam2 === "" || match.goalteam2 === null)) {
+            resultlable.textContent = formatdatetoTime(match.time);
+            resultlable.style.fontWeight = "normal";
+    
+            if (!firstUnplayedMatch) {
+                firstUnplayedMatch = matchelement;
+            }
+        } else {
+
+            resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
+            resultlable.style.fontWeight = "bold";
+            resultlable.style.color = mapColors("main");
+            resultlable.style.fontSize = "16px";
+
+        }
+    
+        if (item.matches.indexOf(match) === item.matches.length - 1) {
+            matchelement.querySelector(".bordholder").style.borderBottom = 'none';
+        }
+    
+        matchlist.appendChild(matchelement);
+    }
+
+}
+
+function locationSelectorInMatchlistChange(matches, matchlist, matchholder, selectedValue) {
+    // Filtrer kamper basert på valgt verdi
+    const filteredMatches = matches.filter(match => match.location === selectedValue);
+
+    // Kall funksjonen makeMatchInMatchHolder med de filtrerte kampene
+    makeMatchInMatchHolder(filteredMatches, matchlist, matchholder);
 }
 
 function viewMatch(match){
