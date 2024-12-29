@@ -122,7 +122,7 @@ function listmatch(data, grouptype, scroll) {
             // Sett tekst og stil hvis `labelText` har verdi, ellers skjul elementet
             if (labelText) {
                 divisionlable.textContent = labelText;
-                divisionlable.style.color = mapColors("main");
+                divisionlable.style.color = mapColors("midlemain");
                 divisionlable.style.display = "block";
             } else {
                 divisionlable.style.display = "none";

@@ -135,6 +135,7 @@ function mapColors(typeColor) {
         border: "bluemarking",
         textoff:"textoff",
         blueblack:"blueblack",
+        midlemain:"middlemain"
     };
 
     // Sjekk om `typeColor` finnes i `colorMap`
