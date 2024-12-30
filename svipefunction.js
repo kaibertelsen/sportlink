@@ -138,10 +138,13 @@ function handleTouchEnd() {
         // Mark active button based on currentIndex
         if (currentIndex === 0) {
             markActiveButton(document.getElementById('tabeltabbutton'));
+            fadeInMatchSelector(false);
         } else if (currentIndex === 1) {
             markActiveButton(document.getElementById('matchtabbutton'));
+            fadeInMatchSelector(true);
         } else if (currentIndex === 2) {
             markActiveButton(document.getElementById('endplaytabbutton'));
+            fadeInMatchSelector(false);
         }
     }
 
