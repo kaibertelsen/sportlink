@@ -307,6 +307,16 @@ function listMatchesInTeamView(matchs,team){
       if (match.team1clublogo) team1Logo.src = match.team1clublogo;
       if (match.team2clublogo) team2Logo.src = match.team2clublogo;
 
+
+        //oppdaterer lokasjonsnavn
+    const locationlable = matchelement.querySelector(".locationlable");
+    if(match.location){
+        locationlable.textContent = match.location;
+        locationlable.style.display = "inline-block";
+    }
+
+
+
       // Oppdater sluttspillinformasjon
       const endplayLable = matchelement.querySelector(".endplaylable");
       if (match.typematch) {
@@ -336,6 +346,42 @@ function listMatchesInTeamView(matchs,team){
           resultlable.style.fontSize = "12px";
           //skjul annen datoelement
           matchelement.querySelector(".teamdatematch").style.display = "none";
+
+            // Sjekk om tiden nå er forbi kampens tid
+            const now = new Date(); // Nåværende tid
+
+            // Ekstraksjon av dato og tid fra match.time manuelt
+            const matchTimeParts = match.time.split("T"); // Deler dato og tid
+            const matchDate = matchTimeParts[0]; // Hent datoen (YYYY-MM-DD)
+            const matchTime = matchTimeParts[1].split(".")[0]; // Hent klokkeslettet (HH:mm:ss)
+
+            // Bygg en dato- og tidsstreng uten å ta hensyn til tidssone
+            const matchDateTime = new Date(`${matchDate}T${matchTime}`); // Lokal dato/tid uten Z
+
+            // Nåværende tid (uten tidssone-manipulering)
+            const nowLocal = new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate(),
+                now.getHours(),
+                now.getMinutes(),
+                now.getSeconds()
+            );
+
+            // Finn playIcon og oppdater basert på tiden
+            const playIcon = matchelement.querySelector(".playicon");
+
+            if (nowLocal > matchDateTime) {
+                if (playIcon) {
+                    playIcon.style.display = "flex";
+                }
+            } else {
+                if (playIcon) {
+                    playIcon.style.display = "none";
+                }
+            }
+
+
       } else {
     
           resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
