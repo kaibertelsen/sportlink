@@ -156,8 +156,12 @@ function listmatch(data, grouptype, scroll) {
             if (match.team2clublogo) team2Logo.src = match.team2clublogo;
 
 
-            //oppdaterer lokasjonsnavn
-            matchelement.querySelector(".locationlable").textContent = match.location || "";
+              //oppdaterer lokasjonsnavn
+                const locationlable = matchelement.querySelector(".locationlable");
+                if(match.location){
+                    locationlable.textContent = match.location;
+                    locationlable.style.display = "inline-block";
+                }
         
             // Oppdater sluttspillinformasjon hvis tilgjengelig
             const endplayLable = matchelement.querySelector(".endplaylable");
@@ -377,8 +381,12 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
         if (match.team1clublogo) team1Logo.src = match.team1clublogo;
         if (match.team2clublogo) team2Logo.src = match.team2clublogo;
 
-        //oppdaterer lokasjonsnavn
-        matchelement.querySelector(".locationlable").textContent = match.location || "";
+         //oppdaterer lokasjonsnavn
+         const locationlable = matchelement.querySelector(".locationlable");
+         if(match.location){
+             locationlable.textContent = match.location;
+             locationlable.style.display = "inline-block";
+         }
     
         // Oppdater sluttspillinformasjon hvis tilgjengelig
         const endplayLable = matchelement.querySelector(".endplaylable");
