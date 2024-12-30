@@ -218,16 +218,33 @@ function generateVolleyballPointToTeams(data) {
                 if (team1SetsWon > team2SetsWon) {
                     team1.points.won++;
                     team2.points.lost++;
-                    team1.points.points += 3; // 3 poeng for seier basert på sett
+
+                    if (team1SetsWon === 2 && team2SetsWon === 1) {
+                        // 2-1: Vinnerlaget får 2 poeng, tapende lag får 1 poeng
+                        team1.points.points += 2;
+                        team2.points.points += 1;
+                    } else {
+                        // Andre tilfeller: 3 poeng for seier
+                        team1.points.points += 3;
+                    }
                 } else if (team2SetsWon > team1SetsWon) {
                     team2.points.won++;
                     team1.points.lost++;
-                    team2.points.points += 3; // 3 poeng for seier basert på sett
+
+                    if (team2SetsWon === 2 && team1SetsWon === 1) {
+                        // 2-1: Vinnerlaget får 2 poeng, tapende lag får 1 poeng
+                        team2.points.points += 2;
+                        team1.points.points += 1;
+                    } else {
+                        // Andre tilfeller: 3 poeng for seier
+                        team2.points.points += 3;
+                    }
                 } else {
                     // Uavgjort tilfelle hvis aktuelt, eller tilpass om det ikke er aktuelt for volleyball
                     team1.points.points += 1; // 1 poeng for uavgjort
                     team2.points.points += 1;
                 }
+
             } else {
                 // Beregn poeng basert på målpoeng når settdata ikke er tilgjengelig
                 team1.points.goalsFor += team1Score;
