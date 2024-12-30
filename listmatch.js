@@ -300,6 +300,13 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
     const activeDivision = getActiveDivisionFilter();
     matchlist.parentElement.querySelector(".countermatch").textContent = matches.length+" stk.";
 
+    //sjekke om selector er aktiv
+    const mselector = document.getElementById("matchMainListSelector");
+
+    if(mselector){
+        matches = filterMatchesBySelector(matches);
+    }
+
     removeAllExceptSpecific(matchlist, matchholder);
 
     for (let match of matches) {
