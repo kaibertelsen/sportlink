@@ -56,10 +56,11 @@ function filterMatchesBySelector(matchs) {
     } else if (selector.value === "ongoing") {
         // Vise alle kamper som har startet, men ikke har resultat
         return matchs.filter(match => {
-            const now = new Date();
-            const matchTime = new Date(match.time);
-            return matchTime <= now && (!match.goalteam1 && !match.goalteam2);
+            const now = new Date(); // Nåværende dato og tid
+            const matchTime = new Date(match.time); // Konverter match.time til Date-objekt
+            return matchTime.toISOString() <= now.toISOString() && (!match.goalteam1 && !match.goalteam2);
         });
+        
     } else if (selector.value === "played") {
         // Vise alle kamper som det foreligger resultat på
         return matchs.filter(match => 
