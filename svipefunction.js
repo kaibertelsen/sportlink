@@ -33,13 +33,49 @@ function goToSlide(index) {
         // Mark active button based on currentIndex
         if (currentIndex === 0) {
             markActiveButton(document.getElementById('tabeltabbutton'));
+            fadeInMatchSelector(false);
         } else if (currentIndex === 1) {
             markActiveButton(document.getElementById('matchtabbutton'));
+            fadeInMatchSelector(true);
         } else if (currentIndex === 2) {
             markActiveButton(document.getElementById('endplaytabbutton'));
+            fadeInMatchSelector(false);
         }
     }
 }
+
+
+function fadeInMatchSelector(type){
+  const selector = document.getElementById("matchMainListSelector");
+  if(type){
+    //kampsiden
+    if (selector) {
+        const parentElement = selector.parentElement; // Hent parent-elementet
+        if (parentElement) {
+            parentElement.style.display = "flex"; // Sett display til flex
+            parentElement.style.opacity = "0"; // Start med usynlig
+            parentElement.style.transition = "opacity 0.5s"; // Legg til overgang for fading
+            setTimeout(() => {
+                parentElement.style.opacity = "1"; // Fad inn over 0.5 sek
+            }, 0); // Sørg for at overgangen aktiveres
+        }
+    }
+  }else{
+    if (selector) {
+        const parentElement = selector.parentElement; // Hent parent-elementet
+        if (parentElement) {
+            parentElement.style.transition = "opacity 0.5s"; // Legg til overgang for fading
+            parentElement.style.opacity = "0"; // Fad ut over 0.5 sek
+            
+            // Etter fading, skjul elementet
+            setTimeout(() => {
+                parentElement.style.display = "none"; // Skjul elementet helt
+            }, 500); // 500ms matcher fading-tiden
+        }
+    }
+  }
+}
+
 
 // Handle touch start
 function handleTouchStart(event) {
