@@ -245,24 +245,39 @@ function listmatch(data, grouptype, scroll) {
 
                     
                     // Sjekk om tiden nå er forbi kampens tid
-                        const now = new Date(); // Nåværende tid
-                        const matchTime = new Date(match.time); // Kampens tid
+                const now = new Date(); // Nåværende tid
 
-                        // Konverter datoene til strengformat uten tidssone
-                        const nowString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-                        const matchTimeString = `${matchTime.getFullYear()}-${String(matchTime.getMonth() + 1).padStart(2, '0')}-${String(matchTime.getDate()).padStart(2, '0')}T${String(matchTime.getHours()).padStart(2, '0')}:${String(matchTime.getMinutes()).padStart(2, '0')}:${String(matchTime.getSeconds()).padStart(2, '0')}`;
+                // Ekstraksjon av dato og tid fra match.time manuelt
+                const matchTimeParts = match.time.split("T"); // Deler dato og tid
+                const matchDate = matchTimeParts[0]; // Hent datoen (YYYY-MM-DD)
+                const matchTime = matchTimeParts[1].split(".")[0]; // Hent klokkeslettet (HH:mm:ss)
 
-                        const playIcon = matchelement.querySelector(".playicon");
+                // Bygg en dato- og tidsstreng uten å ta hensyn til tidssone
+                const matchDateTime = new Date(`${matchDate}T${matchTime}`); // Lokal dato/tid uten Z
 
-                        if (nowString > matchTimeString) {
-                            if (playIcon) {
-                                playIcon.style.display = "flex";
-                            }
-                        } else {
-                            if (playIcon) {
-                                playIcon.style.display = "none";
-                            }
-                        }
+                // Nåværende tid (uten tidssone-manipulering)
+                const nowLocal = new Date(
+                    now.getFullYear(),
+                    now.getMonth(),
+                    now.getDate(),
+                    now.getHours(),
+                    now.getMinutes(),
+                    now.getSeconds()
+                );
+
+                // Finn playIcon og oppdater basert på tiden
+                const playIcon = matchelement.querySelector(".playicon");
+
+                if (nowLocal > matchDateTime) {
+                    if (playIcon) {
+                        playIcon.style.display = "flex";
+                    }
+                } else {
+                    if (playIcon) {
+                        playIcon.style.display = "none";
+                    }
+                }
+
 
 
             } else {
@@ -448,15 +463,29 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
             
             // Sjekk om tiden nå er forbi kampens tid
                 const now = new Date(); // Nåværende tid
-                const matchTime = new Date(match.time); // Kampens tid
 
-                // Konverter datoene til strengformat uten tidssone
-                const nowString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-                const matchTimeString = `${matchTime.getFullYear()}-${String(matchTime.getMonth() + 1).padStart(2, '0')}-${String(matchTime.getDate()).padStart(2, '0')}T${String(matchTime.getHours()).padStart(2, '0')}:${String(matchTime.getMinutes()).padStart(2, '0')}:${String(matchTime.getSeconds()).padStart(2, '0')}`;
+                // Ekstraksjon av dato og tid fra match.time manuelt
+                const matchTimeParts = match.time.split("T"); // Deler dato og tid
+                const matchDate = matchTimeParts[0]; // Hent datoen (YYYY-MM-DD)
+                const matchTime = matchTimeParts[1].split(".")[0]; // Hent klokkeslettet (HH:mm:ss)
 
+                // Bygg en dato- og tidsstreng uten å ta hensyn til tidssone
+                const matchDateTime = new Date(`${matchDate}T${matchTime}`); // Lokal dato/tid uten Z
+
+                // Nåværende tid (uten tidssone-manipulering)
+                const nowLocal = new Date(
+                    now.getFullYear(),
+                    now.getMonth(),
+                    now.getDate(),
+                    now.getHours(),
+                    now.getMinutes(),
+                    now.getSeconds()
+                );
+
+                // Finn playIcon og oppdater basert på tiden
                 const playIcon = matchelement.querySelector(".playicon");
 
-                if (nowString > matchTimeString) {
+                if (nowLocal > matchDateTime) {
                     if (playIcon) {
                         playIcon.style.display = "flex";
                     }
@@ -465,6 +494,7 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
                         playIcon.style.display = "none";
                     }
                 }
+
 
 
 
