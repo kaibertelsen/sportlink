@@ -292,6 +292,11 @@ function endplaySelectorChange(){
     listMatch(gMatchs);
 }
 
+function statusSelectorChange(){
+    listMatch(gMatchs);
+}
+
+
 function locationSelectorChange(){
     listMatch(gMatchs);
 }
@@ -463,6 +468,41 @@ function makeTeamrow(nodeelement,team,Cluboptions,Divisionoptions,tabelid){
     
 }
 
+function filterMatchesBySelector(matchs) {
+    const selector = document.getElementById("matchMainListSelector");
+
+    if (selector.value === "") {
+        // Vise alle kamper
+        return matchs;
+    } else if (selector.value === "upcoming") {
+        // Vise alle kamper som ikke har resultat
+        return matchs.filter(match => !match.goalteam1 && !match.goalteam2);
+    } else if (selector.value === "ongoing") {
+        // Vise alle kamper som har startet, men ikke har resultat
+        return matchs.filter(match => {
+            const now = new Date();
+            // Lag ISO-format uten tidssonejustering for nåværende tid
+            const nowString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+            
+            // Bruk match.time som den er, siden den allerede er i ISO-format
+            const matchTime = match.time;
+        
+            return matchTime <= nowString && (!match.goalteam1 && !match.goalteam2);
+        });
+        
+        
+        
+    } else if (selector.value === "played") {
+        // Vise alle kamper som det foreligger resultat på
+        return matchs.filter(match => 
+            match.goalteam1 !== undefined && 
+            match.goalteam1 !== "" &&
+            match.goalteam2 !== undefined && 
+            match.goalteam2 !== ""
+        );
+    }
+}
+
 function listMatch(matchs) {
     // Get selected values from division and group selectors
     const divisionValue = document.getElementById("divisionSelector").value;
@@ -483,6 +523,14 @@ function listMatch(matchs) {
 
     // Sort matches by time
     filteredMatches.sort((a, b) => new Date(a.time) - new Date(b.time));
+
+
+     //sjekke om status selector er aktiv
+     const mselector = document.getElementById("matchMainListSelector");
+
+     if(mselector){
+         filteredMatches = filterMatchesBySelector(filteredMatches);
+     }
 
     // Get the list holder and clear previous content
     const list = document.getElementById("matchlistholder");
