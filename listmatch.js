@@ -62,7 +62,12 @@ function filterMatchesBySelector(matchs) {
         });
     } else if (selector.value === "played") {
         // Vise alle kamper som det foreligger resultat på
-        return matchs.filter(match => match.goalteam1 !== undefined && match.goalteam2 !== undefined);
+        return matchs.filter(match => 
+            match.goalteam1 !== undefined && 
+            match.goalteam1 !== "" &&
+            match.goalteam2 !== undefined && 
+            match.goalteam2 !== ""
+        );
     }
 }
 
