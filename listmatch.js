@@ -245,34 +245,24 @@ function listmatch(data, grouptype, scroll) {
 
                     
                     // Sjekk om tiden nå er forbi kampens tid
-                    const now = new Date(); // Nåværende tid
-                    const matchTime = new Date(match.time); // Kampens tid
-                    const nowWithoutTimezone = new Date(
-                        now.getFullYear(),
-                        now.getMonth(),
-                        now.getDate(),
-                        now.getHours(),
-                        now.getMinutes(),
-                        now.getSeconds()
-                    ); // Fjerner tidssone fra nåværende tid
-                    const matchTimeWithoutTimezone = new Date(
-                        matchTime.getFullYear(),
-                        matchTime.getMonth(),
-                        matchTime.getDate(),
-                        matchTime.getHours(),
-                        matchTime.getMinutes(),
-                        matchTime.getSeconds()
-                    ); // Fjerner tidssone fra kampens tid
-                    const playIcon =   matchelement.querySelector(".playicon");
-                    if (nowWithoutTimezone > matchTimeWithoutTimezone) {
-                        if(playIcon){
-                            playIcon.style.display = "flex";
+                        const now = new Date(); // Nåværende tid
+                        const matchTime = new Date(match.time); // Kampens tid
+
+                        // Konverter datoene til strengformat uten tidssone
+                        const nowString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+                        const matchTimeString = `${matchTime.getFullYear()}-${String(matchTime.getMonth() + 1).padStart(2, '0')}-${String(matchTime.getDate()).padStart(2, '0')}T${String(matchTime.getHours()).padStart(2, '0')}:${String(matchTime.getMinutes()).padStart(2, '0')}:${String(matchTime.getSeconds()).padStart(2, '0')}`;
+
+                        const playIcon = matchelement.querySelector(".playicon");
+
+                        if (nowString > matchTimeString) {
+                            if (playIcon) {
+                                playIcon.style.display = "flex";
+                            }
+                        } else {
+                            if (playIcon) {
+                                playIcon.style.display = "none";
+                            }
                         }
-                    }else{
-                        if(playIcon){
-                            playIcon.style.display = "none";
-                        }
-                    }
 
 
             } else {
@@ -457,34 +447,25 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
 
             
             // Sjekk om tiden nå er forbi kampens tid
-            const now = new Date(); // Nåværende tid
-            const matchTime = new Date(match.time); // Kampens tid
-            const nowWithoutTimezone = new Date(
-                now.getFullYear(),
-                now.getMonth(),
-                now.getDate(),
-                now.getHours(),
-                now.getMinutes(),
-                now.getSeconds()
-            ); // Fjerner tidssone fra nåværende tid
-            const matchTimeWithoutTimezone = new Date(
-                matchTime.getFullYear(),
-                matchTime.getMonth(),
-                matchTime.getDate(),
-                matchTime.getHours(),
-                matchTime.getMinutes(),
-                matchTime.getSeconds()
-            ); // Fjerner tidssone fra kampens tid
-            const playIcon =   matchelement.querySelector(".playicon");
-            if (nowWithoutTimezone > matchTimeWithoutTimezone) {
-                if(playIcon){
-                    playIcon.style.display = "flex";
+                const now = new Date(); // Nåværende tid
+                const matchTime = new Date(match.time); // Kampens tid
+
+                // Konverter datoene til strengformat uten tidssone
+                const nowString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}T${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+                const matchTimeString = `${matchTime.getFullYear()}-${String(matchTime.getMonth() + 1).padStart(2, '0')}-${String(matchTime.getDate()).padStart(2, '0')}T${String(matchTime.getHours()).padStart(2, '0')}:${String(matchTime.getMinutes()).padStart(2, '0')}:${String(matchTime.getSeconds()).padStart(2, '0')}`;
+
+                const playIcon = matchelement.querySelector(".playicon");
+
+                if (nowString > matchTimeString) {
+                    if (playIcon) {
+                        playIcon.style.display = "flex";
+                    }
+                } else {
+                    if (playIcon) {
+                        playIcon.style.display = "none";
+                    }
                 }
-            }else{
-                if(playIcon){
-                    playIcon.style.display = "none";
-                }
-            }
+
 
 
 
