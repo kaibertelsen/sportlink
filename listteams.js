@@ -32,7 +32,7 @@ function listteams(data) {
         acc[division][group || "Uten gruppe"].push(team);
         return acc;
     }, {});
-
+        /*
     //sorter gruppenavn evt divisjonsnavn alfabetisk
         // Hent og sorter nøklene i root-objektet alfabetisk
         const sortedKeys = Object.keys(teamsByDivisionAndGroup).sort();
@@ -42,7 +42,7 @@ function listteams(data) {
         for (const key of sortedKeys) {
             sortedObject[key] = teamsByDivisionAndGroup[key];
         }
-
+        */
 
     const list = document.getElementById("teamslistholder");
     list.replaceChildren(); // Tømmer holderen for å unngå duplisering
