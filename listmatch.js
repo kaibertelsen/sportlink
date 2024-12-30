@@ -38,10 +38,46 @@ function groupArraybyDate(matchs) {
     return grouparray;
 }
 
+function matchMainListSelectorChange(){
+
+    listmatch(matches,"dato");
+    
+}
+
+function filterMatchesBySelector(matchs) {
+    const selector = document.getElementById("matchMainListSelector");
+
+    if (selector.value === "") {
+        // Vise alle kamper
+        return matchs;
+    } else if (selector.value === "upcoming") {
+        // Vise alle kamper som ikke har resultat
+        return matchs.filter(match => !match.goalteam1 && !match.goalteam2);
+    } else if (selector.value === "ongoing") {
+        // Vise alle kamper som har startet, men ikke har resultat
+        return matchs.filter(match => {
+            const now = new Date();
+            const matchTime = new Date(match.time);
+            return matchTime <= now && (!match.goalteam1 && !match.goalteam2);
+        });
+    } else if (selector.value === "played") {
+        // Vise alle kamper som det foreligger resultat på
+        return matchs.filter(match => match.goalteam1 !== undefined && match.goalteam2 !== undefined);
+    }
+}
+
 // listmatch function adjusted to avoid scroll conflicts
 function listmatch(data, grouptype, scroll) {
     const activeDivision = getActiveDivisionFilter();
     let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
+    
+    //sjekke om selector er aktiv
+    const mselector = document.getElementById("matchMainListSelector");
+
+    if(mselector){
+        filteredMatches = filterMatchesBySelector(filteredMatches);
+    }
+
     let matchs = sortDateArray(filteredMatches, "time");
     let grouparray = grouptype === "dato" ? groupArraybyDate(matchs) : [];
 

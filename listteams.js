@@ -10,6 +10,9 @@ function getTeamresponse(data){
 
 
 
+
+
+
 function listteams(data) {
     const activeDivision = getActiveDivisionFilter();
 
