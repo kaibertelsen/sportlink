@@ -57,10 +57,15 @@ function filterMatchesBySelector(matchs) {
         // Vise alle kamper som har startet, men ikke har resultat
         return matchs.filter(match => {
             const now = new Date();
-            const nowDate = now.toISOString().split("T")[0]; // Hent kun datoen i "YYYY-MM-DD"-format
-            const matchDate = match.time.split("T")[0]; // Hent datoen fra match.time i "YYYY-MM-DD"-format
-            return matchDate <= nowDate && (!match.goalteam1 && !match.goalteam2);
+            // Lag ISO-format uten tidssonejustering for nåværende tid
+            const nowString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+            
+            // Bruk match.time som den er, siden den allerede er i ISO-format
+            const matchTime = match.time;
+        
+            return matchTime <= nowString && (!match.goalteam1 && !match.goalteam2);
         });
+        
         
         
     } else if (selector.value === "played") {
