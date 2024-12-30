@@ -231,12 +231,50 @@ function listmatch(data, grouptype, scroll) {
             const resultlable = matchelement.querySelector(".resultlable");
             if ((match.goalteam1 === "" || match.goalteam1 === null) || 
             (match.goalteam2 === "" || match.goalteam2 === null)) {
-                resultlable.textContent = formatdatetoTime(match.time);
-                resultlable.style.fontWeight = "normal";
-        
-                if (!firstUnplayedMatch) {
-                    firstUnplayedMatch = matchelement;
-                }
+               
+                        // Det er ingen resultat
+
+                    // Nåværende tid er forbi kampens tid
+                    resultlable.textContent = formatdatetoTime(match.time);
+                    resultlable.style.fontWeight = "normal";
+
+                    // Sett første upåbegynte kamp
+                    if (!firstUnplayedMatch) {
+                        firstUnplayedMatch = matchelement;
+                    }
+
+                    
+                    // Sjekk om tiden nå er forbi kampens tid
+                    const now = new Date(); // Nåværende tid
+                    const matchTime = new Date(match.time); // Kampens tid
+                    const nowWithoutTimezone = new Date(
+                        now.getFullYear(),
+                        now.getMonth(),
+                        now.getDate(),
+                        now.getHours(),
+                        now.getMinutes(),
+                        now.getSeconds()
+                    ); // Fjerner tidssone fra nåværende tid
+                    const matchTimeWithoutTimezone = new Date(
+                        matchTime.getFullYear(),
+                        matchTime.getMonth(),
+                        matchTime.getDate(),
+                        matchTime.getHours(),
+                        matchTime.getMinutes(),
+                        matchTime.getSeconds()
+                    ); // Fjerner tidssone fra kampens tid
+                    const playIcon =   matchelement.querySelector(".playicon");
+                    if (nowWithoutTimezone > matchTimeWithoutTimezone) {
+                        if(playIcon){
+                            playIcon.style.display = "flex";
+                        }
+                    }else{
+                        if(playIcon){
+                            playIcon.style.display = "none";
+                        }
+                    }
+
+
             } else {
 
                 resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
