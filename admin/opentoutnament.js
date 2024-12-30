@@ -512,7 +512,7 @@ function listMatch(matchs) {
     const locationValue = document.getElementById("locationSelector").value;
 
     // Filter matches based on selected division and group
-    const filteredMatches = matchs.filter(match => {
+    let filteredMatches = matchs.filter(match => {
         const matchesDivision = !divisionValue || match.division === divisionValue;
         const matchesGroup = !groupValue || match.group === groupValue;
         const matchesType = !typeValue || match.typematch === typeValue;
