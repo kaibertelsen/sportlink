@@ -348,6 +348,7 @@ function listMatchesInTeamView(matchs,team){
           matchelement.querySelector(".teamdatematch").style.display = "none";
 
             // Sjekk om tiden nå er forbi kampens tid
+          // Sjekk om tiden nå er forbi kampens tid
             const now = new Date(); // Nåværende tid
 
             // Ekstraksjon av dato og tid fra match.time manuelt
@@ -371,15 +372,21 @@ function listMatchesInTeamView(matchs,team){
             // Finn playIcon og oppdater basert på tiden
             const playIcon = matchelement.querySelector(".playicon");
 
-            if (nowLocal > matchDateTime) {
+            // Beregn tidsdifferanse i minutter
+            const timeDifference = (nowLocal - matchDateTime) / (1000 * 60); // Forskjell i minutter
+
+            if (nowLocal > matchDateTime && timeDifference <= 30) {
+                // Hvis kampen har startet, men det har gått mindre enn 30 minutter
                 if (playIcon) {
                     playIcon.style.display = "flex";
                 }
             } else {
+                // Hvis tiden er over 30 minutter siden kampstart eller kampen ikke har startet
                 if (playIcon) {
                     playIcon.style.display = "none";
                 }
             }
+
 
 
       } else {
