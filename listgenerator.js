@@ -239,7 +239,7 @@ function findeunicOrganizer(Array){
         uniqueOrganizerArray.push({
             organizer: event.organizer[0],
             organizername: event.organizername[0],
-            organizerend: event.organizerend[0]
+            organizerend: event.organizerend[0] || ""
         });
     }
     });
