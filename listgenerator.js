@@ -127,7 +127,15 @@ function listOrganizer(tournament) {
     list.innerHTML = "";
 
     //sotere organizerList de objectene som har organizerend = true sist
-    organizerList = sortArrayABC(organizerList,"organizerend");
+    organizerList.sort((a, b) => {
+        if (a.organizerend && !b.organizerend) {
+            return 1;
+        }
+        if (!a.organizerend && b.organizerend) {
+            return -1;
+        }
+        return 0;
+    });
 
     for (let item of organizerList) {
         // Lag en kopi av mal-elementet
