@@ -4,6 +4,18 @@ function listTournament(tournament) {
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.turneringholder');
 
+    //sortere tournament array etter startdato nyeste først
+    tournament.sort((a, b) => {
+        if (a.startdate < b.startdate) {
+            return 1;
+        }
+        if (a.startdate > b.startdate) {
+            return -1;
+        }
+        return 0;
+    }
+    );
+
     for (let item of tournament) {
         const rowelement = nodeelement.cloneNode(true);
         rowelement.dataset.sport = item.sport[0];
@@ -37,6 +49,7 @@ function listTournament(tournament) {
             if (item?.enddate && isDatePassed(item.enddate)) {
                 statuslableelement.textContent = "Er avsluttet!";
                 statuslableelement.style.color = mapColors("textoff");
+                rowelement.style.opacity = "0.5";
             } else {
                 statuslableelement.textContent = "Spilles nå!";
                 statuslableelement.style.color = mapColors("main");
