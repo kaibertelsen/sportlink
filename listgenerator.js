@@ -126,13 +126,18 @@ function listOrganizer(tournament) {
     // Tøm eksisterende liste før ny oppbygging
     list.innerHTML = "";
 
-    //sotere
-
+    //sotere organizerList de objectene som har organizerend = true sist
+    organizerList = sortArrayABC(organizerList,"organizerend");
 
     for (let item of organizerList) {
         // Lag en kopi av mal-elementet
         const rowElement = nodeElement.cloneNode(true);
         rowElement.id = "org" + item.organizer;
+
+        //sette grå tekst farge hvis organizerend = true
+        if(item.organizerend){
+            rowElement.style.color = mapColors("textoff");
+        }
 
         // Definer klikk-funksjonen for filter
         rowElement.onclick = function () {
