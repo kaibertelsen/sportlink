@@ -117,7 +117,7 @@ async function GETairtable(baseId,tableId,itemId,id,public){
             response = await fetch(`https://expoapi-zeta.vercel.app/api/row?baseId=${baseId}&tableId=${tableId}&rowId=${itemId}`);
         }else{
             let token = MemberStack.getToken();
-            response = await fetch(`https://expoapi-zeta.vercel.app/api/row?baseId=${baseId}&tableId=${tableId}&rowId=${itemId}&token=${token}`);
+            response = await fetch(`https://expoapi-zeta.vercel.app/api/row?baseId=${baseId}&tableId=${tableId}&rowId=${itemId}&token=${token}&skipCache=true`);
         }
         if (!response.ok) {
             throw new Error(`HTTP-feil! status: ${response.status} - ${response.statusText}`);
