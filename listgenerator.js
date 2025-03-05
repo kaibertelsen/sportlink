@@ -25,8 +25,10 @@ function listTournament(tournament) {
         };
 
         const nameelement = rowelement.querySelector(".turnname");
-        let name = item.name + " " + (item.organizername?.[0] || "");
-        nameelement.textContent = name;
+        nameelement.textContent = item.name
+
+        const teventname = rowelement.querySelector(".teventname");
+        teventname.textContent = item.organizername?.[0] || "";
 
         const dateelement = rowelement.querySelector(".datename");
         const startDate = new Date(item.startdate);
