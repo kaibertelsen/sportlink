@@ -126,6 +126,9 @@ function listOrganizer(tournament) {
     // Tøm eksisterende liste før ny oppbygging
     list.innerHTML = "";
 
+    //sotere
+
+
     for (let item of organizerList) {
         // Lag en kopi av mal-elementet
         const rowElement = nodeElement.cloneNode(true);
@@ -235,7 +238,8 @@ function findeunicOrganizer(Array){
     if (!exists) {
         uniqueOrganizerArray.push({
             organizer: event.organizer[0],
-            organizername: event.organizername[0]
+            organizername: event.organizername[0],
+            organizerend: event.organizerend[0]
         });
     }
     });
