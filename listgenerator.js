@@ -28,7 +28,7 @@ function listTournament(tournament) {
         nameelement.textContent = item.name
 
         const teventname = rowelement.querySelector(".teventname");
-        teventname.textContent = "- "+(item.organizername?.[0] || "");
+        teventname.textContent = item.organizername?.[0] || "";
 
         const dateelement = rowelement.querySelector(".datename");
         const startDate = new Date(item.startdate);
