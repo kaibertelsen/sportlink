@@ -1003,10 +1003,9 @@ function listmatchLayoutGrid(data, grouptype, scroll) {
             (match.goalteam2 === "" || match.goalteam2 === null)) {
                     // Det er ingen resultat
                     //skjul resultater
-                    resultlableteam1.style.display = "none";
-                    resultlableteam2.style.display = "none";
-
-
+                    resultlableteam1.textContent = "-";
+                    resultlableteam2.textContent = "-";
+                   
                     // Sett denne som første upåbegynte kamp for scrollen
                     if (!firstUnplayedMatch) {
                         firstUnplayedMatch = matchelement;
