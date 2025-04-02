@@ -930,8 +930,9 @@ function listmatchLayoutGrid(data, grouptype, scroll) {
             locationlable.textContent = match.location || "";
                 
             //oppdater dommer
-            const destinationlable = matchelement.querySelector(".destinationtext");
-            destinationlable.textContent = match.refereename || "";
+            const destinationlable = matchelement.querySelector(".refereename");
+            let refereenametext = match.refereename || "";
+            destinationlable.textContent = "D "+refereenametext; 
             
             // Oppdater sluttspillinformasjon hvis tilgjengelig
             const endplayLable = matchelement.querySelector(".endplaylable");
