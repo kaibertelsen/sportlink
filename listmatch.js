@@ -927,17 +927,12 @@ function listmatchLayoutGrid(data, grouptype, scroll) {
         
             //oppdaterer lokasjonsnavn
             const locationlable = matchelement.querySelector(".locationtext");
-            if(match.location){
-                locationlable.textContent = match.location;
-                locationlable.style.display = "inline-block";
-            }
-
-            //oppdater destinasjonsnavn
+            locationlable.textContent = match.location || "";
+                
+            //oppdater dommer
             const destinationlable = matchelement.querySelector(".destinationtext");
-            if(match.destination){
-                destinationlable.textContent = match.destination;
-            }
-        
+            destinationlable.textContent = match.refereename || "";
+            
             // Oppdater sluttspillinformasjon hvis tilgjengelig
             const endplayLable = matchelement.querySelector(".endplaylable");
             if (match.typematch) {
@@ -959,24 +954,19 @@ function listmatchLayoutGrid(data, grouptype, scroll) {
             }
         
             // Divisjonsnavn og gruppenavn
-            let labelText;
+            const divisiontext = matchelement.querySelector(".divisiontext");
+            const grouptext = matchelement.querySelector(".grouptext");
+
             if (activeDivision === "") {
-                // Når ingen divisjonsfilter er aktivt, inkluder både divisionname og groupname
-                labelText = `${match.divisionname || ""} ${match.groupname ? `- ${match.groupname}` : ""}`.trim();
+                //Vis både divisionname og groupname
+                divisiontext.textContent = match.divisionname || "";
+                grouptext.textContent = match.groupname || "";
             } else {
-                // Når divisjonsfilter er aktivt, bruk kun groupname
-                labelText = match.groupname || "";
+                // Når divisjonsfilter er aktivt, vis gkun roupname
+                divisiontext.textContent = "";
+                grouptext.textContent = match.groupname || "";
             }
 
-            const divisionlable = matchelement.querySelector(".divisionlable");
-            if (labelText) {
-                divisionlable.textContent = labelText;
-                divisionlable.style.color = mapColors("midlemain");
-                divisionlable.style.display = "block";
-            } else {
-                divisionlable.style.display = "none";
-            }
-        
             /*
             // Sjekk om det finnes noen settverdier
             const hasSetValues = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
