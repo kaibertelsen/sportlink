@@ -1039,8 +1039,14 @@ function listmatchLayoutGrid(data, grouptype, scroll) {
                     // Beregn tidsdifferanse i minutter
                     const timeDifference = (nowLocal - matchDateTime) / (1000 * 60); // Forskjell i minutter
 
-                    if (nowLocal > matchDateTime && timeDifference <= 30) {
-                        // Hvis kampen har startet, men det har gått mindre enn 30 minutter
+                    let timePlaying = 30;
+                    //sjekke om match inneholder minutesPerPeriod og numberOfPeriods
+                    if(match.minutesPerPeriod && match.numberOfPeriods){
+                        timePlaying = Number(match.minutesPerPeriod) * Number(match.numberOfPeriods);
+                    }
+
+                    if (nowLocal > matchDateTime && timeDifference <= timePlaying) {
+                        // Hvis kampen har startet, men det har gått mindre enn spilletid
                         if (playIcon) {
                             playIcon.style.display = "flex";
                         }
