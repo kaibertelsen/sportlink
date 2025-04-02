@@ -1101,3 +1101,15 @@ function listmatchLayoutGrid(data, grouptype, scroll) {
     
     
 }
+
+const matchToggleButtons = document.querySelectorAll('.match-toggle-button');
+
+matchToggleButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    matchToggleButtons.forEach(btn => btn.classList.remove('match-toggle-active'));
+    button.classList.add('match-toggle-active');
+
+    const selectedValue = button.dataset.value;
+    console.log("Valgt visning:", selectedValue);
+  });
+});
