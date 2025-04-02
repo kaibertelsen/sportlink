@@ -1002,6 +1002,10 @@ function listmatchLayoutGrid(data, grouptype, scroll) {
             if ((match.goalteam1 === "" || match.goalteam1 === null) || 
             (match.goalteam2 === "" || match.goalteam2 === null)) {
                     // Det er ingen resultat
+                    //skjul resultater
+                    resultlableteam1.style.display = "none";
+                    resultlableteam2.style.display = "none";
+
 
                     // Sett denne som første upåbegynte kamp for scrollen
                     if (!firstUnplayedMatch) {
@@ -1009,43 +1013,43 @@ function listmatchLayoutGrid(data, grouptype, scroll) {
                     }
 
                     
-                // Sjekk om tiden nå er forbi kampens tid
-                const now = new Date(); // Nåværende tid
+                    // Sjekk om tiden nå er forbi kampens tid
+                    const now = new Date(); // Nåværende tid
 
-                const matchTimeParts = match.time.split("T"); // Deler dato og tid
-                const matchDate = matchTimeParts[0]; // Hent datoen (YYYY-MM-DD)
-                const matchTime = matchTimeParts[1].split(".")[0]; // Hent klokkeslettet (HH:mm:ss)
+                    const matchTimeParts = match.time.split("T"); // Deler dato og tid
+                    const matchDate = matchTimeParts[0]; // Hent datoen (YYYY-MM-DD)
+                    const matchTime = matchTimeParts[1].split(".")[0]; // Hent klokkeslettet (HH:mm:ss)
 
-                // Bygg en dato- og tidsstreng uten å ta hensyn til tidssone
-                const matchDateTime = new Date(`${matchDate}T${matchTime}`); // Lokal dato/tid uten Z
+                    // Bygg en dato- og tidsstreng uten å ta hensyn til tidssone
+                    const matchDateTime = new Date(`${matchDate}T${matchTime}`); // Lokal dato/tid uten Z
 
-                // Nåværende tid (uten tidssone-manipulering)
-                const nowLocal = new Date(
-                    now.getFullYear(),
-                    now.getMonth(),
-                    now.getDate(),
-                    now.getHours(),
-                    now.getMinutes(),
-                    now.getSeconds()
-                );
+                    // Nåværende tid (uten tidssone-manipulering)
+                    const nowLocal = new Date(
+                        now.getFullYear(),
+                        now.getMonth(),
+                        now.getDate(),
+                        now.getHours(),
+                        now.getMinutes(),
+                        now.getSeconds()
+                    );
 
-                // Finn playIcon og oppdater basert på tiden
-                const playIcon = matchelement.querySelector(".playicon");
+                    // Finn playIcon og oppdater basert på tiden
+                    const playIcon = matchelement.querySelector(".playicon");
 
-                // Beregn tidsdifferanse i minutter
-                const timeDifference = (nowLocal - matchDateTime) / (1000 * 60); // Forskjell i minutter
+                    // Beregn tidsdifferanse i minutter
+                    const timeDifference = (nowLocal - matchDateTime) / (1000 * 60); // Forskjell i minutter
 
-                if (nowLocal > matchDateTime && timeDifference <= 30) {
-                    // Hvis kampen har startet, men det har gått mindre enn 30 minutter
-                    if (playIcon) {
-                        playIcon.style.display = "flex";
+                    if (nowLocal > matchDateTime && timeDifference <= 30) {
+                        // Hvis kampen har startet, men det har gått mindre enn 30 minutter
+                        if (playIcon) {
+                            playIcon.style.display = "flex";
+                        }
+                    } else {
+                        // Hvis tiden er over 30 minutter siden kampstart eller kampen ikke har startet
+                        if (playIcon) {
+                            playIcon.style.display = "none";
+                        }
                     }
-                } else {
-                    // Hvis tiden er over 30 minutter siden kampstart eller kampen ikke har startet
-                    if (playIcon) {
-                        playIcon.style.display = "none";
-                    }
-                }
 
                
 
