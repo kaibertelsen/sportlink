@@ -41,6 +41,37 @@ function groupArraybyDate(matchs) {
     return grouparray;
 }
 
+function groupArrayByLocation(matchs) {
+    // Initialiser en ny array for grupperte kamper
+    let grouparray = [];
+  
+    // Bruk reduce for å gruppere kampene etter location
+    let groupedByLocation = matchs.reduce((groups, match) => {
+      // Hent lokasjon eller bruk standardtekst hvis mangler
+      let location = match.location && match.location.trim() !== "" ? match.location : "Ukjent lokasjon";
+  
+      // Hvis lokasjonen ikke finnes i grupperingsobjektet, opprett ny array
+      if (!groups[location]) {
+        groups[location] = [];
+      }
+  
+      // Legg til kampen i gruppen for den lokasjonen
+      groups[location].push(match);
+  
+      return groups;
+    }, {});
+  
+    // Konverter til array med nøkkel og matches
+    grouparray = Object.keys(groupedByLocation).map(location => {
+      return {
+        location: location,
+        matches: groupedByLocation[location]
+      };
+    });
+  
+    return grouparray;
+}
+  
 function matchMainListSelectorChange(){
 
    listmatch(matches,"dato");
@@ -86,11 +117,8 @@ function filterMatchesBySelector(matchs) {
 // listmatch function adjusted to avoid scroll conflicts
 function listmatch(data, grouptype, scroll) {
 
-    
-
-
     //teste ut ny layout
-    listmatchLayoutGrid(data, grouptype, scroll);
+    listmatchLayoutGrid(data, grouptype);
 
     /*
     const activeDivision = getActiveDivisionFilter();
@@ -844,8 +872,7 @@ function adjustMatchContainer() {
     }
 }
 
-// listmatch function adjusted to avoid scroll conflicts
-function listmatchLayoutGrid(data, grouptype, scroll) {
+function listmatchLayoutGrid(data, grouptype) {
     const activeDivision = getActiveDivisionFilter();
     let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
     
@@ -857,7 +884,14 @@ function listmatchLayoutGrid(data, grouptype, scroll) {
     }
 
     let matchs = sortDateArray(filteredMatches, "time");
-    let grouparray = grouptype === "dato" ? groupArraybyDate(matchs) : [];
+    let grouparray = [];
+
+    //hvelge vilke type gruppering som skal vises
+    if(grouptype === "dato"){
+        grouparray = groupArraybyDate(matchs);
+    }else if(grouptype === "lokasjon"){
+        grouparray = groupArrayByLocation(matchs);
+    }
 
     const list = document.getElementById("matchlistholder");
     list.replaceChildren();
@@ -869,36 +903,43 @@ function listmatchLayoutGrid(data, grouptype, scroll) {
     for (let item of grouparray) {
         const rowelement = nodeelement.cloneNode(true);
 
-        const dateValue = item.date;
-        const isValidDate = !isNaN(Date.parse(dateValue));
 
-        // Hvis datoen er gyldig, formatter den. Hvis ikke, bruk verdien av item.date.
-        rowelement.querySelector(".groupheadername").textContent = isValidDate
-        ? formatDateToNorwegian(dateValue)
-        : dateValue;
+        const groupheadername = rowelement.querySelector(".groupheadername");
+        const locationSelector = rowelement.querySelector(".locationselector");
+
+        if (item.date) {
+          groupheadername.textContent = isNaN(Date.parse(item.date))
+            ? item.date
+            : formatDateToNorwegian(item.date);
+
+            //last inn alle de forskjellige lokasjoner i denne velgeren
+            if(locationSelector){
+                loadLocationSelector(item.matches,locationSelector);
+                    // Legg til en change-eventlistener for locationSelector
+                locationSelector.addEventListener("change", () => {
+                    // Hent valgt verdi fra selectoren
+                    const selectedValue = locationSelector.value;
+
+                    // Kjør funksjonen med item.matches, matchList og valgt verdi
+                    locationSelectorInMatchlistChange(item.matches, matchlist,matchholder, selectedValue,firstUnplayedMatch);
+                });
+            }
+
+        } else if (item.location) {
+            groupheadername.textContent = item.location;
+            locationSelector.style.display = "none";
+        } else {
+            groupheadername.textContent = "-";
+            locationSelector.style.display = "none";
+        }
+        
+        // Oppdaterer antall
+        rowelement.querySelector(".countermatch").textContent = item.matches.length+" stk."
 
         const matchlist = rowelement.querySelector(".matchlist");
         const matchholder = rowelement.querySelector('.matchholder');
 
-        //lokasjonsvelger
-        const locationSelector = rowelement.querySelector(".locationselector");
-        //last inn alle de forskjellige lokasjoner i denne gruppen
-        rowelement.querySelector(".countermatch").textContent = item.matches.length+" stk."
-        
-        if(locationSelector){
-            loadLocationSelector(item.matches,locationSelector);
-                // Legg til en change-eventlistener for locationSelector
-            locationSelector.addEventListener("change", () => {
-                // Hent valgt verdi fra selectoren
-                const selectedValue = locationSelector.value;
-
-                // Kjør funksjonen med item.matches, matchList og valgt verdi
-                locationSelectorInMatchlistChange(item.matches, matchlist,matchholder, selectedValue,firstUnplayedMatch);
-            });
-        }
-
-
-        //firstUnplayedMatch = makeMatchInMatchHolder(item.matches,matchlist,matchholder,firstUnplayedMatch);  
+         
         for (let match of item.matches) {
             const matchelement = matchholder.cloneNode(true);
             matchlist.appendChild(matchelement);
@@ -1150,8 +1191,7 @@ function loadDayfilter(matches) {
       if (selectedDate) {
         buttonFilterdaysdate(selectedDate,matches)
       } else {
-        console.log("Viser alle datoer");
-        // filterMatchesByDate(null);
+        listmatch(filteredMatches, "dato", "")
       }
     };
   
@@ -1211,7 +1251,7 @@ function buttonFilterdaysdate(date,matches){
     console.log(filteredMatches);
 
     //hvelge å layout basert på destinasjonsgrupper
-
+    listmatch(filteredMatches, "lokasjon", "")
 }
   
   
