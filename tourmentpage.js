@@ -19,7 +19,6 @@ function goToObjectShareKey() {
 
     // Sjekk om "page" er definert
     if (!keys?.page) {
-        console.error("Page-parameteren mangler i URL-en.");
         return;
     }
 
