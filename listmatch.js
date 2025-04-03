@@ -1191,7 +1191,7 @@ function loadDayfilter(matches) {
     });
   
     // 👉 Velg "Idag" hvis den finnes, ellers første dato, ellers "Alle"
-    const buttonToClick = todayButton || firstDateButton || allButton;
+    const buttonToClick = todayButton || allButton;
     if (buttonToClick) {
       setTimeout(() => {
         buttonToClick.click();
