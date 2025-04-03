@@ -1141,8 +1141,9 @@ function loadDayfilter(matches) {
     const monthNames = ['jan', 'feb', 'mars', 'apr', 'mai', 'juni', 'juli', 'aug', 'sep', 'okt', 'nov', 'des'];
   
     let todayButton = null;
+    let firstButton = null;
   
-    sortedDates.forEach(dateStr => {
+    sortedDates.forEach((dateStr, index) => {
       const date = new Date(dateStr);
       const today = new Date();
       const isToday = date.toDateString() === today.toDateString();
@@ -1152,9 +1153,12 @@ function loadDayfilter(matches) {
   
       const button = document.createElement('button');
       button.classList.add('day-button');
+  
       if (isToday) {
         button.classList.add('active');
         todayButton = button;
+      } else if (index === 0 && !todayButton) {
+        firstButton = button; // lagre første hvis ikke "idag" finnes
       }
   
       button.innerHTML = `
@@ -1168,19 +1172,21 @@ function loadDayfilter(matches) {
   
         console.log("Valgt dato:", dateStr);
   
-        // 👉 Her kan du trigge filtrering:
+        // 👉 Trigger filtering om ønskelig
         // filterMatchesByDate(dateStr);
       });
   
       dayScrollContainer.appendChild(button);
     });
   
-    // 👉 Trigger click + scroll til "Idag"-knappen
-    if (todayButton) {
+    // 👉 Velg "idag" hvis den finnes, ellers første
+    const buttonToClick = todayButton || firstButton;
+    if (buttonToClick) {
       setTimeout(() => {
-        todayButton.click();
-        todayButton.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        buttonToClick.click();
+        buttonToClick.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }, 0);
     }
-}
+  }
+  
   
