@@ -1231,6 +1231,7 @@ function loadDayfilter(matches) {
     if (buttonToClick) {
       setTimeout(() => {
         buttonToClick.click();
+        buttonToClick.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }, 0);
     }
     
