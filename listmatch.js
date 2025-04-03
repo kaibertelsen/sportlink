@@ -1194,9 +1194,10 @@ function loadDayfilter(matches) {
   
     // 👉 ghost-padding venstre
     const ghostLeft = document.createElement('div');
-    ghostLeft.style.minWidth = "16px";
+    ghostLeft.style.minWidth = "95px"; // ← oppdatert
     ghostLeft.style.flexShrink = "0";
     dayScrollContainer.appendChild(ghostLeft);
+
   
     // 👉 "Alle"-knapp
     const allButton = document.createElement('button');
@@ -1233,7 +1234,7 @@ function loadDayfilter(matches) {
   
     // 👉 ghost-padding høyre
     const ghostRight = document.createElement('div');
-    ghostRight.style.minWidth = "16px";
+    ghostRight.style.minWidth = "95px"; // ← oppdatert
     ghostRight.style.flexShrink = "0";
     dayScrollContainer.appendChild(ghostRight);
   
