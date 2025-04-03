@@ -6,6 +6,9 @@ function getMatch(data){
 function getMatchresponse(data,id){
     matches = rawdatacleaner(data);
     listmatch(matches,"dato");
+
+    //laste inn alle dager det er kamper
+
 }
 
 function groupArraybyDate(matchs) {
@@ -82,6 +85,9 @@ function filterMatchesBySelector(matchs) {
 
 // listmatch function adjusted to avoid scroll conflicts
 function listmatch(data, grouptype, scroll) {
+
+    
+
 
     //teste ut ny layout
     listmatchLayoutGrid(data, grouptype, scroll);
@@ -1103,7 +1109,6 @@ function listmatchLayoutGrid(data, grouptype, scroll) {
 }
 
 const matchToggleButtons = document.querySelectorAll('.match-toggle-button');
-
 matchToggleButtons.forEach(button => {
   button.addEventListener('click', () => {
     matchToggleButtons.forEach(btn => btn.classList.remove('match-toggle-active'));
@@ -1114,33 +1119,68 @@ matchToggleButtons.forEach(button => {
   });
 });
 
-
-const container = document.getElementById('dayScrollContainer');
-const today = new Date();
-
-for (let i = -5; i <= 5; i++) {
-  const date = new Date(today);
-  date.setDate(today.getDate() + i);
-
-  const dayNames = ['Søn.', 'Man.', 'Tir.', 'Ons.', 'Tor.', 'Fre.', 'Lør.'];
-  const dayLabel = i === 0 ? 'Idag' : dayNames[date.getDay()];
+function loadDayfilter(matches) {
+    const dayScrollContainer = document.getElementById('dayScrollContainer');
+    if (!dayScrollContainer) return;
   
-  const day = date.getDate();
-  const monthNames = ['jan', 'feb', 'mars', 'apr', 'mai', 'juni', 'juli', 'aug', 'sep', 'okt', 'nov', 'des'];
-  const monthLabel = monthNames[date.getMonth()];
-
-  const dateLabel = `${day}. ${monthLabel}`;
-
-  const button = document.createElement('button');
-  button.classList.add('day-button');
-  if (i === 0) button.classList.add('active');
-  button.innerHTML = `<span class="day-label">${dayLabel}</span><span class="date-label">${dateLabel}</span>`;
-
-  button.addEventListener('click', () => {
-    document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-    console.log("Valgt dato:", date.toISOString().split('T')[0]);
-  });
-
-  container.appendChild(button);
+    dayScrollContainer.innerHTML = ''; // Tøm containeren først
+  
+    const dateSet = new Set();
+  
+    // Hent unike datoer fra kampene
+    matches.forEach(match => {
+      if (!match.time) return;
+      const date = new Date(match.time);
+      const dateOnly = date.toISOString().split('T')[0]; // Kun dato
+      dateSet.add(dateOnly);
+    });
+  
+    const sortedDates = Array.from(dateSet).sort();
+  
+    const dayNames = ['Søn.', 'Man.', 'Tir.', 'Ons.', 'Tor.', 'Fre.', 'Lør.'];
+    const monthNames = ['jan', 'feb', 'mars', 'apr', 'mai', 'juni', 'juli', 'aug', 'sep', 'okt', 'nov', 'des'];
+  
+    let todayButton = null;
+  
+    sortedDates.forEach(dateStr => {
+      const date = new Date(dateStr);
+      const today = new Date();
+      const isToday = date.toDateString() === today.toDateString();
+  
+      const dayLabel = isToday ? 'Idag' : dayNames[date.getDay()];
+      const dateLabel = `${date.getDate()}. ${monthNames[date.getMonth()]}`;
+  
+      const button = document.createElement('button');
+      button.classList.add('day-button');
+      if (isToday) {
+        button.classList.add('active');
+        todayButton = button;
+      }
+  
+      button.innerHTML = `
+        <span class="day-label">${dayLabel}</span>
+        <span class="date-label">${dateLabel}</span>
+      `;
+  
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+  
+        console.log("Valgt dato:", dateStr);
+  
+        // 👉 Her kan du trigge filtrering:
+        // filterMatchesByDate(dateStr);
+      });
+  
+      dayScrollContainer.appendChild(button);
+    });
+  
+    // 👉 Trigger click + scroll til "Idag"-knappen
+    if (todayButton) {
+      setTimeout(() => {
+        todayButton.click();
+        todayButton.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }, 0);
+    }
 }
+  
