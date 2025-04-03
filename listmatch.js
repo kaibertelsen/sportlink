@@ -1181,7 +1181,9 @@ function listmatchLayoutGrid(data, grouptype) {
 function toggleMatchList(rowelement, closeopengroupbutton) {
     const matchlist = rowelement.querySelector(".matchlist");
   
-    const isCollapsed = matchlist.style.height === "0px" || getComputedStyle(matchlist).height === "0px";
+    // Hvis ingen eksplisitt høyde er satt, og display er block → regnes som åpen
+    const isCollapsed = getComputedStyle(matchlist).display === "none" || 
+                        getComputedStyle(matchlist).height === "0px";
   
     if (isCollapsed) {
       // Åpne
@@ -1190,7 +1192,6 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
   
       matchlist.style.height = "0px";
       matchlist.style.overflow = "hidden";
-  
       void matchlist.offsetWidth;
   
       matchlist.style.transition = "height 300ms ease";
@@ -1207,9 +1208,9 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
     } else {
       // Lukk
       const fullHeight = matchlist.scrollHeight + "px";
+  
       matchlist.style.height = fullHeight;
       matchlist.style.overflow = "hidden";
-  
       void matchlist.offsetWidth;
   
       matchlist.style.transition = "height 300ms ease";
@@ -1225,7 +1226,8 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
       closeopengroupbutton.style.transition = "transform 300ms ease";
       closeopengroupbutton.style.transform = "rotate(180deg)";
     }
-  }
+}
+  
   
   
 
