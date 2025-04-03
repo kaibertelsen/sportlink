@@ -936,6 +936,10 @@ function listmatchLayoutGrid(data, grouptype) {
                 });
             }
 
+            underlineheader.style.display = "none";
+            closeopengroupbutton.style.display = "none";
+            locationSelector.style.display = "block";
+
         } else if (item.location) {
             //hviser lokasjonsnavn
             groupheadername.textContent = item.location;
