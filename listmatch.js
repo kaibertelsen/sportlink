@@ -1136,13 +1136,31 @@ function loadDayfilter(matches) {
     });
   
     const sortedDates = Array.from(dateSet).sort();
-  
     const dayNames = ['Søn.', 'Man.', 'Tir.', 'Ons.', 'Tor.', 'Fre.', 'Lør.'];
     const monthNames = ['jan', 'feb', 'mars', 'apr', 'mai', 'juni', 'juli', 'aug', 'sep', 'okt', 'nov', 'des'];
   
     let todayButton = null;
-    let firstButton = null;
+    let firstDateButton = null;
+    let allButton = null;
   
+    // 👉 Lag "Alle"-knapp først
+    allButton = document.createElement('button');
+    allButton.classList.add('day-button', 'active'); // aktiv som standard
+    allButton.innerHTML = `
+      <span class="day-label">Alle</span>
+      <span class="date-label">&nbsp;</span>
+    `;
+  
+    allButton.addEventListener('click', () => {
+      document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
+      allButton.classList.add('active');
+      console.log("Viser alle datoer");
+      // filterMatchesByDate(null); // eller vis alle
+    });
+  
+    dayScrollContainer.appendChild(allButton);
+  
+    // 👉 Bygg dato-knapper
     sortedDates.forEach((dateStr, index) => {
       const date = new Date(dateStr);
       const today = new Date();
@@ -1157,8 +1175,8 @@ function loadDayfilter(matches) {
       if (isToday) {
         button.classList.add('active');
         todayButton = button;
-      } else if (index === 0 && !todayButton) {
-        firstButton = button; // lagre første hvis ikke "idag" finnes
+      } else if (!firstDateButton) {
+        firstDateButton = button;
       }
   
       button.innerHTML = `
@@ -1169,18 +1187,15 @@ function loadDayfilter(matches) {
       button.addEventListener('click', () => {
         document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
-  
         console.log("Valgt dato:", dateStr);
-  
-        // 👉 Trigger filtering om ønskelig
         // filterMatchesByDate(dateStr);
       });
   
       dayScrollContainer.appendChild(button);
     });
   
-    // 👉 Velg "idag" hvis den finnes, ellers første
-    const buttonToClick = todayButton || firstButton;
+    // 👉 Velg "Idag", ellers første dato, ellers "Alle"
+    const buttonToClick = todayButton || firstDateButton || allButton;
     if (buttonToClick) {
       setTimeout(() => {
         buttonToClick.click();
@@ -1188,5 +1203,6 @@ function loadDayfilter(matches) {
       }, 0);
     }
   }
+  
   
   
