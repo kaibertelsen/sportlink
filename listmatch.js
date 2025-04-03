@@ -949,8 +949,10 @@ function listmatchLayoutGrid(data, grouptype) {
 
             //vise knap som kan lukke og åpne matchlist
             closeopengroupbutton.style.display = "block";
+            closeopengroupbutton.onclick = function() {
+                // Toggle matchlist visibility
             toggleMatchList(rowelement, closeopengroupbutton);
-
+            };
         } else {
             groupheadername.textContent = "-";
             locationSelector.style.display = "none";
