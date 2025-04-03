@@ -1198,7 +1198,7 @@ function loadDayfilter(matches) {
         buttonToClick.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }, 0);
     }
-  }
+}
   
   
   
