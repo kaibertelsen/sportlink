@@ -1,3 +1,5 @@
+var activeDayFilter = "";
+
 function getMatch(data){
     var body = airtablebodylistAND({tournamentid:data.airtable,archived:0});
     Getlistairtable(baseId,"tblrHBFa60aIdqkUu",body,"getMatchresponse");
@@ -883,6 +885,9 @@ function listmatchLayoutGrid(data, grouptype) {
         filteredMatches = filterMatchesBySelector(filteredMatches);
     }
 
+    //sjekke om noen dagknapper er aktive
+    filteredMatches = filterDaybuttons(filteredMatches);
+
     let matchs = sortDateArray(filteredMatches, "time");
     let grouparray = [];
 
@@ -1187,9 +1192,10 @@ function loadDayfilter(matches) {
     const setActiveButton = (targetButton, selectedDate) => {
       document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
       targetButton.classList.add('active');
-  
+      activeDayFilter = selectedDate;
       if (selectedDate) {
-        buttonFilterdaysdate(selectedDate,matches)
+
+        listmatch(filteredMatches, "lokasjon", "")
       } else {
         listmatch(filteredMatches, "dato", "")
       }
@@ -1252,6 +1258,22 @@ function buttonFilterdaysdate(date,matches){
 
     //hvelge å layout basert på destinasjonsgrupper
     listmatch(filteredMatches, "lokasjon", "")
+}
+  
+function filterDaybuttons(matches) {
+    // Hvis filteret er tomt eller ikke satt, returner alle kamper
+    if (!activeDayFilter || activeDayFilter === "") return matches;
+  
+    // Formatér valgt dato til YYYY-MM-DD
+    const filterDate = new Date(activeDayFilter).toISOString().split('T')[0];
+  
+    // Filtrer kampene basert på dato
+    return matches.filter(match => {
+      if (!match.time) return false;
+  
+      const matchDate = new Date(match.time).toISOString().split('T')[0];
+      return matchDate === filterDate;
+    });
 }
   
   
