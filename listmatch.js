@@ -1180,7 +1180,6 @@ function listmatchLayoutGrid(data, grouptype) {
 
 function toggleMatchList(rowelement, closeopengroupbutton) {
     const matchlist = rowelement.querySelector(".matchlist");
-    const icon = closeopengroupbutton.querySelector(".icon");
   
     const isCollapsed = matchlist.style.height === "0px" || getComputedStyle(matchlist).height === "0px";
   
@@ -1192,7 +1191,6 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
       matchlist.style.height = "0px";
       matchlist.style.overflow = "hidden";
   
-      // Trigger reflow
       void matchlist.offsetWidth;
   
       matchlist.style.transition = "height 300ms ease";
@@ -1204,8 +1202,8 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
         matchlist.style.overflow = "";
       }, 300);
   
-      icon.style.transition = "transform 300ms ease";
-      icon.style.transform = "rotate(0deg)";
+      closeopengroupbutton.style.transition = "transform 300ms ease";
+      closeopengroupbutton.style.transform = "rotate(0deg)";
     } else {
       // Lukk
       const fullHeight = matchlist.scrollHeight + "px";
@@ -1224,10 +1222,11 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
         matchlist.style.overflow = "";
       }, 300);
   
-      icon.style.transition = "transform 300ms ease";
-      icon.style.transform = "rotate(180deg)";
+      closeopengroupbutton.style.transition = "transform 300ms ease";
+      closeopengroupbutton.style.transform = "rotate(180deg)";
     }
   }
+  
   
 
 
