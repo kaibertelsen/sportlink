@@ -432,7 +432,7 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
         if (match.team2clublogo) team2Logo.src = match.team2clublogo;
 
          //oppdaterer lokasjonsnavn
-         const locationlable = matchelement.querySelector(".locationlable");
+         const locationlable = matchelement.querySelector(".locationtext");
          if(match.location){
              locationlable.textContent = match.location || "Ukjent";
              locationlable.style.display = "inline-block";
@@ -913,7 +913,9 @@ function listmatchLayoutGrid(data, grouptype) {
 
 
         const groupheadername = rowelement.querySelector(".groupheadername");
+        const underlineheader = rowelement.querySelector(".underlineheader");
         const locationSelector = rowelement.querySelector(".locationselector");
+
 
         if (item.date) {
           groupheadername.textContent = isNaN(Date.parse(item.date))
@@ -934,11 +936,25 @@ function listmatchLayoutGrid(data, grouptype) {
             }
 
         } else if (item.location) {
+            //hviser lokasjonsnavn
             groupheadername.textContent = item.location;
             locationSelector.style.display = "none";
+
+            //kan dato vises på underline
+            const date = item.matches[0].time.split("T")[0];
+            const dateString = formatDateToNorwegian(date);
+            underlineheader.textContent = dateString;
+            underlineheader.style.display = "block";
+
         } else {
             groupheadername.textContent = "-";
             locationSelector.style.display = "none";
+
+            //kan dato vises på underline
+            const date = item.matches[0].time.split("T")[0];
+            const dateString = formatDateToNorwegian(date);
+            underlineheader.textContent = dateString;
+            underlineheader.style.display = "block";
         }
         
         // Oppdaterer antall
