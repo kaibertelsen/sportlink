@@ -1195,9 +1195,9 @@ function loadDayfilter(matches) {
       activeDayFilter = selectedDate;
       if (selectedDate) {
 
-        listmatch(filteredMatches, "lokasjon", "")
+        listmatch(matches, "lokasjon", "")
       } else {
-        listmatch(filteredMatches, "dato", "")
+        listmatch(matches, "dato", "")
       }
     };
   
@@ -1245,20 +1245,7 @@ function loadDayfilter(matches) {
     }
 }
 
-function buttonFilterdaysdate(date,matches){
 
-    //filterer alle kamper på denne datoen
-    const filteredMatches = matches.filter(match => {
-        if (!match.time) return false;
-        const matchDate = new Date(match.time);
-        return matchDate.toISOString().split('T')[0] === date;
-    });
-    //oppdaterer listen
-    console.log(filteredMatches);
-
-    //hvelge å layout basert på destinasjonsgrupper
-    listmatch(filteredMatches, "lokasjon", "")
-}
   
 function filterDaybuttons(matches) {
     // Hvis filteret er tomt eller ikke satt, returner alle kamper
