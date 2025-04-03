@@ -190,8 +190,11 @@ function loadTourment(tournamentid){
     loadeLists(data);
     isInTurnament = true;
 
-   // Kjør funksjonen etter 1 sekund
-setTimeout(adjustSwipeContainer, 500);
+    //hente ut aktuelle dager for filteret og laste det
+    loadDayfilter(makeObjectFromAirtableJSON(data, "matchjson"));
+
+    // Kjør funksjonen etter 1 sekund
+    setTimeout(adjustSwipeContainer, 500);
 }
 // Juster på nytt hvis størrelsen endres (valgfritt)
 window.addEventListener("resize", adjustSwipeContainer);
@@ -221,9 +224,6 @@ function loadeLists(data){
     //list sluttspill
     endplay = endplayConverter(data);
     if(endplay){listendplay(matches,endplay);}
-
-    //Hent ut alle dager fra matcher
-    loadDayfilter(matches);
 
 }
 

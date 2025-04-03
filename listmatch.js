@@ -1227,7 +1227,7 @@ function loadDayfilter(matches) {
   
     
     // 👉 Scroll og aktiver riktig knapp
-    const buttonToClick = todayButton || firstDateButton || allButton;
+    const buttonToClick = todayButton || allButton;
     if (buttonToClick) {
       setTimeout(() => {
         buttonToClick.click();
