@@ -1192,13 +1192,6 @@ function loadDayfilter(matches) {
       }
     };
   
-    // 👉 ghost-padding venstre
-    const ghostLeft = document.createElement('div');
-    ghostLeft.style.minWidth = "95px"; // ← oppdatert
-    ghostLeft.style.flexShrink = "0";
-    dayScrollContainer.appendChild(ghostLeft);
-
-  
     // 👉 "Alle"-knapp
     const allButton = document.createElement('button');
     allButton.classList.add('day-button', 'active');
@@ -1232,12 +1225,7 @@ function loadDayfilter(matches) {
       dayScrollContainer.appendChild(button);
     });
   
-    // 👉 ghost-padding høyre
-    const ghostRight = document.createElement('div');
-    ghostRight.style.minWidth = "95px"; // ← oppdatert
-    ghostRight.style.flexShrink = "0";
-    dayScrollContainer.appendChild(ghostRight);
-  
+    
     // 👉 Scroll og aktiver riktig knapp
     const buttonToClick = todayButton || firstDateButton || allButton;
     if (buttonToClick) {
