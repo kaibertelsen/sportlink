@@ -1148,8 +1148,7 @@ function loadDayfilter(matches) {
       targetButton.classList.add('active');
   
       if (selectedDate) {
-        console.log("Valgt dato:", selectedDate);
-        // filterMatchesByDate(selectedDate);
+        buttonFilterdaysdate(selectedDate,matches)
       } else {
         console.log("Viser alle datoer");
         // filterMatchesByDate(null);
@@ -1198,6 +1197,19 @@ function loadDayfilter(matches) {
         buttonToClick.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }, 0);
     }
+}
+
+function buttonFilterdaysdate(date,matches){
+
+    //filterer alle kamper på denne datoen
+    const filteredMatches = matches.filter(match => {
+        if (!match.time) return false;
+        const matchDate = new Date(match.time);
+        return matchDate.toISOString().split('T')[0] === date;
+    });
+    //oppdaterer listen
+    console.log(filteredMatches);
+
 }
   
   
