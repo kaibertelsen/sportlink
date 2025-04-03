@@ -1186,9 +1186,9 @@ function loadDayfilter(matches) {
   
       // Koble til filtreringsfunksjon her:
       if (selectedDate) {
-        listmatch(matches, "dato", selectedDate); // ← filtrer på valgt dato
+        listmatch(matches, "lokasjon", ""); // ← filtrer på valgt dato
       } else {
-        listmatch(matches, "lokasjon", ""); // ← vis alle
+        listmatch(matches, "dato", selectedDate); // ← vis alle
       }
     };
   
