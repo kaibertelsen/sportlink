@@ -1157,30 +1157,18 @@ function listmatchLayoutGrid(data, grouptype) {
     
 }
 
-const matchToggleButtons = document.querySelectorAll('.match-toggle-button');
-matchToggleButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    matchToggleButtons.forEach(btn => btn.classList.remove('match-toggle-active'));
-    button.classList.add('match-toggle-active');
 
-    const selectedValue = button.dataset.value;
-    console.log("Valgt visning:", selectedValue);
-  });
-});
 
 function loadDayfilter(matches) {
     const dayScrollContainer = document.getElementById('dayScrollContainer');
     if (!dayScrollContainer) return;
   
-    dayScrollContainer.innerHTML = ''; // Tøm containeren først
+    dayScrollContainer.innerHTML = ''; // Tøm containeren
   
     const dateSet = new Set();
-  
-    // Hent unike datoer fra kampene
     matches.forEach(match => {
       if (!match.time) return;
-      const date = new Date(match.time);
-      const dateOnly = date.toISOString().split('T')[0]; // Kun dato
+      const dateOnly = new Date(match.time).toISOString().split('T')[0];
       dateSet.add(dateOnly);
     });
   
@@ -1191,30 +1179,36 @@ function loadDayfilter(matches) {
     let todayButton = null;
     let firstDateButton = null;
   
-    // 👉 Funksjon for å fjerne .active og legge til på valgt knapp
     const setActiveButton = (targetButton, selectedDate) => {
       document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
       targetButton.classList.add('active');
       activeDayFilter = selectedDate;
+  
+      // Koble til filtreringsfunksjon her:
       if (selectedDate) {
-
-        listmatch(matches, "lokasjon", "")
+        listmatch(matches, "dato", selectedDate); // ← filtrer på valgt dato
       } else {
-        listmatch(matches, "dato", "")
+        listmatch(matches, "lokasjon", ""); // ← vis alle
       }
     };
   
-    // 👉 Lag "Alle"-knappen
+    // 👉 ghost-padding venstre
+    const ghostLeft = document.createElement('div');
+    ghostLeft.style.minWidth = "16px";
+    ghostLeft.style.flexShrink = "0";
+    dayScrollContainer.appendChild(ghostLeft);
+  
+    // 👉 "Alle"-knapp
     const allButton = document.createElement('button');
-    allButton.classList.add('day-button', 'active'); // aktiv som standard
+    allButton.classList.add('day-button', 'active');
     allButton.innerHTML = `
-    <span class="day-label">Alle</span>
-    <span class="date-label">Dager</span>
+      <span class="day-label">Alle</span>
+      <span class="date-label">Dager</span>
     `;
-    allButton.addEventListener('click', () => setActiveButton(allButton, null));
+    allButton.addEventListener('click', () => setActiveButton(allButton, ""));
     dayScrollContainer.appendChild(allButton);
   
-    // 👉 Lag knapper for hver unik kampdato
+    // 👉 Dato-knapper
     sortedDates.forEach(dateStr => {
       const date = new Date(dateStr);
       const today = new Date();
@@ -1233,20 +1227,25 @@ function loadDayfilter(matches) {
         <span class="day-label">${dayLabel}</span>
         <span class="date-label">${dateLabel}</span>
       `;
-  
       button.addEventListener('click', () => setActiveButton(button, dateStr));
       dayScrollContainer.appendChild(button);
     });
   
-    // 👉 Velg "Idag" hvis den finnes, ellers første dato, ellers "Alle"
-    const buttonToClick = todayButton || allButton;
+    // 👉 ghost-padding høyre
+    const ghostRight = document.createElement('div');
+    ghostRight.style.minWidth = "16px";
+    ghostRight.style.flexShrink = "0";
+    dayScrollContainer.appendChild(ghostRight);
+  
+    // 👉 Scroll og aktiver riktig knapp
+    const buttonToClick = todayButton || firstDateButton || allButton;
     if (buttonToClick) {
       setTimeout(() => {
         buttonToClick.click();
         buttonToClick.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
       }, 0);
     }
-}
+  }
 
 
   
