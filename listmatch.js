@@ -1113,3 +1113,34 @@ matchToggleButtons.forEach(button => {
     console.log("Valgt visning:", selectedValue);
   });
 });
+
+
+const container = document.getElementById('dayScrollContainer');
+const today = new Date();
+
+for (let i = -5; i <= 5; i++) {
+  const date = new Date(today);
+  date.setDate(today.getDate() + i);
+
+  const dayNames = ['Søn.', 'Man.', 'Tir.', 'Ons.', 'Tor.', 'Fre.', 'Lør.'];
+  const dayLabel = i === 0 ? 'Idag' : dayNames[date.getDay()];
+  
+  const day = date.getDate();
+  const monthNames = ['jan', 'feb', 'mars', 'apr', 'mai', 'juni', 'juli', 'aug', 'sep', 'okt', 'nov', 'des'];
+  const monthLabel = monthNames[date.getMonth()];
+
+  const dateLabel = `${day}. ${monthLabel}`;
+
+  const button = document.createElement('button');
+  button.classList.add('day-button');
+  if (i === 0) button.classList.add('active');
+  button.innerHTML = `<span class="day-label">${dayLabel}</span><span class="date-label">${dateLabel}</span>`;
+
+  button.addEventListener('click', () => {
+    document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    console.log("Valgt dato:", date.toISOString().split('T')[0]);
+  });
+
+  container.appendChild(button);
+}
