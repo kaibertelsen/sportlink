@@ -400,10 +400,13 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
 
     //sjekke om selector er aktiv
     const mselector = document.getElementById("matchMainListSelector");
-
+    let filteredMatches = matches
     if(mselector){
-        matches = filterMatchesBySelector(matches);
+        filteredMatches = filterMatchesBySelector(matches);
     }
+
+    //sjekke om noen dagknapper er aktive
+    filteredMatches = filterDaybuttons(filteredMatches);
 
     removeAllExceptSpecific(matchlist, matchholder);
 
@@ -431,7 +434,7 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
          //oppdaterer lokasjonsnavn
          const locationlable = matchelement.querySelector(".locationlable");
          if(match.location){
-             locationlable.textContent = match.location;
+             locationlable.textContent = match.location || "Ukjent";
              locationlable.style.display = "inline-block";
          }
     
