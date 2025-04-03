@@ -1141,27 +1141,33 @@ function loadDayfilter(matches) {
   
     let todayButton = null;
     let firstDateButton = null;
-    let allButton = null;
   
-    // 👉 Lag "Alle"-knapp først
-    allButton = document.createElement('button');
+    // 👉 Funksjon for å fjerne .active og legge til på valgt knapp
+    const setActiveButton = (targetButton, selectedDate) => {
+      document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
+      targetButton.classList.add('active');
+  
+      if (selectedDate) {
+        console.log("Valgt dato:", selectedDate);
+        // filterMatchesByDate(selectedDate);
+      } else {
+        console.log("Viser alle datoer");
+        // filterMatchesByDate(null);
+      }
+    };
+  
+    // 👉 Lag "Alle"-knappen
+    const allButton = document.createElement('button');
     allButton.classList.add('day-button', 'active'); // aktiv som standard
     allButton.innerHTML = `
       <span class="day-label">Alle</span>
-      <span class="date-label">&nbsp;</span>
+      <span class="date-label" style="visibility: hidden;">-</span>
     `;
-  
-    allButton.addEventListener('click', () => {
-      document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
-      allButton.classList.add('active');
-      console.log("Viser alle datoer");
-      // filterMatchesByDate(null); // eller vis alle
-    });
-  
+    allButton.addEventListener('click', () => setActiveButton(allButton, null));
     dayScrollContainer.appendChild(allButton);
   
-    // 👉 Bygg dato-knapper
-    sortedDates.forEach((dateStr, index) => {
+    // 👉 Lag knapper for hver unik kampdato
+    sortedDates.forEach(dateStr => {
       const date = new Date(dateStr);
       const today = new Date();
       const isToday = date.toDateString() === today.toDateString();
@@ -1172,29 +1178,19 @@ function loadDayfilter(matches) {
       const button = document.createElement('button');
       button.classList.add('day-button');
   
-      if (isToday) {
-        button.classList.add('active');
-        todayButton = button;
-      } else if (!firstDateButton) {
-        firstDateButton = button;
-      }
+      if (isToday) todayButton = button;
+      if (!firstDateButton) firstDateButton = button;
   
       button.innerHTML = `
         <span class="day-label">${dayLabel}</span>
         <span class="date-label">${dateLabel}</span>
       `;
   
-      button.addEventListener('click', () => {
-        document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        console.log("Valgt dato:", dateStr);
-        // filterMatchesByDate(dateStr);
-      });
-  
+      button.addEventListener('click', () => setActiveButton(button, dateStr));
       dayScrollContainer.appendChild(button);
     });
   
-    // 👉 Velg "Idag", ellers første dato, ellers "Alle"
+    // 👉 Velg "Idag" hvis den finnes, ellers første dato, ellers "Alle"
     const buttonToClick = todayButton || firstDateButton || allButton;
     if (buttonToClick) {
       setTimeout(() => {
@@ -1203,6 +1199,7 @@ function loadDayfilter(matches) {
       }, 0);
     }
   }
+  
   
   
   
