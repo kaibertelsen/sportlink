@@ -1160,8 +1160,8 @@ function loadDayfilter(matches) {
     const allButton = document.createElement('button');
     allButton.classList.add('day-button', 'active'); // aktiv som standard
     allButton.innerHTML = `
-      <span class="day-label">Alle</span>
-      <span class="date-label" style="visibility: hidden;">-</span>
+    <span class="day-label">Alle</span>
+    <span class="date-label">Dager</span>
     `;
     allButton.addEventListener('click', () => setActiveButton(allButton, null));
     dayScrollContainer.appendChild(allButton);
