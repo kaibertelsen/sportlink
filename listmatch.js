@@ -1210,6 +1210,8 @@ function buttonFilterdaysdate(date,matches){
     //oppdaterer listen
     console.log(filteredMatches);
 
+    //hvelge å layout basert på destinasjonsgrupper
+
 }
   
   
