@@ -915,6 +915,7 @@ function listmatchLayoutGrid(data, grouptype) {
         const groupheadername = rowelement.querySelector(".groupheadername");
         const underlineheader = rowelement.querySelector(".underlineheader");
         const locationSelector = rowelement.querySelector(".locationselector");
+        const closeopengroupbutton = rowelement.querySelector(".closeopengroupbutton");
 
 
         if (item.date) {
@@ -945,6 +946,10 @@ function listmatchLayoutGrid(data, grouptype) {
             const dateString = formatDateToNorwegian(date);
             underlineheader.textContent = dateString;
             underlineheader.style.display = "block";
+
+            //vise knap som kan lukke og åpne matchlist
+            closeopengroupbutton.style.display = "block";
+            toggleMatchList(rowelement, closeopengroupbutton);
 
         } else {
             groupheadername.textContent = "-";
@@ -1173,6 +1178,57 @@ function listmatchLayoutGrid(data, grouptype) {
     
 }
 
+function toggleMatchList(rowelement, closeopengroupbutton) {
+    const matchlist = rowelement.querySelector(".matchlist");
+    const icon = closeopengroupbutton.querySelector(".icon");
+  
+    const isCollapsed = matchlist.style.height === "0px" || getComputedStyle(matchlist).height === "0px";
+  
+    if (isCollapsed) {
+      // Åpne
+      matchlist.style.display = "block";
+      const fullHeight = matchlist.scrollHeight + "px";
+  
+      matchlist.style.height = "0px";
+      matchlist.style.overflow = "hidden";
+  
+      // Trigger reflow
+      void matchlist.offsetWidth;
+  
+      matchlist.style.transition = "height 300ms ease";
+      matchlist.style.height = fullHeight;
+  
+      setTimeout(() => {
+        matchlist.style.height = "";
+        matchlist.style.transition = "";
+        matchlist.style.overflow = "";
+      }, 300);
+  
+      icon.style.transition = "transform 300ms ease";
+      icon.style.transform = "rotate(0deg)";
+    } else {
+      // Lukk
+      const fullHeight = matchlist.scrollHeight + "px";
+      matchlist.style.height = fullHeight;
+      matchlist.style.overflow = "hidden";
+  
+      void matchlist.offsetWidth;
+  
+      matchlist.style.transition = "height 300ms ease";
+      matchlist.style.height = "0px";
+  
+      setTimeout(() => {
+        matchlist.style.display = "none";
+        matchlist.style.height = "";
+        matchlist.style.transition = "";
+        matchlist.style.overflow = "";
+      }, 300);
+  
+      icon.style.transition = "transform 300ms ease";
+      icon.style.transform = "rotate(180deg)";
+    }
+  }
+  
 
 
 function loadDayfilter(matches) {
