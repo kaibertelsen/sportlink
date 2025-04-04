@@ -897,7 +897,7 @@ function listmatchLayoutGrid(data, grouptype) {
     //hvelge vilke type gruppering som skal vises
     if (!activeDayFilter || activeDayFilter === ""){
         grouparray = groupArraybyDate(matchs);
-    }else if(grouptype === "lokasjon"){
+    }else {
         grouparray = groupArrayByLocation(matchs);
     }
 
