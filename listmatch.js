@@ -958,7 +958,6 @@ function listmatchLayoutGrid(data, grouptype) {
             toggleMatchList(rowelement, closeopengroupbutton);
             };
 
-            /
         } else {
             groupheadername.textContent = "-";
             locationSelector.style.display = "none";
