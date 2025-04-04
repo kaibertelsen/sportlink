@@ -215,6 +215,9 @@ function adjustSwipeContainer() {
 
 function loadeLists(data){
     matches = makeObjectFromAirtableJSON(data, "matchjson");
+    //regne ut verdier om det er settverdier
+    matches = calculateMatchResultBySett(matches);
+    
     if(matches){listmatch(matches,"dato",true);}
 
     teams = makeObjectFromAirtableJSON(data, "teamjson");
