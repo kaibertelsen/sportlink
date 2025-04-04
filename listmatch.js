@@ -957,6 +957,8 @@ function listmatchLayoutGrid(data, grouptype) {
                 // Toggle matchlist visibility
             toggleMatchList(rowelement, closeopengroupbutton);
             };
+
+            /
         } else {
             groupheadername.textContent = "-";
             locationSelector.style.display = "none";
@@ -1186,6 +1188,7 @@ function listmatchLayoutGrid(data, grouptype) {
 
 function toggleMatchList(rowelement, closeopengroupbutton) {
     const matchlist = rowelement.querySelector(".matchlist");
+    const headerdiv = rowelement.querySelector(".headerdiv");
   
     // Hvis ingen eksplisitt høyde er satt, og display er block → regnes som åpen
     const isCollapsed = getComputedStyle(matchlist).display === "none" || 
@@ -1193,16 +1196,19 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
   
     if (isCollapsed) {
       // Åpne
-      matchlist.style.display = "block";
-      const fullHeight = matchlist.scrollHeight + "px";
-  
-      matchlist.style.height = "0px";
-      matchlist.style.overflow = "hidden";
-      void matchlist.offsetWidth;
-  
-      matchlist.style.transition = "height 300ms ease";
-      matchlist.style.height = fullHeight;
-  
+      //hviser bord på headerdiv element #474747
+        headerdiv.style.borderBottom = "1px solid #474747";
+
+        matchlist.style.display = "block";
+        const fullHeight = matchlist.scrollHeight + "px";
+    
+        matchlist.style.height = "0px";
+        matchlist.style.overflow = "hidden";
+        void matchlist.offsetWidth;
+    
+        matchlist.style.transition = "height 300ms ease";
+        matchlist.style.height = fullHeight;
+    
       setTimeout(() => {
         matchlist.style.height = "";
         matchlist.style.transition = "";
@@ -1213,6 +1219,10 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
       closeopengroupbutton.style.transform = "rotate(0deg)";
     } else {
       // Lukk
+
+        //fjerne bord på headerdiv element
+        headerdiv.style.borderBottom = "none";
+
       const fullHeight = matchlist.scrollHeight + "px";
   
       matchlist.style.height = fullHeight;
