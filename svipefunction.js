@@ -47,21 +47,18 @@ function goToSlide(index) {
 function fadeElement(element, show = true, displayType = "block") {
   if (!element) return;
 
-  const parent = element.parentElement;
-  if (!parent) return;
-
-  parent.style.transition = "opacity 0.5s";
+  element.style.transition = "opacity 0.5s";
 
   if (show) {
-    parent.style.display = displayType;
-    parent.style.opacity = "0";
+    element.style.display = displayType;
+    element.style.opacity = "0";
     // Trigger reflow to apply transition
-    void parent.offsetWidth;
-    parent.style.opacity = "1";
+    void element.offsetWidth;
+    element.style.opacity = "1";
   } else {
-    parent.style.opacity = "0";
+    element.style.opacity = "0";
     setTimeout(() => {
-      parent.style.display = "none";
+      element.style.display = "none";
     }, 500);
   }
 }
@@ -72,10 +69,10 @@ function fadeInMatchSelector(type) {
 
   // Vis begge hvis type er true (kampsiden)
   if (type) {
-    fadeElement(selector, true, "flex");
+    fadeElement(selector.parentElement, true, "flex");
     fadeElement(dayfilterwrapper, true, "block");
   } else {
-    fadeElement(selector, false);
+    fadeElement(selector.parentElement, false);
     fadeElement(dayfilterwrapper, false);
   }
 }
