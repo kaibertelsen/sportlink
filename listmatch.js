@@ -1012,7 +1012,7 @@ function listmatchLayoutGrid(data, grouptype) {
             //oppdater dommer
             const destinationlable = matchelement.querySelector(".refereename");
             let refereenametext = match.refereename || "";
-            destinationlable.textContent = "D "+refereenametext; 
+            destinationlable.textContent = refereenametext; 
             
             // Oppdater sluttspillinformasjon hvis tilgjengelig
             const endplayLable = matchelement.querySelector(".endplaylable");
