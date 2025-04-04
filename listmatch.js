@@ -895,10 +895,12 @@ function listmatchLayoutGrid(data, grouptype) {
     let grouparray = [];
 
     //hvelge vilke type gruppering som skal vises
+    let locationView = false;
     if (!activeDayFilter || activeDayFilter === ""){
         grouparray = groupArraybyDate(matchs);
     }else {
         grouparray = groupArrayByLocation(matchs);
+        locationView = true;
     }
 
     const list = document.getElementById("matchlistholder");
@@ -918,7 +920,7 @@ function listmatchLayoutGrid(data, grouptype) {
         const closeopengroupbutton = rowelement.querySelector(".closeopengroupbutton");
 
 
-        if (item.date) {
+        if (!locationView) {
           groupheadername.textContent = isNaN(Date.parse(item.date))
             ? item.date
             : formatDateToNorwegian(item.date);
@@ -940,8 +942,8 @@ function listmatchLayoutGrid(data, grouptype) {
             closeopengroupbutton.style.display = "none";
             locationSelector.style.display = "block";
 
-        } else if (item.location) {
-            //hviser lokasjonsnavn
+        } else {
+            //viser lokasjonsnavn
             groupheadername.textContent = item.location;
             locationSelector.style.display = "none";
 
@@ -958,15 +960,6 @@ function listmatchLayoutGrid(data, grouptype) {
             toggleMatchList(rowelement, closeopengroupbutton);
             };
 
-        } else {
-            groupheadername.textContent = "-";
-            locationSelector.style.display = "none";
-
-            //kan dato vises på underline
-            const date = item.matches[0].time.split("T")[0];
-            const dateString = formatDateToNorwegian(date);
-            underlineheader.textContent = dateString;
-            underlineheader.style.display = "block";
         }
         
         // Oppdaterer antall
@@ -1008,10 +1001,14 @@ function listmatchLayoutGrid(data, grouptype) {
             matchelement.querySelector(".team1").textContent = team1Name;
             matchelement.querySelector(".team2").textContent = team2Name;
         
+
             //oppdaterer lokasjonsnavn
             const locationlable = matchelement.querySelector(".locationtext");
-            locationlable.textContent = match.location || "";
-                
+            if(locationView){
+                locationlable.style.display = "none";
+            }else{
+                locationlable.textContent = match.location || "";
+            }
             //oppdater dommer
             const destinationlable = matchelement.querySelector(".refereename");
             let refereenametext = match.refereename || "";
