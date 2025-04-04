@@ -1080,6 +1080,8 @@ function listmatchLayoutGrid(data, grouptype) {
             } 
             */
 
+            const resultwrapper = matchelement.querySelector(".resultwrapper");
+
             if ((match.goalteam1 === "" || match.goalteam1 === null) || 
             (match.goalteam2 === "" || match.goalteam2 === null)) {
                     // Det er ingen resultat
@@ -1136,11 +1138,9 @@ function listmatchLayoutGrid(data, grouptype) {
                             playIcon.style.display = "none";
                         }
                     }
-
-               
-
-
-
+            }else{
+                
+                resultwrapper.style.backgroundColor = "#0b344f";
             }
         
             //fjerner understrek på siste kamp i listen
