@@ -44,35 +44,39 @@ function goToSlide(index) {
     }
 }
 
+function fadeElement(element, show = true, displayType = "block") {
+  if (!element) return;
 
-function fadeInMatchSelector(type){
+  const parent = element.parentElement;
+  if (!parent) return;
+
+  parent.style.transition = "opacity 0.5s";
+
+  if (show) {
+    parent.style.display = displayType;
+    parent.style.opacity = "0";
+    // Trigger reflow to apply transition
+    void parent.offsetWidth;
+    parent.style.opacity = "1";
+  } else {
+    parent.style.opacity = "0";
+    setTimeout(() => {
+      parent.style.display = "none";
+    }, 500);
+  }
+}
+
+function fadeInMatchSelector(type) {
   const selector = document.getElementById("matchMainListSelector");
-  if(type){
-    //kampsiden
-    if (selector) {
-        const parentElement = selector.parentElement; // Hent parent-elementet
-        if (parentElement) {
-            parentElement.style.display = "flex"; // Sett display til flex
-            parentElement.style.opacity = "0"; // Start med usynlig
-            parentElement.style.transition = "opacity 0.5s"; // Legg til overgang for fading
-            setTimeout(() => {
-                parentElement.style.opacity = "1"; // Fad inn over 0.5 sek
-            }, 0); // Sørg for at overgangen aktiveres
-        }
-    }
-  }else{
-    if (selector) {
-        const parentElement = selector.parentElement; // Hent parent-elementet
-        if (parentElement) {
-            parentElement.style.transition = "opacity 0.5s"; // Legg til overgang for fading
-            parentElement.style.opacity = "0"; // Fad ut over 0.5 sek
-            
-            // Etter fading, skjul elementet
-            setTimeout(() => {
-                parentElement.style.display = "none"; // Skjul elementet helt
-            }, 500); // 500ms matcher fading-tiden
-        }
-    }
+  const dayfilterwrapper = document.getElementById("dayfilterwrapper");
+
+  // Vis begge hvis type er true (kampsiden)
+  if (type) {
+    fadeElement(selector, true, "flex");
+    fadeElement(dayfilterwrapper, true, "block");
+  } else {
+    fadeElement(selector, false);
+    fadeElement(dayfilterwrapper, false);
   }
 }
 

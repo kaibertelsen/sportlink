@@ -1243,10 +1243,6 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
     }
 }
   
-  
-  
-
-
 function loadDayfilter(matches) {
     const dayScrollContainer = document.getElementById('dayScrollContainer');
     if (!dayScrollContainer) return;
@@ -1323,10 +1319,8 @@ function loadDayfilter(matches) {
       }, 0);
     }
     
-  }
+}
 
-
-  
 function filterDaybuttons(matches) {
     // Hvis filteret er tomt eller ikke satt, returner alle kamper
     if (!activeDayFilter || activeDayFilter === "") return matches;
