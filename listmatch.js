@@ -1023,13 +1023,12 @@ function listmatchLayoutGrid(data, grouptype) {
             const matchTime = matchelement.querySelector(".timelable");
             matchTime.textContent = formatdatetoTime(match.time);
             
-            //resultat om det foreligger
             const resultlableteam1 = matchelement.querySelector(".resultlableteam1");
-            resultlableteam1.textContent = match.goalteam1 || "";
-
+            resultlableteam1.textContent = match.goalteam1 != null ? match.goalteam1 : "";
+            
             const resultlableteam2 = matchelement.querySelector(".resultlableteam2");
-            resultlableteam2.textContent = match.goalteam2 || "";
-
+            resultlableteam2.textContent = match.goalteam2 != null ? match.goalteam2 : "";
+            
             // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
             const team1Logo = matchelement.querySelector(".logoteam1");
             const team2Logo = matchelement.querySelector(".logoteam2");
@@ -1123,8 +1122,8 @@ function listmatchLayoutGrid(data, grouptype) {
 
             const resultwrapper = matchelement.querySelector(".resultwrapper");
 
-            if ((match.goalteam1 === "" || match.goalteam1 === null) || 
-            (match.goalteam2 === "" || match.goalteam2 === null)) {
+            if (match.goalteam1 == null || match.goalteam1 === "" || 
+                match.goalteam2 == null || match.goalteam2 === "") {
                     // Det er ingen resultat
                     //skjul resultater
                     resultlableteam1.textContent = "-";
