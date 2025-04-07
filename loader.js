@@ -37,6 +37,7 @@ cdnScripts.reduce((promise, script) => {
 }, Promise.resolve()).then(() => {
     console.log("All scripts loaded");
     getTournament("recCdECitGpKE2O1F");
+    initDayFilterToggle();
 }).catch(error => {
     console.error(error);
 });

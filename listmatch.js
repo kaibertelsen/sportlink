@@ -1143,6 +1143,40 @@ function filterDaybuttons(data) {
       return matchDate === filterDate;
     });
 }
+
+function initDayFilterToggle() {
+    const filterButton = document.getElementById('filterstartbutton');
+    const dayFilterWrapper = document.getElementById('dayfilterwrapper');
+  
+    if (!filterButton || !dayFilterWrapper) return;
+  
+    let isExpanded = false;
+    const originalHeight = 53;
+    const expandedHeight = 103;
+  
+    // Sett startstil og animasjon
+    dayFilterWrapper.style.height = `${originalHeight}px`;
+    dayFilterWrapper.style.overflow = 'hidden';
+    dayFilterWrapper.style.transition = 'height 300ms ease';
+  
+    // Toggle høyde på knappetrykk
+    filterButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      isExpanded = !isExpanded;
+      dayFilterWrapper.style.height = isExpanded ? `${expandedHeight}px` : `${originalHeight}px`;
+    });
+  
+    // Klikk utenfor → tilbakestill
+    document.addEventListener('click', (e) => {
+      const isClickInside =
+        dayFilterWrapper.contains(e.target) || filterButton.contains(e.target);
+  
+      if (!isClickInside) {
+        isExpanded = false;
+        dayFilterWrapper.style.height = `${originalHeight}px`;
+      }
+    });
+  }
   
   
   
