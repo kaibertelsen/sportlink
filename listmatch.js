@@ -10,9 +10,8 @@ function getMatchresponse(data,id){
     matches = calculateMatchResultBySett(matCH);
 
     //list på nytt om ikke det alt er siden er lastet for 20sek siden
-    if(!iSAlreadyLoaded){
     listmatch(matches,"dato");
-    }
+    
    
 }
 
