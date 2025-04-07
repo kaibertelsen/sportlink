@@ -878,44 +878,39 @@ function adjustMatchContainer() {
 }
 
 function calculateMatchResultBySett(matchs) {
-
-    // Iterer over alle matcher
     for (let match of matchs) {
-    
-            // Sjekk om det finnes noen settverdier
-            const hasSetValues = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
+        const hasSetValues = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
             .some(value => value != null && value.toString().trim() !== "");
 
-             if (hasSetValues) {
-                // Regne ut stillingen basert på settverdiene
-                const sets = [
-                    { teamA: match.settaa, teamB: match.settab },
-                    { teamA: match.settba, teamB: match.settbb },
-                    { teamA: match.settca, teamB: match.settcb },
-                ];
+        if (hasSetValues) {
+            const sets = [
+                { teamA: match.settaa, teamB: match.settab },
+                { teamA: match.settba, teamB: match.settbb },
+                { teamA: match.settca, teamB: match.settcb },
+            ];
 
-                let teamAWins = 0;
-                let teamBWins = 0;
+            let teamAWins = 0;
+            let teamBWins = 0;
 
-                sets.forEach(set => {
-                    const teamA = parseInt(set.teamA) || 0;
-                    const teamB = parseInt(set.teamB) || 0;
+            sets.forEach(set => {
+                const teamA = parseInt(set.teamA) || 0;
+                const teamB = parseInt(set.teamB) || 0;
 
-                    if (teamA > teamB) {
-                        teamAWins++;
-                    } else if (teamB > teamA) {
-                        teamBWins++;
-                    }
-                });
+                if (teamA > teamB) {
+                    teamAWins++;
+                } else if (teamB > teamA) {
+                    teamBWins++;
+                }
+            });
 
-                match.goalteam1 = teamAWins;
-                match.goalteam2 = teamBWins;
-            } 
+            match.goalteam1 = teamAWins.toString();
+            match.goalteam2 = teamBWins.toString();
+        }
     }
 
     return matchs;
-
 }
+
 
 
 function listmatchLayoutGrid(data, grouptype) {
