@@ -692,11 +692,13 @@ function listmatchLayoutGrid(data) {
 
     //hvelge vilke type gruppering som skal vises
     let locationView = false;
+    let groupType = "dato";
     if (!activeDayFilter || activeDayFilter === ""){
         grouparray = groupArraybyDate(matchs);
     }else {
         grouparray = groupArrayByLocation(matchs);
         locationView = true;
+        groupType = "location";
     }
 
     const list = document.getElementById("matchlistholder");
@@ -707,79 +709,7 @@ function listmatchLayoutGrid(data) {
     let firstUnplayedMatch = null;
 
     for (let item of grouparray) {
-        const rowelement = nodeelement.cloneNode(true);
-
-
-        const groupheadername = rowelement.querySelector(".groupheadername");
-        const underlineheader = rowelement.querySelector(".underlineheader");
-        const locationSelector = rowelement.querySelector(".locationselector");
-        const closeopengroupbutton = rowelement.querySelector(".closeopengroupbutton");
-
-
-        if (!locationView) {
-          groupheadername.textContent = isNaN(Date.parse(item.date))
-            ? item.date
-            : formatDateToNorwegian(item.date);
-
-            //last inn alle de forskjellige lokasjoner i denne velgeren
-            if(locationSelector){
-                loadLocationSelector(item.matches,locationSelector);
-                    // Legg til en change-eventlistener for locationSelector
-                locationSelector.addEventListener("change", () => {
-                    // Hent valgt verdi fra selectoren
-                    const selectedValue = locationSelector.value;
-
-                    // Kjør funksjonen med item.matches, matchList og valgt verdi
-                    locationSelectorInMatchlistChange(item.matches, matchlist,matchholder, selectedValue,firstUnplayedMatch);
-                });
-            }
-
-            underlineheader.style.display = "none";
-            closeopengroupbutton.style.display = "none";
-            locationSelector.style.display = "block";
-
-        } else {
-            //viser lokasjonsnavn
-            groupheadername.textContent = item.location;
-            locationSelector.style.display = "none";
-
-            //kan dato vises på underline
-            const date = item.matches[0].time.split("T")[0];
-            const dateString = formatDateToNorwegian(date);
-            underlineheader.textContent = dateString;
-            underlineheader.style.display = "block";
-
-            //vise knap som kan lukke og åpne matchlist
-            closeopengroupbutton.style.display = "block";
-            closeopengroupbutton.onclick = function() {
-                // Toggle matchlist visibility
-            toggleMatchList(rowelement, closeopengroupbutton);
-            };
-
-        }
-        
-        // Oppdaterer antall
-        rowelement.querySelector(".countermatch").textContent = item.matches.length+" stk."
-
-        const matchlist = rowelement.querySelector(".matchlist");
-        const matchholder = rowelement.querySelector('.matchholder');
-
-         
-        for (let match of item.matches) {
-           
-            let matchelement = makeMatchWrapper(matchholder, match,locationView,firstUnplayedMatch);
-
-             //fjerner understrek på siste kamp i listen
-            if (item.matches.indexOf(match) === item.matches.length - 1) {
-                matchelement.querySelector(".bordholder").style.borderBottom = 'none';
-            }
-
-            matchlist.appendChild(matchelement);
-
-        }
-    
-        
-        matchholder.style.display = "none";
+        let rowelement = makeGroupMatchWrapper(item,nodeelement,groupType,firstUnplayedMatch);
         list.appendChild(rowelement);
     }
 
@@ -805,8 +735,83 @@ function listmatchLayoutGrid(data) {
         }
     }
     
-    
-    
+}
+
+function makeGroupMatchWrapper(item,nodeelement,grouptype,firstUnplayedMatch){
+
+    const rowelement = nodeelement.cloneNode(true);
+
+    const groupheadername = rowelement.querySelector(".groupheadername");
+    const underlineheader = rowelement.querySelector(".underlineheader");
+    const locationSelector = rowelement.querySelector(".locationselector");
+    const closeopengroupbutton = rowelement.querySelector(".closeopengroupbutton");
+
+    if (grouptype === "dato") {
+        groupheadername.textContent = isNaN(Date.parse(item.date))
+          ? item.date
+          : formatDateToNorwegian(item.date);
+
+          //last inn alle de forskjellige lokasjoner i denne velgeren
+          if(locationSelector){
+              loadLocationSelector(item.matches,locationSelector);
+                  // Legg til en change-eventlistener for locationSelector
+              locationSelector.addEventListener("change", () => {
+                  // Hent valgt verdi fra selectoren
+                  const selectedValue = locationSelector.value;
+
+                  // Kjør funksjonen med item.matches, matchList og valgt verdi
+                  locationSelectorInMatchlistChange(item.matches, matchlist,matchholder, selectedValue,firstUnplayedMatch);
+              });
+          }
+
+          underlineheader.style.display = "none";
+          closeopengroupbutton.style.display = "none";
+          locationSelector.style.display = "block";
+
+      } else {
+          //viser lokasjonsnavn
+          groupheadername.textContent = item.location;
+          locationSelector.style.display = "none";
+
+          //kan dato vises på underline
+          const date = item.matches[0].time.split("T")[0];
+          const dateString = formatDateToNorwegian(date);
+          underlineheader.textContent = dateString;
+          underlineheader.style.display = "block";
+
+          //vise knap som kan lukke og åpne matchlist
+          closeopengroupbutton.style.display = "block";
+          closeopengroupbutton.onclick = function() {
+              // Toggle matchlist visibility
+          toggleMatchList(rowelement, closeopengroupbutton);
+          };
+
+      }
+
+    // Oppdaterer antall kamper i gruppen
+    const countermatch = rowelement.querySelector(".countermatch");
+    countermatch.textContent = item.matches.length+" stk."
+
+    const matchlist = rowelement.querySelector(".matchlist");
+    const matchholder = rowelement.querySelector('.matchholder');
+
+    for (let match of item.matches) {
+        
+        let matchelement = makeMatchWrapper(matchholder, match,locationView,firstUnplayedMatch);
+
+        //fjerner understrek på siste kamp i listen
+        if (item.matches.indexOf(match) === item.matches.length - 1) {
+            matchelement.querySelector(".bordholder").style.borderBottom = 'none';
+        }
+
+        matchlist.appendChild(matchelement);
+
+    }
+   
+    //skuler mal element
+    matchholder.style.display = "none";
+
+    return rowelement;
 }
 
 function makeMatchWrapper(nodeelement, match,locationView,firstUnplayedMatch){
