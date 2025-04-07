@@ -769,6 +769,12 @@ function listmatchLayoutGrid(data) {
         for (let match of item.matches) {
            
             let matchelement = makeMatchWrapper(matchholder, match,locationView);
+
+             //fjerner understrek på siste kamp i listen
+            if (item.matches.indexOf(match) === item.matches.length - 1) {
+                matchelement.querySelector(".bordholder").style.borderBottom = 'none';
+            }
+
             matchlist.appendChild(matchelement);
 
         }
@@ -946,11 +952,6 @@ function makeMatchWrapper(nodeelement, match,locationView){
     }else{
         
         resultwrapper.style.backgroundColor = "#0b344f";
-    }
-
-    //fjerner understrek på siste kamp i listen
-    if (item.matches.indexOf(match) === item.matches.length - 1) {
-        matchelement.querySelector(".bordholder").style.borderBottom = 'none';
     }
 
     return matchelement;
