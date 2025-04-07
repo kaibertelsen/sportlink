@@ -1013,13 +1013,6 @@ function loadDayfilter(matches) {
       document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
       targetButton.classList.add('active');
       activeDayFilter = selectedDate;
-  
-      // Koble til filtreringsfunksjon her:
-      if (selectedDate) {
-        listmatch(matches, "lokasjon", ""); // ← filtrer på valgt dato
-      } else {
-        listmatch(matches, "dato", selectedDate); // ← vis alle
-      }
     };
   
     // 👉 "Alle"-knapp

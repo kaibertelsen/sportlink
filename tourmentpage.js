@@ -185,14 +185,14 @@ function loadTourment(tournamentid){
     //start match window
     document.getElementById('matchtabbutton').click();
 
+    //hente ut aktuelle dager for filteret og laste det
+    loadDayfilter(makeObjectFromAirtableJSON(data, "matchjson"));
+
     activetournament = data
     loadTourmentHeader(data);
     listDivision(data);
     loadeLists(data);
     isInTurnament = true;
-
-    //hente ut aktuelle dager for filteret og laste det
-    loadDayfilter(makeObjectFromAirtableJSON(data, "matchjson"));
 
     // Kjør funksjonen etter 1 sekund
     setTimeout(adjustSwipeContainer, 500);
