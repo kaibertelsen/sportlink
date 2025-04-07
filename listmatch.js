@@ -737,6 +737,7 @@ function listmatchLayoutGrid(data) {
     
 }
 
+
 function makeGroupMatchWrapper(item,team,nodeelement,grouptype,firstUnplayedMatch){
 
     const rowelement = nodeelement.cloneNode(true);
