@@ -658,7 +658,7 @@ function calculateMatchResultBySett(matchs) {
 
 
 
-function listmatchLayoutGrid(data, grouptype) {
+function listmatchLayoutGrid(data) {
     const activeDivision = getActiveDivisionFilter();
     let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
     
@@ -989,32 +989,39 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
     }
 }
   
-function loadDayfilter(matches) {
+function loadDayfilter(data) {
     const dayScrollContainer = document.getElementById('dayScrollContainer');
     if (!dayScrollContainer) return;
-  
+
     dayScrollContainer.innerHTML = ''; // Tøm containeren
-  
+
     const dateSet = new Set();
-    matches.forEach(match => {
-      if (!match.time) return;
-      const dateOnly = new Date(match.time).toISOString().split('T')[0];
-      dateSet.add(dateOnly);
+    data.forEach(match => {
+        if (!match.time) return;
+        const dateOnly = new Date(match.time).toISOString().split('T')[0];
+        dateSet.add(dateOnly);
     });
-  
+
     const sortedDates = Array.from(dateSet).sort();
     const dayNames = ['Søn.', 'Man.', 'Tir.', 'Ons.', 'Tor.', 'Fre.', 'Lør.'];
     const monthNames = ['jan', 'feb', 'mars', 'apr', 'mai', 'juni', 'juli', 'aug', 'sep', 'okt', 'nov', 'des'];
-  
+
     let todayButton = null;
     let firstDateButton = null;
-  
+
+    let firstLoad = true; // 👈 flagg for første lasting
+
     const setActiveButton = (targetButton, selectedDate) => {
-      document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
-      targetButton.classList.add('active');
-      activeDayFilter = selectedDate;
+        document.querySelectorAll('.day-button').forEach(btn => btn.classList.remove('active'));
+        targetButton.classList.add('active');
+        activeDayFilter = selectedDate;
+
+        // Kjør listmatch **kun** hvis det ikke er første gang
+        if (!firstLoad) {
+            listmatch(matches);
+        }
     };
-  
+
     // 👉 "Alle"-knapp
     const allButton = document.createElement('button');
     allButton.classList.add('day-button', 'active');
@@ -1024,43 +1031,43 @@ function loadDayfilter(matches) {
     `;
     allButton.addEventListener('click', () => setActiveButton(allButton, ""));
     dayScrollContainer.appendChild(allButton);
-  
+
     // 👉 Dato-knapper
     sortedDates.forEach(dateStr => {
-      const date = new Date(dateStr);
-      const today = new Date();
-      const isToday = date.toDateString() === today.toDateString();
-  
-      const dayLabel = isToday ? 'Idag' : dayNames[date.getDay()];
-      const dateLabel = `${date.getDate()}. ${monthNames[date.getMonth()]}`;
-  
-      const button = document.createElement('button');
-      button.classList.add('day-button');
-  
-      if (isToday) todayButton = button;
-      if (!firstDateButton) firstDateButton = button;
-  
-      button.innerHTML = `
-        <span class="day-label">${dayLabel}</span>
-        <span class="date-label">${dateLabel}</span>
-      `;
-      button.addEventListener('click', () => setActiveButton(button, dateStr));
-      dayScrollContainer.appendChild(button);
+        const date = new Date(dateStr);
+        const today = new Date();
+        const isToday = date.toDateString() === today.toDateString();
+
+        const dayLabel = isToday ? 'Idag' : dayNames[date.getDay()];
+        const dateLabel = `${date.getDate()}. ${monthNames[date.getMonth()]}`;
+
+        const button = document.createElement('button');
+        button.classList.add('day-button');
+
+        if (isToday) todayButton = button;
+        if (!firstDateButton) firstDateButton = button;
+
+        button.innerHTML = `
+            <span class="day-label">${dayLabel}</span>
+            <span class="date-label">${dateLabel}</span>
+        `;
+        button.addEventListener('click', () => setActiveButton(button, dateStr));
+        dayScrollContainer.appendChild(button);
     });
-  
-    
-    // 👉 Scroll og aktiver riktig knapp
+
+    // 👉 Scroll og aktiver riktig knapp (men IKKE kjør listmatch ennå)
     const buttonToClick = todayButton || allButton;
     if (buttonToClick) {
-      setTimeout(() => {
-        buttonToClick.click();
-        buttonToClick.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      }, 0);
+        setTimeout(() => {
+            setActiveButton(buttonToClick, buttonToClick === allButton ? "" : sortedDates[0]);
+            buttonToClick.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            firstLoad = false; // ✅ Etter første gang
+        }, 0);
     }
-    
 }
 
-function filterDaybuttons(matches) {
+
+function filterDaybuttons(data) {
     // Hvis filteret er tomt eller ikke satt, returner alle kamper
     if (!activeDayFilter || activeDayFilter === "") return matches;
   
@@ -1068,7 +1075,7 @@ function filterDaybuttons(matches) {
     const filterDate = new Date(activeDayFilter).toISOString().split('T')[0];
   
     // Filtrer kampene basert på dato
-    return matches.filter(match => {
+    return data.filter(match => {
       if (!match.time) return false;
   
       const matchDate = new Date(match.time).toISOString().split('T')[0];
