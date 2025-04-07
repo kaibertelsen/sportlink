@@ -903,8 +903,8 @@ function calculateMatchResultBySett(matchs) {
                 }
             });
 
-            match.goalteam1 = teamAWins.toString();
-            match.goalteam2 = teamBWins.toString();
+            match.goalteam1 = teamAWins;
+            match.goalteam2 = teamBWins;
         }
     }
 
@@ -1089,8 +1089,8 @@ function listmatchLayoutGrid(data, grouptype) {
                 match.goalteam2 == null || match.goalteam2 === "") {
                     // Det er ingen resultat
                     //skjul resultater
-                    resultlableteam1.textContent = "-";
-                    resultlableteam2.textContent = "-";
+                    //resultlableteam1.textContent = "-";
+                    //resultlableteam2.textContent = "-";
                    
                     // Sett denne som første upåbegynte kamp for scrollen
                     if (!firstUnplayedMatch) {
