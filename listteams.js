@@ -245,18 +245,9 @@ function listMatchesInTeamView(matchs,team){
         return;
     }
 
-    // Hent containeren der kampene skal vises
-    const teammatchlist = document.getElementById("teammatchlist");
-    if (!teammatchlist) {
-        console.warn("Containeren for visning av kamper (teampagecontent) finnes ikke.");
-        return;
-    }
+    
+    
 
-
-    // Tøm eksisterende innhold i containeren
-    teammatchlist.innerHTML = "";
-
-   
     // Filtrer kampene for laget
     const filteredMatchesTeam = matchs.filter(
         match => match.team1 === team.airtable || match.team2 === team.airtable
@@ -275,21 +266,111 @@ function listMatchesInTeamView(matchs,team){
     document.getElementById("countermatches").textContent = filteredMatches.length+" stk.";
 
 
+    //lage grupper på dato
+    let grouparray = groupArraybyDate(filteredMatches);
+
+    // Hent containeren der kampene skal vises
+    const list = document.getElementById("teammatchlist");
+    if (!teammatchlist) {
+        console.warn("Containeren for visning av kamper (teampagecontent) finnes ikke.");
+        return;
+    }
+    // Tøm eksisterende innhold i containeren
+    teammatchlist.innerHTML = "";
+    const nodeelement = elementlibrary.querySelector('.groupholderlayoutgrid');
+
     let firstUnplayedMatch = null;
 
-  // Gå gjennom filtrerte kamper og legg til elementer
-  for (let i = 0; i < filteredMatches.length; i++) {
-      const match = filteredMatches[i];
+    for (let item of grouparray) {
+        const rowelement = nodeelement.cloneNode(true);
 
-      let matchelement = makeMatchWrapper(nodematchholder, match,false,firstUnplayedMatch);
 
-       //fjerner understrek på siste kamp i listen
-       if (filteredMatches.length === i - 1) {
-        matchelement.querySelector(".bordholder").style.borderBottom = 'none';
+        const groupheadername = rowelement.querySelector(".groupheadername");
+        const underlineheader = rowelement.querySelector(".underlineheader");
+        const locationSelector = rowelement.querySelector(".locationselector");
+        const closeopengroupbutton = rowelement.querySelector(".closeopengroupbutton");
 
-        teammatchlist.appendChild(matchelement);
+
+        if (!locationView) {
+          groupheadername.textContent = isNaN(Date.parse(item.date))
+            ? item.date
+            : formatDateToNorwegian(item.date);
+
+            //last inn alle de forskjellige lokasjoner i denne velgeren
+            if(locationSelector){
+                loadLocationSelector(item.matches,locationSelector);
+                    // Legg til en change-eventlistener for locationSelector
+                locationSelector.addEventListener("change", () => {
+                    // Hent valgt verdi fra selectoren
+                    const selectedValue = locationSelector.value;
+
+                    // Kjør funksjonen med item.matches, matchList og valgt verdi
+                    locationSelectorInMatchlistChange(item.matches, matchlist,matchholder, selectedValue,firstUnplayedMatch);
+                });
+            }
+
+            underlineheader.style.display = "none";
+            closeopengroupbutton.style.display = "none";
+            locationSelector.style.display = "block";
+
+        } else {
+            //viser lokasjonsnavn
+            groupheadername.textContent = item.location;
+            locationSelector.style.display = "none";
+
+            //kan dato vises på underline
+            const date = item.matches[0].time.split("T")[0];
+            const dateString = formatDateToNorwegian(date);
+            underlineheader.textContent = dateString;
+            underlineheader.style.display = "block";
+
+            //vise knap som kan lukke og åpne matchlist
+            closeopengroupbutton.style.display = "block";
+            closeopengroupbutton.onclick = function() {
+                // Toggle matchlist visibility
+            toggleMatchList(rowelement, closeopengroupbutton);
+            };
+
+        }
+        
+        // Oppdaterer antall
+        rowelement.querySelector(".countermatch").textContent = item.matches.length+" stk."
+
+        const matchlist = rowelement.querySelector(".matchlist");
+        const matchholder = rowelement.querySelector('.matchholder');
+
+         
+        for (let match of item.matches) {
+           
+            let matchelement = makeMatchWrapper(matchholder, match,locationView,firstUnplayedMatch);
+
+             //fjerner understrek på siste kamp i listen
+            if (item.matches.indexOf(match) === item.matches.length - 1) {
+                matchelement.querySelector(".bordholder").style.borderBottom = 'none';
+            }
+
+            matchlist.appendChild(matchelement);
+
+        }
+    
+        
+        matchholder.style.display = "none";
+        list.appendChild(rowelement);
     }
+    /*
+    // Gå gjennom filtrerte kamper og legg til elementer
+    for (let i = 0; i < filteredMatches.length; i++) {
+        const match = filteredMatches[i];
 
+        let matchelement = makeMatchWrapper(nodematchholder, match,false,firstUnplayedMatch);
+
+        //fjerner understrek på siste kamp i listen
+        if (filteredMatches.length === i - 1) {
+            matchelement.querySelector(".bordholder").style.borderBottom = 'none';
+
+            teammatchlist.appendChild(matchelement);
+        }
+    */
       /*
       const matchelement = nodematchholder.cloneNode(true);
       teammatchlist.appendChild(matchelement);
@@ -420,9 +501,9 @@ function listMatchesInTeamView(matchs,team){
           }
       }
           */
-  }
-
 }
+
+
 
 function loadLocationSelector(Matchs,locationSelector) {
     let uniclocations = [];
