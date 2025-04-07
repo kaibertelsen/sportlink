@@ -1091,6 +1091,7 @@ function listmatchLayoutGrid(data, grouptype) {
                     //skjul resultater
                     //resultlableteam1.textContent = "-";
                     //resultlableteam2.textContent = "-";
+                    console.log("Ingen resultat", match.goalteam1, match.goalteam2);
                    
                     // Sett denne som første upåbegynte kamp for scrollen
                     if (!firstUnplayedMatch) {
