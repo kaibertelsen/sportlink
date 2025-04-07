@@ -138,16 +138,16 @@ function removeAllExceptSpecific(listElement, keepElement) {
     }
 }
 
-function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch){
+function makeMatchInMatchHolder(data,matchlist,matchholder,firstUnplayedMatch){
 
     const activeDivision = getActiveDivisionFilter();
-    matchlist.parentElement.querySelector(".countermatch").textContent = matches.length+" stk.";
+    matchlist.parentElement.querySelector(".countermatch").textContent = data.length+" stk.";
 
     //sjekke om selector er aktiv
     const mselector = document.getElementById("matchMainListSelector");
-    let filteredMatches = matches
+    let filteredMatches = data;
     if(mselector){
-        filteredMatches = filterMatchesBySelector(matches);
+        filteredMatches = filterMatchesBySelector(data);
     }
 
     //sjekke om noen dagknapper er aktive
@@ -155,7 +155,11 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
 
     removeAllExceptSpecific(matchlist, matchholder);
 
-    for (let match of matches) {
+    for (let match of data) {
+
+        let matchelement = makeMatchWrapper(matchholder, match);
+        matchlist.appendChild(matchelement);
+        /*
         const matchelement = matchholder.cloneNode(true);
         matchlist.appendChild(matchelement);
         matchelement.style.display = "block";
@@ -163,12 +167,16 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
             previouspage = "";
             viewMatch(match);
         };
-    
-        // Oppdater lagnavn eller bruk plassholdere
-        const team1Name = match.team1name || match.placeholderteam1 || "Unknown";
-        const team2Name = match.team2name || match.placeholderteam2 || "Unknown";
-        matchelement.querySelector(".team1").textContent = team1Name;
-        matchelement.querySelector(".team2").textContent = team2Name;
+
+        //sett tidspunkt for kampen
+        const matchTime = matchelement.querySelector(".timelable");
+        matchTime.textContent = formatdatetoTime(match.time);
+
+        const resultlableteam1 = matchelement.querySelector(".resultlableteam1");
+        resultlableteam1.textContent = match.goalteam1 != null ? match.goalteam1 : "";
+        
+        const resultlableteam2 = matchelement.querySelector(".resultlableteam2");
+        resultlableteam2.textContent = match.goalteam2 != null ? match.goalteam2 : "";
     
         // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
         const team1Logo = matchelement.querySelector(".logoteam1");
@@ -176,12 +184,20 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
         if (match.team1clublogo) team1Logo.src = match.team1clublogo;
         if (match.team2clublogo) team2Logo.src = match.team2clublogo;
 
+         // Oppdater lagnavn eller bruk plassholdere
+         const team1Name = match.team1name || match.placeholderteam1 || "Unknown";
+         const team2Name = match.team2name || match.placeholderteam2 || "Unknown";
+         matchelement.querySelector(".team1").textContent = team1Name;
+         matchelement.querySelector(".team2").textContent = team2Name;
+
          //oppdaterer lokasjonsnavn
          const locationlable = matchelement.querySelector(".locationtext");
-         if(match.location){
-             locationlable.textContent = match.location || "Ukjent";
-             locationlable.style.display = "inline-block";
+         if(locationView){
+             locationlable.style.display = "none";
+         }else{
+             locationlable.textContent = match.location || "";
          }
+
     
         // Oppdater sluttspillinformasjon hvis tilgjengelig
         const endplayLable = matchelement.querySelector(".endplaylable");
@@ -329,7 +345,7 @@ function makeMatchInMatchHolder(matches,matchlist,matchholder,firstUnplayedMatch
             matchelement.querySelector(".bordholder").style.borderBottom = 'none';
         }
         */
-        matchlist.appendChild(matchelement);
+       
     }
     return firstUnplayedMatch;
 }
@@ -751,153 +767,10 @@ function listmatchLayoutGrid(data) {
 
          
         for (let match of item.matches) {
-            const matchelement = matchholder.cloneNode(true);
+           
+            let matchelement = makeMatchWrapper(matchholder, match);
             matchlist.appendChild(matchelement);
-        
-            matchelement.onclick = function() {
-                previouspage = "";
-                viewMatch(match);
-            };
 
-            //sett tidspunkt for kampen
-            const matchTime = matchelement.querySelector(".timelable");
-            matchTime.textContent = formatdatetoTime(match.time);
-            
-            const resultlableteam1 = matchelement.querySelector(".resultlableteam1");
-            resultlableteam1.textContent = match.goalteam1 != null ? match.goalteam1 : "";
-            
-            const resultlableteam2 = matchelement.querySelector(".resultlableteam2");
-            resultlableteam2.textContent = match.goalteam2 != null ? match.goalteam2 : "";
-            
-            // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
-            const team1Logo = matchelement.querySelector(".logoteam1");
-            const team2Logo = matchelement.querySelector(".logoteam2");
-            if (match.team1clublogo) team1Logo.src = match.team1clublogo;
-            if (match.team2clublogo) team2Logo.src = match.team2clublogo;
-          
-            // Oppdater lagnavn eller bruk plassholdere
-            const team1Name = match.team1name || match.placeholderteam1 || "Unknown";
-            const team2Name = match.team2name || match.placeholderteam2 || "Unknown";
-            matchelement.querySelector(".team1").textContent = team1Name;
-            matchelement.querySelector(".team2").textContent = team2Name;
-        
-
-            //oppdaterer lokasjonsnavn
-            const locationlable = matchelement.querySelector(".locationtext");
-            if(locationView){
-                locationlable.style.display = "none";
-            }else{
-                locationlable.textContent = match.location || "";
-            }
-            //oppdater dommer
-            const destinationlable = matchelement.querySelector(".refereename");
-            let refereenametext = match.refereename || "";
-            destinationlable.textContent = refereenametext; 
-            
-            // Oppdater sluttspillinformasjon hvis tilgjengelig
-            const endplayLable = matchelement.querySelector(".endplaylable");
-            if (match.typematch) {
-                const matchTypeMap = {
-                    "eighthfinale": "ÅF",
-                    "placementfinale":"PK",
-                    "round2":"R2",
-                    "quarterfinale": "KF",
-                    "semifinale": "SF",
-                    "bronzefinale":"BF",
-                    "finale": "F"
-                };
-        
-                const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
-                endplayLable.textContent = `${endplayText} - ${match.endplay || ""}`;
-                endplayLable.style.display = "block";
-            } else {
-                endplayLable.style.display = "none";
-            }
-        
-            // Divisjonsnavn og gruppenavn
-            const divisiontext = matchelement.querySelector(".divisiontext");
-            const grouptext = matchelement.querySelector(".grouptext");
-
-            if (activeDivision === "") {
-                //Vis både divisionname og groupname
-                divisiontext.textContent = match.divisionname || "";
-                grouptext.textContent = match.groupname || "";
-            } else {
-                // Når divisjonsfilter er aktivt, vis gkun roupname
-                divisiontext.textContent = "";
-                grouptext.textContent = match.groupname || "";
-            }
-
-            const resultwrapper = matchelement.querySelector(".resultwrapper");
-
-            if (match.goalteam1 == null || match.goalteam1 === "" || 
-                match.goalteam2 == null || match.goalteam2 === "") {
-                    // Det er ingen resultat
-                    //skjul resultater
-                    resultlableteam1.textContent = "-";
-                    resultlableteam2.textContent = "-";
-                    
-                   
-                    // Sett denne som første upåbegynte kamp for scrollen
-                    if (!firstUnplayedMatch) {
-                        firstUnplayedMatch = matchelement;
-                    }
-
-                    
-                    // Sjekk om tiden nå er forbi kampens tid
-                    const now = new Date(); // Nåværende tid
-
-                    const matchTimeParts = match.time.split("T"); // Deler dato og tid
-                    const matchDate = matchTimeParts[0]; // Hent datoen (YYYY-MM-DD)
-                    const matchTime = matchTimeParts[1].split(".")[0]; // Hent klokkeslettet (HH:mm:ss)
-
-                    // Bygg en dato- og tidsstreng uten å ta hensyn til tidssone
-                    const matchDateTime = new Date(`${matchDate}T${matchTime}`); // Lokal dato/tid uten Z
-
-                    // Nåværende tid (uten tidssone-manipulering)
-                    const nowLocal = new Date(
-                        now.getFullYear(),
-                        now.getMonth(),
-                        now.getDate(),
-                        now.getHours(),
-                        now.getMinutes(),
-                        now.getSeconds()
-                    );
-
-                    // Finn playIcon og oppdater basert på tiden
-                    const playIcon = matchelement.querySelector(".playicon");
-
-                    // Beregn tidsdifferanse i minutter
-                    const timeDifference = (nowLocal - matchDateTime) / (1000 * 60); // Forskjell i minutter
-
-                    let timePlaying = 30;
-                    //sjekke om match inneholder minutesPerPeriod og numberOfPeriods
-                    if(match.minutesPerPeriod && match.numberOfPeriods){
-                        timePlaying = Number(match.minutesPerPeriod) * Number(match.numberOfPeriods);
-                    }
-
-                    if (nowLocal > matchDateTime && timeDifference <= timePlaying) {
-                        // Hvis kampen har startet, men det har gått mindre enn spilletid
-                        if (playIcon) {
-                            playIcon.style.display = "flex";
-                        }
-                    } else {
-                        // Hvis tiden er over 30 minutter siden kampstart eller kampen ikke har startet
-                        if (playIcon) {
-                            playIcon.style.display = "none";
-                        }
-                    }
-            }else{
-                
-                resultwrapper.style.backgroundColor = "#0b344f";
-            }
-        
-            //fjerner understrek på siste kamp i listen
-            if (item.matches.indexOf(match) === item.matches.length - 1) {
-                matchelement.querySelector(".bordholder").style.borderBottom = 'none';
-            }
-        
-            matchlist.appendChild(matchelement);
         }
     
         
@@ -929,6 +802,156 @@ function listmatchLayoutGrid(data) {
     
     
     
+}
+
+function makeMatchWrapper(nodeelement, match){
+
+    let matchelement = nodeelement.cloneNode(true);    
+
+    matchelement.onclick = function() {
+        previouspage = "";
+        viewMatch(match);
+    };
+
+    //sett tidspunkt for kampen
+    const matchTime = matchelement.querySelector(".timelable");
+    matchTime.textContent = formatdatetoTime(match.time);
+    
+    const resultlableteam1 = matchelement.querySelector(".resultlableteam1");
+    resultlableteam1.textContent = match.goalteam1 != null ? match.goalteam1 : "";
+    
+    const resultlableteam2 = matchelement.querySelector(".resultlableteam2");
+    resultlableteam2.textContent = match.goalteam2 != null ? match.goalteam2 : "";
+    
+    // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
+    const team1Logo = matchelement.querySelector(".logoteam1");
+    const team2Logo = matchelement.querySelector(".logoteam2");
+    if (match.team1clublogo) team1Logo.src = match.team1clublogo;
+    if (match.team2clublogo) team2Logo.src = match.team2clublogo;
+  
+    // Oppdater lagnavn eller bruk plassholdere
+    const team1Name = match.team1name || match.placeholderteam1 || "Unknown";
+    const team2Name = match.team2name || match.placeholderteam2 || "Unknown";
+    matchelement.querySelector(".team1").textContent = team1Name;
+    matchelement.querySelector(".team2").textContent = team2Name;
+
+
+    //oppdaterer lokasjonsnavn
+    const locationlable = matchelement.querySelector(".locationtext");
+    if(locationView){
+        locationlable.style.display = "none";
+    }else{
+        locationlable.textContent = match.location || "";
+    }
+    //oppdater dommer
+    const destinationlable = matchelement.querySelector(".refereename");
+    let refereenametext = match.refereename || "";
+    destinationlable.textContent = refereenametext; 
+    
+    // Oppdater sluttspillinformasjon hvis tilgjengelig
+    const endplayLable = matchelement.querySelector(".endplaylable");
+    if (match.typematch) {
+        const matchTypeMap = {
+            "eighthfinale": "ÅF",
+            "placementfinale":"PK",
+            "round2":"R2",
+            "quarterfinale": "KF",
+            "semifinale": "SF",
+            "bronzefinale":"BF",
+            "finale": "F"
+        };
+
+        const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
+        endplayLable.textContent = `${endplayText} - ${match.endplay || ""}`;
+        endplayLable.style.display = "block";
+    } else {
+        endplayLable.style.display = "none";
+    }
+
+    // Divisjonsnavn og gruppenavn
+    const divisiontext = matchelement.querySelector(".divisiontext");
+    const grouptext = matchelement.querySelector(".grouptext");
+
+    if (activeDivision === "") {
+        //Vis både divisionname og groupname
+        divisiontext.textContent = match.divisionname || "";
+        grouptext.textContent = match.groupname || "";
+    } else {
+        // Når divisjonsfilter er aktivt, vis gkun roupname
+        divisiontext.textContent = "";
+        grouptext.textContent = match.groupname || "";
+    }
+
+    const resultwrapper = matchelement.querySelector(".resultwrapper");
+
+    if (match.goalteam1 == null || match.goalteam1 === "" || 
+        match.goalteam2 == null || match.goalteam2 === "") {
+            // Det er ingen resultat
+            //skjul resultater
+            resultlableteam1.textContent = "-";
+            resultlableteam2.textContent = "-";
+            
+           
+            // Sett denne som første upåbegynte kamp for scrollen
+            if (!firstUnplayedMatch) {
+                firstUnplayedMatch = matchelement;
+            }
+
+            
+            // Sjekk om tiden nå er forbi kampens tid
+            const now = new Date(); // Nåværende tid
+
+            const matchTimeParts = match.time.split("T"); // Deler dato og tid
+            const matchDate = matchTimeParts[0]; // Hent datoen (YYYY-MM-DD)
+            const matchTime = matchTimeParts[1].split(".")[0]; // Hent klokkeslettet (HH:mm:ss)
+
+            // Bygg en dato- og tidsstreng uten å ta hensyn til tidssone
+            const matchDateTime = new Date(`${matchDate}T${matchTime}`); // Lokal dato/tid uten Z
+
+            // Nåværende tid (uten tidssone-manipulering)
+            const nowLocal = new Date(
+                now.getFullYear(),
+                now.getMonth(),
+                now.getDate(),
+                now.getHours(),
+                now.getMinutes(),
+                now.getSeconds()
+            );
+
+            // Finn playIcon og oppdater basert på tiden
+            const playIcon = matchelement.querySelector(".playicon");
+
+            // Beregn tidsdifferanse i minutter
+            const timeDifference = (nowLocal - matchDateTime) / (1000 * 60); // Forskjell i minutter
+
+            let timePlaying = 30;
+            //sjekke om match inneholder minutesPerPeriod og numberOfPeriods
+            if(match.minutesPerPeriod && match.numberOfPeriods){
+                timePlaying = Number(match.minutesPerPeriod) * Number(match.numberOfPeriods);
+            }
+
+            if (nowLocal > matchDateTime && timeDifference <= timePlaying) {
+                // Hvis kampen har startet, men det har gått mindre enn spilletid
+                if (playIcon) {
+                    playIcon.style.display = "flex";
+                }
+            } else {
+                // Hvis tiden er over 30 minutter siden kampstart eller kampen ikke har startet
+                if (playIcon) {
+                    playIcon.style.display = "none";
+                }
+            }
+    }else{
+        
+        resultwrapper.style.backgroundColor = "#0b344f";
+    }
+
+    //fjerner understrek på siste kamp i listen
+    if (item.matches.indexOf(match) === item.matches.length - 1) {
+        matchelement.querySelector(".bordholder").style.borderBottom = 'none';
+    }
+
+    return matchelement;
 }
 
 function toggleMatchList(rowelement, closeopengroupbutton) {
