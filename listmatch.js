@@ -709,7 +709,7 @@ function listmatchLayoutGrid(data) {
     let firstUnplayedMatch = null;
 
     for (let item of grouparray) {
-        let rowelement = makeGroupMatchWrapper(item,nodeelement,groupType,firstUnplayedMatch);
+        let rowelement = makeGroupMatchWrapper(item,false,nodeelement,groupType,firstUnplayedMatch);
         list.appendChild(rowelement);
     }
 
@@ -737,7 +737,7 @@ function listmatchLayoutGrid(data) {
     
 }
 
-function makeGroupMatchWrapper(item,nodeelement,grouptype,firstUnplayedMatch){
+function makeGroupMatchWrapper(item,team,nodeelement,grouptype,firstUnplayedMatch){
 
     const rowelement = nodeelement.cloneNode(true);
 
@@ -797,7 +797,7 @@ function makeGroupMatchWrapper(item,nodeelement,grouptype,firstUnplayedMatch){
 
     for (let match of item.matches) {
         
-        let matchelement = makeMatchWrapper(matchholder, match,grouptype,firstUnplayedMatch);
+        let matchelement = makeMatchWrapper(matchholder,match,team,grouptype,firstUnplayedMatch);
 
         //fjerner understrek på siste kamp i listen
         if (item.matches.indexOf(match) === item.matches.length - 1) {
@@ -814,7 +814,7 @@ function makeGroupMatchWrapper(item,nodeelement,grouptype,firstUnplayedMatch){
     return rowelement;
 }
 
-function makeMatchWrapper(nodeelement, match,grouptype,firstUnplayedMatch){
+function makeMatchWrapper(nodeelement,match,team,grouptype,firstUnplayedMatch){
 
     let matchelement = nodeelement.cloneNode(true);   
     
@@ -953,13 +953,44 @@ function makeMatchWrapper(nodeelement, match,grouptype,firstUnplayedMatch){
                     playIcon.style.display = "none";
                 }
             }
-    }else{
-        
-        resultwrapper.style.backgroundColor = "#0b344f";
     }
+    //markerer farge på resultatene
+    makeColorOnResult(team,match,resultwrapper);
 
     return matchelement;
 }
+
+function makeColorOnResult(team, match, resultLabel) {
+    // Konverter til tall hvis mulig, ellers null
+    const goal1 = match.goalteam1 != null && match.goalteam1 !== "" ? parseInt(match.goalteam1) : null;
+    const goal2 = match.goalteam2 != null && match.goalteam2 !== "" ? parseInt(match.goalteam2) : null;
+
+    if (!team) {
+        // Nøytral visning – blå hvis spilt, grå hvis ikke
+        if (goal1 == null || goal2 == null) {
+            resultLabel.style.backgroundColor = "#2c2c2d"; // Ikke spilt
+        } else {
+            resultLabel.style.backgroundColor = "#0b344f"; // Spilt
+        }
+    } else {
+        // Lagspesifikk visning
+        if (goal1 != null && goal2 != null) {
+            const isTeam1 = match.team1 === team.airtable;
+            const isTeam2 = match.team2 === team.airtable;
+
+            if ((goal1 > goal2 && isTeam1) || (goal2 > goal1 && isTeam2)) {
+                resultLabel.style.backgroundColor = "green"; // Vunnet
+            } else if (goal1 === goal2) {
+                resultLabel.style.backgroundColor = "gray"; // Uavgjort
+            } else {
+                resultLabel.style.backgroundColor = "red"; // Tapt
+            }
+        } else {
+            resultLabel.style.backgroundColor = "#2c2c2d"; // Ikke spilt
+        }
+    }
+}
+
 
 function toggleMatchList(rowelement, closeopengroupbutton) {
     const matchlist = rowelement.querySelector(".matchlist");

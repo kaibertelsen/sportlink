@@ -283,7 +283,7 @@ function listMatchesInTeamView(matchs,team){
 
     for (let item of grouparray) {
        
-        let rowelement = makeGroupMatchWrapper(item,nodeelement,"dato",firstUnplayedMatch);
+        let rowelement = makeGroupMatchWrapper(item,team,nodeelement,"dato",firstUnplayedMatch);
         list.appendChild(rowelement);
     }
     /*
