@@ -1154,29 +1154,46 @@ function initDayFilterToggle() {
     const originalHeight = 53;
     const expandedHeight = 103;
   
+    const originalBottom = -53;
+    const expandedBottom = -103;
+  
     // Sett startstil og animasjon
     dayFilterWrapper.style.height = `${originalHeight}px`;
+    dayFilterWrapper.style.bottom = `${originalBottom}px`;
     dayFilterWrapper.style.overflow = 'hidden';
-    dayFilterWrapper.style.transition = 'height 300ms ease';
+    dayFilterWrapper.style.transition = 'height 300ms ease, bottom 300ms ease';
   
-    // Toggle høyde på knappetrykk
+    // Funksjon for å lukke filteret
+    const collapse = () => {
+      isExpanded = false;
+      dayFilterWrapper.style.height = `${originalHeight}px`;
+      dayFilterWrapper.style.bottom = `${originalBottom}px`;
+    };
+  
+    // Toggle åpen/lukket
     filterButton.addEventListener('click', (e) => {
       e.preventDefault();
       isExpanded = !isExpanded;
       dayFilterWrapper.style.height = isExpanded ? `${expandedHeight}px` : `${originalHeight}px`;
+      dayFilterWrapper.style.bottom = isExpanded ? `${expandedBottom}px` : `${originalBottom}px`;
     });
   
-    // Klikk utenfor → tilbakestill
-    document.addEventListener('click', (e) => {
+    // Håndter klikk og trykk utenfor
+    const handleOutsideInteraction = (e) => {
       const isClickInside =
         dayFilterWrapper.contains(e.target) || filterButton.contains(e.target);
-  
       if (!isClickInside) {
-        isExpanded = false;
-        dayFilterWrapper.style.height = `${originalHeight}px`;
+        collapse();
       }
-    });
+    };
+  
+    // Lyttere for desktop og mobil
+    document.addEventListener('click', handleOutsideInteraction);
+    document.addEventListener('mousedown', handleOutsideInteraction);
+    document.addEventListener('touchstart', handleOutsideInteraction);
   }
+  
+  
   
   
   
