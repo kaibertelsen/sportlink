@@ -271,12 +271,26 @@ function listMatchesInTeamView(matchs,team){
     return location;
     });
 
-     //oppdaterer counter
-     document.getElementById("countermatches").textContent = filteredMatches.length+" stk.";
+    //oppdaterer counter
+    document.getElementById("countermatches").textContent = filteredMatches.length+" stk.";
+
+
+    let firstUnplayedMatch = null;
 
   // Gå gjennom filtrerte kamper og legg til elementer
   for (let i = 0; i < filteredMatches.length; i++) {
       const match = filteredMatches[i];
+
+      let matchelement = makeMatchWrapper(nodematchholder, match,false,firstUnplayedMatch);
+
+       //fjerner understrek på siste kamp i listen
+       if (filteredMatches.length === i - 1) {
+        matchelement.querySelector(".bordholder").style.borderBottom = 'none';
+
+        teammatchlist.appendChild(matchelement);
+    }
+
+      /*
       const matchelement = nodematchholder.cloneNode(true);
       teammatchlist.appendChild(matchelement);
   
@@ -405,6 +419,7 @@ function listMatchesInTeamView(matchs,team){
               resultlable.style.backgroundColor = "red";
           }
       }
+          */
   }
 
 }

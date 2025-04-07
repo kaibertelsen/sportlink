@@ -673,8 +673,6 @@ function calculateMatchResultBySett(matchs) {
     return matchs;
 }
 
-
-
 function listmatchLayoutGrid(data) {
     const activeDivision = getActiveDivisionFilter();
     let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
