@@ -158,3 +158,12 @@ function isThisMacthPlayed(match){
         return true;
     }
 }
+
+
+function startLoadTimer() {
+    iSAlreadyLoaded = true;
+
+    setTimeout(() => {
+        iSAlreadyLoaded = false;
+    }, 20000); // 20 sekunder = 20000 millisekunder
+}

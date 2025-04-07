@@ -6,11 +6,14 @@ function getMatch(data){
 }
 
 function getMatchresponse(data,id){
-    matches = rawdatacleaner(data);
+    let matCH = rawdatacleaner(data);
+    matches = calculateMatchResultBySett(matCH);
+
+    //list på nytt om ikke det alt er siden er lastet for 20sek siden
+    if(!iSAlreadyLoaded){
     listmatch(matches,"dato");
-
-    //laste inn alle dager det er kamper
-
+    }
+   
 }
 
 function groupArraybyDate(matchs) {
@@ -122,264 +125,6 @@ function listmatch(data, grouptype, scroll) {
     //teste ut ny layout
     listmatchLayoutGrid(data, grouptype);
 
-    /*
-    const activeDivision = getActiveDivisionFilter();
-    let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
-    
-    //sjekke om selector er aktiv
-    const mselector = document.getElementById("matchMainListSelector");
-
-    if(mselector){
-        filteredMatches = filterMatchesBySelector(filteredMatches);
-    }
-
-    let matchs = sortDateArray(filteredMatches, "time");
-    let grouparray = grouptype === "dato" ? groupArraybyDate(matchs) : [];
-
-    const list = document.getElementById("matchlistholder");
-    list.replaceChildren();
-    const elementlibrary = document.getElementById("elementlibrary");
-    const nodeelement = elementlibrary.querySelector('.groupholder');
-
-    let firstUnplayedMatch = null;
-
-    for (let item of grouparray) {
-        const rowelement = nodeelement.cloneNode(true);
-
-        const dateValue = item.date;
-        const isValidDate = !isNaN(Date.parse(dateValue));
-
-        // Hvis datoen er gyldig, formatter den. Hvis ikke, bruk verdien av item.date.
-            rowelement.querySelector(".groupheadername").textContent = isValidDate
-            ? formatDateToNorwegian(dateValue)
-            : dateValue;
-
-        const matchlist = rowelement.querySelector(".matchlist");
-        const matchholder = rowelement.querySelector('.matchholder');
-
-        //lokasjonsvelger
-        const locationSelector = rowelement.querySelector(".locationselector");
-        //last inn alle de forskjellige lokasjoner i denne gruppen
-        rowelement.querySelector(".countermatch").textContent = item.matches.length+" stk."
-        
-        if(locationSelector){
-            loadLocationSelector(item.matches,locationSelector);
-                // Legg til en change-eventlistener for locationSelector
-            locationSelector.addEventListener("change", () => {
-                // Hent valgt verdi fra selectoren
-                const selectedValue = locationSelector.value;
-
-                // Kjør funksjonen med item.matches, matchList og valgt verdi
-                locationSelectorInMatchlistChange(item.matches, matchlist,matchholder, selectedValue,firstUnplayedMatch);
-            });
-        }
-
-
-        //firstUnplayedMatch = makeMatchInMatchHolder(item.matches,matchlist,matchholder,firstUnplayedMatch);  
-        for (let match of item.matches) {
-            const matchelement = matchholder.cloneNode(true);
-            matchlist.appendChild(matchelement);
-        
-            matchelement.onclick = function() {
-                previouspage = "";
-                viewMatch(match);
-            };
-        
-            // Oppdater lagnavn eller bruk plassholdere
-            const team1Name = match.team1name || match.placeholderteam1 || "Unknown";
-            const team2Name = match.team2name || match.placeholderteam2 || "Unknown";
-            matchelement.querySelector(".team1").textContent = team1Name;
-            matchelement.querySelector(".team2").textContent = team2Name;
-        
-            // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
-            const team1Logo = matchelement.querySelector(".logoteam1");
-            const team2Logo = matchelement.querySelector(".logoteam2");
-            if (match.team1clublogo) team1Logo.src = match.team1clublogo;
-            if (match.team2clublogo) team2Logo.src = match.team2clublogo;
-
-
-              //oppdaterer lokasjonsnavn
-                const locationlable = matchelement.querySelector(".locationlable");
-                if(match.location){
-                    locationlable.textContent = match.location;
-                    locationlable.style.display = "inline-block";
-                }
-        
-            // Oppdater sluttspillinformasjon hvis tilgjengelig
-            const endplayLable = matchelement.querySelector(".endplaylable");
-            if (match.typematch) {
-                const matchTypeMap = {
-                    "eighthfinale": "ÅF",
-                    "placementfinale":"PK",
-                    "round2":"R2",
-                    "quarterfinale": "KF",
-                    "semifinale": "SF",
-                    "bronzefinale":"BF",
-                    "finale": "F"
-                };
-        
-                const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
-                endplayLable.textContent = `${endplayText} - ${match.endplay || ""}`;
-                endplayLable.style.display = "block";
-            } else {
-                endplayLable.style.display = "none";
-            }
-        
-            const divisionlable = matchelement.querySelector(".divisionlable");
-        
-            // Bestem tekstinnholdet basert på `activeDivision` og tilgjengelige data
-            let labelText;
-            if (activeDivision === "") {
-                // Når ingen divisjonsfilter er aktivt, inkluder både divisionname og groupname
-                labelText = `${match.divisionname || ""} ${match.groupname ? `- ${match.groupname}` : ""}`.trim();
-            } else {
-                // Når divisjonsfilter er aktivt, bruk kun groupname
-                labelText = match.groupname || "";
-            }
-        
-            // Sett tekst og stil hvis `labelText` har verdi, ellers skjul elementet
-            if (labelText) {
-                divisionlable.textContent = labelText;
-                divisionlable.style.color = mapColors("midlemain");
-                divisionlable.style.display = "block";
-            } else {
-                divisionlable.style.display = "none";
-            }
-        
-                // Sjekk om det finnes noen settverdier
-                const hasSetValues = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb]
-                .some(value => value != null && value.toString().trim() !== "");
-
-        
-             if (hasSetValues) {
-                // Regne ut stillingen basert på settverdiene
-                const sets = [
-                    { teamA: match.settaa, teamB: match.settab },
-                    { teamA: match.settba, teamB: match.settbb },
-                    { teamA: match.settca, teamB: match.settcb },
-                ];
-
-                let teamAWins = 0;
-                let teamBWins = 0;
-
-                sets.forEach(set => {
-                    const teamA = parseInt(set.teamA) || 0;
-                    const teamB = parseInt(set.teamB) || 0;
-
-                    if (teamA > teamB) {
-                        teamAWins++;
-                    } else if (teamB > teamA) {
-                        teamBWins++;
-                    }
-                });
-
-                match.goalteam1 = teamAWins;
-                match.goalteam2 = teamBWins;
-            } 
-
-            
-            const resultlable = matchelement.querySelector(".resultlable");
-            if ((match.goalteam1 === "" || match.goalteam1 === null) || 
-            (match.goalteam2 === "" || match.goalteam2 === null)) {
-                    // Det er ingen resultat
-
-                    // Nåværende tid er forbi kampens tid
-                    resultlable.textContent = formatdatetoTime(match.time);
-                    resultlable.style.fontWeight = "normal";
-
-                    // Sett første upåbegynte kamp
-                    if (!firstUnplayedMatch) {
-                        firstUnplayedMatch = matchelement;
-                    }
-
-                    
-                // Sjekk om tiden nå er forbi kampens tid
-                const now = new Date(); // Nåværende tid
-
-                // Ekstraksjon av dato og tid fra match.time manuelt
-                const matchTimeParts = match.time.split("T"); // Deler dato og tid
-                const matchDate = matchTimeParts[0]; // Hent datoen (YYYY-MM-DD)
-                const matchTime = matchTimeParts[1].split(".")[0]; // Hent klokkeslettet (HH:mm:ss)
-
-                // Bygg en dato- og tidsstreng uten å ta hensyn til tidssone
-                const matchDateTime = new Date(`${matchDate}T${matchTime}`); // Lokal dato/tid uten Z
-
-                // Nåværende tid (uten tidssone-manipulering)
-                const nowLocal = new Date(
-                    now.getFullYear(),
-                    now.getMonth(),
-                    now.getDate(),
-                    now.getHours(),
-                    now.getMinutes(),
-                    now.getSeconds()
-                );
-
-                // Finn playIcon og oppdater basert på tiden
-                const playIcon = matchelement.querySelector(".playicon");
-
-                // Beregn tidsdifferanse i minutter
-                const timeDifference = (nowLocal - matchDateTime) / (1000 * 60); // Forskjell i minutter
-
-                if (nowLocal > matchDateTime && timeDifference <= 30) {
-                    // Hvis kampen har startet, men det har gått mindre enn 30 minutter
-                    if (playIcon) {
-                        playIcon.style.display = "flex";
-                    }
-                } else {
-                    // Hvis tiden er over 30 minutter siden kampstart eller kampen ikke har startet
-                    if (playIcon) {
-                        playIcon.style.display = "none";
-                    }
-                }
-
-
-
-
-            } else {
-
-                resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
-                resultlable.style.fontWeight = "bold";
-                resultlable.style.color = mapColors("main");
-                resultlable.style.fontSize = "16px";
-
-            }
-        
-            if (item.matches.indexOf(match) === item.matches.length - 1) {
-                matchelement.querySelector(".bordholder").style.borderBottom = 'none';
-            }
-        
-            matchlist.appendChild(matchelement);
-        }
-    
-        
-        matchholder.style.display = "none";
-        list.appendChild(rowelement);
-    }
-
-    if (firstUnplayedMatch) {
-        const swipeListContainer = firstUnplayedMatch.closest('.swipe-container-list');
-    
-        if (swipeListContainer) {
-            const scrollToFirstMatch = () => {
-                const elementTop = firstUnplayedMatch.getBoundingClientRect().top;
-                const containerTop = swipeListContainer.getBoundingClientRect().top;
-                const offset = elementTop - containerTop - (swipeListContainer.clientHeight / 2);
-    
-                swipeListContainer.scrollTo({
-                    top: swipeListContainer.scrollTop + offset,
-                    behavior: 'smooth',
-                });
-            };
-    
-            // Bruk `requestAnimationFrame` og en ekstra forsinkelse for å sikre at layout er oppdatert
-            setTimeout(() => {
-                requestAnimationFrame(scrollToFirstMatch);
-            }, 300);
-        }
-    }
-    
-    */
-    
 }
 
 function removeAllExceptSpecific(listElement, keepElement) {
@@ -1089,9 +834,9 @@ function listmatchLayoutGrid(data, grouptype) {
                 match.goalteam2 == null || match.goalteam2 === "") {
                     // Det er ingen resultat
                     //skjul resultater
-                    //resultlableteam1.textContent = "-";
-                    //resultlableteam2.textContent = "-";
-                    console.log("Ingen resultat", match.goalteam1, match.goalteam2);
+                    resultlableteam1.textContent = "-";
+                    resultlableteam2.textContent = "-";
+                    
                    
                     // Sett denne som første upåbegynte kamp for scrollen
                     if (!firstUnplayedMatch) {

@@ -9,8 +9,10 @@ function getTournamentresponse(data){
     listSports(tournament);
     //sorter på dato
     listTournament(sortDateArray(tournament,"startdate"));
-
     goToObjectShareKey();
+
+    //sopp videre umidelbare oppdateringer i 20 sek.
+    startLoadTimer();
 }
 
 function goToObjectShareKey() {

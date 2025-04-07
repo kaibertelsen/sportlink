@@ -13,3 +13,4 @@ var SportList;
 var clientID;
 var previouspage;
 var isInTurnament=false;
+var iSAlreadyLoaded = false;
