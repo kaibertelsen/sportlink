@@ -157,7 +157,7 @@ function makeMatchInMatchHolder(data,matchlist,matchholder,firstUnplayedMatch){
 
     for (let match of data) {
 
-        let matchelement = makeMatchWrapper(matchholder, match);
+        let matchelement = makeMatchWrapper(matchholder, match,false);
         matchlist.appendChild(matchelement);
         /*
         const matchelement = matchholder.cloneNode(true);
@@ -768,7 +768,7 @@ function listmatchLayoutGrid(data) {
          
         for (let match of item.matches) {
            
-            let matchelement = makeMatchWrapper(matchholder, match);
+            let matchelement = makeMatchWrapper(matchholder, match,locationView);
             matchlist.appendChild(matchelement);
 
         }
@@ -804,7 +804,7 @@ function listmatchLayoutGrid(data) {
     
 }
 
-function makeMatchWrapper(nodeelement, match){
+function makeMatchWrapper(nodeelement, match,locationView){
 
     let matchelement = nodeelement.cloneNode(true);    
 
