@@ -214,11 +214,13 @@ function adjustSwipeContainer() {
 }
 
 function loadeLists(data){
-    matches = makeObjectFromAirtableJSON(data, "matchjson");
+
+    let matCh = makeObjectFromAirtableJSON(data, "matchjson");
     //regne ut verdier om det er settverdier
-    matches = calculateMatchResultBySett(matches);
-    
-    if(matches){listmatch(matches,"dato",true);}
+    matCh = calculateMatchResultBySett(matCh);
+    matches = matCh;
+
+    if(matCh){listmatch(matCh,"dato",true);}
 
     teams = makeObjectFromAirtableJSON(data, "teamjson");
     if(teams){listteams(teams);}
