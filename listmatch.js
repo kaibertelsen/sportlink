@@ -1147,6 +1147,7 @@ function filterDaybuttons(data) {
 function initDayFilterToggle() {
     const filterButton = document.getElementById('filterstartbutton');
     const dayFilterWrapper = document.getElementById('dayfilterwrapper');
+    const matchstatuswrapperfilter = document.getElementById('matchstatuswrapperfilter');
   
     if (!filterButton || !dayFilterWrapper) return;
   
@@ -1191,10 +1192,23 @@ function initDayFilterToggle() {
     document.addEventListener('click', handleOutsideInteraction);
     document.addEventListener('mousedown', handleOutsideInteraction);
     document.addEventListener('touchstart', handleOutsideInteraction);
+}
+  
+  
+  
+function initMatchlistFilter(onFilterChange) {
+    const filterButtons = document.querySelectorAll('#matchlistFilter .matchlist-tab');
+  
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+  
+        const selectedFilter = button.getAttribute('data-filter');
+  
+      });
+    });
   }
-  
-  
-  
   
   
   
