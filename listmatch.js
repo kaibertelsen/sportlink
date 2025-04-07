@@ -806,7 +806,9 @@ function listmatchLayoutGrid(data) {
 
 function makeMatchWrapper(nodeelement, match,locationView){
 
-    let matchelement = nodeelement.cloneNode(true);    
+    let matchelement = nodeelement.cloneNode(true);   
+    
+    const activeDivision = getActiveDivisionFilter();
 
     matchelement.onclick = function() {
         previouspage = "";
