@@ -797,7 +797,7 @@ function makeGroupMatchWrapper(item,nodeelement,grouptype,firstUnplayedMatch){
 
     for (let match of item.matches) {
         
-        let matchelement = makeMatchWrapper(matchholder, match,locationView,firstUnplayedMatch);
+        let matchelement = makeMatchWrapper(matchholder, match,grouptype,firstUnplayedMatch);
 
         //fjerner understrek på siste kamp i listen
         if (item.matches.indexOf(match) === item.matches.length - 1) {
@@ -814,7 +814,7 @@ function makeGroupMatchWrapper(item,nodeelement,grouptype,firstUnplayedMatch){
     return rowelement;
 }
 
-function makeMatchWrapper(nodeelement, match,locationView,firstUnplayedMatch){
+function makeMatchWrapper(nodeelement, match,grouptype,firstUnplayedMatch){
 
     let matchelement = nodeelement.cloneNode(true);   
     
@@ -850,7 +850,7 @@ function makeMatchWrapper(nodeelement, match,locationView,firstUnplayedMatch){
 
     //oppdaterer lokasjonsnavn
     const locationlable = matchelement.querySelector(".locationtext");
-    if(locationView){
+    if(grouptype === "location"){
         locationlable.style.display = "none";
     }else{
         locationlable.textContent = match.location || "";
