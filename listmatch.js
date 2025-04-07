@@ -158,6 +158,7 @@ function makeMatchInMatchHolder(data,matchlist,matchholder,firstUnplayedMatch){
     for (let match of data) {
 
         let matchelement = makeMatchWrapper(matchholder, match,false,firstUnplayedMatch);
+        matchelement.style.display = "block";
         matchlist.appendChild(matchelement);
         /*
         const matchelement = matchholder.cloneNode(true);
