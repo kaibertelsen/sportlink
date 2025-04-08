@@ -707,14 +707,14 @@ function listmatchLayoutGrid(data) {
     const list = document.getElementById("matchlistholder");
     list.replaceChildren();
 
-    //sjekke om det er noen kamper i det hele tatt
-    if(filteredMatches.length === 0){
+    if (filteredMatches.length === 0) {
         const emptyMessage = document.createElement("div");
         emptyMessage.className = "empty-message";
         emptyMessage.textContent = "Ingen kamper";
         list.appendChild(emptyMessage);
         return;
-    }
+      }
+      
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.groupholderlayoutgrid');
