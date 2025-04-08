@@ -807,10 +807,12 @@ function makeGroupMatchWrapper(item,team,nodeelement,grouptype,firstUnplayedMatc
 
     const matchlist = rowelement.querySelector(".matchlist");
     const matchholder = rowelement.querySelector('.matchholder');
+    const isOnlyOneLocation = findUnicLocations(item.matches) === 1;
+
 
     for (let match of item.matches) {
         
-        let matchelement = makeMatchWrapper(matchholder,match,team,grouptype,firstUnplayedMatch);
+        let matchelement = makeMatchWrapper(matchholder,match,team,grouptype,firstUnplayedMatch,isOnlyOneLocation);
 
         //fjerner understrek på siste kamp i listen
         if (item.matches.indexOf(match) === item.matches.length - 1) {
@@ -827,7 +829,7 @@ function makeGroupMatchWrapper(item,team,nodeelement,grouptype,firstUnplayedMatc
     return rowelement;
 }
 
-function makeMatchWrapper(nodeelement,match,team,grouptype,firstUnplayedMatch){
+function makeMatchWrapper(nodeelement,match,team,grouptype,firstUnplayedMatch,isOnlyOneLocation){
 
     let matchelement = nodeelement.cloneNode(true);   
     
@@ -866,7 +868,7 @@ function makeMatchWrapper(nodeelement,match,team,grouptype,firstUnplayedMatch){
     const fieldName = match.fieldname || "";
     const locationName = match.location || "";
 
-    if (grouptype === "location") {
+    if (grouptype === "location" || isOnlyOneLocation) {
     // Lokasjon vises allerede på gruppenivå – kun vis felt
     locationLabel.textContent = "Bane: "+fieldName;
     } else {

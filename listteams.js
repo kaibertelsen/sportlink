@@ -280,14 +280,8 @@ function listMatchesInTeamView(matchs,team){
 
 
 function loadLocationSelector(Matchs,locationSelector) {
-    let uniclocations = [];
-
-    // Finn unike location-verdier
-    for (let match of Matchs) {
-        if (match.location && !uniclocations.includes(match.location)) {
-            uniclocations.push(match.location);
-        }
-    }
+    
+    let uniclocations = findUnicLocations(data);
 
     // Tøm eksisterende options
     locationSelector.innerHTML = "";
@@ -312,6 +306,17 @@ function loadLocationSelector(Matchs,locationSelector) {
     locationSelector.style.display = "block"; 
    
 }
+
+function findUnicLocations(data){
+    let uniclocations = [];
+    for (let match of data) {
+        if (match.location && !uniclocations.includes(match.location)) {
+            uniclocations.push(match.location);
+        }
+    }
+    return uniclocations;
+}
+
 
 function findRankForTeam(team) {
     // Filtrer lagene basert på aktivt divisjonsfilter
