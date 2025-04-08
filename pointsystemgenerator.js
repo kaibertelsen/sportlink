@@ -50,6 +50,23 @@ function generatePointToTeams(data) {
 
         return tabeldata;
 
+    }else if (activetournament.sport[0] === "reca0jxxTQAtlUTNu") {
+        // Landhocey
+        console.log("Dette er Floorball");
+        let tabeldata = generateFloorballPointsToTeams(data) 
+
+        tabeldata.sort((a, b) => {
+            if (b.points.points !== a.points.points) {
+                return b.points.points - a.points.points;
+            }
+            if (b.points.goalDifference !== a.points.goalDifference) {
+                return b.points.goalDifference - a.points.goalDifference;
+            }
+            return b.points.goalsFor - a.points.goalsFor;
+        });
+
+        return tabeldata;
+
     } else if (activetournament.sport[0] === "recCUabw69dx5ZajH") {
         // Padel
         console.log("Dette er padeloppsett");
@@ -139,7 +156,6 @@ function generateFotballPointToTeams(data) {
 
     return data;
 }
-
 
 function generateVolleyballPointToTeams(data) {
     // Initialiser poengstatistikk for hvert lag
@@ -279,6 +295,107 @@ function generateVolleyballPointToTeams(data) {
 }
 
 function generateIceHockeyPointsToTeams(data) {
+    // Initialiser poengstatistikk for hvert lag
+    for (let team of data) {
+        team.points = {
+            played: 0,
+            won: 0,
+            overtimeWins: 0,
+            overtimeLosses: 0,
+            lost: 0,
+            goalsFor: 0,
+            goalsAgainst: 0,
+            goalDifference: 0,
+            penaltymin:0,
+            points: 0
+        };
+    }
+
+    // Oppdater poengstatistikk basert på kamper
+    for (let match of matches) {
+        
+        // Hopp over kamper som er i sluttspillet eller som ikke er spilt
+        if (
+            match.endplay || 
+            [match.goalteam1, match.goalteam2].some(value => value === undefined || value === "" || value === null)
+        ) {
+            continue;
+        }
+
+        let team1 = data.find(team => team.airtable === match.team1);
+        let team2 = data.find(team => team.airtable === match.team2);
+
+        if (team1 && team2) {
+            // Oppdater spilte kamper
+            team1.points.played++;
+            team2.points.played++;
+
+            // Hent mål fra `goalteam1` og `goalteam2`
+            const team1Score = Number(match.goalteam1);
+            const team2Score = Number(match.goalteam2);
+
+            // Oppdater mål for og mot
+            team1.points.goalsFor += team1Score;
+            team1.points.goalsAgainst += team2Score;
+            team2.points.goalsFor += team2Score;
+            team2.points.goalsAgainst += team1Score;
+
+            // Oppdater målforskjell
+            team1.points.goalDifference = team1.points.goalsFor - team1.points.goalsAgainst;
+            team2.points.goalDifference = team2.points.goalsFor - team2.points.goalsAgainst;
+
+            //oppdater utvisningsminutter
+            const penaltyminteam1 = match.penaltyminteam1 || 0;
+            const penaltyminteam2 = match.penaltyminteam2 || 0;
+            team1.points.penaltymin += Number(penaltyminteam1);
+            team2.points.penaltymin += Number(penaltyminteam2);
+
+            // Sjekk om kampen gikk til overtid eller straffeslag
+            const isOvertime = match.overtime || false;
+            const isShootout = match.shootout || false;
+
+            // Oppdater poeng basert på resultat
+            if (team1Score > team2Score) {
+                if (isOvertime || isShootout) {
+                    // Team 1 vinner i overtid/straffeslag
+                    team1.points.overtimeWins++;
+                    team2.points.overtimeLosses++;
+                    team1.points.points += 2; // 2 poeng for seier i overtid/straffeslag
+                    team2.points.points += 1; // 1 poeng for tap i overtid/straffeslag
+                } else {
+                    // Team 1 vinner i ordinær tid
+                    team1.points.won++;
+                    team1.points.points += 3; // 3 poeng for seier i ordinær tid
+                    team2.points.lost++;
+                }
+            } else if (team1Score < team2Score) {
+                if (isOvertime || isShootout) {
+                    // Team 2 vinner i overtid/straffeslag
+                    team2.points.overtimeWins++;
+                    team1.points.overtimeLosses++;
+                    team2.points.points += 2; // 2 poeng for seier i overtid/straffeslag
+                    team1.points.points += 1; // 1 poeng for tap i overtid/straffeslag
+                } else {
+                    // Team 2 vinner i ordinær tid
+                    team2.points.won++;
+                    team2.points.points += 3; // 3 poeng for seier i ordinær tid
+                    team1.points.lost++;
+                }
+            }else if (team1Score == team2Score) {
+           
+                // Det er uavgjort
+                team1.points.points += 1; // 1 poeng for uavgjort
+                team2.points.points += 1; // 1 poeng for uavgjort
+                
+            
+            }
+        }
+    }
+
+    return data;
+}
+
+function generateFloorballPointsToTeams(data) {
     // Initialiser poengstatistikk for hvert lag
     for (let team of data) {
         team.points = {
