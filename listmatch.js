@@ -86,7 +86,7 @@ function matchMainListSelectorChange(){
 function filterMatchesByStatus(matchs) {
     //Finne filterknappen som er aktive
     const activeFilterbutton = document.querySelectorAll('#matchlistFilter .matchlist-tab .active');
-    let filtervalue = activeDayFilter.dataset.filter;
+    let filtervalue = activeDayFilter.getAttribute('data-filter');
 
 
     if (filtervalue === "") {
