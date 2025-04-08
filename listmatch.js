@@ -1188,6 +1188,7 @@ function initDayFilterToggle() {
       let exsizeM = 0;
       let exsizeP = 0;
       if(statusfilterMatchLable.textContent !== ""){
+        statusfilterMatchLable.style.display = "block";
         exsizeP = 15;
         exsizeM = -15;
       }
@@ -1208,7 +1209,14 @@ function initDayFilterToggle() {
         exsizeP = 15;
         exsizeM = -15;
       }
-  
+      // Toggle mellom å vise og skjule filteret
+        if (isExpanded) {
+            // Hvis filteret er åpent, lukk det
+            statusfilterMatchLable.style.display = "block";
+        } else {
+            // Hvis filteret er lukket, skjul det
+            statusfilterMatchLable.style.display = "none";
+        }
       dayFilterWrapper.style.height = isExpanded ? `${expandedHeight}px` : `${originalHeight+exsizeP}px`;
       dayFilterWrapper.style.bottom = isExpanded ? `${expandedBottom}px` : `${originalBottom+exsizeM}px`;
       matchlistholder.style.paddingTop = isExpanded ? `${expandedPaddingTop}px` : `${originalPaddingTop+exsizeP}px`;
