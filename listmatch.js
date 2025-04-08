@@ -1201,10 +1201,17 @@ function initDayFilterToggle() {
     filterButton.addEventListener('click', (e) => {
       e.preventDefault();
       isExpanded = !isExpanded;
+
+      let exsizeM = 0;
+      let exsizeP = 0;
+      if(statusfilterMatchLable.textContent !== ""){
+        exsizeP = 15;
+        exsizeM = -15;
+      }
   
-      dayFilterWrapper.style.height = isExpanded ? `${expandedHeight}px` : `${originalHeight}px`;
-      dayFilterWrapper.style.bottom = isExpanded ? `${expandedBottom}px` : `${originalBottom}px`;
-      matchlistholder.style.paddingTop = isExpanded ? `${expandedPaddingTop}px` : `${originalPaddingTop}px`;
+      dayFilterWrapper.style.height = isExpanded ? `${expandedHeight}px` : `${originalHeight+exsizeP}px`;
+      dayFilterWrapper.style.bottom = isExpanded ? `${expandedBottom}px` : `${originalBottom+exsizeM}px`;
+      matchlistholder.style.paddingTop = isExpanded ? `${expandedPaddingTop}px` : `${originalPaddingTop+exsizeP}px`;
     });
   
     const handleOutsideInteraction = (e) => {
