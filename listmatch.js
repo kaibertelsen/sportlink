@@ -997,7 +997,6 @@ function makeColorOnResult(team, match, resultLabel) {
 function toggleMatchList(rowelement, closeopengroupbutton) {
     const matchlist = rowelement.querySelector(".matchlist");
     const headerdiv = rowelement.querySelector(".headerdiv");
-    const statusfilterMatchLable = document.getElementById("statusfilterMatchLable");
 
     // Finn aktiv filterknapp
     const activeFilterButton = document.querySelector('#matchlistFilter .matchlist-tab.active');
@@ -1024,7 +1023,7 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
         matchlist.style.transition = "height 300ms ease";
         matchlist.style.height = fullHeight;
 
-        statusfilterMatchLable.style.display = "none";
+       
     
       setTimeout(() => {
         matchlist.style.height = "";
@@ -1039,11 +1038,6 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
 
         //fjerne bord på headerdiv element
         headerdiv.style.borderBottom = "none";
-
-        //hvis filkteret ikke er "Alle"
-        if (filterValue !== "all") {
-        statusfilterMatchLable.style.display = "block";
-        }
 
       const fullHeight = matchlist.scrollHeight + "px";
   
@@ -1163,6 +1157,7 @@ function initDayFilterToggle() {
     const filterButton = document.getElementById('filterstartbutton');
     const dayFilterWrapper = document.getElementById('dayfilterwrapper');
     const matchlistholder = document.getElementById('matchlistholder');
+    const statusfilterMatchLable = document.getElementById("statusfilterMatchLable");
   
     if (!filterButton || !dayFilterWrapper || !matchlistholder) return;
   
@@ -1190,18 +1185,24 @@ function initDayFilterToggle() {
   
     const collapse = () => {
       isExpanded = false;
-      dayFilterWrapper.style.height = `${originalHeight}px`;
-      dayFilterWrapper.style.bottom = `${originalBottom}px`;
-      matchlistholder.style.paddingTop = `${originalPaddingTop}px`;
+      let exsize = 0;
+      if(statusfilterMatchLable.textContent !== ""){
+        exsize = 15;
+      }
+      
+      dayFilterWrapper.style.height = `${originalHeight+exsize}px`;
+      dayFilterWrapper.style.bottom = `${originalBottom+exsize}px`;
+      matchlistholder.style.paddingTop = `${originalPaddingTop+exsize}px`;
+      
     };
   
     filterButton.addEventListener('click', (e) => {
       e.preventDefault();
       isExpanded = !isExpanded;
   
-      dayFilterWrapper.style.height = isExpanded ? `${expandedHeight+15}px` : `${originalHeight}px`;
-      dayFilterWrapper.style.bottom = isExpanded ? `${expandedBottom+15}px` : `${originalBottom}px`;
-      matchlistholder.style.paddingTop = isExpanded ? `${expandedPaddingTop015}px` : `${originalPaddingTop}px`;
+      dayFilterWrapper.style.height = isExpanded ? `${expandedHeight}px` : `${originalHeight}px`;
+      dayFilterWrapper.style.bottom = isExpanded ? `${expandedBottom}px` : `${originalBottom}px`;
+      matchlistholder.style.paddingTop = isExpanded ? `${expandedPaddingTop}px` : `${originalPaddingTop}px`;
     });
   
     const handleOutsideInteraction = (e) => {
