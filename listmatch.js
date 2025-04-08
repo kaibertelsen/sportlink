@@ -740,7 +740,6 @@ function listmatchLayoutGrid(data) {
     
 }
 
-
 function makeGroupMatchWrapper(item,team,nodeelement,grouptype,firstUnplayedMatch){
 
     const rowelement = nodeelement.cloneNode(true);
@@ -995,7 +994,6 @@ function makeColorOnResult(team, match, resultLabel) {
     }
 }
 
-
 function toggleMatchList(rowelement, closeopengroupbutton) {
     const matchlist = rowelement.querySelector(".matchlist");
     const headerdiv = rowelement.querySelector(".headerdiv");
@@ -1145,7 +1143,6 @@ function loadDayfilter(data) {
     }
 }
 
-
 function filterDaybuttons(data) {
     // Hvis filteret er tomt eller ikke satt, returner alle kamper
     if (!activeDayFilter || activeDayFilter === "") return data;
@@ -1202,9 +1199,9 @@ function initDayFilterToggle() {
       e.preventDefault();
       isExpanded = !isExpanded;
   
-      dayFilterWrapper.style.height = isExpanded ? `${expandedHeight}px` : `${originalHeight}px`;
-      dayFilterWrapper.style.bottom = isExpanded ? `${expandedBottom}px` : `${originalBottom}px`;
-      matchlistholder.style.paddingTop = isExpanded ? `${expandedPaddingTop}px` : `${originalPaddingTop}px`;
+      dayFilterWrapper.style.height = isExpanded ? `${expandedHeight+15}px` : `${originalHeight}px`;
+      dayFilterWrapper.style.bottom = isExpanded ? `${expandedBottom+15}px` : `${originalBottom}px`;
+      matchlistholder.style.paddingTop = isExpanded ? `${expandedPaddingTop015}px` : `${originalPaddingTop}px`;
     });
   
     const handleOutsideInteraction = (e) => {
@@ -1219,8 +1216,6 @@ function initDayFilterToggle() {
     document.addEventListener('mousedown', handleOutsideInteraction);
     document.addEventListener('touchstart', handleOutsideInteraction);
 }
-  
-  
   
 function initMatchlistFilter() {
     const filterButtons = document.querySelectorAll('#matchlistFilter .matchlist-tab');
