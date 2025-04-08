@@ -807,7 +807,7 @@ function makeGroupMatchWrapper(item,team,nodeelement,grouptype,firstUnplayedMatc
 
     const matchlist = rowelement.querySelector(".matchlist");
     const matchholder = rowelement.querySelector('.matchholder');
-    const isOnlyOneLocation = findUnicLocations(item.matches) === 1;
+    const isOnlyOneLocation = findUnicLocations(item.matches).length === 1;
 
 
     for (let match of item.matches) {
