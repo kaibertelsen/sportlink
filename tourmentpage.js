@@ -5,9 +5,7 @@ function getTournament(klientid) {
 
 function getTournamentresponse(data){
     tournament = rawdatacleaner(data);
-    //tømfilter
-    activeDayFilter = "";
-    activeMatchlistFilter = "";
+   
     listOrganizer(tournament);
     listSports(tournament);
     //sorter på dato
@@ -189,8 +187,9 @@ function loadTourment(tournamentid){
     //hente ut aktuelle dager for filteret og laste det
     loadDayfilter(makeObjectFromAirtableJSON(data, "matchjson"));
 
-    //resetter filerert spilte, kommende osv.
-    //resetMatchlistFilter();
+     //tømfilter
+     activeDayFilter = "";
+     activeMatchlistFilter = "";
 
     activetournament = data
     loadTourmentHeader(data);
