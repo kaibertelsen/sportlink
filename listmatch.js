@@ -93,11 +93,10 @@ function filterMatchesByStatus(matchs) {
     
 
     if (filterValue === "all") {
-        statusfilterMatchLable.style.display = "none"; // Skjul etikett for "Alle kamper"
+        statusfilterMatchLable.textContent = "";
         // Vis alle kamper
         return matchs;
     } else if (filterValue === "upcoming") {
-        statusfilterMatchLable.style.display = "block"; // Vis etikett for "Kommende kamper"
         statusfilterMatchLable.textContent = "Kommende kamper";
         // Kamper som ikke har resultat
         return matchs.filter(match => !match.goalteam1 && !match.goalteam2);
@@ -1000,7 +999,7 @@ function makeColorOnResult(team, match, resultLabel) {
 function toggleMatchList(rowelement, closeopengroupbutton) {
     const matchlist = rowelement.querySelector(".matchlist");
     const headerdiv = rowelement.querySelector(".headerdiv");
-    const statusfilterMatchLable = rowelement.querySelector(".statusfilterMatchLable");
+    const statusfilterMatchLable = document.getElementById("statusfilterMatchLable");
 
     // Finn aktiv filterknapp
     const activeFilterButton = document.querySelector('#matchlistFilter .matchlist-tab.active');
@@ -1172,10 +1171,10 @@ function initDayFilterToggle() {
   
     let isExpanded = false;
   
-    const originalHeight = 53;
+    const originalHeight = 63;
     const expandedHeight = 103;
   
-    const originalBottom = -53;
+    const originalBottom = -63;
     const expandedBottom = -103;
   
     // Hent faktisk padding-top fra stil
