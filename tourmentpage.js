@@ -5,6 +5,9 @@ function getTournament(klientid) {
 
 function getTournamentresponse(data){
     tournament = rawdatacleaner(data);
+    //tømfilter
+    activeDayFilter = "";
+    activeMatchlistFilter = "";
     listOrganizer(tournament);
     listSports(tournament);
     //sorter på dato
