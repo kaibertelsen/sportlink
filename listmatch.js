@@ -929,7 +929,7 @@ function makeMatchWrapper(nodeelement,match,team,grouptype,firstUnplayedMatch){
             const playIcon = matchelement.querySelector(".playicon");
 
             if (isMatchPlaying) {
-                    playIcon.style.display = "flex";
+                    playIcon.style.display = "block";
             }else {
                     playIcon.style.display = "none";
             }
