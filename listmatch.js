@@ -84,42 +84,39 @@ function matchMainListSelectorChange(){
 }
 
 function filterMatchesByStatus(matchs) {
-    //Finne filterknappen som er aktive
-    const activeFilterbutton = document.querySelectorAll('#matchlistFilter .matchlist-tab .active');
-    let filtervalue = activeDayFilter.getAttribute('data-filter');
+    // Finn aktiv filterknapp
+    const activeFilterButton = document.querySelector('#matchlistFilter .matchlist-tab.active');
+    if (!activeFilterButton) return matchs;
 
+    const filterValue = activeFilterButton.getAttribute('data-filter');
 
-    if (filtervalue === "") {
-        // Vise alle kamper
+    if (filterValue === "all") {
+        // Vis alle kamper
         return matchs;
-    } else if (filtervalue === "upcoming") {
-        // Vise alle kamper som ikke har resultat
+    } else if (filterValue === "upcoming") {
+        // Kamper som ikke har resultat
         return matchs.filter(match => !match.goalteam1 && !match.goalteam2);
-    } else if (filtervalue === "ongoing") {
-        // Vise alle kamper som har startet, men ikke har resultat
+    } else if (filterValue === "live" || filterValue === "ongoing") {
+        // Kamper som har startet, men ikke har resultat
         return matchs.filter(match => {
             const now = new Date();
-            // Lag ISO-format uten tidssonejustering for nåværende tid
-            const nowString = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}T${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
-            
-            // Bruk match.time som den er, siden den allerede er i ISO-format
-            const matchTime = match.time;
-        
-            return matchTime <= nowString && (!match.goalteam1 && !match.goalteam2);
+            const matchTime = new Date(match.time);
+            return matchTime <= now && !match.goalteam1 && !match.goalteam2;
         });
-        
-        
-        
-    } else if (filtervalue === "played") {
-        // Vise alle kamper som det foreligger resultat på
-        return matchs.filter(match => 
-            match.goalteam1 !== undefined && 
+    } else if (filterValue === "played") {
+        // Kamper som har resultat
+        return matchs.filter(match =>
+            match.goalteam1 !== undefined &&
             match.goalteam1 !== "" &&
-            match.goalteam2 !== undefined && 
+            match.goalteam2 !== undefined &&
             match.goalteam2 !== ""
         );
     }
+
+    // Hvis ingen filterverdi matcher, returner alle
+    return matchs;
 }
+
 
 // listmatch function adjusted to avoid scroll conflicts
 function listmatch(data, grouptype, scroll) {
