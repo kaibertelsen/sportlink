@@ -159,7 +159,6 @@ function responseClublist(data){
     gClub =  rawdatacleaner(data);// Global variabel for videre bruk
 }
 
-
 //uploader
 const ctx = document.querySelector('uc-upload-ctx-provider')
     ctx.addEventListener('file-url-changed', e => {
@@ -263,7 +262,6 @@ function viewTurnamentData(data) {
 
 }
 
-
 function viewGroupAndTeams(list,division){
 // sjekk om det er noen grupper
 
@@ -282,6 +280,7 @@ function viewGroupAndTeams(list,division){
     }
 
 }
+
 function viewTeams(list, divisionname, groupname) {
     // Filtrer team basert på divisjon og gruppe
     const filterteam = iTeams.filter(team => 
@@ -337,7 +336,6 @@ function formatDate(dateString) {
         minute: "2-digit"
     });
 }
-
 
 function listClub(clubs) {
     // Sorter clubs alfabetisk etter club.name

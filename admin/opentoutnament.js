@@ -63,7 +63,7 @@ function openTournament(Tournamentid){
     document.getElementById("tournamenttabbutton").style.display = "inline-block";
 
     //hvis loader
-     document.getElementById("loadingholdertournament").style.display = "block";
+    document.getElementById("loadingholdertournament").style.display = "block";
     GETairtable(baseId,"tblGhVlhWETNvhrWN",Tournamentid,"responsGetTournament");
 
     //tøm listene
@@ -335,6 +335,8 @@ function listDivision(divisions) {
 
 function makeDivisionRow(nodeelement,division){
 
+    let tabelid = "tblY9xnfQ1y8dXTaA";
+
     const rowelement = nodeelement.cloneNode(true);
     const divisionName = rowelement.querySelector(".name")
     divisionName.textContent = division.name || "Ukjent navn";
@@ -369,6 +371,15 @@ function makeDivisionRow(nodeelement,division){
     optionTeam.value = division.airtable;
     optionTeam.textContent = division.name || "Ukjent navn";
     divisionSelector.appendChild(optionTeam);
+
+
+    const minutesPerPeriod = rowelement.querySelector(".minutesperperiod");
+    minutesPerPeriod.textContent = division.minutesperperiod || "Ukjent";
+    minutesPerPeriod.addEventListener("click", () => triggerEditInput(minutesPerPeriod, division, "minutesperperiod", "number", tabelid));
+    
+    const numberOfPeriods = rowelement.querySelector(".numberofperiods");
+    numberOfPeriods.textContent = division.numberofperiods || "Ukjent";
+    numberOfPeriods.addEventListener("click", () => triggerEditInput(numberOfPeriods, division, "numberofperiods", "number", tabelid));
     
     return rowelement;
 
