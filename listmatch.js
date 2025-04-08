@@ -1220,8 +1220,7 @@ function initDayFilterToggle() {
   
 function initMatchlistFilter() {
     const filterButtons = document.querySelectorAll('#matchlistFilter .matchlist-tab');
-    const statusfilterMatchLable = document.getElementById("statusfilterMatchLable");
-    statusfilterMatchLable.style.display = "none";
+ 
 
     let isInitialSetup = true;
   
@@ -1236,8 +1235,6 @@ function initMatchlistFilter() {
         // Ikke kjør listmatch på første oppsett
         if (!isInitialSetup) {
           listmatch(matches); // 👈 din funksjon her
-          statusfilterMatchLable.style.display = "none";
-
         }
       });
     });
