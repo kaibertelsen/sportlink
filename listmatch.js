@@ -898,7 +898,7 @@ function makeMatchWrapper(nodeelement,match,team,grouptype,firstUnplayedMatch){
 
         const endplayText = matchTypeMap[match.typematch] || "Ukjent sluttspill";
         endplayLable.textContent = `${endplayText} - ${match.endplay || ""}`;
-        endplayLable.style.display = "block";
+        endplayLable.style.display = "inline-block";
     } else {
         endplayLable.style.display = "none";
     }
