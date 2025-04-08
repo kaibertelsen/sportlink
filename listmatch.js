@@ -89,6 +89,8 @@ function filterMatchesByStatus(matchs) {
     if (!activeFilterButton) return matchs;
 
     const filterValue = activeFilterButton.getAttribute('data-filter');
+    const statusfilterMatchLable = document.getElementById("statusfilterMatchLable");
+    statusfilterMatchLable.textContent = activeFilterButton.textContent;
 
     if (filterValue === "all") {
         // Vis alle kamper
@@ -993,6 +995,7 @@ function makeColorOnResult(team, match, resultLabel) {
 function toggleMatchList(rowelement, closeopengroupbutton) {
     const matchlist = rowelement.querySelector(".matchlist");
     const headerdiv = rowelement.querySelector(".headerdiv");
+    const statusfilterMatchLable = rowelement.querySelector(".statusfilterMatchLable");
   
     // Hvis ingen eksplisitt høyde er satt, og display er block → regnes som åpen
     const isCollapsed = getComputedStyle(matchlist).display === "none" || 
@@ -1012,6 +1015,8 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
     
         matchlist.style.transition = "height 300ms ease";
         matchlist.style.height = fullHeight;
+
+        statusfilterMatchLable.style.display = "none";
     
       setTimeout(() => {
         matchlist.style.height = "";
@@ -1026,6 +1031,9 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
 
         //fjerne bord på headerdiv element
         headerdiv.style.borderBottom = "none";
+
+        //hvis filkteret ikke er "Alle"
+        statusfilterMatchLable.style.display = "block";
 
       const fullHeight = matchlist.scrollHeight + "px";
   
