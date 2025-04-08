@@ -1145,39 +1145,46 @@ function filterDaybuttons(data) {
 function initDayFilterToggle() {
     const filterButton = document.getElementById('filterstartbutton');
     const dayFilterWrapper = document.getElementById('dayfilterwrapper');
-    const matchstatuswrapperfilter = document.getElementById('matchstatuswrapperfilter');
+    const matchlistholder = document.getElementById('matchlistholder');
   
-    if (!filterButton || !dayFilterWrapper) return;
+    if (!filterButton || !dayFilterWrapper || !matchlistholder) return;
   
     let isExpanded = false;
+  
     const originalHeight = 53;
     const expandedHeight = 103;
   
     const originalBottom = -53;
     const expandedBottom = -103;
   
-    // Sett startstil og animasjon
+    const originalPaddingTop = 10; // ← oppdatert her
+    const expandedPaddingTop = originalPaddingTop + (expandedHeight - originalHeight); // = 60
+  
+    // Startstil og animasjon
     dayFilterWrapper.style.height = `${originalHeight}px`;
     dayFilterWrapper.style.bottom = `${originalBottom}px`;
     dayFilterWrapper.style.overflow = 'hidden';
     dayFilterWrapper.style.transition = 'height 300ms ease, bottom 300ms ease';
   
-    // Funksjon for å lukke filteret
+    matchlistholder.style.paddingTop = `${originalPaddingTop}px`;
+    matchlistholder.style.transition = 'padding 300ms ease';
+  
     const collapse = () => {
       isExpanded = false;
       dayFilterWrapper.style.height = `${originalHeight}px`;
       dayFilterWrapper.style.bottom = `${originalBottom}px`;
+      matchlistholder.style.paddingTop = `${originalPaddingTop}px`;
     };
   
-    // Toggle åpen/lukket
     filterButton.addEventListener('click', (e) => {
       e.preventDefault();
       isExpanded = !isExpanded;
+  
       dayFilterWrapper.style.height = isExpanded ? `${expandedHeight}px` : `${originalHeight}px`;
       dayFilterWrapper.style.bottom = isExpanded ? `${expandedBottom}px` : `${originalBottom}px`;
+      matchlistholder.style.paddingTop = isExpanded ? `${expandedPaddingTop}px` : `${originalPaddingTop}px`;
     });
   
-    // Håndter klikk og trykk utenfor
     const handleOutsideInteraction = (e) => {
       const isClickInside =
         dayFilterWrapper.contains(e.target) || filterButton.contains(e.target);
@@ -1186,11 +1193,11 @@ function initDayFilterToggle() {
       }
     };
   
-    // Lyttere for desktop og mobil
     document.addEventListener('click', handleOutsideInteraction);
     document.addEventListener('mousedown', handleOutsideInteraction);
     document.addEventListener('touchstart', handleOutsideInteraction);
-}
+  }
+  
   
 function initMatchlistFilter() {
     const filterButtons = document.querySelectorAll('#matchlistFilter .matchlist-tab');
