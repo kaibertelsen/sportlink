@@ -93,12 +93,17 @@ function filterMatchesByStatus(matchs) {
     statusfilterMatchLable.textContent = activeFilterButton.textContent;
 
     if (filterValue === "all") {
+        statusfilterMatchLable.style.display = "none"; // Skjul etikett for "Alle kamper"
         // Vis alle kamper
         return matchs;
     } else if (filterValue === "upcoming") {
+        statusfilterMatchLable.style.display = "block"; // Vis etikett for "Kommende kamper"
+        statusfilterMatchLable.textContent = "Kommende kamper";
         // Kamper som ikke har resultat
         return matchs.filter(match => !match.goalteam1 && !match.goalteam2);
     } else if (filterValue === "live" || filterValue === "ongoing") {
+        statusfilterMatchLable.style.display = "block"; // Vis etikett for "Pågående kamper"
+        statusfilterMatchLable.textContent = "Pågående kamper";
         // Kamper som har startet, men ikke har resultat
         return matchs.filter(match => {
             const now = new Date();
@@ -106,6 +111,8 @@ function filterMatchesByStatus(matchs) {
             return matchTime <= now && !match.goalteam1 && !match.goalteam2;
         });
     } else if (filterValue === "played") {
+        statusfilterMatchLable.style.display = "block"; // Vis etikett for "Spilte kamper"
+        statusfilterMatchLable.textContent = "Spilte kamper";
         // Kamper som har resultat
         return matchs.filter(match =>
             match.goalteam1 !== undefined &&
@@ -995,8 +1002,7 @@ function makeColorOnResult(team, match, resultLabel) {
 function toggleMatchList(rowelement, closeopengroupbutton) {
     const matchlist = rowelement.querySelector(".matchlist");
     const headerdiv = rowelement.querySelector(".headerdiv");
-    const statusfilterMatchLable = rowelement.querySelector(".statusfilterMatchLable");
-  
+
     // Hvis ingen eksplisitt høyde er satt, og display er block → regnes som åpen
     const isCollapsed = getComputedStyle(matchlist).display === "none" || 
                         getComputedStyle(matchlist).height === "0px";
@@ -1016,7 +1022,6 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
         matchlist.style.transition = "height 300ms ease";
         matchlist.style.height = fullHeight;
 
-        statusfilterMatchLable.style.display = "none";
     
       setTimeout(() => {
         matchlist.style.height = "";
@@ -1031,9 +1036,6 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
 
         //fjerne bord på headerdiv element
         headerdiv.style.borderBottom = "none";
-
-        //hvis filkteret ikke er "Alle"
-        statusfilterMatchLable.style.display = "block";
 
       const fullHeight = matchlist.scrollHeight + "px";
   
