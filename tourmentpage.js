@@ -189,7 +189,8 @@ function loadTourment(tournamentid){
 
      //tømfilter
      activeDayFilter = "";
-     activeMatchlistFilter = "";
+     //activeMatchlistFilter = "";
+     resetMatchlistFilter();
 
     activetournament = data
     loadTourmentHeader(data);
