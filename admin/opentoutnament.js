@@ -11,7 +11,6 @@ document.getElementById('teamtabbutton').onclick = function() {
     listTeams(gTeam); 
 }
 
-
 document.getElementById('createNewMatch').onclick = function() {
     createNewMatch(); 
 }

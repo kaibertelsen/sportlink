@@ -429,6 +429,13 @@ function listOrganizer(organizers) {
 function listTournament(tournaments) {
     const list = document.getElementById("tournamentlistholderlist");
     list.replaceChildren(); // Clear previous content
+
+    //sorter turneringer etter startdato nyest øverst
+    tournaments.sort((a, b) => {
+        const dateA = new Date(a.startdate);
+        const dateB = new Date(b.startdate);
+        return dateB - dateA; // Sorter i synkende rekkefølge
+    });
     
     //tabelid for lagring lokalt og på server
     let tabelid = "tblGhVlhWETNvhrWN";
