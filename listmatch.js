@@ -861,13 +861,23 @@ function makeMatchWrapper(nodeelement,match,team,grouptype,firstUnplayedMatch){
     matchelement.querySelector(".team2").textContent = team2Name;
 
 
-    //oppdaterer lokasjonsnavn
-    const locationlable = matchelement.querySelector(".locationtext");
-    if(grouptype === "location"){
-        locationlable.style.display = "none";
-    }else{
-        locationlable.textContent = match.location || "";
+    // Oppdaterer lokasjonsnavn
+    const locationLabel = matchelement.querySelector(".locationtext");
+    const fieldName = match.fieldname || "";
+    const locationName = match.location || "";
+
+    if (grouptype === "location") {
+    // Lokasjon vises allerede på gruppenivå – kun vis felt
+    locationLabel.textContent = fieldName;
+    } else {
+    // Sett sammen lokasjon + felt hvis felt finnes
+    const locationText = fieldName
+        ? `${locationName} (${fieldName})`
+        : locationName;
+
+    locationLabel.textContent = locationText;
     }
+
     //oppdater dommer
     const destinationlable = matchelement.querySelector(".refereename");
     let refereenametext = match.refereename || "";
