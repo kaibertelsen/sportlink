@@ -868,7 +868,7 @@ function makeMatchWrapper(nodeelement,match,team,grouptype,firstUnplayedMatch){
 
     if (grouptype === "location") {
     // Lokasjon vises allerede på gruppenivå – kun vis felt
-    locationLabel.textContent = fieldName;
+    locationLabel.textContent = "Bane: "+fieldName;
     } else {
     // Sett sammen lokasjon + felt hvis felt finnes
     const locationText = fieldName
