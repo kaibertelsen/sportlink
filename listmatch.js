@@ -83,16 +83,19 @@ function matchMainListSelectorChange(){
     
 }
 
-function filterMatchesBySelector(matchs) {
-    const selector = document.getElementById("matchMainListSelector");
+function filterMatchesByStatus(matchs) {
+    //Finne filterknappen som er aktive
+    const activeFilterbutton = document.querySelectorAll('#matchlistFilter .matchlist-tab .active');
+    let filtervalue = activeDayFilter.dataset.filter;
 
-    if (selector.value === "") {
+
+    if (filtervalue === "") {
         // Vise alle kamper
         return matchs;
-    } else if (selector.value === "upcoming") {
+    } else if (filtervalue === "upcoming") {
         // Vise alle kamper som ikke har resultat
         return matchs.filter(match => !match.goalteam1 && !match.goalteam2);
-    } else if (selector.value === "ongoing") {
+    } else if (filtervalue === "ongoing") {
         // Vise alle kamper som har startet, men ikke har resultat
         return matchs.filter(match => {
             const now = new Date();
@@ -107,7 +110,7 @@ function filterMatchesBySelector(matchs) {
         
         
         
-    } else if (selector.value === "played") {
+    } else if (filtervalue === "played") {
         // Vise alle kamper som det foreligger resultat på
         return matchs.filter(match => 
             match.goalteam1 !== undefined && 
@@ -673,17 +676,15 @@ function calculateMatchResultBySett(matchs) {
 }
 
 function listmatchLayoutGrid(data) {
+
+    //divisjonsfilter
     const activeDivision = getActiveDivisionFilter();
     let filteredMatches = activeDivision === "" ? data : data.filter(match => match.division === activeDivision);
     
-    //sjekke om selector er aktiv
-    const mselector = document.getElementById("matchMainListSelector");
-
-    if(mselector){
-        filteredMatches = filterMatchesBySelector(filteredMatches);
-    }
-
-    //sjekke om noen dagknapper er aktive
+    //spillt status filter
+    filteredMatches = filterMatchesByStatus(filteredMatches);
+    
+    //Dagknapper filter
     filteredMatches = filterDaybuttons(filteredMatches);
 
     let matchs = sortDateArray(filteredMatches, "time");
@@ -1194,8 +1195,6 @@ function initDayFilterToggle() {
     document.addEventListener('touchstart', handleOutsideInteraction);
 }
   
-  
-  
 function initMatchlistFilter(onFilterChange) {
     const filterButtons = document.querySelectorAll('#matchlistFilter .matchlist-tab');
   
@@ -1208,7 +1207,7 @@ function initMatchlistFilter(onFilterChange) {
   
       });
     });
-  }
+}
   
   
   
