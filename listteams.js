@@ -280,8 +280,8 @@ function listMatchesInTeamView(matchs,team){
 
 
 function loadLocationSelector(Matchs,locationSelector) {
-    
-    let uniclocations = findUnicLocations(data);
+
+    let uniclocations = findUnicLocations(Matchs);
 
     // Tøm eksisterende options
     locationSelector.innerHTML = "";
