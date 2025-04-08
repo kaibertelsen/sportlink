@@ -1157,16 +1157,18 @@ function initDayFilterToggle() {
     const originalBottom = -53;
     const expandedBottom = -103;
   
-    const originalPaddingTop = 10; // ← oppdatert her
-    const expandedPaddingTop = originalPaddingTop + (expandedHeight - originalHeight); // = 60
+    // Hent faktisk padding-top fra stil
+    const computedStyle = window.getComputedStyle(matchlistholder);
+    const originalPaddingTop = parseInt(computedStyle.paddingTop) || 0;
   
-    // Startstil og animasjon
+    const expandedPaddingTop = originalPaddingTop + (expandedHeight - originalHeight);
+  
+    // Sett overgang og behold eksisterende padding-verdi
     dayFilterWrapper.style.height = `${originalHeight}px`;
     dayFilterWrapper.style.bottom = `${originalBottom}px`;
     dayFilterWrapper.style.overflow = 'hidden';
     dayFilterWrapper.style.transition = 'height 300ms ease, bottom 300ms ease';
   
-    matchlistholder.style.paddingTop = `${originalPaddingTop}px`;
     matchlistholder.style.transition = 'padding 300ms ease';
   
     const collapse = () => {
@@ -1196,7 +1198,8 @@ function initDayFilterToggle() {
     document.addEventListener('click', handleOutsideInteraction);
     document.addEventListener('mousedown', handleOutsideInteraction);
     document.addEventListener('touchstart', handleOutsideInteraction);
-  }
+}
+  
   
   
 function initMatchlistFilter() {
