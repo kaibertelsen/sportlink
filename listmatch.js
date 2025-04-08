@@ -1305,8 +1305,6 @@ function resetMatchlistFilter() {
     // Sett "Alle"-knappen som aktiv
     allButton.classList.add('active');
   
-    // Oppdater kampvisning
-    listmatch(matches);
   }
   
   
