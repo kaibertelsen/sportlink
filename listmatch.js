@@ -1171,10 +1171,10 @@ function initDayFilterToggle() {
   
     let isExpanded = false;
   
-    const originalHeight = 63;
+    const originalHeight = 53;
     const expandedHeight = 103;
   
-    const originalBottom = -63;
+    const originalBottom = -53;
     const expandedBottom = -103;
   
     // Hent faktisk padding-top fra stil
@@ -1224,6 +1224,9 @@ function initDayFilterToggle() {
   
 function initMatchlistFilter() {
     const filterButtons = document.querySelectorAll('#matchlistFilter .matchlist-tab');
+    const statusfilterMatchLable = document.getElementById("statusfilterMatchLable");
+    statusfilterMatchLable.style.display = "none";
+
     let isInitialSetup = true;
   
     filterButtons.forEach(button => {
@@ -1237,6 +1240,8 @@ function initMatchlistFilter() {
         // Ikke kjør listmatch på første oppsett
         if (!isInitialSetup) {
           listmatch(matches); // 👈 din funksjon her
+          statusfilterMatchLable.style.display = "none";
+
         }
       });
     });
