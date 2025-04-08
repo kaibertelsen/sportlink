@@ -1192,19 +1192,31 @@ function initDayFilterToggle() {
     document.addEventListener('touchstart', handleOutsideInteraction);
 }
   
-function initMatchlistFilter(onFilterChange) {
+function initMatchlistFilter() {
     const filterButtons = document.querySelectorAll('#matchlistFilter .matchlist-tab');
+    let isInitialSetup = true;
   
     filterButtons.forEach(button => {
       button.addEventListener('click', () => {
+        // Fjern aktiv status fra alle
         filterButtons.forEach(btn => btn.classList.remove('active'));
+  
+        // Sett valgt knapp som aktiv
         button.classList.add('active');
   
-        const selectedFilter = button.getAttribute('data-filter');
-  
+        // Ikke kjør listmatch på første oppsett
+        if (!isInitialSetup) {
+          listmatch(matches); // 👈 din funksjon her
+        }
       });
     });
-}
+  
+    // Etter at event listeners er satt opp, slå av init-modus
+    setTimeout(() => {
+      isInitialSetup = false;
+    }, 0);
+  }
+  
   
   
   
