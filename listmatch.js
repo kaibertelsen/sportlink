@@ -90,9 +90,10 @@ function filterMatchesByStatus(matchs) {
 
     const filterValue = activeFilterButton.getAttribute('data-filter');
     const statusfilterMatchLable = document.getElementById("statusfilterMatchLable");
-    statusfilterMatchLable.textContent = activeFilterButton.textContent;
+    
 
     if (filterValue === "all") {
+        statusfilterMatchLable.style.display = "none"; // Skjul etikett for "Alle kamper"
         // Vis alle kamper
         return matchs;
     } else if (filterValue === "upcoming") {
@@ -1046,7 +1047,7 @@ function toggleMatchList(rowelement, closeopengroupbutton) {
         if (filterValue !== "all") {
         statusfilterMatchLable.style.display = "block";
         }
-        
+
       const fullHeight = matchlist.scrollHeight + "px";
   
       matchlist.style.height = fullHeight;
