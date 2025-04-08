@@ -1000,8 +1000,8 @@ function markMatchIfPlaying(match) {
       // Standard spilletid: 30 minutter
       let timePlaying = 30;
   
-      if (match.minutesPerPeriod && match.numberOfPeriods) {
-        timePlaying = Number(match.minutesPerPeriod) * Number(match.numberOfPeriods);
+      if (match.minutesperperiod && match.numberofperiods) {
+        timePlaying = Number(match.minutesperperiod) * Number(match.numberofperiods);
       }
   
       return nowLocal > matchDateTime && timeDifference <= timePlaying;
@@ -1010,7 +1010,7 @@ function markMatchIfPlaying(match) {
       console.error("Feil ved parsing av kampdato:", err);
       return false;
     }
-  }
+}
   
 
 function toggleMatchList(rowelement, closeopengroupbutton) {
