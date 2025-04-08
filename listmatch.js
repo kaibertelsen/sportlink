@@ -104,9 +104,8 @@ function filterMatchesByStatus(matchs) {
         statusfilterMatchLable.textContent = "Pågående kamper";
         // Kamper som har startet, men ikke har resultat
         return matchs.filter(match => {
-            const now = new Date();
-            const matchTime = new Date(match.time);
-            return matchTime <= now && !match.goalteam1 && !match.goalteam2;
+            const isMatchPlaying = markMatchIfPlaying(match);
+            return isMatchPlaying;
         });
     } else if (filterValue === "played") {
         statusfilterMatchLable.textContent = "Spilte kamper";
@@ -913,49 +912,17 @@ function makeMatchWrapper(nodeelement,match,team,grouptype,firstUnplayedMatch){
             }
 
             
-            // Sjekk om tiden nå er forbi kampens tid
-            const now = new Date(); // Nåværende tid
-
-            const matchTimeParts = match.time.split("T"); // Deler dato og tid
-            const matchDate = matchTimeParts[0]; // Hent datoen (YYYY-MM-DD)
-            const matchTime = matchTimeParts[1].split(".")[0]; // Hent klokkeslettet (HH:mm:ss)
-
-            // Bygg en dato- og tidsstreng uten å ta hensyn til tidssone
-            const matchDateTime = new Date(`${matchDate}T${matchTime}`); // Lokal dato/tid uten Z
-
-            // Nåværende tid (uten tidssone-manipulering)
-            const nowLocal = new Date(
-                now.getFullYear(),
-                now.getMonth(),
-                now.getDate(),
-                now.getHours(),
-                now.getMinutes(),
-                now.getSeconds()
-            );
+            let isMatchPlaying = markMatchIfPlaying(match);
 
             // Finn playIcon og oppdater basert på tiden
             const playIcon = matchelement.querySelector(".playicon");
 
-            // Beregn tidsdifferanse i minutter
-            const timeDifference = (nowLocal - matchDateTime) / (1000 * 60); // Forskjell i minutter
-
-            let timePlaying = 30;
-            //sjekke om match inneholder minutesPerPeriod og numberOfPeriods
-            if(match.minutesPerPeriod && match.numberOfPeriods){
-                timePlaying = Number(match.minutesPerPeriod) * Number(match.numberOfPeriods);
-            }
-
-            if (nowLocal > matchDateTime && timeDifference <= timePlaying) {
-                // Hvis kampen har startet, men det har gått mindre enn spilletid
-                if (playIcon) {
+            if (isMatchPlaying) {
                     playIcon.style.display = "flex";
-                }
-            } else {
-                // Hvis tiden er over 30 minutter siden kampstart eller kampen ikke har startet
-                if (playIcon) {
+            }else {
                     playIcon.style.display = "none";
-                }
             }
+            
     }
     //markerer farge på resultatene
     makeColorOnResult(team,match,resultwrapper);
@@ -993,6 +960,47 @@ function makeColorOnResult(team, match, resultLabel) {
         }
     }
 }
+
+function markMatchIfPlaying(match) {
+    const now = new Date();
+  
+    if (!match.time) return false;
+  
+    try {
+      // Del opp tidspunktet fra ISO-streng
+      const [datePart, timePart] = match.time.split("T");
+      const cleanTime = timePart.split(".")[0]; // Fjerner evt. millisekunder
+  
+      const matchDateTime = new Date(`${datePart}T${cleanTime}`);
+  
+      // Lag en ny Date uten tidssone-manipulering for nå
+      const nowLocal = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        now.getHours(),
+        now.getMinutes(),
+        now.getSeconds()
+      );
+  
+      // Forskjell i minutter
+      const timeDifference = (nowLocal - matchDateTime) / (1000 * 60);
+  
+      // Standard spilletid: 30 minutter
+      let timePlaying = 30;
+  
+      if (match.minutesPerPeriod && match.numberOfPeriods) {
+        timePlaying = Number(match.minutesPerPeriod) * Number(match.numberOfPeriods);
+      }
+  
+      return nowLocal > matchDateTime && timeDifference <= timePlaying;
+  
+    } catch (err) {
+      console.error("Feil ved parsing av kampdato:", err);
+      return false;
+    }
+  }
+  
 
 function toggleMatchList(rowelement, closeopengroupbutton) {
     const matchlist = rowelement.querySelector(".matchlist");
