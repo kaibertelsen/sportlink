@@ -1185,14 +1185,16 @@ function initDayFilterToggle() {
   
     const collapse = () => {
       isExpanded = false;
-      let exsize = 0;
+      let exsizeM = 0;
+      let exsizeP = 0;
       if(statusfilterMatchLable.textContent !== ""){
-        exsize = 15;
+        exsizeP = 15;
+        exsizeM = -15;
       }
       
-      dayFilterWrapper.style.height = `${originalHeight+exsize}px`;
-      dayFilterWrapper.style.bottom = `${originalBottom+exsize}px`;
-      matchlistholder.style.paddingTop = `${originalPaddingTop+exsize}px`;
+      dayFilterWrapper.style.height = `${originalHeight+exsizeP}px`;
+      dayFilterWrapper.style.bottom = `${originalBottom+exsizeM}px`;
+      matchlistholder.style.paddingTop = `${originalPaddingTop+exsizeP}px`;
       
     };
   
