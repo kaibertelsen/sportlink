@@ -1128,7 +1128,7 @@ function loadDayfilter(data) {
 
 function filterDaybuttons(data) {
     // Hvis filteret er tomt eller ikke satt, returner alle kamper
-    if (!activeDayFilter || activeDayFilter === "") return matches;
+    if (!activeDayFilter || activeDayFilter === "") return data;
   
     // Formatér valgt dato til YYYY-MM-DD
     const filterDate = new Date(activeDayFilter).toISOString().split('T')[0];
