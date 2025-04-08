@@ -1212,10 +1212,10 @@ function initDayFilterToggle() {
       // Toggle mellom å vise og skjule filteret
         if (isExpanded) {
             // Hvis filteret er åpent, lukk det
-            statusfilterMatchLable.style.display = "block";
+            statusfilterMatchLable.style.display = "none";
         } else {
             // Hvis filteret er lukket, skjul det
-            statusfilterMatchLable.style.display = "none";
+            statusfilterMatchLable.style.display = "block";
         }
       dayFilterWrapper.style.height = isExpanded ? `${expandedHeight}px` : `${originalHeight+exsizeP}px`;
       dayFilterWrapper.style.bottom = isExpanded ? `${expandedBottom}px` : `${originalBottom+exsizeM}px`;
