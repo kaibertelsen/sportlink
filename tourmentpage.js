@@ -186,6 +186,9 @@ function loadTourment(tournamentid){
     //hente ut aktuelle dager for filteret og laste det
     loadDayfilter(makeObjectFromAirtableJSON(data, "matchjson"));
 
+    //resetter filerert spilte, kommende osv.
+    resetMatchlistFilter();
+
     activetournament = data
     loadTourmentHeader(data);
     listDivision(data);

@@ -1216,6 +1216,22 @@ function initMatchlistFilter() {
       isInitialSetup = false;
     }, 0);
   }
+
+function resetMatchlistFilter() {
+    const filterButtons = document.querySelectorAll('#matchlistFilter .matchlist-tab');
+    const allButton = document.querySelector('#matchlistFilter .matchlist-tab[data-filter="all"]');
+  
+    if (!allButton) return;
+  
+    // Fjern .active fra alle
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+  
+    // Sett "Alle"-knappen som aktiv
+    allButton.classList.add('active');
+  
+    // Oppdater kampvisning
+    listmatch(matches);
+  }
   
   
   
