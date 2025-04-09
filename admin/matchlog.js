@@ -12,34 +12,42 @@ function loadMatchLog(rowelement, match) {
     const logteam = newmatchloggrow.querySelector('.logteam');
     const logeventtype = newmatchloggrow.querySelector('.logeventtype');
     const logplayer = newmatchloggrow.querySelector('.logplayer');
+    const logplayerDropdown = newmatchloggrow.querySelector('.logplayer-dropdown');
   
+    // Last inn select-innhold
     loadLogPeriodSelector(logperiod, match);
     loadLogTeamSelector(logteam, match);
     loadLogSportEvents(logeventtype, match);
   
-    // Nullstill spillerliste
-    logplayer.innerHTML = "";
-  
-    // Når lag velges, last inn spillere
+    // Når lag velges – last spillere og sett opp autocomplete
     logteam.addEventListener('change', () => {
       const selectedTeamId = logteam.value;
-  
-      // Tøm gammel spillerliste
-      logplayer.innerHTML = "";
+      logplayer.value = "";
+      logplayer.dataset.airtableId = "";
+      logplayerDropdown.innerHTML = "";
   
       if (!selectedTeamId) return;
   
       const players = findPlayersInMatch(match, selectedTeamId);
   
-      players.forEach(player => {
-        const option = document.createElement("option");
-        option.value = player.name;
-        option.textContent = `${player.nr ? player.nr + " - " : ""}${player.name}`;
-        logplayer.appendChild(option);
+      initLogPlayerAutocomplete(logplayer, logplayerDropdown, players, (name, inputField) => {
+        console.log("Oppretter ny spiller:", name);
+  
+        // Lokal spiller-oppretting (kan erstattes med fetch til server)
+        const newPlayer = {
+          name,
+          nr: "",
+          team: selectedTeamId,
+          airtable: "" // oppdateres når opprettet på server
+        };
+  
+        // Midlertidig ID-markør
+        inputField.dataset.airtableId = "ny_spiller_lokal";
+  
+        // TODO: Legg til logikk for faktisk oppretting i Airtable/server
       });
     });
-  }
-  
+}
   
 function loadLogPeriodSelector(selector, match) {
     const periods = match.numberOfPeriods || 2;
@@ -139,6 +147,66 @@ function findPlayersInMatch(match, teamid) {
     if (!selectedTeam || !Array.isArray(selectedTeam.player)) return [];
   
     return selectedTeam.player.sort((a, b) => a.name.localeCompare(b.name));
+}
+  
+
+function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, onNewPlayerCallback) {
+    inputField.dataset.airtableId = ""; // nullstill ved nytt valg
+  
+    inputField.addEventListener('input', () => {
+      const searchTerm = inputField.value.toLowerCase().trim();
+      dropdownContainer.innerHTML = "";
+  
+      if (!searchTerm) {
+        dropdownContainer.style.display = "none";
+        return;
+      }
+  
+      const filtered = allPlayers.filter(player =>
+        player.name.toLowerCase().includes(searchTerm)
+      );
+  
+      if (filtered.length === 0) {
+        dropdownContainer.style.display = "none";
+        return;
+      }
+  
+      filtered.forEach(player => {
+        const option = document.createElement('div');
+        option.textContent = `${player.nr ? player.nr + " - " : ""}${player.name}`;
+        option.style.padding = "8px";
+        option.style.cursor = "pointer";
+  
+        option.addEventListener('click', () => {
+          inputField.value = player.name;
+          inputField.dataset.airtableId = player.airtable || ""; // lagre spillerens ID
+          dropdownContainer.style.display = "none";
+        });
+  
+        dropdownContainer.appendChild(option);
+      });
+  
+      dropdownContainer.style.display = "block";
+    });
+  
+    // Klikk utenfor → skjul dropdown
+    document.addEventListener('click', (e) => {
+      if (!dropdownContainer.contains(e.target) && e.target !== inputField) {
+        dropdownContainer.style.display = "none";
+      }
+    });
+  
+    // Hvis bruker forlater feltet uten å velge – vurder å opprette spiller
+    inputField.addEventListener('blur', () => {
+      setTimeout(() => {
+        const name = inputField.value.trim();
+        const id = inputField.dataset.airtableId;
+  
+        if (name && !id && typeof onNewPlayerCallback === 'function') {
+          onNewPlayerCallback(name, inputField);
+        }
+      }, 200); // Delay for å unngå konflikt med klikk på dropdown
+    });
   }
   
   
