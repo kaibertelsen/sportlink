@@ -17,6 +17,10 @@ function loadMatchLog(rowelement, match) {
     const logeventtype = newmatchloggrow.querySelector('.logeventtype');
     loadLogSportEvents(logeventtype, match);
 
+    const logplayer = newmatchloggrow.querySelector('.logplayer');
+    //finne alle registrerte spillere på disse lagene
+    findplayersInMatch(match);
+
 }
   
 function loadLogPeriodSelector(selector, match) {
@@ -108,7 +112,11 @@ function loadLogSportEvents(selector, match) {
       option.textContent = event.lable; // NB: "lable" som i original JSON
       selector.appendChild(option);
     });
-  }
+}
   
-  
+function findplayersInMatch(match) {
+
+console.log("findplayersInMatch", match.team1jason);
+
+}
   
