@@ -26,7 +26,7 @@ function loadMatchLog(rowelement, match) {
     logteam.addEventListener('change', () => {
       const selectedTeamId = logteam.value;
       logplayer.value = "";
-      logplayer.dataset.airtableId = "";
+      logplayer.dataset.airtable = "";
       logplayerDropdown.innerHTML = "";
   
       if (!selectedTeamId) return;
@@ -47,7 +47,7 @@ function loadMatchLog(rowelement, match) {
         };
   
         // Midlertidig ID-markør
-        inputField.dataset.airtableId = "ny_spiller_lokal";
+        inputField.dataset.airtable = "ny_spiller_lokal";
   
         // TODO: Legg til logikk for faktisk oppretting i Airtable/server
       });
@@ -156,7 +156,7 @@ function findPlayersInMatch(match, teamid) {
   
 
 function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, onNewPlayerCallback) {
-    inputField.dataset.airtableId = ""; // nullstill ved nytt valg
+    inputField.dataset.airtable = ""; // nullstill ved nytt valg
   
     inputField.addEventListener('input', () => {
       const searchTerm = inputField.value.toLowerCase().trim();
@@ -207,7 +207,7 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
     inputField.addEventListener('blur', () => {
       setTimeout(() => {
         const name = inputField.value.trim();
-        const id = inputField.dataset.airtableId;
+        const id = inputField.dataset.airtable;
   
         if (name && !id && typeof onNewPlayerCallback === 'function') {
           onNewPlayerCallback(name, inputField);
