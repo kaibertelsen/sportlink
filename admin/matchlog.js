@@ -15,7 +15,9 @@ function loadMatchLog(rowelement, match) {
     loadLogTeamSelector(logteam, match);
 
     //finne ut hvilke sport det er
-     console.log(activetournament);
+    const parsedArray = parseSportEventLog(activetournament.sporteventsportlogjson);
+    console.log(parsedArray);
+    
 
     
 }
@@ -67,3 +69,15 @@ function loadLogTeamSelector(selector, match) {
 
 
 }
+
+function parseSportEventLog(rawArray) {
+    try {
+      // Array med tekst-JSON → parse hver enkelt rad til objekt
+      return rawArray.map(item => JSON.parse(item));
+    } catch (error) {
+      console.error("Feil ved parsing av sporteventsportlogjson:", error);
+      return [];
+    }
+  }
+  
+  
