@@ -203,7 +203,7 @@ function controllMatch(data1, data2) {
 
         // Omdøp nøkler
         validatedMatches.push({
-            time: `${parseDateSmart(match.Dato).toISOString().split("T")[0]} ${match.Klokkeslett}`,
+            time:parseDateSmart(match.Dato, match.Klokkeslett),
             divisionname: match.Divisjon || "",
             groupname: match.Gruppe || "",
             team1name: match.Lag1 || "",
