@@ -762,14 +762,10 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         const matchnr = rowelement.querySelector(".matchnr");
         matchnr.textContent = match.nr || "-";
 
-
-        
         //plaseholdertxet1
         const placeholdertext1 = rowelement.querySelector(".team1placeholder");
         placeholdertext1.parentElement.style.display = "none";
         
-       
-
         //plaseholdertxet1
         const placeholdertext2 = rowelement.querySelector(".team2placeholder");
         placeholdertext2.parentElement.style.display = "none";
@@ -1007,6 +1003,9 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             }
         };
 
+        //last inn kamplogg
+        loadMatchLog(rowelement,match);
+
     return rowelement
 
 
@@ -1137,7 +1136,6 @@ function teamdeletedresponse(data) {
     gTeam = gTeam.filter(item => item.airtable !== data.fields.airtable);
 }
 
-
 function createNewMatch(){
 
   // Finn elementet som skal klones
@@ -1190,7 +1188,6 @@ function removeEmtyValuForSave(array) {
         })
     );
 }
-
 
 function createNewTeam(){
 
