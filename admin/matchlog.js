@@ -14,11 +14,12 @@ function loadMatchLog(rowelement, match) {
     const logteam = newmatchloggrow.querySelector('.logteam');
     loadLogTeamSelector(logteam, match);
 
-    //finne ut hvilke sport det er
     const logeventtype = newmatchloggrow.querySelector('.logeventtype');
     loadLogSportEvents(logeventtype, match);
 
-    
+
+
+
    
     
 
@@ -30,6 +31,12 @@ function loadLogPeriodSelector(selector, match) {
   
     // Tøm gamle valg
     selector.innerHTML = "";
+
+    // Velg periode
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = "Velg periode";
+    selector.appendChild(option);
   
     // Legg til ordinære omganger: 1. omgang, 2. omgang, osv.
     for (let i = 1; i <= periods; i++) {
@@ -40,25 +47,27 @@ function loadLogPeriodSelector(selector, match) {
     }
   
     // Ekstraomgang
-    if (match.overtime) {
       const option = document.createElement("option");
       option.value = "OT";
       option.textContent = "Ekstraomgang";
       selector.appendChild(option);
-    }
-  
-    // Straffekonk
-    if (match.shootout) {
+   
       const option = document.createElement("option");
       option.value = "SO";
       option.textContent = "Straffekonk";
       selector.appendChild(option);
-    }
+
 }
 
 function loadLogTeamSelector(selector, match) {
     // Tøm gamle valg
     selector.innerHTML = "";
+
+    // Velg lag
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = "Velg lag";
+    selector.appendChild(option);
   
     // lagene id finnes i match.team1 og match.team2 lagnavn finnes i match.team1name og match.team2name
     const team1 = document.createElement("option");
@@ -92,6 +101,12 @@ function loadLogSportEvents(selector, match) {
   
     // Tøm gamle valg
     selector.innerHTML = "";
+
+    // Velg event
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = "Velg hendelse";
+    selector.appendChild(option);
   
     // Legg til options basert på lable og airtable
     eventsForSport.forEach(event => {
