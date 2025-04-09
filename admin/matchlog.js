@@ -22,36 +22,38 @@ function loadMatchLog(rowelement, match) {
     logplayer.disabled = true;
 
   
-    // Når lag velges – last spillere og sett opp autocomplete
     logteam.addEventListener('change', () => {
-      const selectedTeamId = logteam.value;
-      logplayer.value = "";
-      logplayer.dataset.airtable = "";
-      logplayerDropdown.innerHTML = "";
-  
-      if (!selectedTeamId) return;
-      logplayer.disabled = false;
-
-  
-      const players = findPlayersInMatch(match, selectedTeamId);
-  
-      initLogPlayerAutocomplete(logplayer, logplayerDropdown, players, (name, inputField) => {
-        console.log("Oppretter ny spiller:", name);
-  
-        // Lokal spiller-oppretting (kan erstattes med fetch til server)
-        const newPlayer = {
-          name,
-          nr: "",
-          team: selectedTeamId,
-          airtable: "" // oppdateres når opprettet på server
-        };
-  
-        // Midlertidig ID-markør
-        inputField.dataset.airtable = "ny_spiller_lokal";
-  
-        // TODO: Legg til logikk for faktisk oppretting i Airtable/server
+        const selectedTeamId = logteam.value;
+        logplayer.value = "";
+        logplayer.dataset.airtable = "";
+        logplayerDropdown.innerHTML = "";
+      
+        if (!selectedTeamId) {
+          logplayer.disabled = true;
+          return;
+        }
+      
+        logplayer.disabled = false;
+      
+        const players = findPlayersInMatch(match, selectedTeamId);
+      
+        initLogPlayerAutocomplete(logplayer, logplayerDropdown, players, (name, inputField) => {
+          if (inputField.dataset.airtable) return; // Ikke opprett spiller hvis ID allerede finnes
+      
+          console.log("Oppretter ny spiller:", name);
+      
+          const newPlayer = {
+            name,
+            nr: "",
+            team: selectedTeamId,
+            airtable: ""
+          };
+      
+          inputField.dataset.airtable = "ny_spiller_lokal";
+          // TODO: legg til logikk for faktisk oppretting i Airtable/server
+        });
       });
-    });
+      
 }
   
 function loadLogPeriodSelector(selector, match) {
@@ -156,11 +158,12 @@ function findPlayersInMatch(match, teamid) {
   
 
 function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, onNewPlayerCallback) {
-    inputField.dataset.airtable = ""; // nullstill ved nytt valg
+    inputField.dataset.airtable = "";
   
     inputField.addEventListener('input', () => {
       const searchTerm = inputField.value.toLowerCase().trim();
       dropdownContainer.innerHTML = "";
+      inputField.dataset.airtable = ""; // Nullstill ved ny input
   
       if (!searchTerm) {
         dropdownContainer.style.display = "none";
@@ -186,7 +189,7 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
   
         option.addEventListener('click', () => {
           inputField.value = player.name;
-          inputField.dataset.airtableId = player.airtable || ""; // lagre spillerens ID
+          inputField.dataset.airtable = player.airtable || "";
           dropdownContainer.style.display = "none";
         });
   
@@ -196,25 +199,25 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
       dropdownContainer.style.display = "block";
     });
   
-    // Klikk utenfor → skjul dropdown
     document.addEventListener('click', (e) => {
       if (!dropdownContainer.contains(e.target) && e.target !== inputField) {
         dropdownContainer.style.display = "none";
       }
     });
   
-    // Hvis bruker forlater feltet uten å velge – vurder å opprette spiller
     inputField.addEventListener('blur', () => {
       setTimeout(() => {
         const name = inputField.value.trim();
         const id = inputField.dataset.airtable;
   
+        // Ikke opprett spiller hvis ID allerede finnes (dvs. valgt fra listen)
         if (name && !id && typeof onNewPlayerCallback === 'function') {
           onNewPlayerCallback(name, inputField);
         }
-      }, 200); // Delay for å unngå konflikt med klikk på dropdown
+      }, 200);
     });
   }
+  
   
   
   
