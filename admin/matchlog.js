@@ -19,7 +19,8 @@ function loadMatchLog(rowelement, match) {
 
     const logplayer = newmatchloggrow.querySelector('.logplayer');
     //finne alle registrerte spillere på disse lagene
-    findplayersInMatch(match);
+    let players = findPlayersInMatch(match);
+    console.log("spillere i kampen", players);
 
 }
   
@@ -114,9 +115,17 @@ function loadLogSportEvents(selector, match) {
     });
 }
   
-function findplayersInMatch(match) {
-
-console.log("findplayersInMatch", match.team1jason);
-
-}
+function findPlayersInMatch(match) {
+    const team1Players = Array.isArray(match.team1jason?.player) ? match.team1jason.player : [];
+    const team2Players = Array.isArray(match.team2jason?.player) ? match.team2jason.player : [];
+  
+    // Slå sammen og sorter
+    const allPlayers = [...team1Players, ...team2Players];
+  
+    // Sorter alfabetisk på navn
+    allPlayers.sort((a, b) => a.name.localeCompare(b.name));
+  
+    return allPlayers;
+  }
+  
   
