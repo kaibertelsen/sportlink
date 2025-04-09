@@ -17,13 +17,6 @@ function loadMatchLog(rowelement, match) {
     const logeventtype = newmatchloggrow.querySelector('.logeventtype');
     loadLogSportEvents(logeventtype, match);
 
-
-
-
-   
-    
-
-    
 }
   
 function loadLogPeriodSelector(selector, match) {
@@ -33,10 +26,10 @@ function loadLogPeriodSelector(selector, match) {
     selector.innerHTML = "";
 
     // Velg periode
-    const option = document.createElement("option");
-    option.value = "";
-    option.textContent = "Velg periode";
-    selector.appendChild(option);
+    const option1 = document.createElement("option");
+    option1.value = "";
+    option1.textContent = "Velg periode";
+    selector.appendChild(option1);
   
     // Legg til ordinære omganger: 1. omgang, 2. omgang, osv.
     for (let i = 1; i <= periods; i++) {
@@ -47,15 +40,15 @@ function loadLogPeriodSelector(selector, match) {
     }
   
     // Ekstraomgang
-      const option = document.createElement("option");
-      option.value = "OT";
-      option.textContent = "Ekstraomgang";
-      selector.appendChild(option);
+      const option2 = document.createElement("option");
+      option2.value = "OT";
+      option2.textContent = "Ekstraomgang";
+      selector.appendChild(option2);
    
-      const option = document.createElement("option");
-      option.value = "SO";
-      option.textContent = "Straffekonk";
-      selector.appendChild(option);
+      const option3 = document.createElement("option");
+      option3.value = "SO";
+      option3.textContent = "Straffekonk";
+      selector.appendChild(option3);
 
 }
 
