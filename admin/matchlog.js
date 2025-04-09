@@ -13,48 +13,76 @@ function loadMatchLog(rowelement, match) {
     const logeventtype = newmatchloggrow.querySelector('.logeventtype');
     const logplayer = newmatchloggrow.querySelector('.logplayer');
     const logplayerDropdown = newmatchloggrow.querySelector('.logplayer-dropdown');
+    const logassistplayer = newmatchloggrow.querySelector('.logassistplayer');
   
-    // Last inn select-innhold
+    // Lag dropdown for assist hvis ikke finnes
+    let logassistDropdown = logassistplayer.parentElement.querySelector('.logplayer-dropdown');
+    if (!logassistDropdown) {
+      logassistDropdown = document.createElement('div');
+      logassistDropdown.className = 'logplayer-dropdown';
+      logassistDropdown.style.position = 'absolute';
+      logassistDropdown.style.top = '100%';
+      logassistDropdown.style.left = '0';
+      logassistDropdown.style.right = '0';
+      logassistDropdown.style.display = 'none';
+      logassistplayer.parentElement.style.position = 'relative';
+      logassistplayer.parentElement.appendChild(logassistDropdown);
+    }
+  
     loadLogPeriodSelector(logperiod, match);
     loadLogTeamSelector(logteam, match);
     loadLogSportEvents(logeventtype, match);
-
+  
     logplayer.disabled = true;
-
+    logassistplayer.disabled = true;
   
     logteam.addEventListener('change', () => {
-        const selectedTeamId = logteam.value;
-        logplayer.value = "";
-        logplayer.dataset.airtable = "";
-        logplayerDropdown.innerHTML = "";
-      
-        if (!selectedTeamId) {
-          logplayer.disabled = true;
+      const selectedTeamId = logteam.value;
+  
+      // Nullstill begge felter
+      [logplayer, logassistplayer].forEach(input => {
+        input.value = "";
+        input.dataset.airtable = "";
+      });
+      logplayerDropdown.innerHTML = "";
+      logassistDropdown.innerHTML = "";
+  
+      if (!selectedTeamId) {
+        logplayer.disabled = true;
+        logassistplayer.disabled = true;
+        return;
+      }
+  
+      logplayer.disabled = false;
+      logassistplayer.disabled = false;
+  
+      const players = findPlayersInMatch(match, selectedTeamId);
+  
+      // Aktiver autocomplete for begge felter
+      initLogPlayerAutocomplete(logplayer, logplayerDropdown, players, (name, inputField) => {
+        const confirmed = confirm(`Vil du opprette ny spiller "${name}"?`);
+        if (!confirmed) {
+          inputField.value = "";
+          inputField.dataset.airtable = "";
           return;
         }
-      
-        logplayer.disabled = false;
-      
-        const players = findPlayersInMatch(match, selectedTeamId);
-      
-        initLogPlayerAutocomplete(logplayer, logplayerDropdown, players, (name, inputField) => {
-          if (inputField.dataset.airtable) return; // Ikke opprett spiller hvis ID allerede finnes
-      
-          console.log("Oppretter ny spiller:", name);
-      
-          const newPlayer = {
-            name,
-            nr: "",
-            team: selectedTeamId,
-            airtable: ""
-          };
-      
-          inputField.dataset.airtable = "ny_spiller_lokal";
-          // TODO: legg til logikk for faktisk oppretting i Airtable/server
-        });
+  
+        const newPlayer = {
+          name,
+          nr: "",
+          team: selectedTeamId,
+          airtable: "" // oppdateres når opprettet på server
+        };
+  
+        inputField.dataset.airtable = "ny_spiller_lokal";
+  
+        console.log("Oppretter ny spiller:", name);
+        // TODO: opprett spiller på server og oppdater felt
       });
-      
-}
+  
+      initLogPlayerAutocomplete(logassistplayer, logassistDropdown, players, null); // Kun valg, ikke opprett
+    });
+  }
   
 function loadLogPeriodSelector(selector, match) {
     const periods = match.numberOfPeriods || 2;
@@ -163,7 +191,7 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
     inputField.addEventListener('input', () => {
       const searchTerm = inputField.value.toLowerCase().trim();
       dropdownContainer.innerHTML = "";
-      inputField.dataset.airtable = ""; // Nullstill ved ny input
+      inputField.dataset.airtable = ""; // Nullstill ID
   
       if (!searchTerm) {
         dropdownContainer.style.display = "none";
@@ -210,13 +238,18 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
         const name = inputField.value.trim();
         const id = inputField.dataset.airtable;
   
-        // Ikke opprett spiller hvis ID allerede finnes (dvs. valgt fra listen)
-        if (name && !id && typeof onNewPlayerCallback === 'function') {
+        if (!name || id || typeof onNewPlayerCallback !== 'function') return;
+  
+        const confirmed = confirm(`Vil du opprette ny spiller "${name}"?`);
+        if (confirmed) {
           onNewPlayerCallback(name, inputField);
+        } else {
+          inputField.value = "";
+          inputField.dataset.airtable = "";
         }
       }, 200);
     });
-  }
+}
   
   
   
