@@ -280,20 +280,28 @@ function controllMatch(data1, data2) {
 }
 
 function parseDateSmart(dateString) {
-    if (typeof dateString === "string" && dateString.includes(".")) {
+    if (typeof dateString !== "string" || (!dateString.includes(".") && !dateString.includes("/"))) {
+      return ""; // Ikke gyldig format
+    }
+  
+    if (dateString.includes(".")) {
       // Norsk format: DD.MM.YYYY
       const parts = dateString.split(".");
       if (parts.length === 3) {
         const day = parseInt(parts[0], 10);
-        const month = parseInt(parts[1], 10) - 1; // 0-indeksert
+        const month = parseInt(parts[1], 10) - 1;
         const year = parseInt(parts[2], 10);
-        return new Date(year, month, day);
+        const parsedDate = new Date(year, month, day);
+        return isNaN(parsedDate.getTime()) ? "" : parsedDate;
       }
+      return "";
     }
   
-    // Fallback: standard parsing
-    return new Date(dateString);
-}
+    // Prøv vanlig parsing
+    const parsed = new Date(dateString);
+    return isNaN(parsed.getTime()) ? "" : parsed;
+  }
+  
   
   
 
