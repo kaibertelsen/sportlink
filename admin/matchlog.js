@@ -18,6 +18,9 @@ function loadMatchLog(rowelement, match) {
     loadLogPeriodSelector(logperiod, match);
     loadLogTeamSelector(logteam, match);
     loadLogSportEvents(logeventtype, match);
+
+    logplayer.disabled = true;
+
   
     // Når lag velges – last spillere og sett opp autocomplete
     logteam.addEventListener('change', () => {
@@ -27,6 +30,8 @@ function loadMatchLog(rowelement, match) {
       logplayerDropdown.innerHTML = "";
   
       if (!selectedTeamId) return;
+      logplayer.disabled = false;
+
   
       const players = findPlayersInMatch(match, selectedTeamId);
   
