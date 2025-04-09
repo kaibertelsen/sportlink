@@ -260,7 +260,7 @@ function controllMatch(data1, data2) {
 
         // Omdøp nøkler
         validatedMatches.push({
-            time: `${new Date(match.Dato).toISOString().split("T")[0]} ${match.Klokkeslett}`,
+            time:parseDateSmart(match.Dato, match.Klokkeslett),
             divisionname: match.Divisjon || "",
             groupname: match.Gruppe || "",
             team1name: match.Lag1 || "",
@@ -279,28 +279,49 @@ function controllMatch(data1, data2) {
     return validatedMatches;
 }
 
-function parseDateSmart(dateString) {
-    if (typeof dateString !== "string" || (!dateString.includes(".") && !dateString.includes("/"))) {
-      return ""; // Ikke gyldig format
-    }
+function parseDateSmart(dato, klokke) {
+    // 1. Håndter dato
+    let finalDate;
   
-    if (dateString.includes(".")) {
-      // Norsk format: DD.MM.YYYY
-      const parts = dateString.split(".");
+    if (typeof dato === "string" && dato.includes(".")) {
+      // DD.MM.YYYY → parse manuelt
+      const parts = dato.split(".");
       if (parts.length === 3) {
         const day = parseInt(parts[0], 10);
         const month = parseInt(parts[1], 10) - 1;
         const year = parseInt(parts[2], 10);
-        const parsedDate = new Date(year, month, day);
-        return isNaN(parsedDate.getTime()) ? "" : parsedDate;
+        finalDate = new Date(year, month, day);
       }
-      return "";
+    } else if (typeof dato === "string" && dato.includes("/")) {
+      // MM/DD/YYYY → vanlig parsing
+      finalDate = new Date(dato);
     }
   
-    // Prøv vanlig parsing
-    const parsed = new Date(dateString);
-    return isNaN(parsed.getTime()) ? "" : parsed;
+    // Hvis dato er tom eller ugyldig → bruk dagens dato
+    if (!finalDate || isNaN(finalDate.getTime())) {
+      finalDate = new Date();
+    }
+  
+    // Formatér dato som "DD/MM/YYYY"
+    const day = String(finalDate.getDate()).padStart(2, "0");
+    const month = String(finalDate.getMonth() + 1).padStart(2, "0");
+    const year = finalDate.getFullYear();
+    const dateConverted = `${day}/${month}/${year}`;
+  
+    // 2. Håndter klokkeslett
+    let cleanClock = klokke || "00:00";
+    cleanClock = cleanClock.replace(".", ":");
+  
+    // Hvis klokken er tom etter rensing, sett til 00:00
+    if (!/^\d{1,2}:\d{2}$/.test(cleanClock)) {
+      cleanClock = "00:00";
+    }
+  
+    // 3. Returner format som ISO-dato (YYYY-MM-DD) + klokke
+    const isoDate = `${finalDate.toISOString().split("T")[0]} ${cleanClock}`;
+    return isoDate;
   }
+  
   
   
   
