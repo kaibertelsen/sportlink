@@ -116,16 +116,29 @@ function loadLogSportEvents(selector, match) {
 }
   
 function findPlayersInMatch(match) {
-    const team1Players = Array.isArray(match.team1jason?.player) ? match.team1jason.player : [];
-    const team2Players = Array.isArray(match.team2jason?.player) ? match.team2jason.player : [];
+    const allPlayers = [];
   
-    // Slå sammen og sorter
-    const allPlayers = [...team1Players, ...team2Players];
+    // Gå gjennom hvert lag i team1json
+    if (Array.isArray(match.team1json)) {
+      match.team1json.forEach(team => {
+        if (Array.isArray(team.player)) {
+          allPlayers.push(...team.player);
+        }
+      });
+    }
   
-    // Sorter alfabetisk på navn
-    allPlayers.sort((a, b) => a.name.localeCompare(b.name));
+    // Gå gjennom hvert lag i team2json
+    if (Array.isArray(match.team2json)) {
+      match.team2json.forEach(team => {
+        if (Array.isArray(team.player)) {
+          allPlayers.push(...team.player);
+        }
+      });
+    }
   
-    return allPlayers;
+    // Sorter spillerne alfabetisk på navn
+    return allPlayers.sort((a, b) => a.name.localeCompare(b.name));
   }
+  
   
   
