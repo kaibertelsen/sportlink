@@ -203,7 +203,7 @@ function controllMatch(data1, data2) {
 
         // Omdøp nøkler
         validatedMatches.push({
-            time: `${new Date(match.Dato).toISOString().split("T")[0]} ${match.Klokkeslett}`,
+            time: `${parseDateSmart(match.Dato).toISOString().split("T")[0]} ${match.Klokkeslett}`,
             divisionname: match.Divisjon || "",
             groupname: match.Gruppe || "",
             team1name: match.Lag1 || "",
@@ -211,7 +211,8 @@ function controllMatch(data1, data2) {
             fieldname: match.Bane || "",
             location: match.Plassering || "",
             refereename: match.Dommer || ""
-        });
+          });
+          
     });
 
     // Kontroll for Finalekamper-arket (data2)
@@ -277,6 +278,29 @@ function controllMatch(data1, data2) {
 
     return validatedMatches;
 }
+
+function parseDateSmart(dateString) {
+    if (dateString.includes(".")) {
+      // Norsk format: DD.MM.YYYY → parse manuelt
+      const parts = dateString.split(".");
+      if (parts.length === 3) {
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1;
+        const year = parseInt(parts[2], 10);
+        return new Date(year, month, day);
+      }
+    }
+  
+    // Standard parsing for MM/DD/YYYY, ISO, etc.
+    return new Date(dateString);
+  }
+  
+
+
+
+
+
+
 
 function convertJSONrow(data) {
     try {
