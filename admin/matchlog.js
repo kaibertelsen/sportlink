@@ -167,9 +167,11 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
         return;
       }
   
-      const filtered = allPlayers.filter(player =>
-        player.name.toLowerCase().includes(searchTerm)
-      );
+      const filtered = allPlayers.filter(player => {
+        const nameMatch = player.name?.toLowerCase().includes(searchTerm);
+        const numberMatch = player.nr?.toLowerCase().includes(searchTerm);
+        return nameMatch || numberMatch;
+      });
   
       if (filtered.length === 0) {
         dropdownContainer.style.display = "none";
