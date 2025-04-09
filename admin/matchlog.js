@@ -15,8 +15,11 @@ function loadMatchLog(rowelement, match) {
     loadLogTeamSelector(logteam, match);
 
     //finne ut hvilke sport det er
-    const parsedArray = parseSportEventLog(activetournament.sporteventsportlogjson);
-    console.log(parsedArray);
+    const logeventtype = newmatchloggrow.querySelector('.logeventtype');
+    loadLogSportEvents(logeventtype, match);
+
+    
+   
     
 
     
@@ -78,6 +81,26 @@ function parseSportEventLog(rawArray) {
       console.error("Feil ved parsing av sporteventsportlogjson:", error);
       return [];
     }
+}
+
+function loadLogSportEvents(selector, match) {
+    if (!selector || !activetournament?.sporteventsportlogjson) return;
+  
+    // Parse og sorter events etter norsk label
+    let eventsForSport = parseSportEventLog(activetournament.sporteventsportlogjson)
+      .sort((a, b) => a.lable.localeCompare(b.lable)); // Sorter alfabetisk på norsk tekst
+  
+    // Tøm gamle valg
+    selector.innerHTML = "";
+  
+    // Legg til options basert på lable og airtable
+    eventsForSport.forEach(event => {
+      const option = document.createElement("option");
+      option.value = event.airtable;
+      option.textContent = event.lable; // NB: "lable" som i original JSON
+      selector.appendChild(option);
+    });
   }
+  
   
   
