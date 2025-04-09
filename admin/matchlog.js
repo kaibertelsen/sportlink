@@ -1,28 +1,45 @@
 function loadMatchLog(rowelement, match) {
     const newmatchloggrow = rowelement.querySelector('.matchloggaddrowconteiner');
-
-
-    //sjekke at det er lagt til team 1 og 2
+  
     if (match.team1 === "" || match.team2 === "") {
-        newmatchloggrow.style.display = "none";
-        return;
+      newmatchloggrow.style.display = "none";
+      return;
     }
-
+  
+    newmatchloggrow.style.display = "block";
+  
     const logperiod = newmatchloggrow.querySelector('.logperiod');
-    loadLogPeriodSelector(logperiod, match);
-
     const logteam = newmatchloggrow.querySelector('.logteam');
-    loadLogTeamSelector(logteam, match);
-
     const logeventtype = newmatchloggrow.querySelector('.logeventtype');
-    loadLogSportEvents(logeventtype, match);
-
     const logplayer = newmatchloggrow.querySelector('.logplayer');
-    //finne alle registrerte spillere på disse lagene
-    let players = findPlayersInMatch(match);
-    console.log("spillere i kampen", players);
-
-}
+  
+    loadLogPeriodSelector(logperiod, match);
+    loadLogTeamSelector(logteam, match);
+    loadLogSportEvents(logeventtype, match);
+  
+    // Nullstill spillerliste
+    logplayer.innerHTML = "";
+  
+    // Når lag velges, last inn spillere
+    logteam.addEventListener('change', () => {
+      const selectedTeamId = logteam.value;
+  
+      // Tøm gammel spillerliste
+      logplayer.innerHTML = "";
+  
+      if (!selectedTeamId) return;
+  
+      const players = findPlayersInMatch(match, selectedTeamId);
+  
+      players.forEach(player => {
+        const option = document.createElement("option");
+        option.value = player.name;
+        option.textContent = `${player.nr ? player.nr + " - " : ""}${player.name}`;
+        logplayer.appendChild(option);
+      });
+    });
+  }
+  
   
 function loadLogPeriodSelector(selector, match) {
     const periods = match.numberOfPeriods || 2;
@@ -115,30 +132,15 @@ function loadLogSportEvents(selector, match) {
     });
 }
   
-function findPlayersInMatch(match) {
-    const allPlayers = [];
+function findPlayersInMatch(match, teamid) {
+    const allTeams = [...(match.team1json || []), ...(match.team2json || [])];
+    const selectedTeam = allTeams.find(team => team.airtable === teamid);
   
-    // Gå gjennom hvert lag i team1json
-    if (Array.isArray(match.team1json)) {
-      match.team1json.forEach(team => {
-        if (Array.isArray(team.player)) {
-          allPlayers.push(...team.player);
-        }
-      });
-    }
+    if (!selectedTeam || !Array.isArray(selectedTeam.player)) return [];
   
-    // Gå gjennom hvert lag i team2json
-    if (Array.isArray(match.team2json)) {
-      match.team2json.forEach(team => {
-        if (Array.isArray(team.player)) {
-          allPlayers.push(...team.player);
-        }
-      });
-    }
-  
-    // Sorter spillerne alfabetisk på navn
-    return allPlayers.sort((a, b) => a.name.localeCompare(b.name));
+    return selectedTeam.player.sort((a, b) => a.name.localeCompare(b.name));
   }
+  
   
   
   
