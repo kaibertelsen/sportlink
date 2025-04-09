@@ -5,6 +5,7 @@ var gTournament =[];
 var gDivision = [];
 var gTeam = [];
 var gMatchs = [];
+var importok = [];
 
 var activetournament;
 var activeklient;
