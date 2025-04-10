@@ -86,7 +86,7 @@ function loadMatchLog(rowelement, match) {
         eventtype: [logeventtype?.value.trim()],
         player: [logplayer?.dataset.airtable],
         description: newmatchloggrow.querySelector('#description')?.value.trim(),
-        matchId: [match.airtable]
+        match: [match.airtable]
       };
       // Legg til assist-spiller hvis valgt
       if (logassistplayer?.dataset.airtable != "") {
