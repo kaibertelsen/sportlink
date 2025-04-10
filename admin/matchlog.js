@@ -114,22 +114,22 @@ function loadMatchLog(rowelement, match) {
     });
   }
 
-  const logpenaltyminutes = newmatchloggrow.querySelector('#playedminutes-2');
+  const logpenaltyminutes = newmatchloggrow.querySelector('.logpenaltyminutes');
   const logpenaltyContainer = logpenaltyminutes?.closest('.loginputconteiner');
-  const logpenaltyContainerParent = logpenaltyContainer?.parentElement;
+
   
   // Skjul feltet som standard
   if (logpenaltyContainer) {
-    logpenaltyContainerParent.style.display = "none";
+    logpenaltyContainer.style.display = "none";
   }
   
   // Vis/skjul logikk basert på valgt hendelse
   logeventtype.addEventListener('change', () => {
     const selected = logeventtype.value;
     if (selected === "recfYDgKdjfiDSO4g") {
-      logpenaltyContainerParent.style.display = "block";
+      logpenaltyContainer.style.display = "block";
     } else {
-      logpenaltyContainerParent.style.display = "none";
+      logpenaltyContainer.style.display = "none";
       logpenaltyminutes.value = ""; // Nullstill feltet hvis det skjules
     }
   });
