@@ -1,5 +1,6 @@
 function loadMatchLog(rowelement, match) {
   const newmatchloggrow = rowelement.querySelector('.matchloggaddrowconteiner');
+  newmatchloggrow.dataset.matchid = match.airtable;
 
   if (memberData.airtable != "recuSA6q79aU3ndO3") {
     newmatchloggrow.style.display = "none";
