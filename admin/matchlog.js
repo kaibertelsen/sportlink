@@ -80,17 +80,20 @@ function loadMatchLog(rowelement, match) {
       e.preventDefault();
   
       const data = {
-        playedminutes: newmatchloggrow.querySelector('#playedminutes')?.value.trim(),
+        playedminutes: Number(newmatchloggrow.querySelector('#playedminutes')?.value.trim()),
         period: logperiod?.value.trim(),
         team: [logteam?.value.trim()],
         eventtype: [logeventtype?.value.trim()],
         player: [logplayer?.dataset.airtable],
-        assistplayer: [logassistplayer?.dataset.airtable],
         penaltyminutes: newmatchloggrow.querySelector('#playedminutes-2')?.value.trim(),
         description: newmatchloggrow.querySelector('#description')?.value.trim(),
         matchId: [match.airtable]
       };
-  
+      // Legg til assist-spiller hvis valgt
+      if (logassistplayer?.dataset.airtable != "") {
+        data.assistplayer = [logassistplayer?.dataset.airtable];
+      }
+      
       const required = [
         { label: 'Minutter', value: data.playedminutes },
         { label: 'Periode', value: data.period },
