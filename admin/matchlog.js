@@ -90,9 +90,16 @@ function loadMatchLog(rowelement, match) {
 function responsCreatNewPlayer(data) {
 
   //finne inputfeltet
-  const inputField = document.getElementById(data.field.name+"placeholder");
+  const inputField = document.getElementById(data.fields.name+"placeholder");
   //sett airtable id
   inputField.dataset.airtable = data.id;
+
+  //lagre den lokale spilleren
+  const player = data.fields;
+
+  //finne alle team med samme id og legge til spilleren
+  
+
 }
   
 function loadLogPeriodSelector(selector, match) {
