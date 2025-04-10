@@ -57,25 +57,37 @@ function viewimportinfo() {
 
 function saveTournamentToServer() {
     console.log(iTurnament);
-
-    // Opprett en kopi av iTurnament for å unngå sideeffekter
+  
     let body = { ...iTurnament };
     body.klient = ["recCdECitGpKE2O1F"];
-    //for ikke publisere med en gang
     body.hidden = true;
-
-    //brukerrettigheter
-    if(memberData?.airtable){
-        body.user = [memberData.airtable]
+  
+    if (memberData?.airtable) {
+      body.user = [memberData.airtable];
     }
-
-    // Fjern nøklene 'sportname' og 'organizername' fra body
+  
+    // Konverter datoformat om nødvendig
+    body.startdate = normalizeDate(body.startdate);
+    body.enddate = normalizeDate(body.enddate);
+  
     delete body.sportname;
     delete body.organizername;
-
-    // Opprett turnament
+  
     POSTairtable(baseId, "tblGhVlhWETNvhrWN", JSON.stringify(body), "responseCreatTurnament");
-}
+  }
+  
+  function normalizeDate(input) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(input)) {
+      return input;
+    }
+    if (/^\d{2}\.\d{2}\.\d{4}$/.test(input)) {
+      const [day, month, year] = input.split(".");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    }
+    console.warn("Ugyldig datoformat:", input);
+    return "";
+  }
+  
 
 function responseCreatTurnament(data) {
     console.log(data);
@@ -381,6 +393,21 @@ function allIsImported() {
 }
 
 
-
+function normalizeDate(input) {
+    // Hvis allerede i ISO-format: YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(input)) {
+      return input;
+    }
+  
+    // Hvis i format DD.MM.YYYY → konverter
+    if (/^\d{2}\.\d{2}\.\d{4}$/.test(input)) {
+      const [day, month, year] = input.split(".");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    }
+  
+    console.warn("Ugyldig datoformat:", input);
+    return ""; // returner tom string ved ugyldig format
+  }
+  
 
 
