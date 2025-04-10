@@ -445,7 +445,7 @@ function listLogForMatch(match, rowelement) {
     const eventName = log.eventtypelable;
     
     //hvis det er et mål 
-    const eventPointer = Number(log.eventpoint);
+    const eventPointer = Number(log.eventpoint) || 0;
     //hvis dette er 0 eller større
     if (eventPointer >= 0) {
       if (team === team1) {
