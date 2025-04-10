@@ -126,7 +126,7 @@ function loadMatchLog(rowelement, match) {
   // Vis/skjul logikk basert på valgt hendelse
   logeventtype.addEventListener('change', () => {
     const selected = logeventtype.value;
-    if (selected === "recfYDgKdjfiDSO4g") {
+    if (selected === "recfYDgKdjfiDSO4g" || selected === "reclsQ8SpocBhDlsy") { 
       logpenaltyContainer.style.display = "block";
     } else {
       logpenaltyContainer.style.display = "none";
