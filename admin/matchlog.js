@@ -461,7 +461,7 @@ function listLogForMatch(match, rowelement) {
     let eventnametext = eventName;
     if (eventPointer >= 0) {
       //enten (1-0) eller (0-1)
-      eventnametext = `${eventName} ${goalteam1}-${goalteam2}`;
+      eventnametext = `${eventName} (${goalteam1}-${goalteam2})`;
     }
 
     const infoElement = logRow.querySelector('.info');
