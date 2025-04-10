@@ -116,6 +116,7 @@ function loadMatchLog(rowelement, match) {
 
   const logpenaltyminutes = newmatchloggrow.querySelector('.logpenaltyminutes');
   const logpenaltyContainer = logpenaltyminutes?.closest('.loginputconteiner');
+  const logassistplayerConteiner = logassistplayer?.closest('.loginputconteiner');
 
   
   // Skjul feltet som standard
@@ -128,9 +129,11 @@ function loadMatchLog(rowelement, match) {
     const selected = logeventtype.value;
     if (selected === "recfYDgKdjfiDSO4g" || selected === "reclsQ8SpocBhDlsy") { 
       logpenaltyContainer.style.display = "block";
+      logassistplayerConteiner.style.display = "none"; // Skjul assist-spiller feltet
     } else {
       logpenaltyContainer.style.display = "none";
       logpenaltyminutes.value = ""; // Nullstill feltet hvis det skjules
+      logassistplayerConteiner.style.display = "block"; // Vis assist-spiller feltet
     }
   });
 
