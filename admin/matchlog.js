@@ -443,7 +443,7 @@ function listLogForMatch(match, rowelement) {
     teamElement.textContent = teamname;
 
     //hvis det er mål så må vi oppdatere antall mål eksemper (1-0)
-    const eventtype = log.eventtype?.[0];
+    const eventtype = log.eventtype;
     const eventName = log.eventtypelable;
     
     //hvis det er et mål 
