@@ -52,8 +52,7 @@ function loadMatchLog(rowelement, match) {
 
     const newPlayer = {
       name,
-      nr: "",
-      team: logteam.value,
+      team: [logteam.value],
     };
     inputField.id = newPlayer.name+"placeholder";
 
