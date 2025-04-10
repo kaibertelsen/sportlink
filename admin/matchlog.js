@@ -169,8 +169,14 @@ function responsSaveMatchLog(response) {
   }
   match.matchlogg.push(logData);
 
-  console.log(`✅ Hendelse lagt til i kamp ${match.nr}`);
-  console.log("📋 Oppdatert matchlogg:", match.matchlogg);
+  //laste kampen inn på nytt
+  const rowelement = document.querySelector(`.matchloggrow[data-matchid="${matchId}"]`);
+  if (!rowelement) {
+    console.warn("❌ Fant ikke rad-elementet for kampen:", matchId);
+    return;
+  }
+  // Tøm eksisterende logg
+  loadMatchLog(rowelement, match)
 }
 
 function responsCreatNewPlayer(data) {
