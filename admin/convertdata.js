@@ -292,14 +292,24 @@ function parseDateSmart(dato, klokke) {
         const year = parseInt(parts[2], 10);
         finalDate = new Date(year, month, day);
       }
+    } else if (typeof dato === "string" && dato.includes("-")) {
+      // DD-MM-YYYY → parse manuelt
+      const parts = dato.split("-");
+      if (parts.length === 3) {
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1;
+        const year = parseInt(parts[2], 10);
+        finalDate = new Date(year, month, day);
+      }
     } else if (typeof dato === "string" && dato.includes("/")) {
       // MM/DD/YYYY → vanlig parsing
       finalDate = new Date(dato);
     }
   
-    // Hvis dato er tom eller ugyldig → bruk dagens dato
+    // Hvis dato er tom eller ugyldig → send alert og returner null
     if (!finalDate || isNaN(finalDate.getTime())) {
-      finalDate = new Date();
+      alert("Ugyldig datoformat. Vennligst bruk DD.MM.YYYY, DD-MM-YYYY eller MM/DD/YYYY.");
+      return null;
     }
   
     // Formatér dato som "DD/MM/YYYY"
@@ -321,6 +331,7 @@ function parseDateSmart(dato, klokke) {
     const isoDate = `${finalDate.toISOString().split("T")[0]} ${cleanClock}`;
     return isoDate;
   }
+  
   
   
   

@@ -74,9 +74,9 @@ function saveTournamentToServer() {
     delete body.organizername;
   
     POSTairtable(baseId, "tblGhVlhWETNvhrWN", JSON.stringify(body), "responseCreatTurnament");
-  }
+}
   
-  function normalizeDate(input) {
+function normalizeDate(input) {
     if (/^\d{4}-\d{2}-\d{2}$/.test(input)) {
       return input;
     }
@@ -86,9 +86,8 @@ function saveTournamentToServer() {
     }
     console.warn("Ugyldig datoformat:", input);
     return "";
-  }
+}
   
-
 function responseCreatTurnament(data) {
     console.log(data);
 
