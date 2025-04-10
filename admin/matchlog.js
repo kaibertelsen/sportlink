@@ -85,13 +85,16 @@ function loadMatchLog(rowelement, match) {
         team: [logteam?.value.trim()],
         eventtype: [logeventtype?.value.trim()],
         player: [logplayer?.dataset.airtable],
-        penaltyminutes: newmatchloggrow.querySelector('#playedminutes-2')?.value.trim(),
         description: newmatchloggrow.querySelector('#description')?.value.trim(),
         matchId: [match.airtable]
       };
       // Legg til assist-spiller hvis valgt
       if (logassistplayer?.dataset.airtable != "") {
         data.assistplayer = [logassistplayer?.dataset.airtable];
+      }
+      //legg til penetyminutes hvis valgt
+      if (logpenaltyminutes?.value != "") {
+        data.penaltyminutes = Number(newmatchloggrow.querySelector('.logpenaltyminutes')?.value.trim());
       }
       
       const required = [
@@ -141,6 +144,8 @@ function loadMatchLog(rowelement, match) {
   });
 
 }
+
+
 
 function responsSaveMatchLog(response) {
   const logData = JSON.parse(response.fields.json); // Anta at loggen returneres som JSON-streng fra serveren
