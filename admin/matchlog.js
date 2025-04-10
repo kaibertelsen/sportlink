@@ -99,24 +99,12 @@ function responsCreatNewPlayer(data) {
     inputField.dataset.airtable = data.id;
   }
 
-  // 2. Finn laget i teamjson og legg til spilleren
-  const updated = activetournament.teamjson.map(teamStr => {
-    const team = parseJSON(teamStr);
-    if (team.airtable === teamId) {
-      if (!Array.isArray(team.player)) {
-        team.player = [];
-      }
-      // Sjekk om spilleren allerede finnes (for sikkerhets skyld)
-      const exists = team.player.some(p => p.airtable === newPlayer.airtable);
-      if (!exists) {
-        team.player.push(newPlayer);
-        console.log(`✅ Ny spiller "${newPlayer.name}" lagt til i laget "${team.name}"`);
-      }
-    }
-    return JSON.stringify(team);
-  });
+  // 2. Finn laget i gTeam arrayen op oppdater med spilleren
+  console.log(gTeam);
 
-  activetournament.teamjson = updated;
+  //Finn denne laget i gMatchs og oppdater dette laget
+  console.log(gMatchs);
+ 
 }
 
   
