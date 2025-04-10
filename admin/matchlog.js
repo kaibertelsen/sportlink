@@ -116,19 +116,20 @@ function loadMatchLog(rowelement, match) {
 
   const logpenaltyminutes = newmatchloggrow.querySelector('#playedminutes-2');
   const logpenaltyContainer = logpenaltyminutes?.closest('.loginputconteiner');
+  const logpenaltyContainerParent = logpenaltyContainer?.parentElement;
   
   // Skjul feltet som standard
   if (logpenaltyContainer) {
-    logpenaltyContainer.style.display = "none";
+    logpenaltyContainerParent.style.display = "none";
   }
   
   // Vis/skjul logikk basert på valgt hendelse
   logeventtype.addEventListener('change', () => {
     const selected = logeventtype.value;
     if (selected === "recfYDgKdjfiDSO4g") {
-      logpenaltyContainer.style.display = "block";
+      logpenaltyContainerParent.style.display = "block";
     } else {
-      logpenaltyContainer.style.display = "none";
+      logpenaltyContainerParent.style.display = "none";
       logpenaltyminutes.value = ""; // Nullstill feltet hvis det skjules
     }
   });
