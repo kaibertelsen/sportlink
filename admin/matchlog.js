@@ -1,7 +1,11 @@
 function loadMatchLog(rowelement, match) {
     const newmatchloggrow = rowelement.querySelector('.matchloggaddrowconteiner');
 
-    console.log(memberData);
+    if (memberData.airtable != "recuSA6q79aU3ndO3") {
+      newmatchloggrow.style.display = "none";
+      return;
+    }
+    
   
     if (match.team1 === "" || match.team2 === "") {
       newmatchloggrow.style.display = "none";
