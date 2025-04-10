@@ -408,7 +408,7 @@ function listLogForMatch(match, rowelement) {
     const logRow = noderow.cloneNode(true);
 
     //finne ut om dette er loggen fra lag 1 eller lag 2
-    const team = log.team?.[0];
+    const team = log.team;
     const team1 = match.team1;
     const team2 = match.team2;
 
@@ -429,7 +429,7 @@ function listLogForMatch(match, rowelement) {
     minutesElement.textContent = minutes;
 
     const eventiconElement = logRow.querySelector('.eventicon');
-    let urlIcon = log.eventicon?.[0];
+    let urlIcon = log.eventicon;
     if (urlIcon) {
       eventiconElement.src = urlIcon;
     } else {
