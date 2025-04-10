@@ -125,7 +125,6 @@ function loadMatchLog(rowelement, match) {
   const logpenaltyContainer = logpenaltyminutes?.closest('.loginputconteiner');
   const logassistplayerConteiner = logassistplayer?.closest('.loginputconteiner');
 
-  
   // Skjul feltet som standard
   if (logpenaltyContainer) {
     logpenaltyContainer.style.display = "none";
@@ -143,6 +142,9 @@ function loadMatchLog(rowelement, match) {
       logassistplayerConteiner.style.display = "block"; // Vis assist-spiller feltet
     }
   });
+
+  //last inn eksisterende logg for denne kampen
+  listLogForMatch(match, rowelement);
 
 }
 
@@ -385,4 +387,110 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
       }
     }, 200);
   });
+}
+
+function listLogForMatch(match, rowelement) {
+  const list = rowelement.querySelector('.matchloglist');
+  list.innerHTML = "";
+
+  const elementholder = rowelement.querySelector('.loggelementholder');
+  const noderow = elementholder.querySelector('.loggrow');
+
+  const matchlogg = match.matchlogg || [];
+
+  let goalteam1 = 0;
+  let goalteam2 = 0;
+
+
+  matchlogg.forEach(log => {
+    const logRow = noderow.cloneNode(true);
+
+    //finne ut om dette er loggen fra lag 1 eller lag 2
+    const team = log.team?.[0];
+    const team1 = match.team1;
+    const team2 = match.team2;
+
+    //er det team1 så skal en benytte wraperen med klasse rowteam1
+    const rowteam1 = logRow.querySelector('.rowteam1');
+    const rowteam2 = logRow.querySelector('.rowteam2');
+    const thisIsteam1! = team1 === team;
+    if (thisIsteam1) {
+      rowteam1.style.display = "block";
+      rowteam2.remove();
+    } else {
+      rowteam2.style.display = "block";
+      rowteam1.remove();
+    }
+   
+    const minutesElement = logRow.querySelector('.logminutes');
+    let minutes = log.playedminutes+" '";
+    minutesElement.textContent = minutes;
+
+    const eventiconElement = logRow.querySelector('.eventicon');
+    let urlIcon = log.eventicon?.[0];
+    if (urlIcon) {
+      eventiconElement.src = urlIcon;
+    } else {
+      eventiconElement.remove();
+    }
+
+    const teamElement = logRow.querySelector('.teamname');
+    const team1name = match.team1name;
+    const team2name = match.team2name;
+    const teamname = team === team1 ? team1name : team2name;
+    teamElement.textContent = teamname;
+
+    //hvis det er mål så må vi oppdatere antall mål eksemper (1-0)
+    const eventtype = log.eventtype?.[0];
+    const eventName = log.eventtypelable;
+    
+    //hvis det er et mål 
+    const eventPointer = log.eventpoint;
+    //hvis dette er 0 eller større
+    if (eventPointer >= 0) {
+      if (team === team1) {
+        goalteam1++;
+      } else {
+        goalteam2++;
+      }
+    }
+
+  //lage texten 
+    let eventnametext = eventName;
+    if (eventPointer >= 0) {
+      //enten (1-0) eller (0-1)
+      eventnametext = `${eventName} ${goalteam1}-${goalteam2}`;
+    }
+
+    const infoElement = logRow.querySelector('.info');
+    const playerName = log.playername || "Ukjent spiller";
+    const assistName = log.assistplayername || null;
+    
+    let htmlInfo = "";
+    
+    if (eventtype === "recgg7bmscj8GYCua") {
+      // Mål
+      htmlInfo += `Mål: ${playerName}`;
+      if (assistName) htmlInfo += `<br>Assist: ${assistName}`;
+    } else if (eventtype === "recfYDgKdjfiDSO4g") {
+      // Utvisning
+      htmlInfo = `Utvisning: ${playerName}<br>${log.penaltyminutes || "?"} min`;
+    } else if (eventtype === "recwTupKDW3g2btUl") {
+      // Kun assist (hvis det finnes som egen hendelse)
+      htmlInfo = `Assist: ${playerName}`;
+    } else {
+      // Fallback
+      htmlInfo = `${eventName}: ${playerName}`;
+    }
+    
+    infoElement.innerHTML = htmlInfo;
+    
+
+    list.appendChild(logRow);
+  });
+
+
+
+
+
 }
