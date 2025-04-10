@@ -20,7 +20,6 @@ function loadMatchLog(rowelement, match) {
   const logplayerDropdown = newmatchloggrow.querySelector('.logplayer-dropdown');
   const logassistplayer = newmatchloggrow.querySelector('.logassistplayer');
 
-  // Lag dropdown for assist hvis ikke finnes
   let logassistDropdown = logassistplayer.parentElement.querySelector('.logplayer-dropdown');
   if (!logassistDropdown) {
     logassistDropdown = document.createElement('div');
@@ -41,28 +40,19 @@ function loadMatchLog(rowelement, match) {
   logplayer.disabled = true;
   logassistplayer.disabled = true;
 
-  // 🔁 Gjenbrukbar spiller-opprettingsfunksjon
   const handleNewPlayer = (roleLabel) => (name, inputField) => {
-    const confirmed = confirm(`Vil du opprette ny ${roleLabel} "${name}"?`);
-    if (!confirmed) {
-      inputField.value = "";
-      inputField.dataset.airtable = "";
-      return;
-    }
-
     const newPlayer = {
       name,
       team: [logteam.value],
     };
-    inputField.id = newPlayer.name+"placeholder";
+    inputField.id = newPlayer.name + "placeholder";
 
-    POSTairtable("appxPi2CoLTlsa3qL","tbljVqkOQACs56QqI",JSON.stringify(newPlayer),"responsCreatNewPlayer");
+    POSTairtable("appxPi2CoLTlsa3qL", "tbljVqkOQACs56QqI", JSON.stringify(newPlayer), "responsCreatNewPlayer");
   };
 
   logteam.addEventListener('change', () => {
     const selectedTeamId = logteam.value;
 
-    // Nullstill begge felter
     [logplayer, logassistplayer].forEach(input => {
       input.value = "";
       input.dataset.airtable = "";
@@ -80,12 +70,62 @@ function loadMatchLog(rowelement, match) {
     logassistplayer.disabled = false;
 
     const players = findPlayersInMatch(match, selectedTeamId);
-
-    // Aktiver autocomplete med felles callback
     initLogPlayerAutocomplete(logplayer, logplayerDropdown, players, handleNewPlayer("spiller"));
     initLogPlayerAutocomplete(logassistplayer, logassistDropdown, players, handleNewPlayer("assistspiller"));
   });
+
+  // 🟢 Lagre-knappen
+  const saveButton = newmatchloggrow.querySelector('.logsavebutton');
+  if (saveButton) {
+    saveButton.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const data = {
+        playedminutes: newmatchloggrow.querySelector('#playedminutes')?.value.trim(),
+        period: logperiod?.value.trim(),
+        team: logteam?.value.trim(),
+        eventtype: logeventtype?.value.trim(),
+        player: {
+          name: logplayer?.value.trim(),
+          id: logplayer?.dataset.airtable || ""
+        },
+        assistplayer: {
+          name: logassistplayer?.value.trim(),
+          id: logassistplayer?.dataset.airtable || ""
+        },
+        penaltyminutes: newmatchloggrow.querySelector('#playedminutes-2')?.value.trim(),
+        extratime: newmatchloggrow.querySelector('.extratime')?.checked || false,
+        description: newmatchloggrow.querySelector('#description')?.value.trim(),
+        matchId: match.airtable
+      };
+
+      const required = [
+        { label: 'Minutter', value: data.playedminutes },
+        { label: 'Periode', value: data.period },
+        { label: 'Lag', value: data.team },
+        { label: 'Hendelse', value: data.eventtype },
+        { label: 'Spiller', value: data.player.name },
+      ];
+
+      const missing = required.filter(f => !f.value);
+      if (missing.length > 0) {
+        alert(`Følgende felt mangler: ${missing.map(f => f.label).join(', ')}`);
+        return;
+      }
+
+      console.log("📝 Klar til lagring:", data);
+
+      // 🔁 Her lagres det til server (legg inn faktisk lagringskall)
+      // f.eks. sendMatchEventToServer(data);
+
+      // 🗂 Lokal lagring (om ønskelig):
+      // localStorage.setItem("lastMatchEvent", JSON.stringify(data));
+
+      alert("✅ Hendelsen er lagret!",data);
+    });
+  }
 }
+
 
 function responsCreatNewPlayer(data) {
   const name = data.fields.name;
@@ -129,7 +169,6 @@ function responsCreatNewPlayer(data) {
 }
 
 
-  
 function loadLogPeriodSelector(selector, match) {
     const periods = match.numberOfPeriods || 2;
   
