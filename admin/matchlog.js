@@ -397,6 +397,8 @@ function listLogForMatch(match, rowelement) {
   const noderow = elementholder.querySelector('.loggrow');
 
   const matchlogg = match.matchlogg || [];
+  //sorter etter minutter
+  matchlogg.sort((a, b) => a.playedminutes - b.playedminutes);
 
   let goalteam1 = 0;
   let goalteam2 = 0;
