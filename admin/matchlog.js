@@ -150,8 +150,12 @@ function loadMatchLog(rowelement, match) {
 function responsSaveMatchLog(response) {
   const logData = JSON.parse(response.fields.json); // Anta at loggen returneres som JSON-streng fra serveren
 
-  const matchId = logData.match.airtable;
-  if (!matchId) return;
+  const matchId = response.fields.match?.[0];
+  if (!matchId) {
+    console.warn("❌ Ingen match-ID funnet i responsen:", response);
+    return;
+  }
+
 
   const match = gMatchs.find(m => m.airtable === matchId);
   if (!match) {
