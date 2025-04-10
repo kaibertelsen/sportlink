@@ -95,11 +95,11 @@ function responsCreatNewPlayer(data) {
   inputField.dataset.airtable = data.id;
 
   //lagre den lokale spilleren
-  const player = data.fields;
 
-  //finne alle team med samme id og legge til spilleren
-  
+  const player = parseJSON(data.fields.json);
 
+  //finne alle kamper og team i activetournament med samme teamid og legge til denne player
+  console.log(activetournament);
 }
   
 function loadLogPeriodSelector(selector, match) {
