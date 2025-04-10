@@ -74,58 +74,68 @@ function loadMatchLog(rowelement, match) {
     initLogPlayerAutocomplete(logassistplayer, logassistDropdown, players, handleNewPlayer("assistspiller"));
   });
 
-  // 🟢 Lagre-knappen
   const saveButton = newmatchloggrow.querySelector('.logsavebutton');
   if (saveButton) {
     saveButton.addEventListener('click', (e) => {
       e.preventDefault();
-
+  
       const data = {
         playedminutes: newmatchloggrow.querySelector('#playedminutes')?.value.trim(),
         period: logperiod?.value.trim(),
-        team: logteam?.value.trim(),
-        eventtype: logeventtype?.value.trim(),
-        player: {
-          name: logplayer?.value.trim(),
-          id: logplayer?.dataset.airtable || ""
-        },
-        assistplayer: {
-          name: logassistplayer?.value.trim(),
-          id: logassistplayer?.dataset.airtable || ""
-        },
+        team: [logteam?.value.trim()],
+        eventtype: [logeventtype?.value.trim()],
+        player: [logplayer?.dataset.airtable],
+        assistplayer: [logassistplayer?.dataset.airtable],
         penaltyminutes: newmatchloggrow.querySelector('#playedminutes-2')?.value.trim(),
-        extratime: newmatchloggrow.querySelector('.extratime')?.checked || false,
         description: newmatchloggrow.querySelector('#description')?.value.trim(),
-        matchId: match.airtable
+        matchId: [match.airtable]
       };
-
+  
       const required = [
         { label: 'Minutter', value: data.playedminutes },
         { label: 'Periode', value: data.period },
         { label: 'Lag', value: data.team },
         { label: 'Hendelse', value: data.eventtype },
-        { label: 'Spiller', value: data.player.name },
+        { label: 'Spiller', value: data.player?.[0] },
       ];
-
+  
       const missing = required.filter(f => !f.value);
       if (missing.length > 0) {
         alert(`Følgende felt mangler: ${missing.map(f => f.label).join(', ')}`);
         return;
       }
-
-      console.log("📝 Klar til lagring:", data);
-
-      // 🔁 Her lagres det til server (legg inn faktisk lagringskall)
-      // f.eks. sendMatchEventToServer(data);
-
-      // 🗂 Lokal lagring (om ønskelig):
-      // localStorage.setItem("lastMatchEvent", JSON.stringify(data));
-
-      alert("✅ Hendelsen er lagret!",data);
+  
+      // Lagre til server
+      POSTairtable("appxPi2CoLTlsa3qL", "tbliutqJJOHRsN8mw", JSON.stringify(data), "responsSaveMatchLog");
+  
+      // Tilbakemelding
+      alert("✅ Hendelsen er lagret!");
+      console.log("📝 Sendt data:", data);
     });
   }
+  
 }
+function responsSaveMatchLog(response) {
+  const logData = JSON.parse(response.fields.json); // Anta at loggen returneres som JSON-streng fra serveren
 
+  const matchId = logData.matchId?;
+  if (!matchId) return;
+
+  const match = gMatchs.find(m => m.airtable === matchId);
+  if (!match) {
+    console.warn("❌ Fant ikke kampen i gMatchs:", matchId);
+    return;
+  }
+
+  // Legg til ny logg i kampens logg-array
+  if (!Array.isArray(match.matchlogg)) {
+    match.matchlogg = [];
+  }
+  match.matchlogg.push(logData);
+
+  console.log(`✅ Hendelse lagt til i kamp ${match.nr}`);
+  console.log("📋 Oppdatert matchlogg:", match.matchlogg);
+}
 
 function responsCreatNewPlayer(data) {
   const name = data.fields.name;
