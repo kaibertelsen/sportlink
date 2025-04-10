@@ -90,7 +90,8 @@ function loadMatchLog(rowelement, match) {
 function responsCreatNewPlayer(data) {
   const name = data.fields.name;
   const teamId = data.fields.team?.[0];
-  const newPlayer = parseJSON(data.fields.json);
+  const newPlayer = JSON.parse(data.fields.json);
+
 
   // 1. Finn inputfeltet og sett Airtable-id
   const inputField = document.getElementById(name + "placeholder");
