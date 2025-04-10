@@ -1,5 +1,7 @@
 function loadMatchLog(rowelement, match) {
     const newmatchloggrow = rowelement.querySelector('.matchloggaddrowconteiner');
+
+    console.log(memberData);
   
     if (match.team1 === "" || match.team2 === "") {
       newmatchloggrow.style.display = "none";
@@ -82,7 +84,7 @@ function loadMatchLog(rowelement, match) {
   
       initLogPlayerAutocomplete(logassistplayer, logassistDropdown, players, null); // Kun valg, ikke opprett
     });
-  }
+}
   
 function loadLogPeriodSelector(selector, match) {
     const periods = match.numberOfPeriods || 2;
