@@ -54,13 +54,10 @@ function loadMatchLog(rowelement, match) {
       name,
       nr: "",
       team: logteam.value,
-      airtable: "" // oppdateres når opprettet på server
     };
+    inputField.id = newPlayer.name+"placeholder";
 
-    inputField.dataset.airtable = "ny_spiller_lokal";
-
-    console.log(`Oppretter ny ${roleLabel}:`, name);
-    // TODO: opprett spiller på server og oppdater felt
+    POSTairtable("appxPi2CoLTlsa3qL","tbljVqkOQACs56QqI",JSON.stringify(newPlayer),"responsCreatNewPlayer");
   };
 
   logteam.addEventListener('change', () => {
@@ -91,6 +88,13 @@ function loadMatchLog(rowelement, match) {
   });
 }
 
+function responsCreatNewPlayer(data) {
+
+  //finne inputfeltet
+  const inputField = document.getElementById(data.field.name+"placeholder");
+  //sett airtable id
+  inputField.dataset.airtable = data.id;
+}
   
 function loadLogPeriodSelector(selector, match) {
     const periods = match.numberOfPeriods || 2;
@@ -192,7 +196,6 @@ function findPlayersInMatch(match, teamid) {
     return selectedTeam.player.sort((a, b) => a.name.localeCompare(b.name));
 }
   
-
 function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, onNewPlayerCallback) {
   inputField.dataset.airtable = "";
 

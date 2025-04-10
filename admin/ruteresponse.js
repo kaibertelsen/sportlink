@@ -33,6 +33,8 @@ function ruteresponse(data,id){
         newGroupResponse(data);
     }else if(id == "teamdeletedresponse"){
         teamdeletedresponse(data);
+    }else if(id == "responsCreatNewPlayer"){
+        responsCreatNewPlayer(data);
     }
     
     
