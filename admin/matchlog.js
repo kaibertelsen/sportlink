@@ -417,10 +417,8 @@ function listLogForMatch(match, rowelement) {
     const rowteam2 = logRow.querySelector('.rowteam2');
     const thisIsteam1 = team === team1;
     if (thisIsteam1) {
-      rowteam1.style.display = "block";
       rowteam2.remove();
     } else {
-      rowteam2.style.display = "block";
       rowteam1.remove();
     }
    
