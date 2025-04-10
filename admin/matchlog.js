@@ -413,7 +413,7 @@ function listLogForMatch(match, rowelement) {
     //er det team1 så skal en benytte wraperen med klasse rowteam1
     const rowteam1 = logRow.querySelector('.rowteam1');
     const rowteam2 = logRow.querySelector('.rowteam2');
-    const thisIsteam1! = team1 === team;
+    const thisIsteam1 = team === team1;
     if (thisIsteam1) {
       rowteam1.style.display = "block";
       rowteam2.remove();
