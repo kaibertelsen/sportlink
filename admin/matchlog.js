@@ -115,10 +115,11 @@ function loadMatchLog(rowelement, match) {
   }
   
 }
+
 function responsSaveMatchLog(response) {
   const logData = JSON.parse(response.fields.json); // Anta at loggen returneres som JSON-streng fra serveren
 
-  const matchId = logData.matchId?;
+  const matchId = logData.matchId;
   if (!matchId) return;
 
   const match = gMatchs.find(m => m.airtable === matchId);
@@ -177,7 +178,6 @@ function responsCreatNewPlayer(data) {
 
   console.log("🟢 Fullført oppdatering av spiller i gTeam og gMatchs.");
 }
-
 
 function loadLogPeriodSelector(selector, match) {
     const periods = match.numberOfPeriods || 2;
@@ -344,9 +344,3 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
     }, 200);
   });
 }
-
-  
-  
-  
-  
-  
