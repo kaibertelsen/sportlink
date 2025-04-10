@@ -92,20 +92,42 @@ function responsCreatNewPlayer(data) {
   const teamId = data.fields.team?.[0];
   const newPlayer = JSON.parse(data.fields.json);
 
-
   // 1. Finn inputfeltet og sett Airtable-id
   const inputField = document.getElementById(name + "placeholder");
   if (inputField) {
     inputField.dataset.airtable = data.id;
   }
 
-  // 2. Finn laget i gTeam arrayen op oppdater med spilleren
-  console.log(gTeam);
+  // 2. Legg til spiller i riktig lag i gTeam
+  const team = gTeam.find(t => t.airtable === teamId);
+  if (team) {
+    const alreadyExists = team.player?.some(p => p.airtable === newPlayer.airtable);
+    if (!alreadyExists) {
+      team.player = team.player || [];
+      team.player.push(newPlayer);
+      console.log(`✅ Ny spiller "${name}" lagt til i laget "${team.name}"`);
+    }
+  }
 
-  //Finn denne laget i gMatchs og oppdater dette laget
-  console.log(gMatchs);
- 
+  // 3. Oppdater lag i gMatchs (team1json og team2json)
+  gMatchs.forEach(match => {
+    ['team1json', 'team2json'].forEach(key => {
+      match[key]?.forEach(team => {
+        if (team.airtable === teamId) {
+          const exists = team.player?.some(p => p.airtable === newPlayer.airtable);
+          if (!exists) {
+            team.player = team.player || [];
+            team.player.push(newPlayer);
+            console.log(`➕ Ny spiller lagt til i kamp ${match.nr} (${key})`);
+          }
+        }
+      });
+    });
+  });
+
+  console.log("🟢 Fullført oppdatering av spiller i gTeam og gMatchs.");
 }
+
 
   
 function loadLogPeriodSelector(selector, match) {
