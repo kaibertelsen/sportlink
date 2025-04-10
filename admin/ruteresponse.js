@@ -35,7 +35,11 @@ function ruteresponse(data,id){
         teamdeletedresponse(data);
     }else if(id == "responsCreatNewPlayer"){
         responsCreatNewPlayer(data);
+    }else if(id == "responsSaveMatchLog"){
+        responsSaveMatchLog(data);
     }
+    
+
     
     
 }
