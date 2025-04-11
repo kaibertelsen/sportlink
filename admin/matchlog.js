@@ -478,7 +478,7 @@ function listLogForMatch(match, rowelement,admin) {
     }
 
   // om det er admin 
-    const deletebutton = logRow.querySelector('.deletebutton');
+    const deletebutton = logRow.querySelector('.deletebuttonlogg');
     if (admin) {
       deletebutton.style.display = "block";
 
