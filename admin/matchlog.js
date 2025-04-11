@@ -418,6 +418,14 @@ function listLogForMatch(match, rowelement) {
   //legge inn start conteiner
   const startConteiner = elementholder.querySelector('.start');
   const startRow = startConteiner.cloneNode(true);
+
+  const team1name = match.team1name;
+  const team2name = match.team2name;
+  const team1Element = startRow.querySelector('.team1lable');
+  const team2Element = startRow.querySelector('.team2lable');
+  team1Element.textContent = team1name;
+  team2Element.textContent = team2name;
+
   list.appendChild(startRow);
 
   const periodeConteinerMal = elementholder.querySelector('.periodconteiner');
