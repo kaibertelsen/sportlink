@@ -192,9 +192,19 @@ function loadMatchLog(rowelement, match) {
   goal2.textContent = resultOfLog.goalteam2;
   goal2.style.border = "2px solid blue";
   goal2.disabled = true;
-
   }
+  
+  if (resultOfLog.penaltyminteam1 != 0 && resultOfLog.penaltyminteam2 != 0) {
+    const penalty1 = rowelement.querySelector(".penaltyminteam1");
+    penalty1.textContent = resultOfLog.penaltyminteam1;
+    penalty1.style.border = "2px solid red";
+    penalty1.disabled = true;
 
+    const penalty2 = rowelement.querySelector(".penaltyminteam2");
+    penalty2.textContent = resultOfLog.penaltyminteam2;
+    penalty2.style.border = "2px solid red";
+    penalty2.disabled = true;
+  }
 }
 
 function responsSaveMatchLog(response) {
