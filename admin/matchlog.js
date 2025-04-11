@@ -53,6 +53,11 @@ function loadMatchLog(rowelement, match) {
   logplayer.disabled = true;
   logassistplayer.disabled = true;
 
+  // 👉 Erstatt gammel saveButton med klone (for å fjerne tidligere event listeners)
+  const oldSaveButton = newmatchloggrow.querySelector('.logsavebutton');
+  const saveButton = oldSaveButton.cloneNode(true);
+  oldSaveButton.parentNode.replaceChild(saveButton, oldSaveButton);
+
   const handleNewPlayer = (roleLabel) => (name, inputField) => {
     const newPlayer = {
       name,
@@ -62,9 +67,14 @@ function loadMatchLog(rowelement, match) {
 
     POSTairtable("appxPi2CoLTlsa3qL", "tbljVqkOQACs56QqI", JSON.stringify(newPlayer), "responsCreatNewPlayer");
 
-    //skul lagreknapp frem til respons foreligger
-    const saveButton = newmatchloggrow.querySelector('.logsavebutton');
+    //skul saveButton i 2 sekunder og så vis igjen
     saveButton.style.display = "none";
+    setTimeout(() => {
+      saveButton.style.display = "inline-block";
+    }, 2000);
+
+    
+    
   };
 
   logteam.addEventListener('change', () => {
@@ -91,11 +101,7 @@ function loadMatchLog(rowelement, match) {
     initLogPlayerAutocomplete(logassistplayer, logassistDropdown, players, handleNewPlayer("assistspiller"));
   });
 
-  
-  // 👉 Erstatt gammel saveButton med klone (for å fjerne tidligere event listeners)
-  const oldSaveButton = newmatchloggrow.querySelector('.logsavebutton');
-  const saveButton = oldSaveButton.cloneNode(true);
-  oldSaveButton.parentNode.replaceChild(saveButton, oldSaveButton);
+
 
   // 🎯 Legg så til ny event listener
   saveButton.addEventListener('click', (e) => {
