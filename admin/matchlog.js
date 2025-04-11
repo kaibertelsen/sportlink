@@ -20,6 +20,8 @@ function loadMatchLog(rowelement, match) {
   const logplayer = newmatchloggrow.querySelector('.logplayer');
   const logplayerDropdown = newmatchloggrow.querySelector('.logplayer-dropdown');
   const logassistplayer = newmatchloggrow.querySelector('.logassistplayer');
+  const logplayedminutes = newmatchloggrow.querySelector('.logplayedminutes');
+  const logdescription = newmatchloggrow.querySelector('.logdescription');
 
   let logassistDropdown = logassistplayer.parentElement.querySelector('.logplayer-dropdown');
   if (!logassistDropdown) {
@@ -33,6 +35,16 @@ function loadMatchLog(rowelement, match) {
     logassistplayer.parentElement.style.position = 'relative';
     logassistplayer.parentElement.appendChild(logassistDropdown);
   }
+  //tømme felt
+  logplayedminutes.value = "";
+  logplayer.value = "";
+  logassistplayer.value = "";
+  logplayer.dataset.airtable = "";
+  logassistplayer.dataset.airtable = "";
+  logdescription.value = "";
+
+
+
 
   loadLogPeriodSelector(logperiod, match);
   loadLogTeamSelector(logteam, match);
