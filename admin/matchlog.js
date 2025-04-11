@@ -187,6 +187,11 @@ function loadMatchLog(rowelement, match) {
   if (resultOfLog) {
     const { goalteam1, goalteam2, penaltyminteam1, penaltyminteam2 } = resultOfLog;
     const team1goal = rowelement.querySelector('.team1goal');
+    //lås feltet
+    team1goal.setAttribute("readonly", "readonly");
+    //Lage blå border
+    team1goal.style.border = "1px solid blue";
+
     const team2goal = rowelement.querySelector('.team2goal');
     const team1penalty = rowelement.querySelector('.team1penalty');
     const team2penalty = rowelement.querySelector('.team2penalty');
