@@ -394,6 +394,8 @@ function listLogForMatch(match, rowelement) {
   list.innerHTML = "";
 
   const elementholder = rowelement.querySelector('.loggelementholder');
+  elementholder.style.display = "none";
+
   const noderow = elementholder.querySelector('.loggrow');
 
   const matchlogg = match.matchlogg || [];
@@ -415,7 +417,7 @@ function listLogForMatch(match, rowelement) {
 
   //legge inn start conteiner
   const startConteiner = elementholder.querySelector('.start');
-  const startRow = noderow.cloneNode(true);
+  const startRow = startConteiner.cloneNode(true);
   list.appendChild(startRow);
 
   const periodeConteinerMal = elementholder.querySelector('.periodconteiner');
@@ -536,7 +538,7 @@ function listLogForMatch(match, rowelement) {
 
   //legg inn slutt conteiner
   const endConteiner = elementholder.querySelector('.start');
-  const endRow = noderow.cloneNode(true);
+  const endRow = endConteiner.cloneNode(true);
   list.appendChild(endRow);
 
 }
