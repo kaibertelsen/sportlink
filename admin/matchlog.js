@@ -163,7 +163,7 @@ saveButton.addEventListener('click', (e) => {
 
 
     //sjekke om dette eventet har 1 i nøkkelen point, da skal assisk kunne legges inn
-   if(eventData && eventData.point === 1) {
+   if(eventData && eventData.point == "1") {
       logassistplayer.disabled = false;
       logassistplayerConteiner.style.display = "block"; // Vis assist-spiller feltet
     }else{
