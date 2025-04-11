@@ -183,27 +183,45 @@ function loadMatchLog(rowelement, match) {
 
   if(resultOfLog.goalteam1 != 0 || resultOfLog.goalteam2 != 0){
   
-  const goal1 = rowelement.querySelector(".goalteam1");
-  goal1.textContent = resultOfLog.goalteam1;
-  goal1.style.border = "2px solid blue";
-  goal1.disabled = true; 
+    const goal1 = rowelement.querySelector(".goalteam1");
+    goal1.textContent = resultOfLog.goalteam1;
+    goal1.style.border = "2px solid blue";
+    goal1.disabled = true; 
+    //fjerne klikkevent
+    goal1.removeEventListener('click', function() {
+      alert(" Mål styres av kamplogg");
+    });
 
-  const goal2 = rowelement.querySelector(".goalteam2");
-  goal2.textContent = resultOfLog.goalteam2;
-  goal2.style.border = "2px solid blue";
-  goal2.disabled = true;
+    const goal2 = rowelement.querySelector(".goalteam2");
+    goal2.textContent = resultOfLog.goalteam2;
+    goal2.style.border = "2px solid blue";
+    goal2.disabled = true;
+    //fjerne klikkevent
+    goal2.removeEventListener('click', function() {
+      alert(" Mål styres av kamplogg");
+    });
   }
   
   if (resultOfLog.penaltyminteam1 != 0 || resultOfLog.penaltyminteam2 != 0) {
     const penalty1 = rowelement.querySelector(".penaltyminteam1");
     penalty1.textContent = resultOfLog.penaltyminteam1;
-    penalty1.style.border = "2px solid red";
+    penalty1.style.border = "2px solid blue";
     penalty1.disabled = true;
+    //fjerne klikkevent
+    penalty1.removeEventListener('click', function() {
+      alert(" Utvisning styres av kamplogg");
+    }
+    );
 
     const penalty2 = rowelement.querySelector(".penaltyminteam2");
     penalty2.textContent = resultOfLog.penaltyminteam2;
-    penalty2.style.border = "2px solid red";
+    penalty2.style.border = "2px solid blue";
     penalty2.disabled = true;
+    //fjerne klikkevent
+    penalty2.removeEventListener('click', function() {
+      alert(" Utvisning styres av kamplogg");
+    }
+    );
   }
 }
 
