@@ -87,50 +87,50 @@ function loadMatchLog(rowelement, match) {
     initLogPlayerAutocomplete(logassistplayer, logassistDropdown, players, handleNewPlayer("assistspiller"));
   });
 
-  const saveButton = newmatchloggrow.querySelector('.logsavebutton');
-  if (saveButton) {
-    const handleClick = (e) => {
-      e.preventDefault();
-  
-      const data = {
-        playedminutes: Number(newmatchloggrow.querySelector('#playedminutes')?.value.trim()),
-        period: logperiod?.value.trim(),
-        team: [logteam?.value.trim()],
-        eventtype: [logeventtype?.value.trim()],
-        player: [logplayer?.dataset.airtable],
-        description: newmatchloggrow.querySelector('#description')?.value.trim(),
-        match: [match.airtable]
-      };
-  
-      const required = [
-        { label: 'Minutter', value: data.playedminutes },
-        { label: 'Periode', value: data.period },
-        { label: 'Lag', value: data.team },
-        { label: 'Hendelse', value: data.eventtype },
-        { label: 'Spiller', value: data.player?.[0] },
-      ];
-  
-      if (logassistplayer.value != "") {
-        required.push({ label: 'Assist-spiller', value: logassistplayer?.dataset?.airtable });
-        data.assistplayer = [logassistplayer?.dataset?.airtable];
-      }
-  
-      if (logpenaltyminutes?.value != "") {
-        data.penaltyminutes = Number(logpenaltyminutes?.value.trim());
-      }
-  
-      const missing = required.filter(f => !f.value);
-      if (missing.length > 0) {
-        alert(`Følgende felt mangler: ${missing.map(f => f.label).join(', ')}`);
-        return;
-      }
-  
-      POSTairtable("appxPi2CoLTlsa3qL", "tbliutqJJOHRsN8mw", JSON.stringify(data), "responsSaveMatchLog");
-    };
-  
-    // 👇 Legg til kun én gang
-    saveButton.addEventListener('click', handleClick, { once: true });
+// 👉 Erstatt gammel saveButton med klone (for å fjerne tidligere event listeners)
+const oldSaveButton = newmatchloggrow.querySelector('.logsavebutton');
+const saveButton = oldSaveButton.cloneNode(true);
+oldSaveButton.parentNode.replaceChild(saveButton, oldSaveButton);
+
+// 🎯 Legg så til ny event listener
+saveButton.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  const data = {
+    playedminutes: Number(newmatchloggrow.querySelector('#playedminutes')?.value.trim()),
+    period: logperiod?.value.trim(),
+    team: [logteam?.value.trim()],
+    eventtype: [logeventtype?.value.trim()],
+    player: [logplayer?.dataset.airtable],
+    description: newmatchloggrow.querySelector('#description')?.value.trim(),
+    match: [match.airtable]
+  };
+
+  const required = [
+    { label: 'Minutter', value: data.playedminutes },
+    { label: 'Periode', value: data.period },
+    { label: 'Lag', value: data.team },
+    { label: 'Hendelse', value: data.eventtype },
+    { label: 'Spiller', value: data.player?.[0] },
+  ];
+
+  if (logassistplayer.value != "") {
+    required.push({ label: 'Assist-spiller', value: logassistplayer?.dataset?.airtable });
+    data.assistplayer = [logassistplayer?.dataset?.airtable];
   }
+
+  if (logpenaltyminutes?.value != "") {
+    data.penaltyminutes = Number(logpenaltyminutes?.value.trim());
+  }
+
+  const missing = required.filter(f => !f.value);
+  if (missing.length > 0) {
+    alert(`Følgende felt mangler: ${missing.map(f => f.label).join(', ')}`);
+    return;
+  }
+
+  POSTairtable("appxPi2CoLTlsa3qL", "tbliutqJJOHRsN8mw", JSON.stringify(data), "responsSaveMatchLog");
+});
 
   const logpenaltyminutes = newmatchloggrow.querySelector('.logpenaltyminutes');
   const logpenaltyContainer = logpenaltyminutes?.closest('.loginputconteiner');
