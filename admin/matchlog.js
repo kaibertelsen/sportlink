@@ -183,7 +183,19 @@ function loadMatchLog(rowelement, match) {
   });
 
   //last inn eksisterende logg for denne kampen
-  listLogForMatch(match, rowelement,true);
+  let resultOfLog = listLogForMatch(match, rowelement,true);
+  if (resultOfLog) {
+    const { goalteam1, goalteam2, penaltyminteam1, penaltyminteam2 } = resultOfLog;
+    const team1goal = rowelement.querySelector('.team1goal');
+    const team2goal = rowelement.querySelector('.team2goal');
+    const team1penalty = rowelement.querySelector('.team1penalty');
+    const team2penalty = rowelement.querySelector('.team2penalty');
+
+    team1goal.textContent = goalteam1;
+    team2goal.textContent = goalteam2;
+    team1penalty.textContent = penaltyminteam1;
+    team2penalty.textContent = penaltyminteam2;
+  }
 
 }
 
@@ -460,6 +472,8 @@ function listLogForMatch(match, rowelement,admin) {
 
   let goalteam1 = 0;
   let goalteam2 = 0;
+  let penaltyminteam1 = 0;
+  let penaltyminteam2 = 0;
 
   //legge inn start conteiner
   const startConteiner = elementholder.querySelector('.start');
@@ -587,6 +601,16 @@ function listLogForMatch(match, rowelement,admin) {
       eventnametext = `${eventName}`;
     }
 
+    //regne ut utvisningsminutter
+    if (eventtype === "recfYDgKdjfiDSO4g" || eventtype === "reclsQ8SpocBhDlsy") {
+      const penaltyminutes = log.penaltyminutes || 0;
+      if (team === team1) {
+        penaltyminteam1 = penaltyminteam1 + penaltyminutes;
+      } else {
+        penaltyminteam2 = penaltyminteam2 + penaltyminutes;
+      }
+     
+    }
 
 
 
@@ -625,6 +649,8 @@ function listLogForMatch(match, rowelement,admin) {
   const endConteiner = elementholder.querySelector('.end');
   const endRow = endConteiner.cloneNode(true);
   list.appendChild(endRow);
+
+  return {goalteam1,goalteam2,penaltyminteam1,penaltyminteam2};
 
 }
 
