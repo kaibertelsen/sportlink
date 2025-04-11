@@ -599,7 +599,7 @@ function listLogForMatch(match, rowelement,admin) {
     
     let htmlInfo = "";
     
-    if (eventtype === "recgg7bmscj8GYCua") {
+    if (log.point == "1") {
       // Mål
       htmlInfo += `Mål: ${playerName}`;
       if (assistName) htmlInfo += `<br>Assist: ${assistName}`;
