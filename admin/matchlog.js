@@ -156,17 +156,19 @@ saveButton.addEventListener('click', (e) => {
 
     if (selected === "recfYDgKdjfiDSO4g" || selected === "reclsQ8SpocBhDlsy") {
       logpenaltyContainer.style.display = "block";
+      formElement.style.gridTemplateColumns = "repeat(6, 1fr)";
     } else {
       logpenaltyContainer.style.display = "none";
       logpenaltyminutes.value = "";
+      formElement.style.gridTemplateColumns = "repeat(5, 1fr)";
     }
 
     if (eventData && eventData.point == "1") {
       logassistplayerConteiner.style.display = "block";
-      if (formElement) formElement.style.gridTemplateColumns = "repeat(6, 1fr)";
+      formElement.style.gridTemplateColumns = "repeat(6, 1fr)";
     } else {
       logassistplayerConteiner.style.display = "none";
-      if (formElement) formElement.style.gridTemplateColumns = "repeat(5, 1fr)";
+      formElement.style.gridTemplateColumns = "repeat(5, 1fr)";
     }
   });
 
