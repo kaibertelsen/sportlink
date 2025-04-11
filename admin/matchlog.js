@@ -429,7 +429,21 @@ function listLogForMatch(match, rowelement) {
       activePeriode = periode;
       const newPeriodeRow = periodeConteinerMal.cloneNode(true);
       const periodeElement = newPeriodeRow.querySelector('.periodelable');
-      periodeElement.textContent = `${periode}`;
+
+      let periodenam = "";
+      const period = log.period;
+      if (period === "OT") {
+        periodenam = "Ekstraomgang";
+      } else if (period === "SO") {
+        periodenam = "Straffekonk";
+      }
+      else {
+        const periodNumber = Number(period);
+        if (periodNumber > 0) {
+          periodenam = `${periodNumber}. omgang`;
+        }
+      }
+      periodenam = `${periode}`;
       list.appendChild(newPeriodeRow);
     }
 
@@ -451,20 +465,6 @@ function listLogForMatch(match, rowelement) {
     const minutesElement = logRow.querySelector('.logminutes');
     let minutes = log.playedminutes+" '";
     minutesElement.textContent = minutes;
-
-    const periodElement = logRow.querySelector('.period');
-    const period = log.period;
-    if (period === "OT") {
-      periodElement.textContent = "Ekstraomgang";
-    } else if (period === "SO") {
-      periodElement.textContent = "Straffekonk";
-    }
-    else {
-      const periodNumber = Number(period);
-      if (periodNumber > 0) {
-        periodElement.textContent = `${periodNumber}. omgang`;
-      }
-    }
 
     const eventiconElement = logRow.querySelector('.eventicon');
     let urlIcon = log.eventicon;
