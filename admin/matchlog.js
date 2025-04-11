@@ -181,7 +181,7 @@ function loadMatchLog(rowelement, match) {
   //last inn eksisterende logg for denne kampen
   let resultOfLog = listLogForMatch(match, rowelement,true);
 
-  if(resultOfLog.goalteam1 != 0 && resultOfLog.goalteam2 != 0){
+  if(resultOfLog.goalteam1 != 0 || resultOfLog.goalteam2 != 0){
   
   const goal1 = rowelement.querySelector(".goalteam1");
   goal1.textContent = resultOfLog.goalteam1;
@@ -194,7 +194,7 @@ function loadMatchLog(rowelement, match) {
   goal2.disabled = true;
   }
   
-  if (resultOfLog.penaltyminteam1 != 0 && resultOfLog.penaltyminteam2 != 0) {
+  if (resultOfLog.penaltyminteam1 != 0 || resultOfLog.penaltyminteam2 != 0) {
     const penalty1 = rowelement.querySelector(".penaltyminteam1");
     penalty1.textContent = resultOfLog.penaltyminteam1;
     penalty1.style.border = "2px solid red";
