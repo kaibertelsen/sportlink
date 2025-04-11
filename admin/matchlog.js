@@ -154,22 +154,28 @@ saveButton.addEventListener('click', (e) => {
     //hvis det er utvisning
     if (selected === "recfYDgKdjfiDSO4g" || selected === "reclsQ8SpocBhDlsy") { 
       logpenaltyContainer.style.display = "block";
-      logassistplayerConteiner.style.display = "none"; // Skjul assist-spiller feltet
     } else {
       logpenaltyContainer.style.display = "none";
       logpenaltyminutes.value = ""; // Nullstill feltet hvis det skjules
-      logassistplayerConteiner.style.display = "block"; // Vis assist-spiller feltet
     }
 
 
-    //sjekke om dette eventet har 1 i nøkkelen point, da skal assisk kunne legges inn
-   if(eventData && eventData.point == "1") {
+    const parentRow = logassistplayerConteiner.parentElement;
+    //Hvis det er poengivende såhviser assist-spiller
+    if (eventData && eventData.point == "1") {
       logassistplayer.disabled = false;
-      logassistplayerConteiner.style.display = "block"; // Vis assist-spiller feltet
-    }else{
+      logassistplayerConteiner.style.display = "block";
+    
+      // Sett til 5 kolonner
+      parentRow.style.gridTemplateColumns = "repeat(5, 1fr)";
+    } else {
       logassistplayer.disabled = true;
-      logassistplayerConteiner.style.display = "none"; // Skjul assist-spiller feltet
+      logassistplayerConteiner.style.display = "none";
+    
+      // Sett til 4 kolonner
+      parentRow.style.gridTemplateColumns = "repeat(4, 1fr)";
     }
+    
 
   });
 
