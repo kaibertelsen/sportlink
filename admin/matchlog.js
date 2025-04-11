@@ -253,8 +253,11 @@ function responsCreatNewPlayer(data) {
   });
 
   //hvis lagreknapp igjen
-  const saveButton = inputField.closest('.loginputconteiner').querySelector('.logsavebutton');
-  saveButton.style.display = "inline-block";
+  const saveButton = inputField.closest('.loginputconteiner').querySelector('.matchloggaddrowconteiner');
+  if (saveButton) {
+    saveButton.style.display = "inline-block";
+  }
+  
 
 }
 
