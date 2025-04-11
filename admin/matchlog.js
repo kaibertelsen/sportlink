@@ -410,12 +410,28 @@ function listLogForMatch(match, rowelement) {
   let goalteam1 = 0;
   let goalteam2 = 0;
 
+  //legge inn start conteiner
   const startConteiner = elementholder.querySelector('.start');
   const startRow = noderow.cloneNode(true);
   list.appendChild(startRow);
 
+  const periodeConteinerMal = elementholder.querySelector('.period');
+  
+
+  let activePeriode = matchlogg[0]?.period || 1;
+
   matchlogg.forEach(log => {
     const logRow = noderow.cloneNode(true);
+
+    //finn ut om dette er en ny periode og legge til conteiner
+    const periode = log.period;
+    if (periode !== activePeriode) {
+      activePeriode = periode;
+      const newPeriodeRow = periodeConteinerMal.cloneNode(true);
+      const periodeElement = newPeriodeRow.querySelector('.periodelable');
+      periodeElement.textContent = `${periode}`;
+      list.appendChild(newPeriodeRow);
+    }
 
     //finne ut om dette er loggen fra lag 1 eller lag 2
     const team = log.team;
