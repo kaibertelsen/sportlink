@@ -528,7 +528,7 @@ function listLogForMatch(match, rowelement) {
       // Mål
       htmlInfo += `Mål: ${playerName}`;
       if (assistName) htmlInfo += `<br>Assist: ${assistName}`;
-    } else if (eventtype === "recfYDgKdjfiDSO4g" || eventtype === "recfdSgV9u9fQldac") {
+    } else if (eventtype === "recfYDgKdjfiDSO4g" || eventtype === "reclsQ8SpocBhDlsy") {
       // Utvisning
       htmlInfo = `Utvisning: ${playerName}<br>${log.penaltyminutes || "?"} min`;
     } else if (eventtype === "recwTupKDW3g2btUl") {
