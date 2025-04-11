@@ -134,6 +134,8 @@ function loadMatchLog(rowelement, match) {
       POSTairtable("appxPi2CoLTlsa3qL", "tbliutqJJOHRsN8mw", JSON.stringify(data), "responsSaveMatchLog");
   
     });
+    // 👇 Legg til kun én gang
+  saveButton.addEventListener('click', handleClick, { once: true });
   }
 
   const logpenaltyminutes = newmatchloggrow.querySelector('.logpenaltyminutes');
