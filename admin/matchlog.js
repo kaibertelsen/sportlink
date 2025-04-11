@@ -415,7 +415,7 @@ function listLogForMatch(match, rowelement) {
   const startRow = noderow.cloneNode(true);
   list.appendChild(startRow);
 
-  const periodeConteinerMal = elementholder.querySelector('.period');
+  const periodeConteinerMal = elementholder.querySelector('.periodconteiner');
   
 
   let activePeriode = matchlogg[0]?.period || 1;
