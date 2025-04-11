@@ -146,7 +146,7 @@ saveButton.addEventListener('click', (e) => {
   
   const formElement = newmatchloggrow.querySelector('.newlogrowadd');
   formElement.style.display = "grid"; // 💡 Nøkkelen!
-  formElement.style.setProperty("grid-template-columns", "repeat(6, 1fr)", "important");
+  formElement.style.setProperty("grid-template-columns", "repeat(5, 1fr)", "important");
 
 
   logeventtype.addEventListener('change', () => {
