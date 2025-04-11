@@ -397,15 +397,18 @@ function listLogForMatch(match, rowelement) {
   const noderow = elementholder.querySelector('.loggrow');
 
   const matchlogg = match.matchlogg || [];
-  //sorter etter minutter
-  matchlogg.sort((a, b) => a.playedminutes - b.playedminutes);
-
-  //sorter etter periode 
+  //sortering etter omgang så minutter
   matchlogg.sort((a, b) => {
     const periodA = a.period === "OT" ? 100 : a.period === "SO" ? 200 : Number(a.period);
     const periodB = b.period === "OT" ? 100 : b.period === "SO" ? 200 : Number(b.period);
-    return periodA - periodB;
+  
+    if (periodA !== periodB) {
+      return periodA - periodB;
+    }
+  
+    return Number(a.playedminutes) - Number(b.playedminutes);
   });
+  
 
   let goalteam1 = 0;
   let goalteam2 = 0;
