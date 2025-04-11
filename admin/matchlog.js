@@ -144,7 +144,7 @@ function loadMatchLog(rowelement, match) {
   });
 
   //last inn eksisterende logg for denne kampen
-  listLogForMatch(match, rowelement);
+  listLogForMatch(match, rowelement,true);
 
 }
 
@@ -389,7 +389,7 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
   });
 }
 
-function listLogForMatch(match, rowelement) {
+function listLogForMatch(match, rowelement,admin) {
   const list = rowelement.querySelector('.matchloglist');
   list.innerHTML = "";
 
@@ -476,6 +476,29 @@ function listLogForMatch(match, rowelement) {
     } else {
       rowteam1.remove();
     }
+
+  // om det er admin 
+    const deletebutton = logRow.querySelector('.deletebutton');
+    if (admin) {
+      deletebutton.style.display = "block";
+
+      deletebutton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const bekreft = confirm("⚠️ Er du sikker på at du vil slette denne hendelsen?");
+        if (!bekreft) return;
+
+        // Send loggen til delete-funksjonen
+        deleteLog(match,log);
+
+        // Oppdater visningen lokalt etter sletting
+        listLogForMatch(match, rowelement, admin);
+      });
+
+    } else {
+      deletebutton.style.display = "none";
+    }
+
    
     const minutesElement = logRow.querySelector('.logminutes');
     let minutes = log.playedminutes+" '";
@@ -558,4 +581,20 @@ function listLogForMatch(match, rowelement) {
   const endRow = endConteiner.cloneNode(true);
   list.appendChild(endRow);
 
+}
+
+function deleteLog(match,log){
+
+  //slett denne log fra match.log arrayen 
+  //Fjern loggen lokalt
+  if (Array.isArray(match.matchlogg)) {
+    match.matchlogg = match.matchlogg.filter(item => item.airtable !== log.airtable);
+  }
+
+  DELETEairtable("baseId","tableId",log.airtable,"responseLogDelete")
+
+}
+
+function responseLogDelete(data){
+  console.log(data);
 }
