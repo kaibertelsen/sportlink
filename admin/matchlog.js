@@ -591,7 +591,7 @@ function deleteLog(match,log){
     match.matchlogg = match.matchlogg.filter(item => item.airtable !== log.airtable);
   }
 
-  DELETEairtable("baseId","tableId",log.airtable,"responseLogDelete")
+  DELETEairtable("appxPi2CoLTlsa3qL","tbliutqJJOHRsN8mw",log.airtable,"responseLogDelete")
 
 }
 
