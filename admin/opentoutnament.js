@@ -1014,8 +1014,25 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
             }
         };
 
+        const matchlogconteiner = rowelement.querySelector(".matchlogconteiner");
+        matchlogconteiner.style.display = "none"; // Start med skjult
+        //men om der er data i loggen skal den være åpen
+        if(match.matchlog && match.matchlog.length > 0){
+            matchlogconteiner.style.display = "block";
+        }
+        const matchlogicon = rowelement.querySelector(".matchlogicon");
+        matchlogicon.onclick = function () {
+           //åpne lukke matchlogconteiner
+            if (matchlogconteiner.style.display === "block") {
+                matchlogconteiner.style.display = "none";
+            } else {
+                matchlogconteiner.style.display = "block";
+            }
+        };
         //last inn kamplogg
         loadMatchLog(rowelement,match);
+
+
 
     return rowelement
 
