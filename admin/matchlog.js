@@ -435,20 +435,22 @@ function listLogForMatch(match, rowelement) {
       const newPeriodeRow = periodeConteinerMal.cloneNode(true);
       const periodeElement = newPeriodeRow.querySelector('.periodelable');
 
-      let periodenam = "";
+      let periodename = "";
       const period = log.period;
       if (period === "OT") {
-        periodenam = "Ekstraomgang";
+        periodename = "Ekstraomgang";
       } else if (period === "SO") {
-        periodenam = "Straffekonk";
+        periodename = "Straffekonk";
       }
       else {
         const periodNumber = Number(period);
         if (periodNumber > 0) {
-          periodenam = `${periodNumber}. omgang`;
+          periodename = `${periodNumber}. omgang`;
         }
       }
-      periodenam = `${periode}`;
+      periodeElement.textContent = periodename;
+
+      
       list.appendChild(newPeriodeRow);
     }
 
