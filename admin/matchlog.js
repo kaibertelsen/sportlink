@@ -87,20 +87,7 @@ function loadMatchLog(rowelement, match) {
     initLogPlayerAutocomplete(logassistplayer, logassistDropdown, players, handleNewPlayer("assistspiller"));
   });
 
-  logassistplayer.style.display = "none";
-  logeventtype.addEventListener('change', () => {
-    const selectedEventId = logteam.logeventtype;
-    //sjekke om dette eventet har 1 i nøkkelen point
-    const eventData = activetournament.sporteventsportlogjson.find(event => event.airtable === selectedEventId);
-   if(eventData && eventData.point === 1) {
-      logassistplayer.disabled = false;
-      logassistplayer.style.display = "block";
-    }else{
-      logassistplayer.disabled = true;
-      logassistplayer.style.display = "none";
-    }
-  });
-
+  
 // 👉 Erstatt gammel saveButton med klone (for å fjerne tidligere event listeners)
 const oldSaveButton = newmatchloggrow.querySelector('.logsavebutton');
 const saveButton = oldSaveButton.cloneNode(true);
@@ -155,9 +142,15 @@ saveButton.addEventListener('click', (e) => {
     logpenaltyContainer.style.display = "none";
   }
   
+  logassistplayerConteiner.style.display = "none"; // Skjul assist-spiller feltet som standard
+  
   // Vis/skjul logikk basert på valgt hendelse
   logeventtype.addEventListener('change', () => {
+    
     const selected = logeventtype.value;
+    const eventData = activetournament.sporteventsportlogjson.find(event => event.airtable === selected);
+
+    //hvis det er utvisning
     if (selected === "recfYDgKdjfiDSO4g" || selected === "reclsQ8SpocBhDlsy") { 
       logpenaltyContainer.style.display = "block";
       logassistplayerConteiner.style.display = "none"; // Skjul assist-spiller feltet
@@ -166,6 +159,17 @@ saveButton.addEventListener('click', (e) => {
       logpenaltyminutes.value = ""; // Nullstill feltet hvis det skjules
       logassistplayerConteiner.style.display = "block"; // Vis assist-spiller feltet
     }
+
+
+    //sjekke om dette eventet har 1 i nøkkelen point, da skal assisk kunne legges inn
+   if(eventData && eventData.point === 1) {
+      logassistplayer.disabled = false;
+      logassistplayerConteiner.style.display = "block"; // Vis assist-spiller feltet
+    }else{
+      logassistplayer.disabled = true;
+      logassistplayerConteiner.style.display = "none"; // Skjul assist-spiller feltet
+    }
+
   });
 
   //last inn eksisterende logg for denne kampen
