@@ -1017,7 +1017,7 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         const matchlogconteiner = rowelement.querySelector(".matchlogconteiner");
         matchlogconteiner.style.display = "none"; // Start med skjult
         //men om der er data i loggen skal den være åpen
-        if(match.matchlog && match.matchlog.length > 0){
+        if(match.matchlogg && match.matchlogg.length > 0){
             matchlogconteiner.style.display = "block";
         }
         const matchlogicon = rowelement.querySelector(".matchlogicon");
