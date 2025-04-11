@@ -400,9 +400,19 @@ function listLogForMatch(match, rowelement) {
   //sorter etter minutter
   matchlogg.sort((a, b) => a.playedminutes - b.playedminutes);
 
+  //sorter etter periode 
+  matchlogg.sort((a, b) => {
+    const periodA = a.period === "OT" ? 100 : a.period === "SO" ? 200 : Number(a.period);
+    const periodB = b.period === "OT" ? 100 : b.period === "SO" ? 200 : Number(b.period);
+    return periodA - periodB;
+  });
+
   let goalteam1 = 0;
   let goalteam2 = 0;
 
+  const startConteiner = elementholder.querySelector('.start');
+  const startRow = noderow.cloneNode(true);
+  list.appendChild(startRow);
 
   matchlogg.forEach(log => {
     const logRow = noderow.cloneNode(true);
@@ -425,6 +435,20 @@ function listLogForMatch(match, rowelement) {
     const minutesElement = logRow.querySelector('.logminutes');
     let minutes = log.playedminutes+" '";
     minutesElement.textContent = minutes;
+
+    const periodElement = logRow.querySelector('.logperiod');
+    const period = log.period;
+    if (period === "OT") {
+      periodElement.textContent = "Ekstraomgang";
+    } else if (period === "SO") {
+      periodElement.textContent = "Straffekonk";
+    }
+    else {
+      const periodNumber = Number(period);
+      if (periodNumber > 0) {
+        periodElement.textContent = `${periodNumber}. omgang`;
+      }
+    }
 
     const eventiconElement = logRow.querySelector('.eventicon');
     let urlIcon = log.eventicon;
@@ -491,8 +515,9 @@ function listLogForMatch(match, rowelement) {
     list.appendChild(logRow);
   });
 
-
-
-
+  //legg inn slutt conteiner
+  const endConteiner = elementholder.querySelector('.start');
+  const endRow = noderow.cloneNode(true);
+  list.appendChild(endRow);
 
 }
