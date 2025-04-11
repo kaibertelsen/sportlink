@@ -892,8 +892,8 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
 
 
             } 
-        }else if(activetournament.sport[0] === "reca0jxxTQAtlUTNu"){
-            // det er icehockey
+        }else if(activetournament.sport[0] === "reca0jxxTQAtlUTNu" || activetournament.sport[0] === "recfdSgV9u9fQldac" ){
+            // det er icehockey eller innendørsbandy
             icehockeyDivbox.style.display = "block";
 
             //utvisningsminutter
@@ -928,50 +928,60 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
 
         openButton.addEventListener("click", () => {
             if (allInfoMatch) {
-                if (allInfoMatch.style.display === "block") {
-                    // Skjul med fade ut først
-                    allInfoMatch.style.transition = "opacity 0.3s ease-in-out";
-                    allInfoMatch.style.opacity = "0";
-        
-                    // Etter fade, reduser høyden
-                    setTimeout(() => {
-                        allInfoMatch.style.transition = "height 0.3s ease-in-out";
-                        const currentHeight = allInfoMatch.offsetHeight + "px"; // Få nåværende høyde
-                        allInfoMatch.style.height = currentHeight; // Sett eksplisitt høyde før overgang
-                        requestAnimationFrame(() => {
-                            allInfoMatch.style.height = "0";
-                        });
-        
-                        // Etter høydeanimasjon, skjul elementet
-                        setTimeout(() => {
-                            allInfoMatch.style.display = "none";
-                        }, 400); // Match høydeovergangsvarighet
-                    }, 300); // Match fade-varighet
-        
-                    openButton.classList.remove("open");
-                    openButton.classList.add("close");
-                } else {
-                    // Vis med animasjon: først høyde, så fade inn
-                    allInfoMatch.style.display = "block";
-                    const targetHeight = allInfoMatch.scrollHeight + "px"; // Få innholdshøyde
-                    allInfoMatch.style.height = "0"; // Start fra null høyde
-                    allInfoMatch.style.opacity = "0";
-                    allInfoMatch.style.transition = "height 0.3s ease-in-out";
-                    requestAnimationFrame(() => {
-                        allInfoMatch.style.height = targetHeight;
-                    });
-        
-                    // Etter høydeanimasjon, fade inn
-                    setTimeout(() => {
-                        allInfoMatch.style.transition = "opacity 0.3s ease-in-out";
-                        allInfoMatch.style.opacity = "1";
-                    }, 300); // Match høydeovergangsvarighet
-        
-                    openButton.classList.remove("close");
-                    openButton.classList.add("open");
-                }
+              if (allInfoMatch.style.display === "block") {
+                // 🔻 Skjul med fade ut først
+                allInfoMatch.style.transition = "opacity 0.3s ease-in-out";
+                allInfoMatch.style.opacity = "0";
+          
+                // Etter fade, reduser høyden
+                setTimeout(() => {
+                  allInfoMatch.style.transition = "height 0.3s ease-in-out";
+                  const currentHeight = allInfoMatch.offsetHeight + "px";
+                  allInfoMatch.style.height = currentHeight; // eksplisitt høyde før kollaps
+                  requestAnimationFrame(() => {
+                    allInfoMatch.style.height = "0";
+                  });
+          
+                  // Etter høydeanimasjon, skjul elementet
+                  setTimeout(() => {
+                    allInfoMatch.style.display = "none";
+                  }, 400); // match høydeovergang
+          
+                }, 300); // match fade-varighet
+          
+                openButton.classList.remove("open");
+                openButton.classList.add("close");
+          
+              } else {
+                // 🔼 Vis med animasjon: høyde, så fade inn
+                allInfoMatch.style.display = "block";
+                const targetHeight = allInfoMatch.scrollHeight + "px";
+                allInfoMatch.style.height = "0";
+                allInfoMatch.style.opacity = "0";
+                allInfoMatch.style.transition = "height 0.3s ease-in-out";
+          
+                requestAnimationFrame(() => {
+                  allInfoMatch.style.height = targetHeight;
+                });
+          
+                // Etter høydeanimasjon, fade inn
+                setTimeout(() => {
+                  allInfoMatch.style.transition = "opacity 0.3s ease-in-out";
+                  allInfoMatch.style.opacity = "1";
+          
+                  // 🎯 Sett høyde til auto etterpå for dynamisk innhold
+                  setTimeout(() => {
+                    allInfoMatch.style.height = "auto";
+                  }, 300); // vent til høydeanimasjonen er ferdig
+          
+                }, 300); // match høydeovergang
+          
+                openButton.classList.remove("close");
+                openButton.classList.add("open");
+              }
             }
-        });
+          });
+          
         
     
        // Finn synlige child-elementer (ikke display: none)
