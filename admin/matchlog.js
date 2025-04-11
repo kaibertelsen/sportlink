@@ -145,6 +145,7 @@ saveButton.addEventListener('click', (e) => {
   logassistplayerConteiner.style.display = "none"; // Skjul assist-spiller feltet som standard
   
   const formElement = newmatchloggrow.querySelector('.newlogrowadd');
+  formElement.style.display = "grid"; // 💡 Nøkkelen!
   formElement.style.setProperty("grid-template-columns", "repeat(6, 1fr)", "important");
 
 
