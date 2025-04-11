@@ -187,19 +187,15 @@ function loadMatchLog(rowelement, match) {
     goal1.textContent = resultOfLog.goalteam1;
     goal1.style.border = "2px solid blue";
     goal1.disabled = true; 
-    //fjerne klikkevent
-    goal1.removeEventListener('click', function() {
-      alert(" Mål styres av kamplogg");
-    });
+    goal1.removeEventListener('click', disableGoalClick);
+    
 
     const goal2 = rowelement.querySelector(".goalteam2");
     goal2.textContent = resultOfLog.goalteam2;
     goal2.style.border = "2px solid blue";
     goal2.disabled = true;
-    //fjerne klikkevent
-    goal2.removeEventListener('click', function() {
-      alert(" Mål styres av kamplogg");
-    });
+    goal2.removeEventListener('click', disableGoalClick);
+    
   }
   
   if (resultOfLog.penaltyminteam1 != 0 || resultOfLog.penaltyminteam2 != 0) {
@@ -207,22 +203,23 @@ function loadMatchLog(rowelement, match) {
     penalty1.textContent = resultOfLog.penaltyminteam1;
     penalty1.style.border = "2px solid blue";
     penalty1.disabled = true;
-    //fjerne klikkevent
-    penalty1.removeEventListener('click', function() {
-      alert(" Utvisning styres av kamplogg");
-    }
-    );
+    penalty1.removeEventListener('click', disablePenaltyClick);
+    
 
     const penalty2 = rowelement.querySelector(".penaltyminteam2");
     penalty2.textContent = resultOfLog.penaltyminteam2;
     penalty2.style.border = "2px solid blue";
     penalty2.disabled = true;
-    //fjerne klikkevent
-    penalty2.removeEventListener('click', function() {
-      alert(" Utvisning styres av kamplogg");
-    }
-    );
+    penalty2.removeEventListener('click', disablePenaltyClick);
   }
+}
+
+function disableGoalClick() {
+  alert("Mål styres av kamplogg");
+}
+
+function disablePenaltyClick() {
+  alert("Utvisning styres av kamplogg");
 }
 
 function responsSaveMatchLog(response) {

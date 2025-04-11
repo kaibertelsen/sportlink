@@ -693,8 +693,8 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         goal2.textContent = (match.goalteam2 === "" || match.goalteam2 === null) ? "-" : match.goalteam2;
 
         if(match.team1name && match.team2name){
-        goal1.addEventListener("click", () => triggerEditInput(goal1, match, "goalteam1", "number", tabelid));
-        goal2.addEventListener("click", () => triggerEditInput(goal2, match, "goalteam2", "number", tabelid));
+        goal1.addEventListener("click", (disableGoalClick) => triggerEditInput(goal1, match, "goalteam1", "number", tabelid));
+        goal2.addEventListener("click", (disableGoalClick) => triggerEditInput(goal2, match, "goalteam2", "number", tabelid));
         }
 
         //Result lable
@@ -903,8 +903,8 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
 
 
             if(match.team1name && match.team2name){
-                penaltyminteam1.addEventListener("click", () => triggerEditInput(penaltyminteam1, match, "penaltyminteam1", "number", tabelid));
-                penaltyminteam2.addEventListener("click", () => triggerEditInput(penaltyminteam2, match, "penaltyminteam2", "number", tabelid));
+                penaltyminteam1.addEventListener("click", (disablePenaltyClick) => triggerEditInput(penaltyminteam1, match, "penaltyminteam1", "number", tabelid));
+                penaltyminteam2.addEventListener("click", (disablePenaltyClick) => triggerEditInput(penaltyminteam2, match, "penaltyminteam2", "number", tabelid));
             }
             
 
