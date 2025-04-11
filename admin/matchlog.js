@@ -136,7 +136,7 @@ saveButton.addEventListener('click', (e) => {
   const logpenaltyminutes = newmatchloggrow.querySelector('.logpenaltyminutes');
   const logpenaltyContainer = logpenaltyminutes?.closest('.loginputconteiner');
   const logassistplayerConteiner = logassistplayer?.closest('.loginputconteiner');
-
+  
   // Skjul feltet som standard
   if (logpenaltyContainer) {
     logpenaltyContainer.style.display = "none";
@@ -144,33 +144,27 @@ saveButton.addEventListener('click', (e) => {
   
   logassistplayerConteiner.style.display = "none"; // Skjul assist-spiller feltet som standard
   
-  // Vis/skjul logikk basert på valgt hendelse
+  const formElement = newmatchloggrow.querySelector('.newlogrowadd');
+
   logeventtype.addEventListener('change', () => {
-    
     const selected = logeventtype.value;
     const eventData = parseSportEventLog(activetournament.sporteventsportlogjson)
-    .find(event => event.airtable === selected);
+      .find(event => event.airtable === selected);
 
-    //hvis det er utvisning
-    if (selected === "recfYDgKdjfiDSO4g" || selected === "reclsQ8SpocBhDlsy") { 
+    if (selected === "recfYDgKdjfiDSO4g" || selected === "reclsQ8SpocBhDlsy") {
       logpenaltyContainer.style.display = "block";
     } else {
       logpenaltyContainer.style.display = "none";
-      logpenaltyminutes.value = ""; // Nullstill feltet hvis det skjules
+      logpenaltyminutes.value = "";
     }
 
-    //Hvis det er poengivende såhviser assist-spiller
     if (eventData && eventData.point == "1") {
-      // Vis assistfeltet og sett 5 kolonner
       logassistplayerConteiner.style.display = "block";
-      logassistplayerConteiner.parentElement.style.gridTemplateColumns = "repeat(5, 1fr)";
+      if (formElement) formElement.style.gridTemplateColumns = "repeat(5, 1fr)";
     } else {
-      // Skjul assistfeltet og sett tilbake til 4 kolonner
       logassistplayerConteiner.style.display = "none";
-      logassistplayerConteiner.parentElement.style.gridTemplateColumns = "repeat(4, 1fr)";
+      if (formElement) formElement.style.gridTemplateColumns = "repeat(4, 1fr)";
     }
-    
-
   });
 
   //last inn eksisterende logg for denne kampen
