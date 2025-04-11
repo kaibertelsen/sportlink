@@ -537,7 +537,7 @@ function listLogForMatch(match, rowelement) {
   });
 
   //legg inn slutt conteiner
-  const endConteiner = elementholder.querySelector('.start');
+  const endConteiner = elementholder.querySelector('.end');
   const endRow = endConteiner.cloneNode(true);
   list.appendChild(endRow);
 
