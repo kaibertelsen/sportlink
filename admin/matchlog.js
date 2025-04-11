@@ -111,10 +111,7 @@ function loadMatchLog(rowelement, match) {
         data.penaltyminutes = Number(newmatchloggrow.querySelector('.logpenaltyminutes')?.value.trim());
       }
       
-     
-
     
-  
       const missing = required.filter(f => !f.value);
       if (missing.length > 0) {
         alert(`Følgende felt mangler: ${missing.map(f => f.label).join(', ')}`);
@@ -124,9 +121,6 @@ function loadMatchLog(rowelement, match) {
       // Lagre til server
       POSTairtable("appxPi2CoLTlsa3qL", "tbliutqJJOHRsN8mw", JSON.stringify(data), "responsSaveMatchLog");
   
-      // Tilbakemelding
-      alert("✅ Hendelsen er lagret!");
-      console.log("📝 Sendt data:", data);
     });
   }
 
@@ -160,7 +154,7 @@ function loadMatchLog(rowelement, match) {
 
 
 function responsSaveMatchLog(response) {
-  const logData = JSON.parse(response.fields.json); // Anta at loggen returneres som JSON-streng fra serveren
+  const logData = JSON.parse(response.fields.json); 
 
   const matchId = response.fields.match?.[0];
   if (!matchId) {
@@ -187,8 +181,8 @@ function responsSaveMatchLog(response) {
     console.warn("❌ Fant ikke rad-elementet for kampen:", matchId);
     return;
   }
-  // Tøm eksisterende logg
-  loadMatchLog(rowelement, match)
+  // Bygg listen på nytt
+  loadMatchLog(rowelement, match);
 }
 
 function responsCreatNewPlayer(data) {
