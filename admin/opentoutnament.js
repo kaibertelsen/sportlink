@@ -574,6 +574,7 @@ function listMatch(matchs) {
 
 function makeMatchrow(nodeelement,match,tabelid,startopen){
         let rowelement = nodeelement.cloneNode(true);
+        rowelement.id = match.airtable+"matchrow";
         
         
         const Timeelement = rowelement.querySelector(".time")

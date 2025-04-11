@@ -176,7 +176,7 @@ function responsSaveMatchLog(response) {
   match.matchlogg.push(logData);
 
   //laste kampen inn på nytt
-  const rowelement = document.querySelector(`.matchloggrow[data-matchid="${matchId}"]`);
+  const rowelement = document.getElementById(match.airtable+"matchrow");
   if (!rowelement) {
     console.warn("❌ Fant ikke rad-elementet for kampen:", matchId);
     return;
