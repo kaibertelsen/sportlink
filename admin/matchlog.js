@@ -87,6 +87,20 @@ function loadMatchLog(rowelement, match) {
     initLogPlayerAutocomplete(logassistplayer, logassistDropdown, players, handleNewPlayer("assistspiller"));
   });
 
+  logassistplayer.style.display = "none";
+  logeventtype.addEventListener('change', () => {
+    const selectedEventId = logteam.logeventtype;
+    //sjekke om dette eventet har 1 i nøkkelen point
+    const eventData = activetournament.sporteventsportlogjson.find(event => event.airtable === selectedEventId);
+   if(eventData && eventData.point === 1) {
+      logassistplayer.disabled = false;
+      logassistplayer.style.display = "block";
+    }else{
+      logassistplayer.disabled = true;
+      logassistplayer.style.display = "none";
+    }
+  });
+
 // 👉 Erstatt gammel saveButton med klone (for å fjerne tidligere event listeners)
 const oldSaveButton = newmatchloggrow.querySelector('.logsavebutton');
 const saveButton = oldSaveButton.cloneNode(true);
