@@ -336,6 +336,10 @@ function findPlayersInMatch(match, teamid) {
 function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, onNewPlayerCallback) {
   inputField.dataset.airtable = "";
 
+  // 🔁 Fjern tidligere eventListener ved å bruke et flagg
+  if (inputField._autocompleteInitialized) return;
+  inputField._autocompleteInitialized = true;
+
   inputField.addEventListener('input', () => {
     const searchTerm = inputField.value.toLowerCase().trim();
     dropdownContainer.innerHTML = "";
@@ -398,6 +402,7 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
     }, 200);
   });
 }
+
 
 function listLogForMatch(match, rowelement,admin) {
   const list = rowelement.querySelector('.matchloglist');
