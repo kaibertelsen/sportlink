@@ -148,7 +148,8 @@ saveButton.addEventListener('click', (e) => {
   logeventtype.addEventListener('change', () => {
     
     const selected = logeventtype.value;
-    const eventData = activetournament.sporteventsportlogjson.find(event => event.airtable === selected);
+    const eventData = parseSportEventLog(activetournament.sporteventsportlogjson)
+    .find(event => event.airtable === selected);
 
     //hvis det er utvisning
     if (selected === "recfYDgKdjfiDSO4g" || selected === "reclsQ8SpocBhDlsy") { 
