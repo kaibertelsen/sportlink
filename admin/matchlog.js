@@ -61,6 +61,10 @@ function loadMatchLog(rowelement, match) {
     inputField.id = newPlayer.name + "placeholder";
 
     POSTairtable("appxPi2CoLTlsa3qL", "tbljVqkOQACs56QqI", JSON.stringify(newPlayer), "responsCreatNewPlayer");
+
+    //skul lagreknapp frem til respons foreligger
+    const saveButton = newmatchloggrow.querySelector('.logsavebutton');
+    saveButton.style.display = "none";
   };
 
   logteam.addEventListener('change', () => {
@@ -248,7 +252,10 @@ function responsCreatNewPlayer(data) {
     });
   });
 
-  console.log("🟢 Fullført oppdatering av spiller i gTeam og gMatchs.");
+  //hvis lagreknapp igjen
+  const saveButton = inputField.closest('.loginputconteiner').querySelector('.logsavebutton');
+  saveButton.style.display = "inline-block";
+
 }
 
 function loadLogPeriodSelector(selector, match) {
