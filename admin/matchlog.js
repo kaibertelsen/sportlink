@@ -159,21 +159,15 @@ saveButton.addEventListener('click', (e) => {
       logpenaltyminutes.value = ""; // Nullstill feltet hvis det skjules
     }
 
-
-    const parentRow = logassistplayerConteiner.parentElement;
     //Hvis det er poengivende såhviser assist-spiller
     if (eventData && eventData.point == "1") {
-      logassistplayer.disabled = false;
+      // Vis assistfeltet og sett 5 kolonner
       logassistplayerConteiner.style.display = "block";
-    
-      // Sett til 5 kolonner
-      parentRow.style.gridTemplateColumns = "repeat(5, 1fr)";
+      logassistplayerConteiner.parentElement.style.gridTemplateColumns = "repeat(5, 1fr)";
     } else {
-      logassistplayer.disabled = true;
+      // Skjul assistfeltet og sett tilbake til 4 kolonner
       logassistplayerConteiner.style.display = "none";
-    
-      // Sett til 4 kolonner
-      parentRow.style.gridTemplateColumns = "repeat(4, 1fr)";
+      logassistplayerConteiner.parentElement.style.gridTemplateColumns = "repeat(4, 1fr)";
     }
     
 
