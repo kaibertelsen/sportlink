@@ -436,7 +436,7 @@ function listLogForMatch(match, rowelement) {
     let minutes = log.playedminutes+" '";
     minutesElement.textContent = minutes;
 
-    const periodElement = logRow.querySelector('.logperiod');
+    const periodElement = logRow.querySelector('.period');
     const period = log.period;
     if (period === "OT") {
       periodElement.textContent = "Ekstraomgang";
