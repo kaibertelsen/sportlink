@@ -170,7 +170,6 @@ function responsSaveMatchLog(response) {
     return;
   }
 
-
   const match = gMatchs.find(m => m.airtable === matchId);
   if (!match) {
     console.warn("❌ Fant ikke kampen i gMatchs:", matchId);
@@ -519,9 +518,7 @@ function listLogForMatch(match, rowelement,admin) {
     let urlIcon = log.eventicon;
     if (urlIcon) {
       eventiconElement.src = urlIcon;
-    } else {
-      eventiconElement.remove();
-    }
+    } 
 
     const teamElement = logRow.querySelector('.teamname');
     const team1name = match.team1name;
