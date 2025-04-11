@@ -450,7 +450,7 @@ function listLogForMatch(match, rowelement) {
       }
       periodeElement.textContent = periodename;
 
-      
+
       list.appendChild(newPeriodeRow);
     }
 
@@ -504,10 +504,17 @@ function listLogForMatch(match, rowelement) {
 
   //lage texten 
     let eventnametext = eventName;
-    if (eventPointer >= 0) {
-      //enten (1-0) eller (0-1)
+    if (eventPointer > 0) {
+      //vise målene kun vis dette eventet er poengivende
       eventnametext = `${eventName} (${goalteam1}-${goalteam2})`;
+    }else {
+      //vise målene kun vis dette eventet er poengivende
+      eventnametext = `${eventName}`;
     }
+
+
+
+
     const eventnameElement = logRow.querySelector('.eventname');
     eventnameElement.textContent = eventnametext;
 
@@ -521,7 +528,7 @@ function listLogForMatch(match, rowelement) {
       // Mål
       htmlInfo += `Mål: ${playerName}`;
       if (assistName) htmlInfo += `<br>Assist: ${assistName}`;
-    } else if (eventtype === "recfYDgKdjfiDSO4g") {
+    } else if (eventtype === "recfYDgKdjfiDSO4g" || eventtype === "recfdSgV9u9fQldac") {
       // Utvisning
       htmlInfo = `Utvisning: ${playerName}<br>${log.penaltyminutes || "?"} min`;
     } else if (eventtype === "recwTupKDW3g2btUl") {
