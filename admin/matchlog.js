@@ -89,15 +89,7 @@ function loadMatchLog(rowelement, match) {
         description: newmatchloggrow.querySelector('#description')?.value.trim(),
         match: [match.airtable]
       };
-      // Legg til assist-spiller hvis valgt
-      if (logassistplayer?.dataset.airtable != "") {
-        data.assistplayer = [logassistplayer?.dataset.airtable];
-      }
-      //legg til penetyminutes hvis valgt
-      if (logpenaltyminutes?.value != "") {
-        data.penaltyminutes = Number(newmatchloggrow.querySelector('.logpenaltyminutes')?.value.trim());
-      }
-      
+
       const required = [
         { label: 'Minutter', value: data.playedminutes },
         { label: 'Periode', value: data.period },
@@ -105,6 +97,23 @@ function loadMatchLog(rowelement, match) {
         { label: 'Hendelse', value: data.eventtype },
         { label: 'Spiller', value: data.player?.[0] },
       ];
+
+
+
+
+      // Legg til assist-spiller hvis valgt
+      if (logassistplayer.value != "") {
+        required.push({ label: 'Assist-spiller', value: logassistplayer?.dataset?.airtable });
+        data.assistplayer = [logassistplayer?.dataset?.airtable];
+      }
+      //legg til penetyminutes hvis valgt
+      if (logpenaltyminutes?.value != "") {
+        data.penaltyminutes = Number(newmatchloggrow.querySelector('.logpenaltyminutes')?.value.trim());
+      }
+      
+     
+
+    
   
       const missing = required.filter(f => !f.value);
       if (missing.length > 0) {
