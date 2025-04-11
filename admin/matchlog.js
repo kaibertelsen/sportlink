@@ -596,10 +596,11 @@ function listLogForMatch(match, rowelement,admin) {
     const infoElement = logRow.querySelector('.info');
     const playerName = log.playername || "Ukjent spiller";
     const assistName = log.assistplayername || null;
+    const eventpoint = log.eventpoint || 0;
     
     let htmlInfo = "";
     
-    if (log.point == "1") {
+    if (eventpoint == "1") {
       // Mål
       htmlInfo += `Mål: ${playerName}`;
       if (assistName) htmlInfo += `<br>Assist: ${assistName}`;
