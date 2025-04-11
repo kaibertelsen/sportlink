@@ -258,7 +258,6 @@ function responsCreatNewPlayer(data) {
     saveButton.style.display = "inline-block";
   }
   
-
 }
 
 function loadLogPeriodSelector(selector, match) {
