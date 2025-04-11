@@ -44,8 +44,6 @@ function loadMatchLog(rowelement, match) {
   logdescription.value = "";
 
 
-
-
   loadLogPeriodSelector(logperiod, match);
   loadLogTeamSelector(logteam, match);
   loadLogSportEvents(logeventtype, match);
@@ -100,8 +98,6 @@ function loadMatchLog(rowelement, match) {
     initLogPlayerAutocomplete(logplayer, logplayerDropdown, players, handleNewPlayer("spiller"));
     initLogPlayerAutocomplete(logassistplayer, logassistDropdown, players, handleNewPlayer("assistspiller"));
   });
-
-
 
   // 🎯 Legg så til ny event listener
   saveButton.addEventListener('click', (e) => {
@@ -184,22 +180,19 @@ function loadMatchLog(rowelement, match) {
 
   //last inn eksisterende logg for denne kampen
   let resultOfLog = listLogForMatch(match, rowelement,true);
-  if (resultOfLog) {
-    const { goalteam1, goalteam2, penaltyminteam1, penaltyminteam2 } = resultOfLog;
-    const team1goal = rowelement.querySelector('.team1goal');
-    //lås feltet
-    team1goal.setAttribute("readonly", "readonly");
-    //Lage blå border
-    team1goal.style.border = "1px solid blue";
 
-    const team2goal = rowelement.querySelector('.team2goal');
-    const team1penalty = rowelement.querySelector('.team1penalty');
-    const team2penalty = rowelement.querySelector('.team2penalty');
+  if(resultOfLog.goalteam1 != 0 && resultOfLog.goalteam2 != 0){
+  
+  const goal1 = rowelement.querySelector(".goalteam1");
+  goal1.textContent = resultOfLog.goalteam1;
+  goal1.style.border = "2px solid blue";
+  goal1.disabled = true; 
 
-    team1goal.textContent = goalteam1;
-    team2goal.textContent = goalteam2;
-    team1penalty.textContent = penaltyminteam1;
-    team2penalty.textContent = penaltyminteam2;
+  const goal2 = rowelement.querySelector(".goalteam2");
+  goal2.textContent = resultOfLog.goalteam2;
+  goal2.style.border = "2px solid blue";
+  goal2.disabled = true;
+
   }
 
 }

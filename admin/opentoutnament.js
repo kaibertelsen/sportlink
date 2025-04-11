@@ -576,7 +576,6 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         let rowelement = nodeelement.cloneNode(true);
         rowelement.id = match.airtable+"matchrow";
         
-        
         const Timeelement = rowelement.querySelector(".time")
         Timeelement.textContent = formatIsoDateName(match.time) || "Ukjent startdato";
         Timeelement.dataset.date = formatIsoDateValue(match.time);
