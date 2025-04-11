@@ -145,6 +145,8 @@ saveButton.addEventListener('click', (e) => {
   logassistplayerConteiner.style.display = "none"; // Skjul assist-spiller feltet som standard
   
   const formElement = newmatchloggrow.querySelector('.newlogrowadd');
+  formElement.style.setProperty("grid-template-columns", "repeat(6, 1fr)", "important");
+
 
   logeventtype.addEventListener('change', () => {
     const selected = logeventtype.value;
@@ -160,10 +162,10 @@ saveButton.addEventListener('click', (e) => {
 
     if (eventData && eventData.point == "1") {
       logassistplayerConteiner.style.display = "block";
-      if (formElement) formElement.style.gridTemplateColumns = "repeat(5, 1fr)";
+      if (formElement) formElement.style.gridTemplateColumns = "repeat(6, 1fr)";
     } else {
       logassistplayerConteiner.style.display = "none";
-      if (formElement) formElement.style.gridTemplateColumns = "repeat(4, 1fr)";
+      if (formElement) formElement.style.gridTemplateColumns = "repeat(5, 1fr)";
     }
   });
 
