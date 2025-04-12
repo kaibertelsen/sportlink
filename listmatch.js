@@ -1209,7 +1209,7 @@ function loadDayfilter(data) {
     });
 
     // 👉 Scroll og aktiver riktig knapp (men IKKE kjør listmatch ennå)
-    const buttonToClick = todayButton || allButton;
+    const buttonToClick = allButton || todayButton;
     if (buttonToClick) {
         setTimeout(() => {
             setActiveButton(buttonToClick, buttonToClick === allButton ? "" : sortedDates[0]);
