@@ -147,10 +147,12 @@ function makeMatchInMatchHolder(data,matchlist,matchholder,firstUnplayedMatch){
     matchlist.parentElement.querySelector(".countermatch").textContent = data.length+" stk.";
 
     //sjekke om selector er aktiv
-    const mselector = document.getElementById("matchMainListSelector");
+    //const mselector = document.getElementById("matchMainListSelector");
     let filteredMatches = data;
-    if(mselector){
-        filteredMatches = filterMatchesBySelector(data);
+    const matchlistSelector = matchlist.parentElement.querySelector(".locationselector");
+    let selectorValue = matchlistSelector.value;
+    if(selectorValue){
+        filteredMatches.filter(filteredMatches => match.location === selectorValue);
     }
 
     //sjekke om noen dagknapper er aktive
@@ -722,7 +724,7 @@ function calculateMatchResultByLog(matchs) {
     });
   
     return matchs;
-  }
+}
   
 
 function listmatchLayoutGrid(data) {
