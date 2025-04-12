@@ -199,7 +199,10 @@ function loadMatchLog(rowelement, match) {
   }else{
     //fjerne border og disable
     goal1.style.border = "none";
+    goal1.textContent = (match.goalteam1 === "" || match.goalteam1 === null) ? "-" : match.goalteam1;
+
     goal2.style.border = "none";
+    goal2.textContent = (match.goalteam2 === "" || match.goalteam2 === null) ? "-" : match.goalteam2;
   }
 
   const penalty1 = rowelement.querySelector(".penaltyminteam1");
@@ -216,6 +219,9 @@ function loadMatchLog(rowelement, match) {
     //fjerne border og disable
     penalty1.style.border = "none";
     penalty2.style.border = "none";
+
+    penalty1.textContent = (match.penaltyminteam1 === "" || match.penaltyminteam1 === null) ? "-" : match.penaltyminteam1;
+    penalty2.textContent = (match.penaltyminteam2 === "" || match.penaltyminteam2 === null) ? "-" : match.penaltyminteam2;
   }
 }
 
