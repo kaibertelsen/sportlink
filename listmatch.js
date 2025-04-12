@@ -152,7 +152,7 @@ function makeMatchInMatchHolder(data,matchlist,matchholder,firstUnplayedMatch){
     const matchlistSelector = matchlist.parentElement.querySelector(".locationselector");
     let selectorValue = matchlistSelector.value;
     if(selectorValue){
-        filteredMatches.filter(filteredMatches => match.location === selectorValue);
+        filteredMatches = filteredMatches.filter(match => match.location === selectorValue);
     }
 
     //sjekke om noen dagknapper er aktive
