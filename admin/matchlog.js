@@ -185,47 +185,36 @@ function loadMatchLog(rowelement, match) {
 
   //last inn eksisterende logg for denne kampen
   let resultOfLog = listLogForMatch(match, rowelement,true);
+  const goal1 = rowelement.querySelector(".goalteam1");
+  const goal2 = rowelement.querySelector(".goalteam2");
 
   if(resultOfLog.goalteam1 != 0 || resultOfLog.goalteam2 != 0){
   
-    const goal1 = rowelement.querySelector(".goalteam1");
     goal1.textContent = resultOfLog.goalteam1;
     goal1.style.border = "2px solid blue";
-    goal1.disabled = true; 
-    goal1.removeEventListener('click', disableGoalClick);
-    
 
-    const goal2 = rowelement.querySelector(".goalteam2");
     goal2.textContent = resultOfLog.goalteam2;
     goal2.style.border = "2px solid blue";
-    goal2.disabled = true;
-    goal2.removeEventListener('click', disableGoalClick);
-    
+
+  }else{
+    //fjerne border og disable
+    goal1.style.border = "none";
+    goal2.style.border = "none";
   }
-  
+
+  const penalty1 = rowelement.querySelector(".penaltyminteam1");
+  const penalty2 = rowelement.querySelector(".penaltyminteam2");
+
   if (resultOfLog.penaltyminteam1 != 0 || resultOfLog.penaltyminteam2 != 0) {
-    const penalty1 = rowelement.querySelector(".penaltyminteam1");
+    
     penalty1.textContent = resultOfLog.penaltyminteam1;
     penalty1.style.border = "2px solid blue";
-    penalty1.disabled = true;
-    penalty1.removeEventListener('click', disablePenaltyClick);
-    
 
-    const penalty2 = rowelement.querySelector(".penaltyminteam2");
     penalty2.textContent = resultOfLog.penaltyminteam2;
     penalty2.style.border = "2px solid blue";
-    penalty2.disabled = true;
-    penalty2.removeEventListener('click', disablePenaltyClick);
   }
 }
 
-function disableGoalClick() {
-  alert("Mål styres av kamplogg");
-}
-
-function disablePenaltyClick() {
-  alert("Utvisning styres av kamplogg");
-}
 
 function responsSaveMatchLog(response) {
   const logData = JSON.parse(response.fields.json); 
