@@ -213,7 +213,7 @@ function viewteam(team) {
         thisteamrankinfo.querySelector(".rankdescription").textContent = description;
 
 //hente data på registrerte spillere
-        console.log("Henter spillere for laget: ",team);
+        viewPlayerStats(team);
 
 ////kampoversikten
         const thisteammatchlist = document.getElementById("thisteammatchlist");
@@ -381,3 +381,56 @@ function findRankForTeam(team) {
     };
 }
 
+function viewPlayerStats(team) {
+    const players = (team.player || []).filter(player =>
+      (player.sumgoal != null && player.sumgoal !== "") ||
+      (player.sumassist != null && player.sumassist !== "") ||
+      (player.sumpenaltyminutes != null && player.sumpenaltyminutes !== "")
+    );
+  
+    const playerStatView = document.getElementById("playerstatview");
+    playerStatView.innerHTML = ""; // Tøm visningen
+  
+    if (!players.length) {
+      playerStatView.innerHTML = "<p>Ingen statistikk registrert for laget.</p>";
+      return;
+    }
+  
+    // Sorter spillere etter verdi for hver kategori
+    const goalScorers = [...players]
+      .filter(p => p.sumgoal > 0)
+      .sort((a, b) => b.sumgoal - a.sumgoal);
+  
+    const assisters = [...players]
+      .filter(p => p.sumassist > 0)
+      .sort((a, b) => b.sumassist - a.sumassist);
+  
+    const penalized = [...players]
+      .filter(p => p.sumpenaltyminutes > 0)
+      .sort((a, b) => b.sumpenaltyminutes - a.sumpenaltyminutes);
+  
+    const formatPlayerName = (player) => {
+      return player.nr ? `<strong>${player.nr}. ${player.name}</strong>` : `<strong>${player.name}</strong>`;
+    };
+  
+    const createSection = (title, items, valueKey, unit) => {
+      if (!items.length) return "";
+      let html = `<div style="margin-bottom: 1em;"><strong style="font-size: 1.1em;">${title}</strong><ul style="margin: 0.5em 0; padding-left: 1em;">`;
+      items.forEach(player => {
+        html += `<li>${formatPlayerName(player)} ${player[valueKey]} ${unit}</li>`;
+      });
+      html += "</ul></div>";
+      return html;
+    };
+  
+    // Lag HTML
+    const html = `
+      ${createSection("Målscorere", goalScorers, "sumgoal", "mål")}
+      ${createSection("Assist", assisters, "sumassist", "assist")}
+      ${createSection("Utvisningsminutter", penalized, "sumpenaltyminutes", "min")}
+    `;
+  
+    playerStatView.innerHTML = html;
+  }
+  
+  
