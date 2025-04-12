@@ -27,7 +27,8 @@ const cdnScripts = [
     "https://kaibertelsen.github.io/sportlink/pointsystemgenerator.js",
     "https://kaibertelsen.github.io/sportlink/startup.js",
     "https://kaibertelsen.github.io/sportlink/create/create.js",
-    "https://kaibertelsen.github.io/sportlink/svipefunction.js"
+    "https://kaibertelsen.github.io/sportlink/svipefunction.js",
+    "https://kaibertelsen.github.io/sportlink/admin/loggviewer.js",
     
 ];
 
