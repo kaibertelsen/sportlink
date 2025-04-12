@@ -431,7 +431,7 @@ function viewPlayerStats(team) {
     `;
   
     playerStatView.innerHTML = html;
-}
+    }
 
   
   
