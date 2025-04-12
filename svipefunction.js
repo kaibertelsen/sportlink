@@ -66,14 +66,17 @@ function fadeElement(element, show = true, displayType = "block") {
 function fadeInMatchSelector(type) {
   const selector = document.getElementById("matchMainListSelector");
   const dayfilterwrapper = document.getElementById("dayfilterwrapper");
+  const filterstartbutton = document.getElementById("filterstartbutton");
 
-  // Vis begge hvis type er true (kampsiden)
+  // Vis kampfilter hvis type er true (kampsiden)
   if (type) {
     fadeElement(selector.parentElement, true, "flex");
     fadeElement(dayfilterwrapper, true, "block");
+    fadeElement(filterstartbutton, true, "inline-block");
   } else {
     fadeElement(selector.parentElement, false);
     fadeElement(dayfilterwrapper, false);
+    fadeElement(filterstartbutton, false);
   }
 }
 
