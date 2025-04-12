@@ -388,7 +388,7 @@ function viewPlayerStats(team) {
       (player.sumpenaltyminutes != null && player.sumpenaltyminutes !== "")
     );
   
-    const playerStatView = document.getElementById("playerstatview");
+    const playerStatView = document.getElementById("playerStratview");
     playerStatView.innerHTML = ""; // Tøm visningen
   
     if (!players.length) {
@@ -431,7 +431,7 @@ function viewPlayerStats(team) {
     `;
   
     playerStatView.innerHTML = html;
-    }
+}
 
   
   
