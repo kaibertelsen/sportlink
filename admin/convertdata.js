@@ -328,7 +328,10 @@ function parseDateSmart(dato, klokke) {
     }
   
     // 3. Returner format som ISO-dato (YYYY-MM-DD) + klokke
-    const isoDate = `${finalDate.toISOString().split("T")[0]} ${cleanClock}`;
+    const dayPad = String(finalDate.getDate()).padStart(2, "0");
+    const monthPad = String(finalDate.getMonth() + 1).padStart(2, "0");
+    const isoDate = `${year}-${monthPad}-${dayPad} ${cleanClock}`;
+    
     return isoDate;
   }
   
