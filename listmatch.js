@@ -1064,7 +1064,7 @@ function markMatchIfPlaying(match) {
       let timePlaying = 30;
   
       if (match.minutesPerPeriod && match.numberOfPeriods) {
-        timePlaying = Number(match.minutesperperiod) * Number(match.numberofperiods);
+        timePlaying = Number(match.minutesPerPeriod) * Number(match.numberOfPeriods);
       }
   
       return nowLocal > matchDateTime && timeDifference <= timePlaying;
