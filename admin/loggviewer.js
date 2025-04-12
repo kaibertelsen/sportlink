@@ -154,7 +154,7 @@ function listLogForMatch(match, rowelement,admin) {
   
       //regne ut utvisningsminutter
       if (eventtype === "recfYDgKdjfiDSO4g" || eventtype === "reclsQ8SpocBhDlsy") {
-        const penaltyminutes = log.penaltyminutes || 0;
+        const penaltyminutes = Number(log.penaltyminutes) || 0;
         if (team === team1) {
           penaltyminteam1 = penaltyminteam1 + penaltyminutes;
         } else {

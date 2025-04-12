@@ -224,6 +224,9 @@ function loadeLists(data){
     let matCh = makeObjectFromAirtableJSON(data, "matchjson");
     //regne ut verdier om det er settverdier
     matCh = calculateMatchResultBySett(matCh);
+
+    //regne ut resultat og utvisningsminutter fra loggen
+    matCh = calculateMatchResultByLog(matCh);
     matches = matCh;
 
     if(matCh){listmatch(matCh,"dato",true);}

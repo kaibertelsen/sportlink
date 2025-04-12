@@ -680,6 +680,51 @@ function calculateMatchResultBySett(matchs) {
     return matchs;
 }
 
+function calculateMatchResultByLog(matchs) {
+    matchs.forEach(match => {
+      if (!match.matchlogg || match.matchlogg.length === 0) return;
+  
+      const team1 = match.team1;
+      let goalteam1 = 0;
+      let goalteam2 = 0;
+      let penaltyminteam1 = 0;
+      let penaltyminteam2 = 0;
+  
+      match.matchlogg.forEach(log => {
+        const team = log.team;
+  
+        const eventPointer = Number(log.eventpoint);
+        if (!isNaN(eventPointer) && eventPointer >= 0) {
+          if (team === team1) {
+            goalteam1 += eventPointer;
+          } else {
+            goalteam2 += eventPointer;
+          }
+        }
+  
+        const isPenalty = log.eventtype === "recfYDgKdjfiDSO4g" || log.eventtype === "reclsQ8SpocBhDlsy";
+        if (isPenalty) {
+          const minutes = Number(log.penaltyminutes);
+          if (!isNaN(minutes)) {
+            if (team === team1) {
+              penaltyminteam1 += minutes;
+            } else {
+              penaltyminteam2 += minutes;
+            }
+          }
+        }
+      });
+  
+      match.goalteam1 = goalteam1;
+      match.goalteam2 = goalteam2;
+      match.penaltyminteam1 = penaltyminteam1;
+      match.penaltyminteam2 = penaltyminteam2;
+    });
+  
+    return matchs;
+  }
+  
+
 function listmatchLayoutGrid(data) {
 
     //divisjonsfilter
