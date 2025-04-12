@@ -212,6 +212,10 @@ function loadMatchLog(rowelement, match) {
 
     penalty2.textContent = resultOfLog.penaltyminteam2;
     penalty2.style.border = "2px solid blue";
+  }else{
+    //fjerne border og disable
+    penalty1.style.border = "none";
+    penalty2.style.border = "none";
   }
 }
 
