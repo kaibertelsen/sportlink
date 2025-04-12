@@ -212,6 +212,9 @@ function viewteam(team) {
         let description = team.name+" er på "+teaminfo.rank+" plass i "+groupDivisionText+".";
         thisteamrankinfo.querySelector(".rankdescription").textContent = description;
 
+//hente data på registrerte spillere
+        console.log("Henter spillere for laget: ",team);
+
 ////kampoversikten
         const thisteammatchlist = document.getElementById("thisteammatchlist");
         thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "Kamper";
