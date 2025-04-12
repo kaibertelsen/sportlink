@@ -564,6 +564,10 @@ function viewMatch(match){
         
 
     document.getElementById("thismatchtabbutton").click();
+
+    const matchlogConteinerviewer = document.getElementById("matchlogConteinerviewer");
+    let results = listLogForMatch(match, matchlogConteinerviewer,false);
+
 }
 
 function createICSFile(icon, match) {
