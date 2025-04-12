@@ -569,7 +569,7 @@ function listLogForMatch(match, rowelement,admin) {
         deleteLog(match,log);
 
         // Oppdater visningen lokalt etter sletting
-        listLogForMatch(match, rowelement, admin);
+        loadMatchLog(rowelement, match);
       });
 
     } else {
