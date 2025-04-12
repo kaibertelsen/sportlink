@@ -1063,7 +1063,7 @@ function markMatchIfPlaying(match) {
       // Standard spilletid: 30 minutter
       let timePlaying = 30;
   
-      if (match.minutesperperiod && match.numberofperiods) {
+      if (match.minutesPerPeriod && match.numberOfPeriods) {
         timePlaying = Number(match.minutesperperiod) * Number(match.numberofperiods);
       }
   
