@@ -204,9 +204,14 @@ function viewMatch(match){
     let matchIsPlayed = false;
     if ((match.goalteam1 === "" || match.goalteam1 === null) || 
     (match.goalteam2 === "" || match.goalteam2 === null)) {
+        //hvis dayoly er true ikke vis tid
+        if(match?.onlyday){
+            resultlable.textContent = "";
+        }else{
         resultlable.textContent = formatdatetoTime(match.time);
         resultlable.style.fontWeight = "normal";
         resultlable.style.color = "white";
+        }
     } else {
         resultlable.textContent = `${match.goalteam1} - ${match.goalteam2}`;
         resultlable.style.fontWeight = "bold";
@@ -328,8 +333,11 @@ function viewMatch(match){
         updateTextContent(".refereename", match.refereename);
 
         const timeelement = matchinfo.querySelector(".datetime");
-        timeelement.textContent = formatdatetoDateAndTime(match.time)
-        
+        if (match?.onlyday) {
+            timeelement.textContent = formatdatetoOnlyDate(match.time)
+        }else{
+            timeelement.textContent = formatdatetoDateAndTime(match.time)
+        }
         const calendeicon = matchinfo.querySelector(".calendeicon");
         createICSFile(calendeicon, match);
 

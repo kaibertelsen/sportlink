@@ -115,6 +115,31 @@ function formatDate(dateString) {
       // Returner formatert dato og tid
       return `${dayName} ${day}. ${monthName} kl. ${hours}:${minutes}`;
   }
+
+  function formatdatetoOnlyDate(dateString) {
+    const date = new Date(dateString);
+  
+    // Hent ukedag og måned navn
+    const days = [
+        "Søndag", "Mandag", "Tirsdag", "Onsdag",
+        "Torsdag", "Fredag", "Lørdag"
+    ];
+    const months = [
+        "januar", "februar", "mars", "april",
+        "mai", "juni", "juli", "august",
+        "september", "oktober", "november", "desember"
+    ];
+
+    const dayName = days[date.getUTCDay()]; // Henter navnet på ukedagen (UTC)
+    const day = date.getUTCDate(); // Henter datoen (UTC)
+    const monthName = months[date.getUTCMonth()]; // Henter navnet på måneden (UTC)
+    const hours = String(date.getUTCHours()).padStart(2, '0'); // Henter timen (UTC, 2-sifret)
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0'); // Henter minuttene (UTC, 2-sifret)
+
+    // Returner formatert dato og tid
+    return `${dayName} ${day}. ${monthName}`;
+
+  }
   
   function formatdatetoDateAndTimeshort(dateString) {
     const matchDate = new Date(dateString);
