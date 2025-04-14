@@ -167,6 +167,9 @@ function controllTeam(data) {
 function controllMatch(data1, data2) {
     const validMatchTypes = ["round2","placementfinale","eighthfinale", "quarterfinale", "semifinale","bronzefinale", "finale"];
     const validatedMatches = [];
+
+    
+    // Sjekk om det er noen kamper med Dagvisning
     
     // Kontroll for Kamper-arket (data1)
     data1.forEach((match, index) => {
@@ -201,6 +204,15 @@ function controllMatch(data1, data2) {
             
         }
 
+        let dayonly = false;
+        if(match.Dagvisning){
+            if(match.Dagvisning == "SANN" || match.Dagvisning == "TRUE" || match.Dagvisning == "JA" || match.Dagvisning == "1"){
+                dayonly = true;
+            }else if(match.Dagvisning == "USANN" || match.Dagvisning == "FALSE" || match.Dagvisning == "NEI" || match.Dagvisning == "0"){
+                dayonly = false;
+            }
+        }
+
         // Omdøp nøkler
         validatedMatches.push({
             time:parseDateSmart(match.Dato, match.Klokkeslett),
@@ -212,7 +224,7 @@ function controllMatch(data1, data2) {
             location: match.Plassering || "",
             refereename: match.Dommer || "",
             timelable:match.Tekst || "",
-            onlyday:match.Dagvisning || ""
+            onlyday:dayonly
           });
           
     });
@@ -260,6 +272,15 @@ function controllMatch(data1, data2) {
            
         }
 
+        let dayonly = false;
+        if(match.Dagvisning){
+            if(match.Dagvisning == "SANN" || match.Dagvisning == "TRUE" || match.Dagvisning == "JA" || match.Dagvisning == "1"){
+                dayonly = true;
+            }else if(match.Dagvisning == "USANN" || match.Dagvisning == "FALSE" || match.Dagvisning == "NEI" || match.Dagvisning == "0"){
+                dayonly = false;
+            }
+        }
+
         // Omdøp nøkler
         validatedMatches.push({
             time:parseDateSmart(match.Dato, match.Klokkeslett),
@@ -276,7 +297,7 @@ function controllMatch(data1, data2) {
             placeholderteam1: match.Lag1tekst || "",
             placeholderteam2: match.Lag2tekst || "",
             timelable:match.Tekst || "",
-            onlyday:match.Dagvisning || ""
+            onlyday:dayonly
         });
     });
 
