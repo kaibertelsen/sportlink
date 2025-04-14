@@ -270,11 +270,10 @@ function listMatchesInTeamView(matchs,team){
     teammatchlist.innerHTML = "";
     const nodeelement = elementlibrary.querySelector('.groupholderlayoutgrid');
 
-    let firstUnplayedMatch = null;
-
+   
     for (let item of grouparray) {
        
-        let rowelement = makeGroupMatchWrapper(item,team,nodeelement,"dato",firstUnplayedMatch);
+        let rowelement = makeGroupMatchWrapper(item,team,nodeelement,"dato");
         list.appendChild(rowelement);
     }
      
