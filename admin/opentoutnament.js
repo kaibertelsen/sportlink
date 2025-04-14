@@ -785,7 +785,7 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
 
         //timelable hvis istede for tidspunkt
         const timelable = rowelement.querySelector(".timelable");
-        timelable.textContent = match.time || "-";
+        timelable.textContent = match.timelable || "-";
         timelable.addEventListener("click", () => triggerEditInput(timelable, match, "timelable", "text", tabelid));
         
         if(match.typematch){
