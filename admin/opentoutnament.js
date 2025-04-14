@@ -580,7 +580,11 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         Timeelement.textContent = formatIsoDateName(match.time) || "Ukjent startdato";
         Timeelement.dataset.date = formatIsoDateValue(match.time);
         Timeelement.addEventListener("click", () => triggerEditInput(Timeelement, match, "time", "datetime-local", tabelid));
-        
+        //hvis det inneholder tekst istede for dato marker bord rundt Temelement
+        if (match.timelable) {
+            Timeelement.style.border = "2px solid blue";
+        }
+
         const divisionName = rowelement.querySelector(".division")
         divisionName.textContent = match.divisionname || "Ukjent divisjon";
         if(!match.groupname && !match.team1 && !match.team2){
