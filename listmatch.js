@@ -709,6 +709,11 @@ function makeMatchWrapper(nodeelement,match,team,grouptype,isOnlyOneLocation){
     //sett tidspunkt for kampen
     const matchTime = matchelement.querySelector(".timelable");
     matchTime.textContent = formatdatetoTime(match.time);
+
+    //hvis dayoly er true ikke vis tid
+    if(match.dayonly){
+        matchTime.textContent = "";
+    }
     
     const resultlableteam1 = matchelement.querySelector(".resultlableteam1");
     resultlableteam1.textContent = match.goalteam1 != null ? match.goalteam1 : "";
