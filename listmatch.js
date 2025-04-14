@@ -15,7 +15,7 @@ function getMatchresponse(data,id){
     
    
 }
-
+/*
 function groupArraybyDate(matchs) {
     // Initialiser en ny array for grupperte kamper
     let grouparray = [];
@@ -45,7 +45,43 @@ function groupArraybyDate(matchs) {
 
     return grouparray;
 }
-
+*/
+function groupArraybyDate(matchs) {
+    let grouparray = [];
+  
+    let groupedByDate = matchs.reduce((groups, match) => {
+      let matchDate = match.time ? new Date(match.time).toISOString().split('T')[0] : "ikke tidspunkt enda";
+  
+      if (!groups[matchDate]) {
+        groups[matchDate] = {
+          matches: [],
+          timelable: null // vil bli oppdatert hvis en kamp har timelable
+        };
+      }
+  
+      // Legg til kamp i gruppen
+      groups[matchDate].matches.push(match);
+  
+      // Hvis timelable finnes og ikke er satt ennå, legg den til
+      if (match.timelable && !groups[matchDate].timelable) {
+        groups[matchDate].timelable = match.timelable;
+      }
+  
+      return groups;
+    }, {});
+  
+    // Konverter objekt til array
+    grouparray = Object.keys(groupedByDate).map(date => {
+      return {
+        date: date,
+        timelable: groupedByDate[date].timelable,
+        matches: groupedByDate[date].matches
+      };
+    });
+  
+    return grouparray;
+ }
+  
 function groupArrayByLocation(matchs) {
     // Initialiser en ny array for grupperte kamper
     let grouparray = [];
