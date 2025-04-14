@@ -770,7 +770,7 @@ function listmatchLayoutGrid(data) {
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.groupholderlayoutgrid');
 
-    let firstUnplayedMatch = null;
+    var firstUnplayedMatch = null;
 
     for (let item of grouparray) {
         let rowelement = makeGroupMatchWrapper(item,false,nodeelement,groupType,firstUnplayedMatch);
