@@ -211,8 +211,8 @@ function controllMatch(data1, data2) {
             fieldname: match.Bane || "",
             location: match.Plassering || "",
             refereename: match.Dommer || "",
-            timelable:match.textfortid || "",
-            onlyday:match.dagvisning || ""
+            timelable:match.Tekst || "",
+            onlyday:match.Dagvisning || ""
           });
           
     });
@@ -275,8 +275,8 @@ function controllMatch(data1, data2) {
             endplay: match.Sluttspill || "",
             placeholderteam1: match.Lag1tekst || "",
             placeholderteam2: match.Lag2tekst || "",
-            timelable:match.textfortid || "",
-            onlyday:match.dagvisning || ""
+            timelable:match.Tekst || "",
+            onlyday:match.Dagvisning || ""
         });
     });
 
@@ -286,6 +286,10 @@ function controllMatch(data1, data2) {
 function parseDateSmart(dato, klokke) {
     // 1. Håndter dato
     let finalDate;
+    klokke = klokke || "00:00";
+    // Rens datoen for ekstra mellomrom
+    dato = dato.trim();
+    
   
     if (typeof dato === "string" && dato.includes(".")) {
       // DD.MM.YYYY → parse manuelt
@@ -340,16 +344,6 @@ function parseDateSmart(dato, klokke) {
   }
   
   
-  
-  
-  
-
-
-
-
-
-
-
 function convertJSONrow(data) {
     try {
         return data.map(item => {
