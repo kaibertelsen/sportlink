@@ -416,7 +416,7 @@ function viewPlayerStats(team) {
       if (!items.length) return "";
       let html = `<div style="margin-bottom: 1em;"><strong style="font-size: 1.1em;">${title}</strong><ul style="margin: 0.5em 0; padding-left: 1em;">`;
       items.forEach(player => {
-        html += `<li>${formatPlayerName(player)} ${player[valueKey]} ${unit}</li>`;
+        html += `<li>${formatPlayerName(player)} - ${player[valueKey]} ${unit}</li>`;
       });
       html += "</ul></div>";
       return html;
