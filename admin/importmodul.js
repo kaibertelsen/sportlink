@@ -410,9 +410,16 @@ function normalizeDate(input) {
       return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     }
   
+    // Hvis i format DD/MM/YYYY → konverter
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(input)) {
+      const [day, month, year] = input.split("/");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    }
+  
     console.warn("Ugyldig datoformat:", input);
     return ""; // returner tom string ved ugyldig format
   }
+  
   
   
 
