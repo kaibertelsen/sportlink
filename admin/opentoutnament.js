@@ -782,6 +782,11 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         onlyday.addEventListener("change", () => {
             triggerEditCheckbox(onlyday,match,"onlyday",tabelid);
         });
+
+        //timelable hvis istede for tidspunkt
+        const timelable = rowelement.querySelector(".timelable");
+        timelable.textContent = match.time || "-";
+        timelable.addEventListener("click", () => triggerEditInput(timelable, match, "timelable", "text", tabelid));
         
         if(match.typematch){
             //det er en finalekamp hvis plasholders
