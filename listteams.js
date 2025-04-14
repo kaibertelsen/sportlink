@@ -381,21 +381,41 @@ function findRankForTeam(team) {
 }
 
 function viewPlayerStats(team) {
-    const players = (team.player || []).filter(player =>
-      (player.sumgoal != null && player.sumgoal !== "") ||
-      (player.sumassist != null && player.sumassist !== "") ||
-      (player.sumpenaltyminutes != null && player.sumpenaltyminutes !== "")
+    let rawPlayers = team.player || [];
+  
+    // Sammenslå spillere med samme navn og nummer
+    const playerMap = new Map();
+  
+    rawPlayers.forEach(player => {
+      const key = `${player.nr || ""}|${player.name}`;
+      if (!playerMap.has(key)) {
+        playerMap.set(key, {
+          nr: player.nr,
+          name: player.name,
+          sumgoal: Number(player.sumgoal) || 0,
+          sumassist: Number(player.sumassist) || 0,
+          sumpenaltyminutes: Number(player.sumpenaltyminutes) || 0,
+        });
+      } else {
+        const existing = playerMap.get(key);
+        existing.sumgoal += Number(player.sumgoal) || 0;
+        existing.sumassist += Number(player.sumassist) || 0;
+        existing.sumpenaltyminutes += Number(player.sumpenaltyminutes) || 0;
+      }
+    });
+  
+    const players = Array.from(playerMap.values()).filter(player =>
+      player.sumgoal > 0 || player.sumassist > 0 || player.sumpenaltyminutes > 0
     );
   
     const playerStatView = document.getElementById("playerStratview");
-    playerStatView.innerHTML = ""; // Tøm visningen
+    playerStatView.innerHTML = "";
   
     if (!players.length) {
       playerStatView.innerHTML = "<p>Ingen statistikk registrert for laget.</p>";
       return;
     }
   
-    // Sorter spillere etter verdi for hver kategori
     const goalScorers = [...players]
       .filter(p => p.sumgoal > 0)
       .sort((a, b) => b.sumgoal - a.sumgoal);
@@ -416,13 +436,12 @@ function viewPlayerStats(team) {
       if (!items.length) return "";
       let html = `<div style="margin-bottom: 1em;"><strong style="font-size: 1.1em;">${title}</strong><ul style="margin: 0.5em 0; padding-left: 1em;">`;
       items.forEach(player => {
-        html += `<li>${formatPlayerName(player)} - ${player[valueKey]} ${unit}</li>`;
+        html += `<li>${formatPlayerName(player)} – ${player[valueKey]} ${unit}</li>`;
       });
       html += "</ul></div>";
       return html;
     };
   
-    // Lag HTML
     const html = `
       ${createSection("Målscorere", goalScorers, "sumgoal", "mål")}
       ${createSection("Assist", assisters, "sumassist", "assist")}
@@ -430,7 +449,8 @@ function viewPlayerStats(team) {
     `;
   
     playerStatView.innerHTML = html;
-}
+  }
+  
 
   
   
