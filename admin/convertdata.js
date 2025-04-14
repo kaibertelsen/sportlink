@@ -210,7 +210,9 @@ function controllMatch(data1, data2) {
             team2name: match.Lag2 || "",
             fieldname: match.Bane || "",
             location: match.Plassering || "",
-            refereename: match.Dommer || ""
+            refereename: match.Dommer || "",
+            timelable:match.textfortid || "",
+            onlyday:match.dagvisning || ""
           });
           
     });
@@ -272,7 +274,9 @@ function controllMatch(data1, data2) {
             endplayplace: match.Kampnr || "",
             endplay: match.Sluttspill || "",
             placeholderteam1: match.Lag1tekst || "",
-            placeholderteam2: match.Lag2tekst || ""
+            placeholderteam2: match.Lag2tekst || "",
+            timelable:match.textfortid || "",
+            onlyday:match.dagvisning || ""
         });
     });
 
