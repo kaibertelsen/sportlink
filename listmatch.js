@@ -670,9 +670,10 @@ function makeGroupMatchWrapper(item,team,nodeelement,grouptype){
     const closeopengroupbutton = rowelement.querySelector(".closeopengroupbutton");
 
     if (grouptype === "dato") {
-        groupheadername.textContent = isNaN(Date.parse(item.date))
-          ? item.date
-          : formatDateToNorwegian(item.date);
+        groupheadername.textContent = item.timelable
+        ? item.timelable
+        : (isNaN(Date.parse(item.date)) ? item.date : formatDateToNorwegian(item.date));
+
 
           //last inn alle de forskjellige lokasjoner i denne velgeren
           if(locationSelector){
