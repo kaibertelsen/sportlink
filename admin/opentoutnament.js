@@ -778,7 +778,10 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         }else{
             onlyday.checked = false;    
         }
-        onlyday.addEventListener("click", () => triggerEditInput(onlyday, match, "onlyday", "checkbox", tabelid));
+        // Legg til eventlistener for å håndtere klikk
+        onlyday.addEventListener("change", () => {
+            triggerEditCheckbox(onlyday,match,"onlyday",tabelid);
+        });
         
         if(match.typematch){
             //det er en finalekamp hvis plasholders
