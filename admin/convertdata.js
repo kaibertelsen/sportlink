@@ -176,13 +176,11 @@ function controllMatch(data1, data2) {
         const lineNumber = index + 1; // Linjenummer for Kamper-arket
 
         let dayonly = false;
-        if(match.Dagvisning){
-            if(match.Dagvisning == "SANN" || match.Dagvisning == "TRUE" || match.Dagvisning == "JA" || match.Dagvisning == "1"){
-                dayonly = true;
-            }else if(match.Dagvisning == "USANN" || match.Dagvisning == "FALSE" || match.Dagvisning == "NEI" || match.Dagvisning == "0"){
-                dayonly = false;
-            }
+        if (match.Dagvisning) {
+        const val = match.Dagvisning.toString().toUpperCase();
+        dayonly = ["SANN", "TRUE", "JA", "1"].includes(val);
         }
+
 
         // Sjekk at nødvendige felter er fylt ut
         if (!match.Dato || !match.Klokkeslett && dayonly == false) {
@@ -236,13 +234,11 @@ function controllMatch(data1, data2) {
         const lineNumber = index + 1; // Linjenummer for Finalekamper-arket
 
         let dayonly = false;
-        if(match.Dagvisning){
-            if(match.Dagvisning == "SANN" || match.Dagvisning == "TRUE" || match.Dagvisning == "JA" || match.Dagvisning == "1"){
-                dayonly = true;
-            }else if(match.Dagvisning == "USANN" || match.Dagvisning == "FALSE" || match.Dagvisning == "NEI" || match.Dagvisning == "0"){
-                dayonly = false;
-            }
+        if (match.Dagvisning) {
+          const val = match.Dagvisning.toString().toUpperCase();
+          dayonly = ["SANN", "TRUE", "JA", "1"].includes(val);
         }
+        
 
         // Sjekk at nødvendige felter er fylt ut
         if (!match.Dato || !match.Klokkeslett) {
