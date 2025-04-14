@@ -711,7 +711,7 @@ function makeMatchWrapper(nodeelement,match,team,grouptype,isOnlyOneLocation){
     matchTime.textContent = formatdatetoTime(match.time);
 
     //hvis dayoly er true ikke vis tid
-    if(match?.dayonly){
+    if(match?.onlyday){
         matchTime.textContent = "";
     }
 
