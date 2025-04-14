@@ -711,10 +711,10 @@ function makeMatchWrapper(nodeelement,match,team,grouptype,isOnlyOneLocation){
     matchTime.textContent = formatdatetoTime(match.time);
 
     //hvis dayoly er true ikke vis tid
-    if(match.dayonly){
+    if(match?.dayonly){
         matchTime.textContent = "";
     }
-    
+
     const resultlableteam1 = matchelement.querySelector(".resultlableteam1");
     resultlableteam1.textContent = match.goalteam1 != null ? match.goalteam1 : "";
     
