@@ -175,8 +175,17 @@ function controllMatch(data1, data2) {
     data1.forEach((match, index) => {
         const lineNumber = index + 1; // Linjenummer for Kamper-arket
 
+        let dayonly = false;
+        if(match.Dagvisning){
+            if(match.Dagvisning == "SANN" || match.Dagvisning == "TRUE" || match.Dagvisning == "JA" || match.Dagvisning == "1"){
+                dayonly = true;
+            }else if(match.Dagvisning == "USANN" || match.Dagvisning == "FALSE" || match.Dagvisning == "NEI" || match.Dagvisning == "0"){
+                dayonly = false;
+            }
+        }
+
         // Sjekk at nødvendige felter er fylt ut
-        if (!match.Dato || !match.Klokkeslett) {
+        if (!match.Dato || !match.Klokkeslett && dayonly == false) {
             importMessage.push(`Feil på linje ${lineNumber}: Kamper-arket, mangler dato eller klokkeslett.`);
            
         }
@@ -204,14 +213,7 @@ function controllMatch(data1, data2) {
             
         }
 
-        let dayonly = false;
-        if(match.Dagvisning){
-            if(match.Dagvisning == "SANN" || match.Dagvisning == "TRUE" || match.Dagvisning == "JA" || match.Dagvisning == "1"){
-                dayonly = true;
-            }else if(match.Dagvisning == "USANN" || match.Dagvisning == "FALSE" || match.Dagvisning == "NEI" || match.Dagvisning == "0"){
-                dayonly = false;
-            }
-        }
+        
 
         // Omdøp nøkler
         validatedMatches.push({
@@ -232,6 +234,15 @@ function controllMatch(data1, data2) {
     // Kontroll for Finalekamper-arket (data2)
     data2.forEach((match, index) => {
         const lineNumber = index + 1; // Linjenummer for Finalekamper-arket
+
+        let dayonly = false;
+        if(match.Dagvisning){
+            if(match.Dagvisning == "SANN" || match.Dagvisning == "TRUE" || match.Dagvisning == "JA" || match.Dagvisning == "1"){
+                dayonly = true;
+            }else if(match.Dagvisning == "USANN" || match.Dagvisning == "FALSE" || match.Dagvisning == "NEI" || match.Dagvisning == "0"){
+                dayonly = false;
+            }
+        }
 
         // Sjekk at nødvendige felter er fylt ut
         if (!match.Dato || !match.Klokkeslett) {
@@ -272,15 +283,7 @@ function controllMatch(data1, data2) {
            
         }
 
-        let dayonly = false;
-        if(match.Dagvisning){
-            if(match.Dagvisning == "SANN" || match.Dagvisning == "TRUE" || match.Dagvisning == "JA" || match.Dagvisning == "1"){
-                dayonly = true;
-            }else if(match.Dagvisning == "USANN" || match.Dagvisning == "FALSE" || match.Dagvisning == "NEI" || match.Dagvisning == "0"){
-                dayonly = false;
-            }
-        }
-
+        
         // Omdøp nøkler
         validatedMatches.push({
             time:parseDateSmart(match.Dato, match.Klokkeslett),
