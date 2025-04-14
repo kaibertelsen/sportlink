@@ -769,7 +769,16 @@ function makeMatchrow(nodeelement,match,tabelid,startopen){
         //plaseholdertxet1
         const placeholdertext2 = rowelement.querySelector(".team2placeholder");
         placeholdertext2.parentElement.style.display = "none";
-        
+
+        //sjekke om det er kun dato som skal vises
+        const onlyday = rowelement.querySelector(".onlyday");
+        if(match.onlyday){
+            //skjule tid
+            onlyday.checked = true;
+        }else{
+            onlyday.checked = false;    
+        }
+        onlyday.addEventListener("click", () => triggerEditInput(onlyday, match, "onlyday", "checkbox", tabelid));
         
         if(match.typematch){
             //det er en finalekamp hvis plasholders

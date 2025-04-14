@@ -890,7 +890,6 @@ function markMatchIfPlaying(match) {
     }
 }
   
-
 function toggleMatchList(rowelement, closeopengroupbutton) {
     const matchlist = rowelement.querySelector(".matchlist");
     const headerdiv = rowelement.querySelector(".headerdiv");
