@@ -238,6 +238,22 @@ function loadeLists(data){
     endplay = endplayConverter(data);
     if(endplay){listendplay(matches,endplay);}
 
+    //om denne turneringen skal ha statistikk så slå den på
+    if (data.statistics) {
+        // Samle alle matchlogg-data i én liste
+        let allMatchLogs = [];
+    
+        matches.forEach(match => {
+            if (match.matchlogg && Array.isArray(match.matchlogg)) {
+                allMatchLogs = allMatchLogs.concat(match.matchlogg);
+            }
+        });
+    
+        console.log("Alle matchlogger:", allMatchLogs);
+        // Her kan du f.eks. sende videre til en funksjon som analyserer spillerstatistikk
+        // analyzePlayerStats(allMatchLogs);
+    }
+
 }
 
 function loadTourmentHeader(data){

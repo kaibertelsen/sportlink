@@ -92,7 +92,7 @@ function responsklient(data){
     listClub(gClub);
     listTournament(gTournament);
 
-loadTurnamentSelector(gTournament);
+    loadTurnamentSelector(gTournament);
 
 
 }
@@ -226,6 +226,7 @@ async function importXlsFile(urlToXlsFile) {
  
 }
 
+ 
 function viewTurnamentData(data) {
     const list = document.getElementById("importlist");
     list.replaceChildren(); // Fjern tidligere innhold
@@ -389,7 +390,6 @@ function listClub(clubs) {
     }
 }
 
-
 function listOrganizer(organizers) {
  
     const list = document.getElementById("organizerlistholder");
@@ -463,7 +463,6 @@ function listTournament(tournaments) {
         // Add click event for the row
         rowelement.addEventListener("click", () => {
             // Trigger tournament tab button click
-            document.getElementById("tournamenttabbutton").click();
             openTournament(tournament.airtable);
 
             const selector = document.getElementById("tournamentSelector");
