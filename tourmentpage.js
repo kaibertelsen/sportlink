@@ -239,7 +239,11 @@ function loadeLists(data){
     if(endplay){listendplay(matches,endplay);}
 
     //om denne turneringen skal ha statistikk så slå den på
+    const statisticstabbutton = document.getElementById("statisticstabbutton");
     if (data.statistics) {
+        // Slå på statistikk-fanen
+        statisticstabbutton.style.display = "inline-block";
+   
         // Samle alle matchlogg-data i én liste
         let allMatchLogs = [];
     
@@ -250,9 +254,11 @@ function loadeLists(data){
         });
     
         const stats = summarizePlayerStats(allMatchLogs);
-        console.log(summarizePlayerStats);
-        // Her kan du f.eks. sende videre til en funksjon som analyserer spillerstatistikk
-        // analyzePlayerStats(allMatchLogs);
+        
+    }else
+    {
+        // Skjul statistikk-fanen
+        statisticstabbutton.style.display = "none";
     }
 
 }
@@ -305,6 +311,8 @@ function summarizePlayerStats(allMatchLogs) {
             playerStats[playerId].penaltyMinutes += Number(log.penaltyminutes);
         }
     });
+
+
 
     // Returner som array
     return Object.values(playerStats);
