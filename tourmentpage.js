@@ -249,12 +249,67 @@ function loadeLists(data){
             }
         });
     
-        console.log("Alle matchlogger:", allMatchLogs);
+        const stats = summarizePlayerStats(allMatchLogs);
+        console.log(summarizePlayerStats);
         // Her kan du f.eks. sende videre til en funksjon som analyserer spillerstatistikk
         // analyzePlayerStats(allMatchLogs);
     }
 
 }
+
+function summarizePlayerStats(allMatchLogs) {
+    const playerStats = {};
+
+    allMatchLogs.forEach(log => {
+        const playerId = log.player;
+        if (!playerId) return;
+
+        if (!playerStats[playerId]) {
+            playerStats[playerId] = {
+                playerId: playerId,
+                playername: log.playername || "",
+                goals: 0,
+                assists: 0,
+                penaltyMinutes: 0,
+                events: 0
+            };
+        }
+
+        // Tell antall hendelser
+        playerStats[playerId].events += 1;
+
+        // Mål
+        if (log.eventtypelable === "Mål") {
+            playerStats[playerId].goals += 1;
+        }
+
+        // Assists
+        if (log.assistplayer && log.assistplayer !== "") {
+            const assistId = log.assistplayer;
+            if (!playerStats[assistId]) {
+                playerStats[assistId] = {
+                    playerId: assistId,
+                    playername: log.assistplayername || "",
+                    goals: 0,
+                    assists: 0,
+                    penaltyMinutes: 0,
+                    events: 0
+                };
+            }
+            playerStats[assistId].assists += 1;
+            playerStats[assistId].events += 1;
+        }
+
+        // Utvisningsminutter
+        if (log.penaltyminutes && !isNaN(Number(log.penaltyminutes))) {
+            playerStats[playerId].penaltyMinutes += Number(log.penaltyminutes);
+        }
+    });
+
+    // Returner som array
+    return Object.values(playerStats);
+}
+
 
 function loadTourmentHeader(data){
 
