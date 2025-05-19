@@ -240,9 +240,10 @@ function loadeLists(data){
 
     //om denne turneringen skal ha statistikk så slå den på
     const statisticstabbutton = document.getElementById("statisticstabbutton");
+    statisticstabbutton.style.display = "none";
     if (data.statistics) {
         // Slå på statistikk-fanen
-        statisticstabbutton.style.display = "inline-block";
+       // statisticstabbutton.style.display = "inline-block";
    
         // Samle alle matchlogg-data i én liste
         let allMatchLogs = [];
