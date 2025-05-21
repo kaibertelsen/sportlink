@@ -43,6 +43,7 @@ function goToSlide(index) {
             fadeInMatchSelector(false);
         }else if (currentIndex === 3) {
           markActiveButton(document.getElementById('statisticstabbutton'));
+          fadeInMatchSelector(false);
         }
     }
 }
