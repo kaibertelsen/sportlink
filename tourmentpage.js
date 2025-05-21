@@ -303,9 +303,9 @@ function listPlayerStats(data) {
         rowelement.querySelector(".goals").textContent = item.goals || 0;
         rowelement.querySelector(".assists").textContent = item.assists || 0;
         rowelement.querySelector(".notes").textContent = item.notes || "";
-        let clubbanddivision = item.divisionname || "";
-        if(item.clubname){
-            clubbanddivision = item.clubname + " - " + clubanddivision;
+        let clubbanddivision = item.division || "";
+        if(item.club){
+            clubbanddivision = item.club + " - " + clubanddivision;
         }
         rowelement.querySelector(".clubnamediv").textContent = clubbanddivision || "";
 
