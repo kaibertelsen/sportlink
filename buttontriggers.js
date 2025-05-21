@@ -29,6 +29,12 @@ document.getElementById('endplaytabbutton').onclick = function() {
    // document.getElementById('loadendplaybutton').click();
 }
 
+document.getElementById('statisticstabbutton').onclick = function() {
+    markActiveButton(document.getElementById('statisticstabbutton'));
+    goToSlide(3);
+   // document.getElementById('loadendplaybutton').click();
+}
+
 document.getElementById('buttontoturnament').onclick = function() {
     //matchsiden
     if(previouspage == "team"){
