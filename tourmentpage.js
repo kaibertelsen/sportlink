@@ -244,8 +244,7 @@ function loadeLists(data){
     if (data.statistics) {
         // Slå på statistikk-fanen
        statisticstabbutton.style.display = "inline-block";
-       
-        // Samle alle matchlogg-data i én liste
+    // Samle alle matchlogg-data i én liste
         let allMatchLogs = [];
     
         matches.forEach(match => {
@@ -319,8 +318,6 @@ function listPlayerStats(data) {
 
 
 
-
-
 function summarizePlayerStats(allMatchLogs) {
     const playerStats = {};
 
@@ -332,6 +329,8 @@ function summarizePlayerStats(allMatchLogs) {
             playerStats[playerId] = {
                 playerId: playerId,
                 playername: log.playername || "",
+                club: log.club || "",
+                division: log.division || "",
                 goals: 0,
                 assists: 0,
                 penaltyMinutes: 0,
@@ -354,6 +353,8 @@ function summarizePlayerStats(allMatchLogs) {
                 playerStats[assistId] = {
                     playerId: assistId,
                     playername: log.assistplayername || "",
+                    club: log.assistclub || "",          // Hvis du har assistklubb
+                    division: log.division || "",        // Antatt samme divisjon
                     goals: 0,
                     assists: 0,
                     penaltyMinutes: 0,
@@ -370,11 +371,10 @@ function summarizePlayerStats(allMatchLogs) {
         }
     });
 
-
-
     // Returner som array
     return Object.values(playerStats);
 }
+
 
 
 function loadTourmentHeader(data){
