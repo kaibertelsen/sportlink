@@ -14,3 +14,4 @@ var clientID;
 var previouspage;
 var isInTurnament=false;
 var iSAlreadyLoaded = false;
+var PlayerStats;

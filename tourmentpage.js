@@ -244,8 +244,7 @@ function loadeLists(data){
     if (data.statistics) {
         // Slå på statistikk-fanen
        statisticstabbutton.style.display = "inline-block";
-       addStatisticsSlide();
-   
+       
         // Samle alle matchlogg-data i én liste
         let allMatchLogs = [];
     
@@ -255,8 +254,9 @@ function loadeLists(data){
             }
         });
     
-        const stats = summarizePlayerStats(allMatchLogs);
-
+        PlayerStats = summarizePlayerStats(allMatchLogs);
+        listPlayerStats(PlayerStats);
+        
 
         
     }else
@@ -267,26 +267,43 @@ function loadeLists(data){
 
 }
 
-function addStatisticsSlide() {
-    // Finn wrapperen der slides ligger
-    const wrapper = document.querySelector('.swipe-wrapper');
+function listPlayerStats(data) {
+    const activeDivision = getActiveDivisionFilter();
 
-    // Lag ny slide (samme struktur)
-    const slide = document.createElement('div');
-    slide.classList.add('swipe-slide');
+    // Filtrer data basert på aktiv divisjon
+    const filteredDivision = activeDivision === "" ? data : data.filter(player => player.division === activeDivision);
 
-    slide.innerHTML = `
-        <div class="swipe-container-list">
-            <div id="statisticslist" class="swipe-listholder">
-                <h2>Statistics</h2>
-                <p>Her vises listen over statistikk.</p>
-            </div>
-        </div>
-    `;
+    const list = document.getElementById("statisticslist");
+    list.replaceChildren(); // Tømmer liste før ny data legges inn
 
-    // Legg til den nye slide-en i wrapperen
-    wrapper.appendChild(slide);
+    const elementlibrary = document.getElementById("elementlibrary");
+
+    // 💡 OBS: Her må det stå '.playerstats' (med punktum), ellers returnerer den null
+    const groupHolder = elementlibrary.querySelector('.playerstats');
+    const groupHoldercopy = groupHolder.cloneNode(true);
+    groupHoldercopy.style.display = "block"; // Vis kopien om originalen er skjult
+
+    list.appendChild(groupHoldercopy);
+
+    const nodeelement = groupHoldercopy.querySelector('.resultrow');
+
+    for (let item of filteredDivision) {
+        const rowelement = nodeelement.cloneNode(true);
+
+        rowelement.querySelector(".playername").textContent = item.playername || "";
+        rowelement.querySelector(".goals").textContent = item.goals || 0;
+        rowelement.querySelector(".assists").textContent = item.assists || 0;
+        rowelement.querySelector(".notes").textContent = item.notes || "";
+
+        nodeelement.parentElement.appendChild(rowelement);
+    }
+
+    // Fjern mal-elementet etter bruk
+    nodeelement.remove();
 }
+
+
+
 
 
 function summarizePlayerStats(allMatchLogs) {
