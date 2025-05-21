@@ -1,5 +1,5 @@
 const swipeWrapper = document.querySelector('.swipe-wrapper');
-const slides = document.querySelectorAll('.swipe-slide');
+var slides = document.querySelectorAll('.swipe-slide');
 let currentIndex = 0;
 let startX = 0;
 let startY = 0;
@@ -17,6 +17,7 @@ function updateSlidePosition() {
 }
 
 function goToSlide(index) {
+  slides = document.querySelectorAll('.swipe-slide');
     if (index >= 0 && index < slides.length) {
         // Save scroll position of the current slide
         scrollPositions[currentIndex] = slides[currentIndex].scrollTop;

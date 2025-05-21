@@ -1,5 +1,5 @@
 const swipeWrapper = document.querySelector('.swipe-wrapper');
-const slides = document.querySelectorAll('.swipe-slide');
+let slides = document.querySelectorAll('.swipe-slide');
 let currentIndex = 0;
 let startX = 0;
 let startY = 0;
