@@ -243,7 +243,8 @@ function loadeLists(data){
     statisticstabbutton.style.display = "none";
     if (data.statistics) {
         // Slå på statistikk-fanen
-       // statisticstabbutton.style.display = "inline-block";
+       statisticstabbutton.style.display = "inline-block";
+       addStatisticsSlide();
    
         // Samle alle matchlogg-data i én liste
         let allMatchLogs = [];
@@ -255,6 +256,8 @@ function loadeLists(data){
         });
     
         const stats = summarizePlayerStats(allMatchLogs);
+
+
         
     }else
     {
@@ -263,6 +266,28 @@ function loadeLists(data){
     }
 
 }
+
+function addStatisticsSlide() {
+    // Finn wrapperen der slides ligger
+    const wrapper = document.querySelector('.swipe-wrapper');
+
+    // Lag ny slide (samme struktur)
+    const slide = document.createElement('div');
+    slide.classList.add('swipe-slide');
+
+    slide.innerHTML = `
+        <div class="swipe-container-list">
+            <div id="statisticslist" class="swipe-listholder">
+                <h2>Statistics</h2>
+                <p>Her vises listen over statistikk.</p>
+            </div>
+        </div>
+    `;
+
+    // Legg til den nye slide-en i wrapperen
+    wrapper.appendChild(slide);
+}
+
 
 function summarizePlayerStats(allMatchLogs) {
     const playerStats = {};
