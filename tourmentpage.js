@@ -289,11 +289,18 @@ function listPlayerStats(data) {
 
     for (let item of filteredDivision) {
         const rowelement = nodeelement.cloneNode(true);
+        let index = filteredDivision.indexOf(item) + 1;
 
+        rowelement.querySelector(".rangenr").textContent = index+".";
         rowelement.querySelector(".playername").textContent = item.playername || "";
         rowelement.querySelector(".goals").textContent = item.goals || 0;
         rowelement.querySelector(".assists").textContent = item.assists || 0;
         rowelement.querySelector(".notes").textContent = item.notes || "";
+        let clubbanddivision = item.divisionname || "";
+        if(item.clubname){
+            clubbanddivision = item.clubname + " - " + clubanddivision;
+        }
+        rowelement.querySelector(".clubnamediv").textContent = clubbanddivision || "";
 
         nodeelement.parentElement.appendChild(rowelement);
     }
