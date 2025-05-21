@@ -273,6 +273,14 @@ function listPlayerStats(data) {
     // Filtrer data basert på aktiv divisjon
     const filteredDivision = activeDivision === "" ? data : data.filter(player => player.division === activeDivision);
 
+    //sorter på mål
+    filteredDivision.sort((a, b) => {
+        if (a.goals === b.goals) {
+            return a.playername.localeCompare(b.playername);
+        }
+        return b.goals - a.goals;
+    });
+
     const list = document.getElementById("statisticslist");
     list.replaceChildren(); // Tømmer liste før ny data legges inn
 
