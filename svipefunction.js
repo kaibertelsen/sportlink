@@ -40,6 +40,8 @@ function goToSlide(index) {
         } else if (currentIndex === 2) {
             markActiveButton(document.getElementById('endplaytabbutton'));
             fadeInMatchSelector(false);
+        }else if (currentIndex === 3) {
+          markActiveButton(document.getElementById('statisticstabbutton'));
         }
     }
 }
