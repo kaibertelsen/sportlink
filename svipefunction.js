@@ -150,8 +150,8 @@ function handleTouchEnd() {
             markActiveButton(document.getElementById('endplaytabbutton'));
             fadeInMatchSelector(false);
         }else if (currentIndex === 3) {
-          markActiveButton(document.getElementById('statisticstabbutton'));
-          fadeInMatchSelector(false);
+            markActiveButton(document.getElementById('statisticstabbutton'));
+            fadeInMatchSelector(false);
       }
     }
 

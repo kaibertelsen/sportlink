@@ -37,6 +37,8 @@ function goToSlide(index) {
             markActiveButton(document.getElementById('matchtabbutton'));
         } else if (currentIndex === 2) {
             markActiveButton(document.getElementById('endplaytabbutton'));
+        }else if (currentIndex === 3) {
+            markActiveButton(document.getElementById('statisticstabbutton'));
         }
     }
 }
@@ -108,6 +110,8 @@ function handleTouchEnd() {
             markActiveButton(document.getElementById('matchtabbutton'));
         } else if (currentIndex === 2) {
             markActiveButton(document.getElementById('endplaytabbutton'));
+        }else if (currentIndex === 3) {
+            markActiveButton(document.getElementById('statisticstabbutton'));
         }
     }
 
