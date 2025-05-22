@@ -173,7 +173,8 @@ function listPlayers(players) {
         const matchesDivision = !divisionValue || player.division === divisionValue;
         const matchesGroup = !groupValue || player.group === groupValue;
         const matchesTeam = !teamSelector.value || player.team === teamSelector.value;
-        const matchesSearch = !PlayerSearchField || (player.name && player.name.toLowerCase().includes(PlayerSearchField));
+        // Check if player name or nr matches the search field
+        const matchesSearch = !PlayerSearchField || (player.name && player.name.toLowerCase().includes(PlayerSearchField)) || (player.nr && player.nr.toString().toLowerCase().includes(PlayerSearchField));
         return matchesDivision && matchesGroup && matchesTeam;
     });
 
