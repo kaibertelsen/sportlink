@@ -194,11 +194,7 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
     const statswitsj = tournamentinfoheader.querySelector(".statsswitsj");
     statswitsj.checked = tournament?.statistics;
 
-    //når en trykker på statswitsj
-    statswitsj.addEventListener("change", () => {
-        triggerEditCheckbox(statswitsj, tournament, "statistics", tabelid);
-    }
-    );
+    
 
 }
 
@@ -220,6 +216,14 @@ function publishTournament() {
         // Brukeren trykket Avbryt
         console.log("Publisering avbrutt.");
     }
+}
+
+function settstatistics(){
+
+    const Pswitch = document.getElementById("statsswitsj");
+    let body = {statistics:Pswitch.checked};
+    PATCHairtable(baseId,"tblGhVlhWETNvhrWN",activetournament.airtable,JSON.stringify(body),"respondPublish")
+
 }
 
 function sendPublishRequest() {
