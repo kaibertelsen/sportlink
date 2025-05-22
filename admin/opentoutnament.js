@@ -188,10 +188,10 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
 
     tournamentinfoheader.querySelector(".username").textContent = tournament.username || "";
 
-    const switsj = tournamentinfoheader.querySelector(".merkibj");
+    const switsj = document.getElementById("publichswitsj");
     switsj.checked = !tournament?.hidden;
 
-    const statswitsj = tournamentinfoheader.querySelector(".statsswitsj");
+    const statswitsj = document.getElementById("statsswitsj");
     statswitsj.checked = tournament?.statistics;
 
     
