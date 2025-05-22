@@ -266,71 +266,75 @@ function loadeLists(data){
 
 }
 
+document.getElementById("playerSearch").addEventListener("input", function () {
+    listPlayerStats(PlayerStats);
+  });
+
 function listPlayerStats(data) {
     const activeDivision = getActiveDivisionFilter();
-
-    // Filtrer data basert på aktiv divisjon
-    const filteredDivision = activeDivision === "" ? data : data.filter(player => player.divisionid === activeDivision);
-
-    //sorter på mål og deretter assister og spillernavn
+  
+    // Filtrer basert på aktiv divisjon
+    let filteredDivision = activeDivision === ""
+      ? data
+      : data.filter(player => player.divisionid === activeDivision);
+  
+    // 🔍 Søkefilter på navn og nummer
+    const searchValue = document.getElementById("playerSearch").value.toLowerCase().trim();
+    if (searchValue !== "") {
+      filteredDivision = filteredDivision.filter(player => {
+        const name = (player.playername || "").toLowerCase();
+        const number = (player.playnumber || "").toString();
+        return name.includes(searchValue) || number.includes(searchValue);
+      });
+    }
+  
+    // Sorter etter mål, assist, spillernavn
     filteredDivision.sort((a, b) => {
-        if (b.goals !== a.goals) {
-            return b.goals - a.goals;
-        } else if (b.assists !== a.assists) {
-            return b.assists - a.assists;
-        } else {
-            return a.playername.localeCompare(b.playername);
-        }
+      if (b.goals !== a.goals) return b.goals - a.goals;
+      if (b.assists !== a.assists) return b.assists - a.assists;
+      return a.playername.localeCompare(b.playername);
     });
-    
-
+  
     const list = document.getElementById("statisticslistcontent");
-    list.replaceChildren(); // Tømmer liste før ny data legges inn
-
+    list.replaceChildren();
+  
     const elementlibrary = document.getElementById("elementlibrary");
-
-    
     const groupHolder = elementlibrary.querySelector('.playerstats');
     const groupHoldercopy = groupHolder.cloneNode(true);
-    
-    //sette overskrift på gruppen
+    groupHoldercopy.style.display = "block";
+  
+    // Sett overskrift
     const groupheadername = groupHoldercopy.querySelector('.groupheadername');
-    let groupnameText = "";
-    if (activeDivision === "") {
-        groupnameText = "Alle spillere";
-    } else {
-        const divisionindex = activetournament.division.findIndex(item => item === activeDivision);
-        const division = activetournament.divisionname[divisionindex] || "Ukjent divisjon";
-        groupnameText = `Spillere i ${division}`;
-    }
+    let groupnameText = activeDivision === ""
+      ? "Alle spillere"
+      : `Spillere i ${activetournament.divisionname[
+          activetournament.division.findIndex(item => item === activeDivision)
+        ] || "Ukjent divisjon"}`;
     groupheadername.textContent = groupnameText;
-
+  
+    // Antall spillere
     const countplayers = groupHoldercopy.querySelector('.countplayers');
     countplayers.textContent = `${filteredDivision.length} stk. spillere`;
-   
-
+  
     list.appendChild(groupHoldercopy);
-
+  
     const nodeelement = groupHoldercopy.querySelector('.resultrow');
-
-    for (let item of filteredDivision) {
-        const rowelement = nodeelement.cloneNode(true);
-        let index = filteredDivision.indexOf(item) + 1;
-
-        rowelement.querySelector(".rangenr").textContent = index+".";
-        rowelement.querySelector(".playername").textContent = item.playername || "";
-        rowelement.querySelector(".goals").textContent = item.goals || 0;
-        rowelement.querySelector(".assists").textContent = item.assists || 0;
-        rowelement.querySelector(".teamlable").textContent = item.teamname || "";
-        rowelement.querySelector(".divisjonlable").textContent = item.divisionname || "";
-        rowelement.querySelector(".clubblable").textContent = item.club || "";
-
-        nodeelement.parentElement.appendChild(rowelement);
-    }
-
-    // Fjern mal-elementet etter bruk
+  
+    filteredDivision.forEach((item, i) => {
+      const rowelement = nodeelement.cloneNode(true);
+      rowelement.querySelector(".rangenr").textContent = (i + 1) + ".";
+      rowelement.querySelector(".playername").textContent = item.playername || "";
+      rowelement.querySelector(".goals").textContent = item.goals || 0;
+      rowelement.querySelector(".assists").textContent = item.assists || 0;
+      rowelement.querySelector(".teamlable").textContent = item.teamname || "";
+      rowelement.querySelector(".divisjonlable").textContent = item.divisionname || "";
+      rowelement.querySelector(".clubblable").textContent = item.club || "";
+      nodeelement.parentElement.appendChild(rowelement);
+    });
+  
     nodeelement.remove();
 }
+  
 
 function summarizePlayerStats(allMatchLogs) {
     const playerStats = {};
