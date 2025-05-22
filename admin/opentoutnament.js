@@ -115,8 +115,8 @@ function responsGetTournament(data) {
 function generatePlayerFromTeams(teams) {
     let players = [];
     for (let team of teams) {
-        if (team.players) {
-            for (let player of team.players) {
+        if (team.player) {
+            for (let player of team.player) {
                 // Legg til lagreferanse i spilleren
                 player.team = team.airtable;
                 player.teamname = team.name;
