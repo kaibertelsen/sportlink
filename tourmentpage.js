@@ -299,9 +299,8 @@ function listPlayerStats(data) {
     if (activeDivision === "") {
         groupnameText = "Alle spillere";
     } else {
-        const divisionindex = activetournament.division.find(item => item === activeDivision);
-        const division = activetournament.divisionname[divisionindex] || "Ukjent divisjon";
-
+        const divisionindex = tournament.division.findIndex(item => item === activeDivision);
+        const division = tournament.divisionname[divisionindex] || "Ukjent divisjon";
         groupnameText = `Spillere i ${division}`;
     }
     groupheadername.textContent = groupnameText;
