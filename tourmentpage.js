@@ -326,6 +326,7 @@ function summarizePlayerStats(allMatchLogs) {
             playerStats[playerId] = {
                 playerId: playerId,
                 playername: log.playername || "",
+                teamname: log.teamname || "",
                 club: log.club || "",
                 division: log.division || "",
                 goals: 0,
@@ -351,7 +352,8 @@ function summarizePlayerStats(allMatchLogs) {
                     playerId: assistId,
                     playername: log.assistplayername || "",
                     club: log.assistclub || "",          // Hvis du har assistklubb
-                    division: log.division || "",        // Antatt samme divisjon
+                    division: log.division || "", 
+                    teamname: log.teamname || "",       // Antatt samme divisjon
                     goals: 0,
                     assists: 0,
                     penaltyMinutes: 0,
