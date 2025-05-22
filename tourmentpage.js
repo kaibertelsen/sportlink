@@ -265,6 +265,11 @@ function loadeLists(data){
         // Tøm spillerstatistikk-listen
         const list = document.getElementById("statisticslistcontent");
         list.replaceChildren();
+        //skriv dette  <h2>Statistics</h2>
+          //  <p>Her vises listen over statistikk.</p>
+        const emptyMessage = document.createElement("div");
+        emptyMessage.innerHTML = `<h2>Ingen statistikk tilgjengelig</h2><p>Ingen statistikk tilgjengelig for denne turneringen.</p>`;
+        list.appendChild(emptyMessage);
     }
 
 }
