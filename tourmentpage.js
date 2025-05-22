@@ -284,7 +284,7 @@ function listPlayerStats(data) {
     });
     
 
-    const list = document.getElementById("statisticslistcountent");
+    const list = document.getElementById("statisticslistcontent");
     list.replaceChildren(); // Tømmer liste før ny data legges inn
 
     const elementlibrary = document.getElementById("elementlibrary");
