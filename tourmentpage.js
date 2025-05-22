@@ -262,13 +262,16 @@ function loadeLists(data){
     {
         // Skjul statistikk-fanen
         statisticstabbutton.style.display = "none";
+        // Tøm spillerstatistikk-listen
+        const list = document.getElementById("statisticslistcontent");
+        list.replaceChildren();
     }
 
 }
 
 document.getElementById("playerSearch").addEventListener("input", function () {
     listPlayerStats(PlayerStats);
-  });
+});
 
 function listPlayerStats(data) {
     const activeDivision = getActiveDivisionFilter();
