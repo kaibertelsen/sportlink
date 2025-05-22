@@ -303,7 +303,7 @@ function listPlayerStats(data) {
         rowelement.querySelector(".goals").textContent = item.goals || 0;
         rowelement.querySelector(".assists").textContent = item.assists || 0;
         rowelement.querySelector(".teamlable").textContent = item.teamname || "";
-        rowelement.querySelector(".divisjonlable").textContent = item.divisionname || "";
+        rowelement.querySelector(".divisjonlable").textContent = item.division || "";
         rowelement.querySelector(".clubblable").textContent = item.club || "";
 
         nodeelement.parentElement.appendChild(rowelement);
