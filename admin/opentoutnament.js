@@ -99,7 +99,7 @@ function responsGetTournament(data) {
 
     const players = generatePlayerFromTeams(teams);
     gPlayers = players;
-    //listPlayers(gPlayers);
+    listPlayers(gPlayers);
 
     const matchs = convertJSONrow(tournament.matchjson);
     gMatchs = matchs;
@@ -112,6 +112,88 @@ function responsGetTournament(data) {
 
 }
 
+function listPlayers(players) {
+    // Get selected values from division and group selectors
+    const divisionValue = document.getElementById("divisionSelector").value;
+    const groupValue = document.getElementById("groupSelector").value;
+    const locationValue = document.getElementById("locationSelector").value;
+    const endplayValue = document.getElementById("endplaySelector").value;
+    const statusValue = document.getElementById("statusSelector").value;
+    const typeValue = document.getElementById("typeSelector").value;
+    const locationValue = document.getElementById("locationSelector").value;
+    // Filter players based on selected division and group
+    const filteredPlayers = players.filter(player => {
+        const matchesDivision = !divisionValue || player.division === divisionValue;
+        const matchesGroup = !groupValue || player.group === groupValue;
+        const matchesLocation = !locationValue || player.location === locationValue;
+        const matchesEndplay = !endplayValue || player.endplay === endplayValue;
+        const matchesType = !typeValue || player.typematch === typeValue;
+        const matchesStatus = !statusValue || player.status === statusValue;
+        return matchesDivision && matchesGroup && matchesLocation && matchesEndplay && matchesType && matchesStatus;
+    });
+    // Sort players alphabetically by name
+    filteredPlayers.sort((a, b) => {
+        const nameA = (a.name || "").toLowerCase();
+        const nameB = (b.name || "").toLowerCase();
+        return nameA.localeCompare(nameB); // Alphabetical order
+    });
+    // Get the list holder and clear previous content
+    const list = document.getElementById("playerlistholder");
+    list.replaceChildren(); // Clear previous content
+
+    // Update row counter
+    list.parentElement.querySelector(".rowcounter").textContent = `${filteredPlayers.length} stk.`;
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".playerrow");
+    for (let player of filteredPlayers) {
+        const playerrow = makePlayerrow(nodeelement,player);
+        list.appendChild(playerrow);
+    }
+}
+
+function makePlayerrow(nodeelement,player){
+    let rowelement = nodeelement.cloneNode(true);
+    rowelement.id = player.airtable+"playerrow";
+    // Set player logo if available
+    if (player.playerlogo) {    
+        const playerLogo = rowelement.querySelector(".playerlogo");
+        playerLogo.src = player.playerlogo;
+        playerLogo.alt = player.name || "Ukjent spiller";
+    }
+
+    // Set player details
+    const playerName = rowelement.querySelector(".name")
+    playerName.textContent = player.name || "Ukjent navn";
+
+    const platerNr = rowelement.querySelector(".nr")
+    platerNr.textContent = player.nr || "-";
+
+    const playerTeamName = rowelement.querySelector(".team");
+    playerTeamName.textContent = player.teamname || "Ukjent lag";
+
+    const playerClubName = rowelement.querySelector(".club");
+    playerClubName.textContent = player.clubname || "Ukjent klubb";
+
+    const playerDivisionName = rowelement.querySelector(".division");
+    playerDivisionName.textContent = player.divisionname || "Ukjent divisjon";
+
+    const playerGroupName = rowelement.querySelector(".groupname");
+    playerGroupName.textContent = player.groupname || "-";
+
+    const deletebutton = rowelement.querySelector(".deletebutton");
+    deletebutton.onclick = function () {
+        const confirmation = window.confirm("Ønsker du å slette denne spilleren?");
+        if (confirmation) {
+            DELETEairtable(baseId,"tbl3ta1WZBr6wKPSp",player.airtable,"playerdeletedresponse");
+            rowelement.remove();
+        } else {
+        console.log("Sletting avbrutt.");
+        }
+    }
+}
+
+
+
 function generatePlayerFromTeams(teams) {
     let players = [];
     for (let team of teams) {
@@ -123,6 +205,8 @@ function generatePlayerFromTeams(teams) {
                 player.clubname = team.clubname;
                 player.clublogo = team.clublogo;
                 player.division = team.division;
+                player.groupname = team.groupname;
+                player.group = team.group;
                 player.divisionname = team.divisionname;
                 players.push(player);
             }
