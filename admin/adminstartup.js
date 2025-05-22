@@ -4,6 +4,7 @@ var gClub = [];
 var gTournament =[];
 var gDivision = [];
 var gTeam = [];
+var gPlayers = [];
 var gMatchs = [];
 var importok = [];
 

@@ -97,13 +97,35 @@ function responsGetTournament(data) {
     gTeam = teams;
     listTeams(gTeam);
 
+    const players = generatePlayerFromTeams(teams);
+    gPlayers = players;
+    //listPlayers(gPlayers);
+
     const matchs = convertJSONrow(tournament.matchjson);
     gMatchs = matchs;
     listMatch(matchs);
 
+    
+
     //list opp ale unike location i kampene
     loadLocationSelector(gMatchs);
 
+}
+
+function generatePlayerFromTeams(teams) {
+    let players = [];
+    for (let team of teams) {
+        if (team.players) {
+            for (let player of team.players) {
+                // Legg til lagreferanse i spilleren
+                player.team = team.airtable;
+                player.teamname = team.name;
+                player.clubname = team.clubname;
+                player.clublogo = team.clublogo;
+                players.push(player);
+            }
+        }
+    }
 }
 
 function loadLocationSelector(gMatchs) {
