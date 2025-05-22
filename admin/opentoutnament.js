@@ -186,6 +186,8 @@ function makePlayerrow(nodeelement,player){
         console.log("Sletting avbrutt.");
         }
     }
+
+    return rowelement;
 }
 
 
