@@ -299,8 +299,10 @@ function listPlayerStats(data) {
     if (activeDivision === "") {
         groupnameText = "Alle spillere";
     } else {
-        const division = tournament.divisionname.find(item => item.airtable === activeDivision);
-        groupnameText = division ? division.name : "Ukjent divisjon";
+        const divisionindex = tournament.division.find(item => item === activeDivision);
+        const division = tournament.divisionname[divisionindex] || "Ukjent divisjon";
+
+        groupnameText = `Spillere i ${division}`;
     }
     groupheadername.textContent = groupnameText;
    
