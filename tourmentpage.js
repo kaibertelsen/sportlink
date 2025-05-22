@@ -270,7 +270,7 @@ function listPlayerStats(data) {
     const activeDivision = getActiveDivisionFilter();
 
     // Filtrer data basert på aktiv divisjon
-    const filteredDivision = activeDivision === "" ? data : data.filter(player => player.division === activeDivision);
+    const filteredDivision = activeDivision === "" ? data : data.filter(player => player.divisionid === activeDivision);
 
     //sorter på mål og deretter assister og spillernavn
     filteredDivision.sort((a, b) => {
@@ -318,7 +318,7 @@ function listPlayerStats(data) {
         rowelement.querySelector(".goals").textContent = item.goals || 0;
         rowelement.querySelector(".assists").textContent = item.assists || 0;
         rowelement.querySelector(".teamlable").textContent = item.teamname || "";
-        rowelement.querySelector(".divisjonlable").textContent = item.division || "";
+        rowelement.querySelector(".divisjonlable").textContent = item.divisionname || "";
         rowelement.querySelector(".clubblable").textContent = item.club || "";
 
         nodeelement.parentElement.appendChild(rowelement);
@@ -341,7 +341,8 @@ function summarizePlayerStats(allMatchLogs) {
                 playername: log.playername || "",
                 teamname: log.teamname || "",
                 club: log.club || "",
-                division: log.division || "",
+                divisionid: log.divisionid || "",
+                divisionname: log.divisionname || "",
                 goals: 0,
                 assists: 0,
                 penaltyMinutes: 0,
@@ -365,7 +366,8 @@ function summarizePlayerStats(allMatchLogs) {
                     playerId: assistId,
                     playername: log.assistplayername || "",
                     club: log.assistclub || "",          // Hvis du har assistklubb
-                    division: log.division || "", 
+                    divisionid: log.divisionid || "",
+                    divisionname: log.divisionname || "", 
                     teamname: log.teamname || "",       // Antatt samme divisjon
                     goals: 0,
                     assists: 0,
