@@ -126,6 +126,8 @@ function generatePlayerFromTeams(teams) {
             }
         }
     }
+
+    return players;
 }
 
 function loadLocationSelector(gMatchs) {
