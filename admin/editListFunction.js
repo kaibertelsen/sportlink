@@ -28,6 +28,10 @@ document.getElementById("MatchSearchField").addEventListener("input", function (
     const filterdata = filterSearchList(this.value, gMatchs, keys);
     listMatch(filterdata);
 });
+
+document.getElementById("PlayerSearchField").addEventListener("input", function () {
+    listPlayers(gPlayer);
+});
 //
 
 // Filterfunksjon for søk i input text field

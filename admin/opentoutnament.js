@@ -165,6 +165,7 @@ function listPlayers(players) {
     const divisionValue = document.getElementById("divisionSelector").value;
     const groupValue = document.getElementById("groupSelector").value;
     const teamSelector = document.getElementById("teamSelector");
+    const PlayerSearchField = document.getElementById("playerSearchField").value.toLowerCase();
    
 
     // Filter players based on selected division and group and team
@@ -172,6 +173,7 @@ function listPlayers(players) {
         const matchesDivision = !divisionValue || player.division === divisionValue;
         const matchesGroup = !groupValue || player.group === groupValue;
         const matchesTeam = !teamSelector.value || player.team === teamSelector.value;
+        const matchesSearch = !PlayerSearchField || (player.name && player.name.toLowerCase().includes(PlayerSearchField));
         return matchesDivision && matchesGroup && matchesTeam;
     });
 
