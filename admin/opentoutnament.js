@@ -401,6 +401,7 @@ function divisionSelectorChange() {
 
         listTeams(gTeam);
         listMatch(gMatchs); 
+        listPlayers(gPlayers);
 }
 
 function groupSelectorChange(){
