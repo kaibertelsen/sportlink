@@ -191,6 +191,15 @@ const tournamentinfoheader = document.getElementById("tournamentinfoheader");
     const switsj = tournamentinfoheader.querySelector(".merkibj");
     switsj.checked = !tournament?.hidden;
 
+    const statswitsj = tournamentinfoheader.querySelector(".statsswitsj");
+    statswitsj.checked = tournament?.statistics;
+
+    //når en trykker på statswitsj
+    statswitsj.addEventListener("change", () => {
+        triggerEditCheckbox(statswitsj, tournament, "statistics", tabelid);
+    }
+    );
+
 }
 
 function publishTournament() {
