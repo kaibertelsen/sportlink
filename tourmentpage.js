@@ -255,9 +255,7 @@ function loadeLists(data){
 
         // Opprett spillerstatistikk
         if (allMatchLogs.length === 0) {
-            // Ingen spillere i denne turneringen
-            statisticstabbutton.style.display = "none";
-
+    
             // Tøm spillerstatistikk-listen
             const list = document.getElementById("statisticslistcontent");
             list.replaceChildren();
