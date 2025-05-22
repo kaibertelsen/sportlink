@@ -127,6 +127,13 @@ function loadTeamSelector(teams) {
         return matchesDivision && matchesGroup;
     });
 
+    // Sort teams alphabetically by name
+    filteredTeams.sort((a, b) => {
+        const nameA = (a.name || "").toLowerCase();
+        const nameB = (b.name || "").toLowerCase();
+        return nameA.localeCompare(nameB); // Alphabetical order
+    });
+
     //list opp alle lag i teamSelector
     const teamSelector = document.getElementById("teamSelector");
     teamSelector.replaceChildren(); // Clear previous options
@@ -134,7 +141,7 @@ function loadTeamSelector(teams) {
     defaultOptionTeam.value = "";
     defaultOptionTeam.textContent = "Alle lag";
     teamSelector.appendChild(defaultOptionTeam);
-    for (let team of teams) {
+    for (let team of filteredTeams) {
         let teamnavnDivisjon = team.name;
         if (team.divisionname) {
             teamnavnDivisjon += " (" + team.divisionname + ")";
