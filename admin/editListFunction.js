@@ -29,7 +29,7 @@ document.getElementById("MatchSearchField").addEventListener("input", function (
     listMatch(filterdata);
 });
 
-document.getElementById("PlayerSearchField").addEventListener("input", function () {
+document.getElementById("playerSearchField").addEventListener("input", function () {
     listPlayers(gPlayer);
 });
 //
