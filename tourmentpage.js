@@ -328,8 +328,6 @@ function listPlayerStats(data) {
     nodeelement.remove();
 }
 
-
-
 function summarizePlayerStats(allMatchLogs) {
     const playerStats = {};
 
@@ -388,8 +386,6 @@ function summarizePlayerStats(allMatchLogs) {
     // Returner som array
     return Object.values(playerStats);
 }
-
-
 
 function loadTourmentHeader(data){
 
@@ -476,6 +472,7 @@ function handleDivisionButtonClick(item) {
     listmatch(matches, "dato",false);
     listteams(teams);
     listendplay(matches,endplay);
+    listPlayerStats(PlayerStats);
 }
 
 // Funksjon for å hente ID-en til aktivt filter
