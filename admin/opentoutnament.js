@@ -96,6 +96,8 @@ function responsGetTournament(data) {
     const teams = convertJSONrow(tournament.teamjson);
     gTeam = teams;
     listTeams(gTeam);
+    //last opp lagene i teamSelector
+    loadTeamSelector(gTeam);
 
     const players = generatePlayerFromTeams(teams);
     gPlayers = players;
@@ -109,6 +111,45 @@ function responsGetTournament(data) {
 
     //list opp ale unike location i kampene
     loadLocationSelector(gMatchs);
+
+    
+
+}
+
+function loadTeamSelector(teams) {
+
+    //filter lag basert på valgt divisjon og gruppe
+    const divisionValue = document.getElementById("divisionSelector").value;
+    const groupValue = document.getElementById("groupSelector").value;
+    const filteredTeams = teams.filter(team => {
+        const matchesDivision = !divisionValue || team.division === divisionValue;
+        const matchesGroup = !groupValue || team.group === groupValue;
+        return matchesDivision && matchesGroup;
+    });
+
+    //list opp alle lag i teamSelector
+    const teamSelector = document.getElementById("teamSelector");
+    teamSelector.replaceChildren(); // Clear previous options
+    const defaultOptionTeam = document.createElement("option");
+    defaultOptionTeam.value = "";
+    defaultOptionTeam.textContent = "Alle lag";
+    teamSelector.appendChild(defaultOptionTeam);
+    for (let team of teams) {
+        let teamnavnDivisjon = team.name;
+        if (team.divisionname) {
+            teamnavnDivisjon += " (" + team.divisionname + ")";
+        }
+        if (team.groupname) {
+            teamnavnDivisjon += " - " + team.groupname;
+        }
+        // Legg til lagreferanse i laget
+        const option = document.createElement("option");
+        option.textContent = teamnavnDivisjon || "Ukjent navn";
+        option.value = team.airtable;
+        teamSelector.appendChild(option);
+    }
+
+
 
 }
 
@@ -402,12 +443,16 @@ function divisionSelectorChange() {
         listTeams(gTeam);
         listMatch(gMatchs); 
         listPlayers(gPlayers);
+        loadTeamSelector(gTeam);
 }
 
 function groupSelectorChange(){
         listMatch(gMatchs);
         listTeams(gTeam);
         listPlayers(gPlayers);
+        loadTeamSelector(gTeam);
+
+        
 }
 
 function endplaySelectorChange(){
