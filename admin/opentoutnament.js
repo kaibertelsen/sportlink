@@ -122,6 +122,8 @@ function generatePlayerFromTeams(teams) {
                 player.teamname = team.name;
                 player.clubname = team.clubname;
                 player.clublogo = team.clublogo;
+                player.division = team.division;
+                player.divisionname = team.divisionname;
                 players.push(player);
             }
         }
