@@ -306,7 +306,7 @@ function listPlayerStats(data) {
     groupheadername.textContent = groupnameText;
 
     const countplayers = groupHoldercopy.querySelector('.countplayers');
-    countplayers.textContent = `Totalt ${filteredDivision.length} spillere`;
+    countplayers.textContent = `${filteredDivision.length} stk. spillere`;
    
 
     list.appendChild(groupHoldercopy);
