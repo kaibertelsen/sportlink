@@ -304,6 +304,9 @@ function listPlayerStats(data) {
         groupnameText = `Spillere i ${division}`;
     }
     groupheadername.textContent = groupnameText;
+
+    const countplayers = groupHoldercopy.querySelector('.countplayers');
+    countplayers.textContent = `Totalt ${filteredDivision.length} spillere`;
    
 
     list.appendChild(groupHoldercopy);
