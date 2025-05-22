@@ -139,7 +139,7 @@ function loadTeamSelector(teams) {
     teamSelector.replaceChildren(); // Clear previous options
     const defaultOptionTeam = document.createElement("option");
     defaultOptionTeam.value = "";
-    defaultOptionTeam.textContent = "Alle lag";
+    defaultOptionTeam.textContent = "Spillere fra alle lag";
     teamSelector.appendChild(defaultOptionTeam);
     for (let team of filteredTeams) {
         let teamnavnDivisjon = team.name;
