@@ -272,23 +272,38 @@ function listPlayerStats(data) {
     // Filtrer data basert på aktiv divisjon
     const filteredDivision = activeDivision === "" ? data : data.filter(player => player.division === activeDivision);
 
-    //sorter på mål
+    //sorter på mål og deretter assister og spillernavn
     filteredDivision.sort((a, b) => {
-        if (a.goals === b.goals) {
+        if (b.goals !== a.goals) {
+            return b.goals - a.goals;
+        } else if (b.assists !== a.assists) {
+            return b.assists - a.assists;
+        } else {
             return a.playername.localeCompare(b.playername);
         }
-        return b.goals - a.goals;
     });
+    
 
     const list = document.getElementById("statisticslist");
     list.replaceChildren(); // Tømmer liste før ny data legges inn
 
     const elementlibrary = document.getElementById("elementlibrary");
 
-    // 💡 OBS: Her må det stå '.playerstats' (med punktum), ellers returnerer den null
+    
     const groupHolder = elementlibrary.querySelector('.playerstats');
     const groupHoldercopy = groupHolder.cloneNode(true);
-    groupHoldercopy.style.display = "block"; // Vis kopien om originalen er skjult
+    
+    //sette overskrift på gruppen
+    const groupheadername = groupHoldercopy.querySelector('.groupheadername');
+    let groupnameText = "";
+    if (activeDivision === "") {
+        groupnameText = "Alle spillere";
+    } else {
+        const division = tournament.divisionname.find(item => item.airtable === activeDivision);
+        groupnameText = division ? division.name : "Ukjent divisjon";
+    }
+    groupheadername.textContent = groupnameText;
+   
 
     list.appendChild(groupHoldercopy);
 
