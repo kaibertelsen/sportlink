@@ -30,7 +30,7 @@ document.getElementById("MatchSearchField").addEventListener("input", function (
 });
 
 document.getElementById("playerSearchField").addEventListener("input", function () {
-    listPlayers(gPlayer);
+    listPlayers(gPlayers);
 });
 //
 
