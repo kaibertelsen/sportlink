@@ -167,7 +167,7 @@ function listPlayers(players) {
     const teamSelector = document.getElementById("teamSelector");
    
 
-    // Filter players based on selected division and group
+    // Filter players based on selected division and group and team
     const filteredPlayers = players.filter(player => {
         const matchesDivision = !divisionValue || player.division === divisionValue;
         const matchesGroup = !groupValue || player.group === groupValue;
@@ -460,6 +460,10 @@ function groupSelectorChange(){
         loadTeamSelector(gTeam);
 
         
+}
+
+function teamSelectorChange(){
+    listPlayers(gPlayers);
 }
 
 function endplaySelectorChange(){
