@@ -305,7 +305,7 @@ function listPlayerStats(data) {
         rowelement.querySelector(".notes").textContent = item.notes || "";
         let clubbanddivision = item.division || "";
         if(item.club){
-            clubbanddivision = item.club + " - " + clubanddivision;
+            clubbanddivision = item.club + " - " + clubbanddivision;
         }
         rowelement.querySelector(".clubnamediv").textContent = clubbanddivision || "";
 
