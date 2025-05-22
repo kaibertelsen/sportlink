@@ -252,10 +252,26 @@ function loadeLists(data){
                 allMatchLogs = allMatchLogs.concat(match.matchlogg);
             }
         });
+
+        // Opprett spillerstatistikk
+        if (allMatchLogs.length === 0) {
+            // Ingen spillere i denne turneringen
+            statisticstabbutton.style.display = "none";
+
+            // Tøm spillerstatistikk-listen
+            const list = document.getElementById("statisticslistcontent");
+            list.replaceChildren();
+            //skriv dette  <h2>Statistics</h2>
+            //  <p>Her vises listen over statistikk.</p>
+            const emptyMessage = document.createElement("div");
+            emptyMessage.innerHTML = `<h2>Ingen logg registrert</h2><p>Ingen mål eller assist registrert enda.</p>`;
+            list.appendChild(emptyMessage);
+
+        }else{
     
         PlayerStats = summarizePlayerStats(allMatchLogs);
         listPlayerStats(PlayerStats);
-        
+        }
 
         
     }else
