@@ -116,21 +116,17 @@ function listPlayers(players) {
     // Get selected values from division and group selectors
     const divisionValue = document.getElementById("divisionSelector").value;
     const groupValue = document.getElementById("groupSelector").value;
-    const locationValue = document.getElementById("locationSelector").value;
-    const endplayValue = document.getElementById("endplaySelector").value;
-    const statusValue = document.getElementById("statusSelector").value;
-    const typeValue = document.getElementById("typeSelector").value;
-    const locationValue = document.getElementById("locationSelector").value;
+    const teamSelector = document.getElementById("teamSelector");
+   
+
     // Filter players based on selected division and group
     const filteredPlayers = players.filter(player => {
         const matchesDivision = !divisionValue || player.division === divisionValue;
         const matchesGroup = !groupValue || player.group === groupValue;
-        const matchesLocation = !locationValue || player.location === locationValue;
-        const matchesEndplay = !endplayValue || player.endplay === endplayValue;
-        const matchesType = !typeValue || player.typematch === typeValue;
-        const matchesStatus = !statusValue || player.status === statusValue;
-        return matchesDivision && matchesGroup && matchesLocation && matchesEndplay && matchesType && matchesStatus;
+        const matchesTeam = !teamSelector.value || player.team === teamSelector.value;
+        return matchesDivision && matchesGroup && matchesTeam;
     });
+
     // Sort players alphabetically by name
     filteredPlayers.sort((a, b) => {
         const nameA = (a.name || "").toLowerCase();
