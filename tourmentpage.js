@@ -300,22 +300,28 @@ function listPlayerStats(data) {
       ? data
       : data.filter(player => player.divisionid === activeDivision);
   
-    // 🔍 Søkefilter på navn og nummer
-    const searchValue = document.getElementById("playerSearch").value.toLowerCase().trim();
-    if (searchValue !== "") {
-      filteredDivision = filteredDivision.filter(player => {
-        const name = (player.playername || "").toLowerCase();
-        const number = (player.playnumber || "").toString();
-        return name.includes(searchValue) || number.includes(searchValue);
-      });
-    }
-  
     // Sorter etter mål, assist, spillernavn
     filteredDivision.sort((a, b) => {
       if (b.goals !== a.goals) return b.goals - a.goals;
       if (b.assists !== a.assists) return b.assists - a.assists;
       return a.playername.localeCompare(b.playername);
     });
+
+    // Sette inn plaseringsnummer i raden
+    filteredDivision.forEach((item, i) => {
+        item.rangenr = i + 1;
+    }
+    );
+
+    // 🔍 Søkefilter på navn og nummer
+    const searchValue = document.getElementById("playerSearch").value.toLowerCase().trim();
+    if (searchValue !== "") {
+    filteredDivision = filteredDivision.filter(player => {
+        const name = (player.playername || "").toLowerCase();
+        const number = (player.playnumber || "").toString();
+        return name.includes(searchValue) || number.includes(searchValue);
+    });
+    }
   
     const list = document.getElementById("statisticslistcontent");
     list.replaceChildren();
@@ -344,7 +350,7 @@ function listPlayerStats(data) {
   
     filteredDivision.forEach((item, i) => {
       const rowelement = nodeelement.cloneNode(true);
-      rowelement.querySelector(".rangenr").textContent = (i + 1) + ".";
+      rowelement.querySelector(".rangenr").textContent = item.rangenr + ".";
       rowelement.querySelector(".playername").textContent = item.playername || "";
       rowelement.querySelector(".goals").textContent = item.goals || 0;
       rowelement.querySelector(".assists").textContent = item.assists || 0;
