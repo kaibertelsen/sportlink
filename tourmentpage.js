@@ -302,12 +302,9 @@ function listPlayerStats(data) {
         rowelement.querySelector(".playername").textContent = item.playername || "";
         rowelement.querySelector(".goals").textContent = item.goals || 0;
         rowelement.querySelector(".assists").textContent = item.assists || 0;
-        rowelement.querySelector(".notes").textContent = item.notes || "";
-        let clubbanddivision = item.division || "";
-        if(item.club){
-            clubbanddivision = item.club + " - " + clubbanddivision;
-        }
-        rowelement.querySelector(".clubnamediv").textContent = clubbanddivision || "";
+        rowelement.querySelector(".teamlable").textContent = item.teamname || "";
+        rowelement.querySelector(".divisjonlable").textContent = item.divisionname || "";
+        rowelement.querySelector(".clubblable").textContent = item.club || "";
 
         nodeelement.parentElement.appendChild(rowelement);
     }
