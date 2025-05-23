@@ -1393,7 +1393,7 @@ function newPlayerresponse(data) {
    
    //tilføre nøkler fra laget
    //finne laget i gTeam
-   const team = gTeam.find(item => item.airtable === player.team[0]);
+   const team = gTeam.find(item => item.airtable === player.team);
    if (team) {
        // Legg til lagreferanse i spilleren
         
