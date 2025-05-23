@@ -472,10 +472,12 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         item.teamclubname = team.clubname;
         item.club = team.club;
 
-        makeNewUpdateRowMatch(item,tabelid,cell);
+        makeNewUpdateRowPlayer(item,tabelid,cell);
         
     }
 }
+
+
 
 function findParentWithResultatCell(element,className) {
     while (element) {
@@ -519,5 +521,21 @@ function makeNewUpdateRowMatch(item,tabelid,cell){
     //row trenger å kjøres en oppdatering på
     rowelement.parentElement.insertBefore(newRow, rowelement.nextSibling);
     rowelement.remove();
+}
 
-  }
+    
+function makeNewUpdateRowPlayer(item,tabelid,cell){
+
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".playerrow");
+    let open = false;
+    const rowelement = findParentWithClass(cell, "standardlistrow");
+    if(rowelement.querySelector(".allinfomatch").style.display === "block"){
+        open = true;  
+    }
+    const newRow = makeMatchrow(nodeelement,item,tabelid,open);
+    //row trenger å kjøres en oppdatering på
+    rowelement.parentElement.insertBefore(newRow, rowelement.nextSibling);
+    rowelement.remove();
+
+    }
