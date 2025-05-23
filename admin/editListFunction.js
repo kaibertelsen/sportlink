@@ -462,6 +462,18 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
     }else if(tabelid === "tblrHBFa60aIdqkUu" && (field === "placeholderteam1" || field === "placeholderteam2")  ){
         //row trenger å kjøres en oppdatering på
         makeNewUpdateRowMatch(item,tabelid,cell);
+    }else if(tabelid === "tbljVqkOQACs56QqI" && field === "team"){
+        //dette er på spilleren
+        // Oppdater også teamid og teamname lokalt
+        const team = gTeam.find(item => item.airtable === newValue);
+        item.team = [team.airtable];
+        item.teamname = team.name;
+        item.teamlogo = team.logo;
+        item.teamclubname = team.clubname;
+        item.club = team.club;
+
+        makeNewUpdateRowMatch(item,tabelid,cell);
+        
     }
 }
 
