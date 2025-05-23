@@ -1507,7 +1507,6 @@ function createNewPlayer(){
     // Legg til dagens dato og klokkeslett
     
     let saveobject = {
-        tournament:[activetournament.airtable],
         name:"Ny spiller",
         nr:0,
         division:[divisionId],
