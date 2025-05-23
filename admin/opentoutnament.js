@@ -1414,9 +1414,9 @@ function newPlayerresponse(data) {
         for (let i = 0; i < teammatches.length; i++) {
             const match = teammatches[i];
             if (match.team1 === player.team) {
-                match.team1players.push(player);
+                match.team1json = team;
             } else {
-                match.team2players.push(player);
+                match.team1json = team;
             }
         }
    }
