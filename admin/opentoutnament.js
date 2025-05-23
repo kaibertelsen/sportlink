@@ -1406,6 +1406,13 @@ function newPlayerresponse(data) {
        data.fields.group = "";
    }
 
+   //konvertere team
+   if(data.fields?.team){
+       data.fields.team = data.fields.team[0];
+   }else{
+       data.fields.team = "";
+   }
+
    
    gPlayers.push(data.fields);
  
