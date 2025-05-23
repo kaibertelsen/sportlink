@@ -1386,35 +1386,12 @@ function newPlayerresponse(data) {
        console.error("Klonbart matchrow-element ikke funnet.");
        return;
    }
-   if(data.fields?.division){
-       data.fields.division = data.fields.division[0];
-   }else{
-       data.fields.division = "";
-   }
+  
 
-    //konverterer divisjonsname
-   if(data.fields?.divisionname){
-       data.fields.divisionname = data.fields.divisionname[0];
-   }else{
-       data.fields.divisionname = "";
-   }
-   
-   //konverterer group
-   if(data.fields?.group){
-       data.fields.group = data.fields.group[0];
-   }else{
-       data.fields.group = "";
-   }
 
-   //konvertere team
-   if(data.fields?.team){
-       data.fields.team = data.fields.team[0];
-   }else{
-       data.fields.team = "";
-   }
+   let newPlayer = data.fields.JSON.parse(data.fields.JSON);   
 
-   
-   gPlayers.push(data.fields);
+   gPlayers.push(newPlayer);
  
 
    // Opprett ny rad basert på responsdata
