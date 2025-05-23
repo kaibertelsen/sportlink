@@ -1404,10 +1404,19 @@ function newPlayerresponse(data) {
         player.groupname = team.groupname || "";
         player.group = team.group || "";
         player.divisionname = team.divisionname || "";
+
+        //leggtil spilleren i teamet
+        let teamplayers = team.players || [];
+        teamplayers.push(player);
    }
 
-
+   //oppdater spiller i spillerlisten
    gPlayers.push(player);
+
+   // Oppdater spilleren i team
+   //finne alle spillere i 
+   
+   
  
 
    // Opprett ny rad basert på responsdata
