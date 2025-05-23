@@ -1389,7 +1389,7 @@ function newPlayerresponse(data) {
   
 
 
-   let newPlayer = data.fields.JSON.parse(data.fields.JSON);   
+   let newPlayer = JSON.parse(data.fields.json);   
 
    gPlayers.push(newPlayer);
  
