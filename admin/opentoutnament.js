@@ -175,7 +175,7 @@ function listPlayers(players) {
         const matchesTeam = !teamSelector.value || player.team === teamSelector.value;
         // Check if player name or nr matches the search field
         const matchesSearch = !PlayerSearchField || (player.name && player.name.toLowerCase().includes(PlayerSearchField)) || (player.nr && player.nr.toString().toLowerCase().includes(PlayerSearchField));
-        return matchesDivision && matchesGroup && matchesTeam;
+        return matchesDivision && matchesGroup && matchesTeam && matchesSearch;
     });
 
     // Sort players alphabetically by name
