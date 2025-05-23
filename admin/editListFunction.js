@@ -188,12 +188,16 @@ function triggerEditDropdown(cell, item, field, options, tabelid) {
         const optionElement = document.createElement("option");
         optionElement.value = option.value;
         optionElement.textContent = option.text;
-
+    
         if (option.text === currentValue) {
             optionElement.selected = true;
+        } else if (option.text.includes(currentValue)) {
+            optionElement.selected = true;
         }
+    
         select.appendChild(optionElement);
     });
+    
 
     // Skjul cellen
     cell.style.display = "none";

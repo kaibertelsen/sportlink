@@ -237,7 +237,7 @@ function makePlayerrow(nodeelement,player,tabelid,oTeam){
 
     const playerClubName = rowelement.querySelector(".club");
     playerClubName.textContent = player.clubname || "Ukjent klubb";
-    playerClubName.addEventListener("click", () => triggerEditDropdown(playerClubName, player, "club", oClub, tabelid));
+    
 
     const playerDivisionName = rowelement.querySelector(".division");
     playerDivisionName.textContent = player.divisionname || "Ukjent divisjon";
