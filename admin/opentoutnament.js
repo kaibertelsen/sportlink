@@ -203,25 +203,15 @@ function listPlayers(players) {
         const matchesGroup = !groupValue || team.group === groupValue;
         return matchesDivision && matchesGroup;
     });
-    oTeam = convertArrayToOptions(oTeam,"name","airtable");
-
-    //filtrer clubene for dropdown
-    let oClub = gClub.filter(club => {
-        const matchesDivision = !divisionValue || club.division === divisionValue;
-        const matchesGroup = !groupValue || club.group === groupValue;
-        return matchesDivision && matchesGroup;
-    });
-    oClub = convertArrayToOptions(oClub,"name","airtable");
-
-
+    oTeam = convertTeamArrayToOptions(oTeam);
 
     for (let player of filteredPlayers) {
-        const playerrow = makePlayerrow(nodeelement,player,tabelid,oTeam,oClub);
+        const playerrow = makePlayerrow(nodeelement,player,tabelid,oTeam);
         list.appendChild(playerrow);
     }
 }
 
-function makePlayerrow(nodeelement,player,tabelid,oTeam,oClub){
+function makePlayerrow(nodeelement,player,tabelid,oTeam){
     let rowelement = nodeelement.cloneNode(true);
     rowelement.id = player.airtable+"playerrow";
     // Set player logo if available

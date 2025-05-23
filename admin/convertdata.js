@@ -390,6 +390,21 @@ function convertArrayToOptions(array, textKey, valueKey) {
     return options;
 }
 
+
+function convertTeamArrayToOptions(array) {
+    let options = [];
+    for (let item of array) {
+        let value = item.airtable;
+        let text = item.name+" ("+item.divisionname+")";
+        options.push({ value: value, text: text });
+    }
+
+    // Sorter options alfabetisk etter text
+    options.sort((a, b) => a.text.localeCompare(b.text, 'no', { sensitivity: 'base' }));
+
+    return options;
+}
+
 function formatIsoDateValue(isoDate){
 
 // Konverter til Date-objekt
