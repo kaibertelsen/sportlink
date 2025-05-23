@@ -283,6 +283,8 @@ function rutingArrayName(tabelid){
         return gDivision;
     }else if (tabelid == "tblrHBFa60aIdqkUu"){
         return gMatchs;
+    }else if (tabelid == "tbljVqkOQACs56QqI"){
+        return gPlayers;
     }
     return [];
 
