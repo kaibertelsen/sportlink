@@ -232,7 +232,7 @@ function makePlayerrow(nodeelement,player,tabelid,oTeam){
     platerNr.addEventListener("click", () => triggerEditInput(platerNr, player, "nr", "number", tabelid));
 
     const playerTeamName = rowelement.querySelector(".team");
-    playerTeamName.textContent = player.teamname || "Ukjent lag";
+    playerTeamName.textContent = player.teamname + " ("+player.divisionname+")" || "Ukjent lag";
     playerTeamName.addEventListener("click", () => triggerEditDropdown(playerTeamName, player, "team", oTeam, tabelid));
 
     const playerClubName = rowelement.querySelector(".club");
