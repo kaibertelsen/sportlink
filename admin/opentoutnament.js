@@ -1406,7 +1406,7 @@ function newPlayerresponse(data) {
     });
     oTeam = convertTeamArrayToOptions(oTeam);
 
-   const newRow = makePlayerrow(nodeelement, data.fields, "tbljVqkOQACs56QqI",oTeam);
+   const newRow = makePlayerrow(nodeelement, newPlayer, "tbljVqkOQACs56QqI",oTeam);
    
    // Erstatt midlertidig placeholder med den nye raden
    copyMatchElementholder.parentElement.insertBefore(newRow, copyMatchElementholder.nextSibling);
