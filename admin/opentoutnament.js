@@ -1408,6 +1408,9 @@ function newPlayerresponse(data) {
         //leggtil spilleren i teamet
         let teamplayers = team.player || [];
         teamplayers.push(player);
+
+        //finn kamper med dette laget og oppdater med dette oppdaterte laget
+        console.log(gMatchs);
    }
 
    //oppdater spiller i spillerlisten
