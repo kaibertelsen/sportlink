@@ -1412,7 +1412,7 @@ function newPlayerresponse(data) {
 
    // Opprett ny rad basert på responsdata
    //filtrer lagene for dropdown 
-   let oTeam = gTeams.filter(team => {
+   let oTeam = gTeam.filter(team => {
     const matchesDivision = !divisionValue || team.division === divisionValue;
     const matchesGroup = !groupValue || team.group === groupValue;
     return matchesDivision && matchesGroup;
