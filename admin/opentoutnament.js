@@ -1409,8 +1409,16 @@ function newPlayerresponse(data) {
         let teamplayers = team.player || [];
         teamplayers.push(player);
 
-        //finn kamper med dette laget og oppdater med dette oppdaterte laget
-        console.log(gMatchs);
+        //finn kamper med dette laget og oppdater laget med team
+        let teammatches = gMatchs.filter(item => item.team1 === player.team || item.team2 === player.team);
+        for (let i = 0; i < teammatches.length; i++) {
+            const match = teammatches[i];
+            if (match.team1 === player.team) {
+                match.team1players.push(player);
+            } else {
+                match.team2players.push(player);
+            }
+        }
    }
 
    //oppdater spiller i spillerlisten
@@ -1445,6 +1453,14 @@ function newPlayerresponse(data) {
    
 
 }
+
+
+
+
+
+
+
+
 
 function matchdeletedresponse(data){
    console.log(data);
