@@ -532,9 +532,17 @@ function makeNewUpdateRowPlayer(item,tabelid,cell){
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".playerrow");
-    let open = false;
+    
+    //filtrer lagene for dropdown 
+    let oTeam = gTeam.filter(team => {
+        const matchesDivision = !divisionValue || team.division === divisionValue;
+        const matchesGroup = !groupValue || team.group === groupValue;
+        return matchesDivision && matchesGroup;
+    });
+    oTeam = convertTeamArrayToOptions(oTeam);
+
     const rowelement = findParentWithClass(cell, "standardlistrow");
-    const newRow = makePlayerrow(nodeelement,item,tabelid,open);
+    const newRow = makePlayerrow(nodeelement,item,tabelid,oTeam);
     //row trenger å kjøres en oppdatering på
     rowelement.parentElement.insertBefore(newRow, rowelement.nextSibling);
     rowelement.remove();
