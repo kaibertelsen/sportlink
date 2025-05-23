@@ -1503,7 +1503,6 @@ function createNewPlayer(){
     
     let saveobject = {
         name:"Ny spiller",
-        nr:0,
         team:[teamId]
     }
 
