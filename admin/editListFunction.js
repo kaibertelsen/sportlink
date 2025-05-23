@@ -530,7 +530,6 @@ function makeNewUpdateRowPlayer(item,tabelid,cell){
     const nodeelement = elementlibrary.querySelector(".playerrow");
     let open = false;
     const rowelement = findParentWithClass(cell, "standardlistrow");
-    
     const newRow = makePlayerrow(nodeelement,item,tabelid,open);
     //row trenger å kjøres en oppdatering på
     rowelement.parentElement.insertBefore(newRow, rowelement.nextSibling);
