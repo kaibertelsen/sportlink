@@ -15,6 +15,11 @@ document.getElementById('createNewMatch').onclick = function() {
     createNewMatch(); 
 }
 
+document.getElementById('createNewPlayer').onclick = function() {
+    createNewPlayer(); 
+}
+
+
 document.getElementById('createNewTeam').onclick = function() {
     createNewTeam(); 
 }
@@ -1367,6 +1372,71 @@ function newMatchresponse(data) {
     newRow.querySelector(".infobutton").click();
 }
 
+function newPlayerresponse(data) {
+
+   // Sjekk for nødvendige elementer
+   const elementlibrary = document.getElementById("elementlibrary");
+   if (!elementlibrary) {
+       console.error("Elementlibrary ikke funnet ved respons.");
+       return;
+   }
+
+   const nodeelement = elementlibrary.querySelector(".playerrow");
+   if (!nodeelement) {
+       console.error("Klonbart matchrow-element ikke funnet.");
+       return;
+   }
+   if(data.fields?.division){
+       data.fields.division = data.fields.division[0];
+   }else{
+       data.fields.division = "";
+   }
+
+    //konverterer divisjonsname
+   if(data.fields?.divisionname){
+       data.fields.divisionname = data.fields.divisionname[0];
+   }else{
+       data.fields.divisionname = "";
+   }
+   
+   //konverterer group
+   if(data.fields?.group){
+       data.fields.group = data.fields.group[0];
+   }else{
+       data.fields.group = "";
+   }
+
+   //konverterer tournament
+   if(data.fields?.tournament){
+       data.fields.tournament = data.fields.tournament[0];
+   }else{
+       data.fields.tournament = "";
+   }
+
+   gPlayers.push(data.fields);
+ 
+
+   // Opprett ny rad basert på responsdata
+   //filtrer lagene for dropdown 
+   let oTeam = gTeam.filter(team => {
+    const matchesDivision = !divisionValue || team.division === divisionValue;
+    const matchesGroup = !groupValue || team.group === groupValue;
+    return matchesDivision && matchesGroup;
+    });
+    oTeam = convertTeamArrayToOptions(oTeam);
+
+   const newRow = makePlayerrow(nodeelement, data.fields, "tbljVqkOQACs56QqI",oTeam);
+   
+   // Erstatt midlertidig placeholder med den nye raden
+   copyMatchElementholder.parentElement.insertBefore(newRow, copyMatchElementholder.nextSibling);
+   copyMatchElementholder.remove();
+
+   //marker spillerelementet som nytt med bordercoler blått
+    newRow.style.border = "2px solid blue";
+   
+
+}
+
 function matchdeletedresponse(data){
    console.log(data);
    //fjerne lokalt 
@@ -1416,6 +1486,40 @@ function createNewMatch(){
     // Opprett en ny kamp på server
     POSTairtable(baseId, "tblrHBFa60aIdqkUu", JSON.stringify(cleanedMatch), "newMatchresponse");
 }
+
+function createNewPlayer(){
+
+    // Finn elementet som skal klones
+    const elementlibrary = document.getElementById("elementlibrary");
+    const nodeelement = elementlibrary.querySelector(".copywait");
+    const list = document.getElementById("playerlistholder");
+  
+    const newRow = nodeelement.cloneNode(true);
+    newRow.querySelector(".copytext").textContent = "Oppretter spiller";
+    list.prepend(newRow);
+    copyMatchElementholder = newRow;
+  
+    //finne divisjonsid, gruppeide, lag
+    let divisionId = document.getElementById("divisionSelector").value;
+    let groupId = document.getElementById("groupSelector").value;
+    let teamId = document.getElementById("teamSelector").value;
+
+    // Legg til dagens dato og klokkeslett
+    
+    let saveobject = {
+        tournament:[activetournament.airtable],
+        name:"Ny spiller",
+        nr:0,
+        division:[divisionId],
+        group:[groupId],
+        team:[teamId]
+    }
+
+    const cleanedPlayer = removeEmtyValuForSave(saveobject);
+
+    // Opprett en ny kamp på server
+    POSTairtable(baseId, "tbljVqkOQACs56QqI", JSON.stringify(cleanedPlayer), "newPlayerresponse");
+  }
 
 function removeEmtyValuForSave(array) {
     return Object.fromEntries(

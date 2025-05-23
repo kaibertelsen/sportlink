@@ -39,6 +39,8 @@ function ruteresponse(data,id){
         responsSaveMatchLog(data);
     }else if(id == "responseLogDelete"){
         responseLogDelete(data);
+    }else if(id == "newPlayerresponse"){
+        newPlayerresponse(data);
     }
     
 
