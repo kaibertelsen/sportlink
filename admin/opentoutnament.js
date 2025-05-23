@@ -18,6 +18,7 @@ document.getElementById('createNewMatch').onclick = function() {
 document.getElementById('createNewTeam').onclick = function() {
     createNewTeam(); 
 }
+
 function loadTurnamentSelector(tournaments) {
     // Finn dropdown-elementet
     const selector = document.getElementById("tournamentSelector");
@@ -192,13 +193,35 @@ function listPlayers(players) {
     list.parentElement.querySelector(".rowcounter").textContent = `${filteredPlayers.length} stk.`;
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".playerrow");
+
+    //tabellid for lagring lokalt og på server
+    let tabelid = "tbljVqkOQACs56QqI";
+
+    //filtrer lagene for dropdown 
+    let oTeam = gTeam.filter(team => {
+        const matchesDivision = !divisionValue || team.division === divisionValue;
+        const matchesGroup = !groupValue || team.group === groupValue;
+        return matchesDivision && matchesGroup;
+    });
+    oTeam = convertArrayToOptions(oTeam,"name","airtable");
+
+    //filtrer clubene for dropdown
+    let oClub = gClub.filter(club => {
+        const matchesDivision = !divisionValue || club.division === divisionValue;
+        const matchesGroup = !groupValue || club.group === groupValue;
+        return matchesDivision && matchesGroup;
+    });
+    oClub = convertArrayToOptions(oClub,"name","airtable");
+
+
+
     for (let player of filteredPlayers) {
-        const playerrow = makePlayerrow(nodeelement,player);
+        const playerrow = makePlayerrow(nodeelement,player,tabelid,oTeam,oClub);
         list.appendChild(playerrow);
     }
 }
 
-function makePlayerrow(nodeelement,player){
+function makePlayerrow(nodeelement,player,tabelid,oTeam,oClub){
     let rowelement = nodeelement.cloneNode(true);
     rowelement.id = player.airtable+"playerrow";
     // Set player logo if available
@@ -211,15 +234,20 @@ function makePlayerrow(nodeelement,player){
     // Set player details
     const playerName = rowelement.querySelector(".name")
     playerName.textContent = player.name || "Ukjent navn";
+    playerName.addEventListener("click", () => triggerEditInput(playerName, player, "name", "text", tabelid));
+
 
     const platerNr = rowelement.querySelector(".nr")
     platerNr.textContent = player.nr || "-";
+    platerNr.addEventListener("click", () => triggerEditInput(platerNr, player, "nr", "number", tabelid));
 
     const playerTeamName = rowelement.querySelector(".team");
     playerTeamName.textContent = player.teamname || "Ukjent lag";
+    playerTeamName.addEventListener("click", () => triggerEditDropdown(playerTeamName, player, "team", oTeam, tabelid));
 
     const playerClubName = rowelement.querySelector(".club");
     playerClubName.textContent = player.clubname || "Ukjent klubb";
+    playerClubName.addEventListener("click", () => triggerEditDropdown(playerClubName, player, "club", oClub, tabelid));
 
     const playerDivisionName = rowelement.querySelector(".division");
     playerDivisionName.textContent = player.divisionname || "Ukjent divisjon";
@@ -240,8 +268,6 @@ function makePlayerrow(nodeelement,player){
 
     return rowelement;
 }
-
-
 
 function generatePlayerFromTeams(teams) {
     let players = [];
@@ -295,7 +321,6 @@ function loadLocationSelector(gMatchs) {
         locationSelector.appendChild(option);
     }
 }
-
 
 function updateTournamentInfo(tournament) {
 
@@ -476,7 +501,6 @@ function endplaySelectorChange(){
 function statusSelectorChange(){
     listMatch(gMatchs);
 }
-
 
 function locationSelectorChange(){
     listMatch(gMatchs);
