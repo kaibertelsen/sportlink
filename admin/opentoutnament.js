@@ -1412,6 +1412,9 @@ function newPlayerresponse(data) {
 
    // Opprett ny rad basert på responsdata
    //filtrer lagene for dropdown 
+   const divisionValue = document.getElementById("divisionSelector").value;
+   const groupValue = document.getElementById("groupSelector").value;
+   
    let oTeam = gTeam.filter(team => {
     const matchesDivision = !divisionValue || team.division === divisionValue;
     const matchesGroup = !groupValue || team.group === groupValue;
