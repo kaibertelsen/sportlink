@@ -472,7 +472,8 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         const team = gTeam.find(item => item.airtable === newValue);
         item.team = [team.airtable];
         item.teamname = team.name;
-        item.teamlogo = team.logo;
+        item.divisionname = team.divisionname;
+        item.groupname = team.groupname;
         item.teamclubname = team.clubname;
         item.club = team.club;
 
