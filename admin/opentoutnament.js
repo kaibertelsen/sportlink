@@ -1406,7 +1406,7 @@ function newPlayerresponse(data) {
         player.divisionname = team.divisionname || "";
 
         //leggtil spilleren i teamet
-        let teamplayers = team.players || [];
+        let teamplayers = team.player || [];
         teamplayers.push(player);
    }
 
