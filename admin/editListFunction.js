@@ -478,6 +478,11 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         item.club = team.club;
 
         makeNewUpdateRowPlayer(item,tabelid,cell);
+        //oppdater gPlayers
+        const playerIndex = gPlayers.findIndex(player => player.airtable === item.airtable);
+        if (playerIndex !== -1) {
+            gPlayers[playerIndex] = item;
+        }
         
     }
 }
