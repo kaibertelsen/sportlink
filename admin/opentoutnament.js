@@ -1406,19 +1406,13 @@ function newPlayerresponse(data) {
        data.fields.group = "";
    }
 
-   //konverterer tournament
-   if(data.fields?.tournament){
-       data.fields.tournament = data.fields.tournament[0];
-   }else{
-       data.fields.tournament = "";
-   }
-
+   
    gPlayers.push(data.fields);
  
 
    // Opprett ny rad basert på responsdata
    //filtrer lagene for dropdown 
-   let oTeam = gTeam.filter(team => {
+   let oTeam = gTeams.filter(team => {
     const matchesDivision = !divisionValue || team.division === divisionValue;
     const matchesGroup = !groupValue || team.group === groupValue;
     return matchesDivision && matchesGroup;
