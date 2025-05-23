@@ -532,6 +532,9 @@ function makeNewUpdateRowPlayer(item,tabelid,cell){
 
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector(".playerrow");
+
+    const divisionValue = document.getElementById("divisionSelector").value;
+    const groupValue = document.getElementById("groupSelector").value;
     
     //filtrer lagene for dropdown 
     let oTeam = gTeam.filter(team => {
