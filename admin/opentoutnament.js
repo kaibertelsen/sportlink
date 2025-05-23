@@ -1497,8 +1497,6 @@ function createNewPlayer(){
     copyMatchElementholder = newRow;
   
     //finne divisjonsid, gruppeide, lag
-    let divisionId = document.getElementById("divisionSelector").value;
-    let groupId = document.getElementById("groupSelector").value;
     let teamId = document.getElementById("teamSelector").value;
 
     // Legg til dagens dato og klokkeslett
@@ -1506,8 +1504,6 @@ function createNewPlayer(){
     let saveobject = {
         name:"Ny spiller",
         nr:0,
-        division:[divisionId],
-        group:[groupId],
         team:[teamId]
     }
 
