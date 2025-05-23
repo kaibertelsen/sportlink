@@ -474,7 +474,7 @@ function controllAction(item, newValue, field, tabelid, cell,options) {
         item.teamname = team.name;
         item.divisionname = team.divisionname;
         item.groupname = team.groupname;
-        item.teamclubname = team.clubname;
+        item.clubname = team.clubname;
         item.club = team.club;
 
         makeNewUpdateRowPlayer(item,tabelid,cell);
