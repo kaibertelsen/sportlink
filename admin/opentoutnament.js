@@ -1389,9 +1389,25 @@ function newPlayerresponse(data) {
   
 
 
-   let newPlayer = JSON.parse(data.fields.json);   
+   let player = JSON.parse(data.fields.json);  
+   
+   //tilføre nøkler fra laget
+   //finne laget i gTeam
+   const team = gTeam.find(item => item.airtable === player.team[0]);
+   if (team) {
+       // Legg til lagreferanse i spilleren
+        
+        player.teamname = team.name || "";
+        player.clubname = team.clubname || "";
+        player.clublogo = team.clublogo || "";
+        player.division = team.division || "";
+        player.groupname = team.groupname || "";
+        player.group = team.group || "";
+        player.divisionname = team.divisionname || "";
+   }
 
-   gPlayers.push(newPlayer);
+
+   gPlayers.push(player);
  
 
    // Opprett ny rad basert på responsdata
@@ -1406,7 +1422,7 @@ function newPlayerresponse(data) {
     });
     oTeam = convertTeamArrayToOptions(oTeam);
 
-   const newRow = makePlayerrow(nodeelement, newPlayer, "tbljVqkOQACs56QqI",oTeam);
+   const newRow = makePlayerrow(nodeelement, player, "tbljVqkOQACs56QqI",oTeam);
    
    // Erstatt midlertidig placeholder med den nye raden
    copyMatchElementholder.parentElement.insertBefore(newRow, copyMatchElementholder.nextSibling);
