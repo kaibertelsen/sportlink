@@ -1,3 +1,5 @@
+var maxGoalDiff = 5; // Juster denne verdien ved behov
+
 function loadMatchLog(rowelement, match) {
   const newmatchloggrow = rowelement.querySelector('.matchloggaddrowconteiner');
   newmatchloggrow.dataset.matchid = match.airtable;
@@ -188,22 +190,35 @@ function loadMatchLog(rowelement, match) {
   const goal1 = rowelement.querySelector(".goalteam1");
   const goal2 = rowelement.querySelector(".goalteam2");
 
-  if(resultOfLog.goalteam1 != 0 || resultOfLog.goalteam2 != 0){
+  if (resultOfLog.goalteam1 != 0 || resultOfLog.goalteam2 != 0) {
+    // Begrens målforskjellen til maks 'maxGoalDiff'
+    let g1 = Number(resultOfLog.goalteam1) || 0;
+    let g2 = Number(resultOfLog.goalteam2) || 0;
   
-    goal1.textContent = resultOfLog.goalteam1;
+    const diff = Math.abs(g1 - g2);
+    if (diff > maxGoalDiff) {
+      if (g1 > g2) {
+        g1 = g2 + maxGoalDiff;
+      } else {
+        g2 = g1 + maxGoalDiff;
+      }
+    }
+  
+    goal1.textContent = g1;
     goal1.style.border = "2px solid blue";
-
-    goal2.textContent = resultOfLog.goalteam2;
+  
+    goal2.textContent = g2;
     goal2.style.border = "2px solid blue";
-
-  }else{
-    //fjerne border og disable
+  
+  } else {
+    // Fjern border og vis opprinnelige mål (eller "-" hvis tomt)
     goal1.style.border = "none";
     goal1.textContent = (match.goalteam1 === "" || match.goalteam1 === null) ? "-" : match.goalteam1;
-
+  
     goal2.style.border = "none";
     goal2.textContent = (match.goalteam2 === "" || match.goalteam2 === null) ? "-" : match.goalteam2;
   }
+  
 
   const penalty1 = rowelement.querySelector(".penaltyminteam1");
   const penalty2 = rowelement.querySelector(".penaltyminteam2");
@@ -224,7 +239,6 @@ function loadMatchLog(rowelement, match) {
     penalty2.textContent = (match.penaltyminteam2 === "" || match.penaltyminteam2 === null) ? "-" : match.penaltyminteam2;
   }
 }
-
 
 function responsSaveMatchLog(response) {
   const logData = JSON.parse(response.fields.json); 
