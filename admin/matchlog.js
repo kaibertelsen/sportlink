@@ -195,12 +195,14 @@ function loadMatchLog(rowelement, match) {
     // Begrens målforskjellen til maks 'maxGoalDiff'
     let g1 = Number(resultOfLog.goalteam1) || 0;
     let g2 = Number(resultOfLog.goalteam2) || 0;
+
+    console.log(activetournament);
   
     const diff = Math.abs(g1 - g2);
     if (diff > maxGoalDiff) {
       // Juster målene slik at forskjellen ikke overstiger 'maxGoalDiff'
       infomaxGoalDiff.style.display = "block";
-      infomaxGoalDiff.textContent = `Resultatet er justert til maks ${maxGoalDiff} mål i forskjell. Gjelder for tabellberegning.`;
+      infomaxGoalDiff.textContent = `Resultatet for denne kampen er justert til maks ${maxGoalDiff} mål i forskjell!`;
       infomaxGoalDiff.style.fontWeight = "bold";
       infomaxGoalDiff.style.color = "red";
 
