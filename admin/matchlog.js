@@ -200,7 +200,8 @@ function loadMatchLog(rowelement, match) {
     if (diff > maxGoalDiff) {
       // Juster målene slik at forskjellen ikke overstiger 'maxGoalDiff'
       infomaxGoalDiff.style.display = "block";
-      infomaxGoalDiff.textContent = `Målforskjellen er justert til maks ${maxGoalDiff} mål i forskjell.`;
+      infomaxGoalDiff.textContent = `Resultatet er justert til maks ${maxGoalDiff} mål i forskjell. Gjelder for tabellberegning.`;
+      infomaxGoalDiff.style.fontWeight = "bold";
       infomaxGoalDiff.style.color = "red";
 
       if (g1 > g2) {
