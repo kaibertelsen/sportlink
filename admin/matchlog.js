@@ -189,6 +189,7 @@ function loadMatchLog(rowelement, match) {
   let resultOfLog = listLogForMatch(match, rowelement,true);
   const goal1 = rowelement.querySelector(".goalteam1");
   const goal2 = rowelement.querySelector(".goalteam2");
+  const infomaxGoalDiff = rowelement.querySelector(".infomaxgoaldiff");
 
   if (resultOfLog.goalteam1 != 0 || resultOfLog.goalteam2 != 0) {
     // Begrens målforskjellen til maks 'maxGoalDiff'
@@ -197,11 +198,20 @@ function loadMatchLog(rowelement, match) {
   
     const diff = Math.abs(g1 - g2);
     if (diff > maxGoalDiff) {
+      // Juster målene slik at forskjellen ikke overstiger 'maxGoalDiff'
+      infomaxGoalDiff.style.display = "block";
+      infomaxGoalDiff.textContent = `Målforskjellen er justert til maks ${maxGoalDiff} mål i forskjell.`;
+      infomaxGoalDiff.style.color = "red";
+
       if (g1 > g2) {
         g1 = g2 + maxGoalDiff;
       } else {
         g2 = g1 + maxGoalDiff;
       }
+    }else{
+      infomaxGoalDiff.style.display = "none";
+      infomaxGoalDiff.textContent = "";
+      infomaxGoalDiff.style.color = "";
     }
   
     goal1.textContent = g1;
