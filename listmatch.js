@@ -428,7 +428,35 @@ function viewMatch(match){
     document.getElementById("thismatchtabbutton").click();
 
     const matchlogConteinerviewer = document.getElementById("matchlogConteinerviewer");
-    let results = listLogForMatch(match, matchlogConteinerviewer,false);
+    const infomaxGoalDiff = document.getElementById("infomaxGoalDiff");
+    infomaxGoalDiff.style.display = "none";
+    infomaxGoalDiff.textContent = "";
+    
+    let resultOfLog = listLogForMatch(match, matchlogConteinerviewer,false);
+
+
+     // Begrens målforskjellen til maks 'maxGoalDiff'
+     let g1 = Number(resultOfLog.goalteam1) || 0;
+     let g2 = Number(resultOfLog.goalteam2) || 0;
+
+     const diff = Math.abs(g1 - g2);
+     if (diff > maxGoalDiff) {
+       // Juster målene slik at forskjellen ikke overstiger 'maxGoalDiff'
+       infomaxGoalDiff.style.display = "block";
+       infomaxGoalDiff.textContent = `Resultatet for denne kampen er justert til maks ${maxGoalDiff} mål i forskjell!`;
+       infomaxGoalDiff.style.fontWeight = "bold";
+       infomaxGoalDiff.style.color = "red";
+ 
+       if (g1 > g2) {
+         g1 = g2 + maxGoalDiff;
+       } else {
+         g2 = g1 + maxGoalDiff;
+       }
+     }else{
+       infomaxGoalDiff.style.display = "none";
+       infomaxGoalDiff.textContent = "";
+       infomaxGoalDiff.style.color = "";
+     }
 
 
 
@@ -599,8 +627,6 @@ function calculateMatchResultByLog(matchs) {
     return matchs;
 }
   
-  
-
 function listmatchLayoutGrid(data) {
 
     //divisjonsfilter
