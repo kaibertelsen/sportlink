@@ -243,7 +243,13 @@ function loadeLists(data){
     
     //list sluttspill
     endplay = endplayConverter(data);
-    if(endplay){listendplay(matches,endplay);}
+    if(endplay){
+        listendplay(matches,endplay);
+    }else{
+        // Skjul sluttspill-fanen
+        const endplaytabbutton = document.getElementById("endplaytabbutton");
+        endplaytabbutton.style.display = "none";
+    }
 
     //om denne turneringen skal ha statistikk så slå den på
     const statisticstabbutton = document.getElementById("statisticstabbutton");
