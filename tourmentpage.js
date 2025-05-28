@@ -1,3 +1,5 @@
+var maxGoalDiff = 100; // Standardverdi for maks målforskjell
+
 function getTournament(klientid) {
     var body = airtablebodylistAND({klientid:klientid,archived:0,hidden:0});
     Getlistairtable(baseId,"tblGhVlhWETNvhrWN",body,"getTournamentresponse",true);
@@ -179,6 +181,11 @@ function loadTourment(tournamentid){
         console.warn(`Turneringen med ID ${tournamentid} ble ikke funnet.`);
         return; // Stopp funksjonen hvis turneringen ikke finnes
     }
+
+    // Oppdater maxGoalDiff med tallverdi, eller bruk 100 som fallback
+    maxGoalDiff = Number(data?.maxgoaldiff) || 100;
+
+
     //for å gå videre i tab systemet
     document.getElementById('tabtoturnering').click();
     //start match window
