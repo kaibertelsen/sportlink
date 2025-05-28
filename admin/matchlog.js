@@ -116,6 +116,8 @@ function loadMatchLog(rowelement, match) {
       match: [match.airtable]
     };
 
+    
+
     const required = [
       { label: 'Minutter', value: data.playedminutes },
       { label: 'Periode', value: data.period },
@@ -137,9 +139,13 @@ function loadMatchLog(rowelement, match) {
       required.push({ label: 'Utvisningsminutter', value: data.penaltyminutes });
     }
 
+    //hvis noen av nøklene i data er tomme så fjern nøklene
+    Object.keys(data).forEach(key => {
+      if (data[key] === "" || data[key] === null || data[key] === undefined) {
+        delete data[key];
+      }
+    });
     
-
-
     const missing = required.filter(f => !f.value);
     if (missing.length > 0) {
       alert(`Følgende felt mangler: ${missing.map(f => f.label).join(', ')}`);
