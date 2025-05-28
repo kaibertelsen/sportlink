@@ -98,6 +98,7 @@ function loadMatchLog(rowelement, match) {
     logassistplayer.disabled = false;
 
     const players = findPlayersInMatch(match, selectedTeamId);
+   
     initLogPlayerAutocomplete(logplayer, logplayerDropdown, players, handleNewPlayer("spiller"));
     initLogPlayerAutocomplete(logassistplayer, logassistDropdown, players, handleNewPlayer("assistspiller"));
   });
@@ -442,13 +443,24 @@ function loadLogSportEvents(selector, match) {
 }
   
 function findPlayersInMatch(match, teamid) {
-    const allTeams = [...(match.team1json || []), ...(match.team2json || [])];
-    const selectedTeam = allTeams.find(team => team.airtable === teamid);
-  
-    if (!selectedTeam || !Array.isArray(selectedTeam.player)) return [];
-  
-    return selectedTeam.player.sort((a, b) => a.name.localeCompare(b.name));
+  const allTeams = [...(match.team1json || []), ...(match.team2json || [])];
+  const selectedTeam = allTeams.find(team => team.airtable === teamid);
+
+  if (!selectedTeam || !Array.isArray(selectedTeam.player)) return [];
+
+  // Sorter spillerne alfabetisk
+  const sortedPlayers = selectedTeam.player.slice().sort((a, b) => a.name.localeCompare(b.name));
+
+  // Legg til plassholder først
+  const placeholder = {
+    name: "Plassholder spiller",
+    airtable: "", // eventuelt null eller tom streng
+    isPlaceholder: true
+  };
+
+  return [placeholder, ...sortedPlayers];
 }
+
   
 function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, onNewPlayerCallback) {
   inputField.dataset.airtable = "";
