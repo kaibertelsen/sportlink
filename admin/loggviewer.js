@@ -169,7 +169,7 @@ function listLogForMatch(match, rowelement,admin) {
       eventnameElement.textContent = eventnametext;
   
       const infoElement = logRow.querySelector('.info');
-      const playerName = log.playername || "Ukjent spiller";
+      const playerName = log.playername || "Spiller ikke registrert";
       const assistName = log.assistplayername || null;
       const eventpoint = log.eventpoint || 0;
       
