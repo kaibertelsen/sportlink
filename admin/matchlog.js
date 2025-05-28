@@ -461,12 +461,26 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
       return;
     }
 
+    //  Ledd til en dummy spiller "Plassholder" med value "" 
+    const placeholderOption = document.createElement('div');
+    placeholderOption.textContent = "Plassholder";
+    placeholderOption.style.padding = "8px";
+    placeholderOption.style.cursor = "pointer";
+    placeholderOption.addEventListener('click', () => {
+      inputField.value = "Plassholder";
+      inputField.dataset.airtable = "";
+      dropdownContainer.style.display = "none";
+    });
+    dropdownContainer.appendChild(placeholderOption);
+
+
     filtered.forEach(player => {
       const option = document.createElement('div');
       option.textContent = `${player.nr ? player.nr + " - " : ""}${player.name}`;
       option.style.padding = "8px";
       option.style.cursor = "pointer";
 
+      
       option.addEventListener('click', () => {
         inputField.value = player.name;
         inputField.dataset.airtable = player.airtable || "";
