@@ -204,3 +204,6 @@ function listLogForMatch(match, rowelement,admin) {
     return {goalteam1,goalteam2,penaltyminteam1,penaltyminteam2};
   
   }
+
+
+  

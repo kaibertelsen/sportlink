@@ -94,6 +94,9 @@ function responsGetTournament(data) {
     // Oppdater turneringsinformasjon
     updateTournamentInfo(tournament);
 
+    // Oppdater maxGoalDiff
+    maxGoalDiff = tournament?.maxgoaldiff || 100;
+
     // Konverter divisjoner og liste dem opp
     const divisions = convertJSONrow(tournament.divisjonjson);
     gDivision = divisions;
