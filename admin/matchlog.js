@@ -506,6 +506,12 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
 
       if (!name || id || typeof onNewPlayerCallback !== 'function') return;
 
+      if( name === "Plassholder") {
+        inputField.value = "";
+        inputField.dataset.airtable = "";
+        return;
+      }
+
       const confirmed = confirm(`Vil du opprette ny spiller "${name}"?`);
       if (confirmed) {
         onNewPlayerCallback(name, inputField);
