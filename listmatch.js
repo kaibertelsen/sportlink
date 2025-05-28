@@ -232,6 +232,7 @@ function viewMatch(match){
     header.querySelector(".team2").textContent = team2Name;
 
     let emtyLogo = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
+    
     // Oppdater logoer (kun hvis det finnes en verdi, ellers behold standard)
     header.querySelector(".logoteam1").src = match.team1clublogo || emtyLogo;
     header.querySelector(".logoteam2").src = match.team2clublogo || emtyLogo;
@@ -429,6 +430,9 @@ function viewMatch(match){
     const matchlogConteinerviewer = document.getElementById("matchlogConteinerviewer");
     let results = listLogForMatch(match, matchlogConteinerviewer,false);
 
+
+
+
 }
 
 function createICSFile(icon, match) {
@@ -541,7 +545,7 @@ function calculateMatchResultBySett(matchs) {
     return matchs;
 }
 
-function calculateMatchResultByLog(matchs) {
+function calculateMatchResultByLog(matchs, maxGoalDiff = 100) {
     matchs.forEach(match => {
       if (!match.matchlogg || match.matchlogg.length === 0) return;
   
@@ -576,6 +580,16 @@ function calculateMatchResultByLog(matchs) {
         }
       });
   
+      // 🔁 Juster målforskjellen hvis den overstiger maxGoalDiff
+      const diff = Math.abs(goalteam1 - goalteam2);
+      if (diff > maxGoalDiff) {
+        if (goalteam1 > goalteam2) {
+          goalteam1 = goalteam2 + maxGoalDiff;
+        } else {
+          goalteam2 = goalteam1 + maxGoalDiff;
+        }
+      }
+  
       match.goalteam1 = goalteam1;
       match.goalteam2 = goalteam2;
       match.penaltyminteam1 = penaltyminteam1;
@@ -584,6 +598,7 @@ function calculateMatchResultByLog(matchs) {
   
     return matchs;
 }
+  
   
 
 function listmatchLayoutGrid(data) {
