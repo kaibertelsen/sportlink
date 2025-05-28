@@ -120,9 +120,9 @@ function loadMatchLog(rowelement, match) {
       { label: 'Minutter', value: data.playedminutes },
       { label: 'Periode', value: data.period },
       { label: 'Lag', value: data.team },
-      { label: 'Hendelse', value: data.eventtype },
-      { label: 'Spiller', value: data.player?.[0] },
+      { label: 'Hendelse', value: data.eventtype }
     ];
+
 
     if (logassistplayer.value != "") {
       required.push({ label: 'Assist-spiller', value: logassistplayer?.dataset?.airtable });
@@ -132,10 +132,13 @@ function loadMatchLog(rowelement, match) {
     if (logpenaltyminutes?.value != "") {
       data.penaltyminutes = Number(logpenaltyminutes?.value.trim());
     }
-    //hvis eventtype er utvisningsminutter såm må vi kreve dette feltet
+    //hvis eventtype er utvisningsminutter så må vi kreve dette feltet
     if (logeventtype?.value === "recfYDgKdjfiDSO4g" || logeventtype?.value === "reclsQ8SpocBhDlsy") {
       required.push({ label: 'Utvisningsminutter', value: data.penaltyminutes });
     }
+
+    
+
 
     const missing = required.filter(f => !f.value);
     if (missing.length > 0) {
