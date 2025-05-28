@@ -41,10 +41,14 @@ function listendplay(data, divisjon) {
     list.replaceChildren(); // Fjern eksisterende innhold i listen
     const elementLibrary = document.getElementById("elementlibrary");
 
+    let endPlayExist = false;
+
     for (let division of filteredDivision) {
         // Sjekk om endplay eksisterer i divisjonen
         if (division.endplay && Array.isArray(division.endplay)) {
             let endplays = division.endplay;
+
+            endPlayExist = true; // Sett flagget til true hvis det finnes endplay
 
             // Legg til divisjonsnavnet
             if (endplays.length > 0) {
@@ -203,6 +207,8 @@ function listendplay(data, divisjon) {
             }
         }
     }
+
+    return endPlayExist; // Returner true hvis endplay eksisterer, ellers false
 }
 
 
