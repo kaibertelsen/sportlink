@@ -48,10 +48,11 @@ function listendplay(data, divisjon) {
         if (division.endplay && Array.isArray(division.endplay)) {
             let endplays = division.endplay;
 
-            endPlayExist = true; // Sett flagget til true hvis det finnes endplay
+            
 
             // Legg til divisjonsnavnet
             if (endplays.length > 0) {
+                endPlayExist = true; // Sett flagget til true hvis det finnes endplay
                 let divisionNameLable = elementLibrary.querySelector(".divisionname")?.cloneNode(true);
                 divisionNameLable.textContent = division.name;
                 list.appendChild(divisionNameLable);
