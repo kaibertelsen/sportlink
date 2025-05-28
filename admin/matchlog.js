@@ -513,8 +513,6 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
       if (!name || id || typeof onNewPlayerCallback !== 'function') return;
 
       if( name === "Plassholder") {
-        inputField.value = "";
-        inputField.dataset.airtable = "";
         return;
       }
 
