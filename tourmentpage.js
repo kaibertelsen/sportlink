@@ -245,11 +245,13 @@ function loadeLists(data){
     endplay = endplayConverter(data);
     if(endplay){
        let endPlayExist = listendplay(matches,endplay);
-
+       const endplaytabbutton = document.getElementById("endplaytabbutton");
         if(!endPlayExist){
-             // Skjul sluttspill-fanen
-        const endplaytabbutton = document.getElementById("endplaytabbutton");
+             // Skjul sluttspill-fanen  
         endplaytabbutton.style.display = "none";
+        }else {
+            // Slå på
+            endplaytabbutton.style.display = "inline-block";
         }
     }
 
