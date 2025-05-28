@@ -1,4 +1,4 @@
-var maxGoalDiff = 5; // Juster denne verdien ved behov
+var maxGoalDiff = 100;
 
 function loadMatchLog(rowelement, match) {
   const newmatchloggrow = rowelement.querySelector('.matchloggaddrowconteiner');
