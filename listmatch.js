@@ -545,7 +545,7 @@ function calculateMatchResultBySett(matchs) {
     return matchs;
 }
 
-function calculateMatchResultByLog(matchs, maxGoalDiff = 100) {
+function calculateMatchResultByLog(matchs) {
     matchs.forEach(match => {
       if (!match.matchlogg || match.matchlogg.length === 0) return;
   
