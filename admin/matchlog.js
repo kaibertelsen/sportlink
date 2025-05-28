@@ -141,10 +141,21 @@ function loadMatchLog(rowelement, match) {
 
     //hvis noen av nøklene i data er tomme så fjern nøklene
     Object.keys(data).forEach(key => {
-      if (data[key] === "" || data[key] === null || data[key] === undefined) {
+      const value = data[key];
+    
+      const isEmptyArrayWithEmptyString =
+        Array.isArray(value) && value.length === 1 && value[0].trim?.() === "";
+    
+      if (
+        value === "" ||
+        value === null ||
+        value === undefined ||
+        isEmptyArrayWithEmptyString
+      ) {
         delete data[key];
       }
     });
+    
     
     const missing = required.filter(f => !f.value);
     if (missing.length > 0) {
