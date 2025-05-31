@@ -333,26 +333,27 @@ function listPlayerStats(data) {
     */
 
     let currentRank = 1;
-    let sameRankCount = 1;
-    
+    let previous = null;
+
     for (let i = 0; i < filteredDivision.length; i++) {
-      const current = filteredDivision[i];
-      const prev = filteredDivision[i - 1];
-    
-      if (
-        i > 0 &&
-        current.goals === prev.goals &&
-        current.assists === prev.assists
-      ) {
-        current.rangenr = `(${currentRank})`; // Delt plassering
-        sameRankCount++;
-      } else {
-        // Hvis forrige hadde flere på delt plass, hopp over noen plasseringer
+    const current = filteredDivision[i];
+
+    if (
+        previous &&
+        current.goals === previous.goals &&
+        current.assists === previous.assists
+    ) {
+        // Samme som forrige → delt plassering
+        current.rangenr = `(${currentRank})`;
+    } else {
+        // Ny plassering
         currentRank = i + 1;
-        current.rangenr = `${currentRank}`;
-        sameRankCount = 1;
-      }
+        current.rangenr = `(${currentRank})`;
     }
+
+    previous = current;
+    }
+
     
 
 
