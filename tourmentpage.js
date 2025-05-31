@@ -453,6 +453,7 @@ function summarizePlayerStats(allMatchLogs) {
                 playerId: playerId,
                 playername: log.playername || "",
                 teamname: log.teamname || "",
+                teamid: log.team || "",
                 club: log.club || "",
                 divisionid: log.divisionid || "",
                 divisionname: log.divisionname || "",
@@ -482,6 +483,7 @@ function summarizePlayerStats(allMatchLogs) {
                     divisionid: log.divisionid || "",
                     divisionname: log.divisionname || "", 
                     teamname: log.teamname || "",       // Antatt samme divisjon
+                    teamid: log.team || "",
                     goals: 0,
                     assists: 0,
                     penaltyMinutes: 0,
