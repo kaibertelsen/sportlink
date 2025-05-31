@@ -8,7 +8,6 @@ function getTeamresponse(data){
     listteams(teams);
 }
 
-
 function listteams(data) {
     const activeDivision = getActiveDivisionFilter();
 
@@ -97,6 +96,7 @@ function listteams(data) {
         }
     }
 }
+
 function getPointElement(){
     // Bestem hvilket element som skal kopieres basert på sportstypen
     const elementlibrary = document.getElementById("elementlibrary");
@@ -116,6 +116,7 @@ function getPointElement(){
 
     return nodeelement
 }
+
 function loadPointsToviewer(rowelement,team,range,solo){
     const sportId = activetournament.sport[0];
 
@@ -278,8 +279,6 @@ function listMatchesInTeamView(matchs,team){
     }
      
 }
-
-
 
 function loadLocationSelector(Matchs,locationSelector) {
 

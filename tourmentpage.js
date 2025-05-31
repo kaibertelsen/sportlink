@@ -324,11 +324,37 @@ function listPlayerStats(data) {
       return a.playername.localeCompare(b.playername);
     });
 
+    /*
     // Sette inn plaseringsnummer i raden
     filteredDivision.forEach((item, i) => {
         item.rangenr = i + 1;
     }
     );
+    */
+
+    let currentRank = 1;
+    let sameRankCount = 1;
+    
+    for (let i = 0; i < filteredDivision.length; i++) {
+      const current = filteredDivision[i];
+      const prev = filteredDivision[i - 1];
+    
+      if (
+        i > 0 &&
+        current.goals === prev.goals &&
+        current.assists === prev.assists
+      ) {
+        current.rangenr = `(${currentRank})`; // Delt plassering
+        sameRankCount++;
+      } else {
+        // Hvis forrige hadde flere på delt plass, hopp over noen plasseringer
+        currentRank = i + 1;
+        current.rangenr = `${currentRank}`;
+        sameRankCount = 1;
+      }
+    }
+    
+
 
     // 🔍 Søkefilter på navn og nummer
     const searchValue = document.getElementById("playerSearch").value.toLowerCase().trim();
