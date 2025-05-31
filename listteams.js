@@ -235,6 +235,7 @@ function viewteam(team) {
     // Vis lagsiden
     document.getElementById("thisteamtabbutton").click();
 }
+
 function locationSelectorinTeamChange(){
     listMatchesInTeamView(matches,activeteam);
 }

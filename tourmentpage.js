@@ -424,6 +424,17 @@ function listPlayerStats(data) {
       rowelement.querySelector(".divisjonlable").textContent = item.divisionname || "";
       rowelement.querySelector(".clubblable").textContent = item.club || "";
       nodeelement.parentElement.appendChild(rowelement);
+
+      // Legg til klikkhendelse for å vise laget
+        rowelement.addEventListener("click", () => {
+            const team = gTeam.find(t => t.airtable === item.teamid);
+            if (team) {
+                viewteam(team);
+                previouspage = "";
+            } else {
+                console.warn("Laget ble ikke funnet for spiller:", item.playerId);
+            }
+        });
     });
   
     nodeelement.remove();
