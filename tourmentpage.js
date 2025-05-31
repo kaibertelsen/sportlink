@@ -331,28 +331,50 @@ function listPlayerStats(data) {
     }
     );
     */
-
     let currentRank = 1;
     let previous = null;
-
+    let groupStartIndex = 0;
+    
     for (let i = 0; i < filteredDivision.length; i++) {
-    const current = filteredDivision[i];
-
-    if (
+      const current = filteredDivision[i];
+    
+      // Er denne spilleren lik forrige? (mål og assist)
+      const isSameAsPrevious =
         previous &&
         current.goals === previous.goals &&
-        current.assists === previous.assists
-    ) {
-        // Samme som forrige → delt plassering
-        current.rangenr = `(${currentRank})`;
-    } else {
-        // Ny plassering
+        current.assists === previous.assists;
+    
+      if (!isSameAsPrevious) {
+        // Avslutt forrige gruppe
+        const groupSize = i - groupStartIndex;
+        if (groupSize === 1) {
+          // Kun én spiller i gruppa → uten parentes
+          filteredDivision[groupStartIndex].rangenr = `${currentRank}`;
+        } else {
+          // Flere i gruppa → med parentes
+          for (let j = groupStartIndex; j < i; j++) {
+            filteredDivision[j].rangenr = `(${currentRank})`;
+          }
+        }
+    
+        // Start ny gruppe
+        groupStartIndex = i;
         currentRank = i + 1;
-        current.rangenr = `(${currentRank})`;
+      }
+    
+      previous = current;
     }
-
-    previous = current;
+    
+    // Håndter siste gruppe etter loop
+    const lastGroupSize = filteredDivision.length - groupStartIndex;
+    if (lastGroupSize === 1) {
+      filteredDivision[groupStartIndex].rangenr = `${currentRank}`;
+    } else {
+      for (let j = groupStartIndex; j < filteredDivision.length; j++) {
+        filteredDivision[j].rangenr = `(${currentRank})`;
+      }
     }
+    
 
     
 
