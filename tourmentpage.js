@@ -427,7 +427,7 @@ function listPlayerStats(data) {
 
       // Legg til klikkhendelse for å vise laget
         rowelement.addEventListener("click", () => {
-            const team = gTeam.find(t => t.airtable === item.teamid);
+            const team = teams.find(t => t.airtable === item.teamid);
             if (team) {
                 viewteam(team);
                 previouspage = "";
