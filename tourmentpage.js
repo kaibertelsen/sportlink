@@ -320,52 +320,7 @@ function listPlayerStats(data) {
 
     // Sorter på mål, assist eller samlet
     filteredDivision = filteredTypeStats(filteredDivision);
-   
-    let currentRank = 1;
-    let previous = null;
-    let groupStartIndex = 0;
-    
-    for (let i = 0; i < filteredDivision.length; i++) {
-      const current = filteredDivision[i];
-    
-      // Er denne spilleren lik forrige? (mål og assist)
-      const isSameAsPrevious =
-        previous &&
-        current.goals === previous.goals &&
-        current.assists === previous.assists;
-    
-      if (!isSameAsPrevious) {
-        // Avslutt forrige gruppe
-        const groupSize = i - groupStartIndex;
-        if (groupSize === 1) {
-          // Kun én spiller i gruppa → uten parentes
-          filteredDivision[groupStartIndex].rangenr = `${currentRank}`;
-        } else {
-          // Flere i gruppa → med parentes
-          for (let j = groupStartIndex; j < i; j++) {
-            filteredDivision[j].rangenr = `(${currentRank})`;
-          }
-        }
-    
-        // Start ny gruppe
-        groupStartIndex = i;
-        currentRank = i + 1;
-      }
-    
-      previous = current;
-    }
-    
-    // Håndter siste gruppe etter loop
-    const lastGroupSize = filteredDivision.length - groupStartIndex;
-    if (lastGroupSize === 1) {
-      filteredDivision[groupStartIndex].rangenr = `${currentRank}`;
-    } else {
-      for (let j = groupStartIndex; j < filteredDivision.length; j++) {
-        filteredDivision[j].rangenr = `(${currentRank})`;
-      }
-    }
-    
-
+ 
     // 🔍 Søkefilter på navn og nummer
     const searchValue = document.getElementById("playerSearch").value.toLowerCase().trim();
     if (searchValue !== "") {
@@ -624,31 +579,70 @@ function filteredTypeStats(players) {
         return a.playername.localeCompare(b.playername);
     };
 
-    // Ingen aktivt filter eller "totalStats" valgt
+    let filteredPlayers;
+
     if (!activeFilter || activeFilter.id === "totalStats") {
-        return players
-            .slice()
-            .sort(sortByTotal);
+        filteredPlayers = players.slice().sort(sortByTotal);
+    } else if (activeFilter.id === "goalsfilterStats") {
+        filteredPlayers = players
+            .filter(player => player.goals > 0)
+            .sort((a, b) => {
+                if (b.goals !== a.goals) return b.goals - a.goals;
+                return a.playername.localeCompare(b.playername);
+            });
+    } else if (activeFilter.id === "assistfilterStats") {
+        filteredPlayers = players
+            .filter(player => player.assists > 0)
+            .sort((a, b) => {
+                if (b.assists !== a.assists) return b.assists - a.assists;
+                return a.playername.localeCompare(b.playername);
+            });
+    } else {
+        return [];
     }
 
-    if (activeFilter.id === "goalsfilterStats") {
-        const filteredPlayers = players.filter(player => player.goals > 0);
-        return filteredPlayers.sort((a, b) => {
-            if (b.goals !== a.goals) return b.goals - a.goals;
-            return a.playername.localeCompare(b.playername);
-        });
+    // --- Rangering legges til her ---
+    let currentRank = 1;
+    let previous = null;
+    let groupStartIndex = 0;
+
+    for (let i = 0; i < filteredPlayers.length; i++) {
+        const current = filteredPlayers[i];
+
+        const isSameAsPrevious =
+            previous &&
+            current.goals === previous.goals &&
+            current.assists === previous.assists;
+
+        if (!isSameAsPrevious) {
+            const groupSize = i - groupStartIndex;
+            if (groupSize === 1) {
+                filteredPlayers[groupStartIndex].rangenr = `${currentRank}`;
+            } else {
+                for (let j = groupStartIndex; j < i; j++) {
+                    filteredPlayers[j].rangenr = `(${currentRank})`;
+                }
+            }
+
+            groupStartIndex = i;
+            currentRank = i + 1;
+        }
+
+        previous = current;
     }
 
-    if (activeFilter.id === "assistfilterStats") {
-        const filteredPlayers = players.filter(player => player.assists > 0);
-        return filteredPlayers.sort((a, b) => {
-            if (b.assists !== a.assists) return b.assists - a.assists;
-            return a.playername.localeCompare(b.playername);
-        });
+    // Håndter siste gruppe
+    const groupSize = filteredPlayers.length - groupStartIndex;
+    if (groupSize === 1) {
+        filteredPlayers[groupStartIndex].rangenr = `${currentRank}`;
+    } else {
+        for (let j = groupStartIndex; j < filteredPlayers.length; j++) {
+            filteredPlayers[j].rangenr = `(${currentRank})`;
+        }
     }
 
-    // Ukjent filter
-    return [];
+    return filteredPlayers;
 }
+
 
 
