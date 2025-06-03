@@ -317,20 +317,10 @@ function listPlayerStats(data) {
       ? data
       : data.filter(player => player.divisionid === activeDivision);
   
-    // Sorter etter mål, assist, spillernavn
-    filteredDivision.sort((a, b) => {
-      if (b.goals !== a.goals) return b.goals - a.goals;
-      if (b.assists !== a.assists) return b.assists - a.assists;
-      return a.playername.localeCompare(b.playername);
-    });
 
-    /*
-    // Sette inn plaseringsnummer i raden
-    filteredDivision.forEach((item, i) => {
-        item.rangenr = i + 1;
-    }
-    );
-    */
+    // Sorter på mål, assist eller samlet
+    filteredDivision = filteredTypeStats(filteredDivision);
+   
     let currentRank = 1;
     let previous = null;
     let groupStartIndex = 0;
@@ -593,15 +583,71 @@ function getActiveDivisionFilter() {
     return lastClickedDivisionButton || ""; // Returner aktivt filter eller tom streng hvis ingen knapp er trykket
 }
 
-function initStatisticsFilter(){
-
-    //finn "statisticfilterconteiner" i elementlibrary og flytt det inn i statisticsfiltercontainer
+function initStatisticsFilter() {
+    // Finn "statisticfilterconteiner" i elementlibrary og flytt det inn i statisticsfiltercontainer
     const statisticsFilterContainerNode = document.getElementById("statisticfilterconteinerelement");
     const statisticFilterContainer = document.getElementById("statisticslist");
 
-    if (statisticFilterContainer) {
-        statisticFilterContainer.appendChild(statisticsFilterContainerNode);
+    if (statisticFilterContainer && statisticsFilterContainerNode) {
+        // Legg den inn som første barn i containeren
+        statisticFilterContainer.prepend(statisticsFilterContainerNode);
+
+
+
+        //lag en klikkhendelse for filterknappene
+        const filterButtons = statisticsFilterContainerNode.querySelectorAll(".filterbutton");
+        filterButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                // Fjern "active" klasse fra alle knapper
+                filterButtons.forEach(btn => btn.classList.remove("active"));
+                
+                // Legg til "active" klasse på den trykte knappen
+                button.classList.add("active");
+                
+                // Oppdater spillerstatistikk basert på valgt filter
+                listPlayerStats(PlayerStats);
+            });
+        });
+
+
 
     }
+}
+
+function filteredTypeStats(players) {
+    const statisticsFilterContainerNode = document.getElementById("statisticfilterconteinerelement");
+    const activeFilter = Array.from(statisticsFilterContainerNode.children).find(child => child.classList.contains("active"));
+
+    const sortByTotal = (a, b) => {
+        if (b.goals !== a.goals) return b.goals - a.goals;
+        if (b.assists !== a.assists) return b.assists - a.assists;
+        return a.playername.localeCompare(b.playername);
+    };
+
+    // Ingen aktivt filter eller "total" valgt
+    if (!activeFilter || activeFilter.id === "totalStats") {
+        return players
+            .slice()
+            .sort(sortByTotal);
+    }
+
+    // Filtrér spillere med minst ett målpoeng
+    const filteredPlayers = players.filter(player => player.goals > 0 || player.assists > 0);
+    if (filteredPlayers.length === 0) return [];
+
+    if (activeFilter.id === "goalsfilterStats") {
+        return filteredPlayers.sort((a, b) => {
+            if (b.goals !== a.goals) return b.goals - a.goals;
+            return a.playername.localeCompare(b.playername);
+        });
+    } else if (activeFilter.id === "assistfilterStats") {
+        return filteredPlayers.sort((a, b) => {
+            if (b.assists !== a.assists) return b.assists - a.assists;
+            return a.playername.localeCompare(b.playername);
+        });
+    }
+
+    // Ukjent filter
+    return [];
 }
 
