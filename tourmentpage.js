@@ -596,11 +596,11 @@ function getActiveDivisionFilter() {
 function initStatisticsFilter(){
 
     //finn "statisticfilterconteiner" i elementlibrary og flytt det inn i statisticsfiltercontainer
-    const elementlibrary = document.getElementById("elementlibrary");
-    const statisticsFilterContainerElement = elementlibrary.querySelector(".statisticsfiltercontainer");
+    const statisticsFilterContainerNode = document.getElementById("statisticfilterconteinerelement");
     const statisticFilterContainer = document.getElementById("statisticslist");
-    if (statisticsFilterContainerElement) {
-        statisticFilterContainer.appendChild(statisticsFilterContainerElement);
+
+    if (statisticFilterContainer) {
+        statisticFilterContainer.appendChild(statisticsFilterContainerNode);
 
     }
 }
