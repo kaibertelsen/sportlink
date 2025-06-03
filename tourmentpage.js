@@ -573,46 +573,61 @@ function filteredTypeStats(players) {
     const statisticsFilterContainerNode = document.getElementById("statisticfilterconteinerelement");
     const activeFilter = Array.from(statisticsFilterContainerNode.children).find(child => child.classList.contains("active"));
 
-    const sortByTotal = (a, b) => {
-        if (b.goals !== a.goals) return b.goals - a.goals;
-        if (b.assists !== a.assists) return b.assists - a.assists;
-        return a.playername.localeCompare(b.playername);
-    };
-
     let filteredPlayers;
+    let sortFunction;
+    let isSameFunction;
 
     if (!activeFilter || activeFilter.id === "totalStats") {
-        filteredPlayers = players.slice().sort(sortByTotal);
+        sortFunction = (a, b) => {
+            if (b.goals !== a.goals) return b.goals - a.goals;
+            if (b.assists !== a.assists) return b.assists - a.assists;
+            return a.playername.localeCompare(b.playername);
+        };
+        isSameFunction = (a, b) => a.goals === b.goals && a.assists === b.assists;
+
+        filteredPlayers = players.slice().sort(sortFunction);
     } else if (activeFilter.id === "goalsfilterStats") {
         filteredPlayers = players
             .filter(player => player.goals > 0)
             .sort((a, b) => {
                 if (b.goals !== a.goals) return b.goals - a.goals;
+                if (b.assists !== a.assists) return b.assists - a.assists;
                 return a.playername.localeCompare(b.playername);
             });
+
+        sortFunction = (a, b) => {
+            if (b.goals !== a.goals) return b.goals - a.goals;
+            if (b.assists !== a.assists) return b.assists - a.assists;
+            return a.playername.localeCompare(b.playername);
+        };
+        isSameFunction = (a, b) => a.goals === b.goals && a.assists === b.assists;
     } else if (activeFilter.id === "assistfilterStats") {
         filteredPlayers = players
             .filter(player => player.assists > 0)
             .sort((a, b) => {
                 if (b.assists !== a.assists) return b.assists - a.assists;
+                if (b.goals !== a.goals) return b.goals - a.goals;
                 return a.playername.localeCompare(b.playername);
             });
+
+        sortFunction = (a, b) => {
+            if (b.assists !== a.assists) return b.assists - a.assists;
+            if (b.goals !== a.goals) return b.goals - a.goals;
+            return a.playername.localeCompare(b.playername);
+        };
+        isSameFunction = (a, b) => a.assists === b.assists && a.goals === b.goals;
     } else {
         return [];
     }
 
-    // --- Rangering legges til her ---
+    // --- Rangering ---
     let currentRank = 1;
     let previous = null;
     let groupStartIndex = 0;
 
     for (let i = 0; i < filteredPlayers.length; i++) {
         const current = filteredPlayers[i];
-
-        const isSameAsPrevious =
-            previous &&
-            current.goals === previous.goals &&
-            current.assists === previous.assists;
+        const isSameAsPrevious = previous && isSameFunction(current, previous);
 
         if (!isSameAsPrevious) {
             const groupSize = i - groupStartIndex;
@@ -631,7 +646,7 @@ function filteredTypeStats(players) {
         previous = current;
     }
 
-    // Håndter siste gruppe
+    // Siste gruppe
     const groupSize = filteredPlayers.length - groupStartIndex;
     if (groupSize === 1) {
         filteredPlayers[groupStartIndex].rangenr = `${currentRank}`;
@@ -643,6 +658,7 @@ function filteredTypeStats(players) {
 
     return filteredPlayers;
 }
+
 
 
 
