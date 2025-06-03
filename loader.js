@@ -41,7 +41,11 @@ cdnScripts.reduce((promise, script) => {
     initDayFilterToggle();
     initMatchlistFilter()
 
+    initStatisticsFilter();
+
 }).catch(error => {
     console.error(error);
 });
+
+
 

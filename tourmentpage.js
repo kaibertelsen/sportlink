@@ -376,9 +376,6 @@ function listPlayerStats(data) {
     }
     
 
-    
-
-
     // 🔍 Søkefilter på navn og nummer
     const searchValue = document.getElementById("playerSearch").value.toLowerCase().trim();
     if (searchValue !== "") {
@@ -440,7 +437,6 @@ function listPlayerStats(data) {
     nodeelement.remove();
 }
   
-
 function summarizePlayerStats(allMatchLogs) {
     const playerStats = {};
 
@@ -595,5 +591,17 @@ function handleDivisionButtonClick(item) {
 // Funksjon for å hente ID-en til aktivt filter
 function getActiveDivisionFilter() {
     return lastClickedDivisionButton || ""; // Returner aktivt filter eller tom streng hvis ingen knapp er trykket
+}
+
+function initStatisticsFilter(){
+
+    //finn "statisticfilterconteiner" i elementlibrary og flytt det inn i statisticsfiltercontainer
+    const elementlibrary = document.getElementById("elementlibrary");
+    const statisticsFilterContainer = elementlibrary.querySelector("#statisticsfiltercontainer");
+    const statisticFilterContainer = document.getElementById("statisticslist");
+    if (statisticsFilterContainer) {
+        statisticFilterContainer.appendChild(statisticsFilterContainer);
+        
+    }
 }
 
