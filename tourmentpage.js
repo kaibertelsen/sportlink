@@ -597,11 +597,11 @@ function initStatisticsFilter(){
 
     //finn "statisticfilterconteiner" i elementlibrary og flytt det inn i statisticsfiltercontainer
     const elementlibrary = document.getElementById("elementlibrary");
-    const statisticsFilterContainer = elementlibrary.querySelector("#statisticsfiltercontainer");
+    const statisticsFilterContainerElement = elementlibrary.querySelector(".statisticsfiltercontainer");
     const statisticFilterContainer = document.getElementById("statisticslist");
-    if (statisticsFilterContainer) {
-        statisticFilterContainer.appendChild(statisticsFilterContainer);
-        
+    if (statisticsFilterContainerElement) {
+        statisticFilterContainer.appendChild(statisticsFilterContainerElement);
+
     }
 }
 
