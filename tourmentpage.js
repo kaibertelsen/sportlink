@@ -595,7 +595,7 @@ function initStatisticsFilter() {
 
 
         //lag en klikkhendelse for filterknappene
-        const filterButtons = statisticsFilterContainerNode.querySelectorAll(".filterbutton");
+        const filterButtons = statisticsFilterContainerNode.querySelectorAll(".statisticfilterbutton");
         filterButtons.forEach(button => {
             button.addEventListener("click", () => {
                 // Fjern "active" klasse fra alle knapper
