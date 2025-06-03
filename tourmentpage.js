@@ -624,23 +624,23 @@ function filteredTypeStats(players) {
         return a.playername.localeCompare(b.playername);
     };
 
-    // Ingen aktivt filter eller "total" valgt
+    // Ingen aktivt filter eller "totalStats" valgt
     if (!activeFilter || activeFilter.id === "totalStats") {
         return players
             .slice()
             .sort(sortByTotal);
     }
 
-    // Filtrér spillere med minst ett målpoeng
-    const filteredPlayers = players.filter(player => player.goals > 0 || player.assists > 0);
-    if (filteredPlayers.length === 0) return [];
-
     if (activeFilter.id === "goalsfilterStats") {
+        const filteredPlayers = players.filter(player => player.goals > 0);
         return filteredPlayers.sort((a, b) => {
             if (b.goals !== a.goals) return b.goals - a.goals;
             return a.playername.localeCompare(b.playername);
         });
-    } else if (activeFilter.id === "assistfilterStats") {
+    }
+
+    if (activeFilter.id === "assistfilterStats") {
+        const filteredPlayers = players.filter(player => player.assists > 0);
         return filteredPlayers.sort((a, b) => {
             if (b.assists !== a.assists) return b.assists - a.assists;
             return a.playername.localeCompare(b.playername);
@@ -650,4 +650,5 @@ function filteredTypeStats(players) {
     // Ukjent filter
     return [];
 }
+
 
