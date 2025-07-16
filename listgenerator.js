@@ -4,8 +4,16 @@ function listTournament(tournament) {
     const elementlibrary = document.getElementById("elementlibrary");
     const nodeelement = elementlibrary.querySelector('.turneringholder');
 
-    //sortere tournament array etter startdato nyeste først
+    //sortere tournament array etter hvilke som er avsluttet, altså dato har passert a.enddate (aktive først) deretter etter startdato nyeste først
     tournament.sort((a, b) => {
+        const aEnded = isDatePassed(a.enddate);
+        const bEnded = isDatePassed(b.enddate);
+
+        if (aEnded !== bEnded) {
+            return aEnded ? 1 : -1; // Avsluttede nederst
+        }
+
+        // Hvis begge er like mht. om de er avsluttet, sorter etter startdato (nyeste først)
         if (a.startdate < b.startdate) {
             return 1;
         }
@@ -13,8 +21,7 @@ function listTournament(tournament) {
             return -1;
         }
         return 0;
-    }
-    );
+    });
 
     for (let item of tournament) {
         const rowelement = nodeelement.cloneNode(true);
