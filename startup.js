@@ -38,8 +38,10 @@ function startFirstFunctions() {
        // checkLocation();
 
        //USA
-        checkLocation("8.8.8.8")
+        //checkLocation("8.8.8.8")
 
+        //EU
+        checkLocation("91.198.174.192")
 
 
 
