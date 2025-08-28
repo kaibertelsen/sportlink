@@ -16,7 +16,7 @@ MemberStack.onReady.then(function(member) {
 
 function startFirstFunctions() {
     // Sjekk om lokal nøkkel UserContry er satt
-    if (!localStorage.getItem("UserCountry")) {
+    if (localStorage.getItem("UserCountry")) {
         // Sjekk verdi
         let UserCountry = localStorage.getItem("UserCountry");
 
