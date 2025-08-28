@@ -35,8 +35,10 @@ function startFirstFunctions() {
 
     }else{
         //starte med å hente lokal pososjon
-        checkLocation();
+       // checkLocation();
 
+       //USA
+        checkLocation("8.8.8.8")
 
 
 
@@ -73,13 +75,17 @@ function checkUserCountry(){
     }
 }
 
-async function checkLocation() {
+async function checkLocation(ipOverride) {
+    const url = ipOverride
+      ? `https://ipapi.co/${ipOverride}/json/`
+      : `https://ipapi.co/json/`;
+  
     try {
-      const response = await fetch("https://ipapi.co/json/");
+      const response = await fetch(url);
       const data = await response.json();
   
       const countryCode = data.country; // f.eks. "NO"
-      const euMember = data.in_eu;      // true/false
+      const euMember   = data.in_eu;    // true/false
   
       if (countryCode === "NO") {
         console.log("Brukeren er i Norge");
@@ -91,13 +97,11 @@ async function checkLocation() {
         console.log("Brukeren er utenfor EU og Norge");
         localStorage.setItem("UserCountry", "OTHER");
       }
-
-      startFirstFunctions();
-        
   
+      startFirstFunctions();
     } catch (error) {
       console.error("Kunne ikke hente lokasjon:", error);
-        localStorage.setItem("UserCountry", "OTHER");
-        startFirstFunctions();
+      localStorage.setItem("UserCountry", "OTHER");
+      startFirstFunctions();
     }
   }
