@@ -1,5 +1,36 @@
 var maxGoalDiff = 100; // Standardverdi for maks målforskjell
 
+function startFirstFunctions() {
+    // Sjekk om lokal nøkkel UserContry er satt
+    if (!localStorage.getItem("UserCountry")) {
+        // Sjekk verdi
+        let UserCountry = localStorage.getItem("UserCountry");
+
+        
+        let standardCountry = "NO"; // Sett standard til Norge
+        let klientid = "recCdECitGpKE2O1F" // Sett standard klientid hvis nødvendig
+
+        //Hvis den er EU
+        if (UserCountry === "EU") {
+            standardCountry = "EU";
+            klientid = "recCdECitGpKE2O1F"; // Sett klientid for EU
+        }
+
+       // getTournament(klientid);
+
+    }else{
+        //starte med å hente lokal pososjon
+        checkLocation();
+
+
+
+
+
+    }
+    
+}
+
+
 function getTournament(klientid) {
     var body = airtablebodylistAND({klientid:klientid,archived:0,hidden:0});
     Getlistairtable(baseId,"tblGhVlhWETNvhrWN",body,"getTournamentresponse",true);
@@ -13,10 +44,6 @@ function getTournamentresponse(data){
     //sorter på dato
     listTournament(sortDateArray(tournament,"startdate"));
     goToObjectShareKey();
-
-    //sjekke hvilke land brukeren er i
-    //checkUserCountry();
-    checkLocation();
 
 }
 
@@ -57,14 +84,22 @@ async function checkLocation() {
   
       if (countryCode === "NO") {
         console.log("Brukeren er i Norge");
+        localStorage.setItem("UserCountry", "NO");
       } else if (euMember) {
         console.log("Brukeren er i EU (men ikke Norge)");
+        localStorage.setItem("UserCountry", "EU");
       } else {
         console.log("Brukeren er utenfor EU og Norge");
+        localStorage.setItem("UserCountry", "OTHER");
       }
+
+      startFirstFunctions();
+        
   
     } catch (error) {
       console.error("Kunne ikke hente lokasjon:", error);
+        localStorage.setItem("UserCountry", "OTHER");
+        startFirstFunctions();
     }
   }
   
