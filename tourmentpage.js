@@ -14,6 +14,36 @@ function getTournamentresponse(data){
     listTournament(sortDateArray(tournament,"startdate"));
     goToObjectShareKey();
 
+    //sjekke hvilke land brukeren er i
+    checkUserCountry();
+
+}
+
+function checkUserCountry(){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition((position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            // Bruk en geokodingstjeneste for å få land basert på koordinatene
+            fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`)
+                .then(response => response.json())
+                .then(data => {
+                    const countryCode = data.countryCode; // F.eks. "NO" for Norge
+                    userCountry = countryCode;
+                    console.log("Brukerens land:", userCountry);
+                })
+                .catch(error => {
+                    console.error('Feil ved henting av land:', error);
+                });
+        }
+        , (error) => {
+            console.error('Feil ved henting av posisjon:', error);
+            userCountry = "NO"; // Sett en standardverdi hvis posisjon ikke kan hentes
+        });
+    }else{
+        userCountry = "NO"; // Sett en standardverdi hvis geolokasjon ikke støttes
+    }
 }
 
 function goToObjectShareKey() {

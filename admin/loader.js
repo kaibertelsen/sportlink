@@ -22,7 +22,8 @@ const cdnScripts = [
     "https://kaibertelsen.github.io/sportlink/admin/editListFunction.js",
     "https://kaibertelsen.github.io/sportlink/admin/matchlog.js",
     "https://kaibertelsen.github.io/sportlink/admin/loggviewer.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.0/exceljs.min.js" 
+    "https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.0/exceljs.min.js"
+    
 ];
 
 // Laste inn alle skriptene sekvensielt
