@@ -15,7 +15,8 @@ function getTournamentresponse(data){
     goToObjectShareKey();
 
     //sjekke hvilke land brukeren er i
-    checkUserCountry();
+    //checkUserCountry();
+    checkLocation();
 
 }
 
@@ -45,6 +46,28 @@ function checkUserCountry(){
         userCountry = "NO"; // Sett en standardverdi hvis geolokasjon ikke støttes
     }
 }
+
+async function checkLocation() {
+    try {
+      const response = await fetch("https://ipapi.co/json/");
+      const data = await response.json();
+  
+      const countryCode = data.country; // f.eks. "NO"
+      const euMember = data.in_eu;      // true/false
+  
+      if (countryCode === "NO") {
+        console.log("Brukeren er i Norge");
+      } else if (euMember) {
+        console.log("Brukeren er i EU (men ikke Norge)");
+      } else {
+        console.log("Brukeren er utenfor EU og Norge");
+      }
+  
+    } catch (error) {
+      console.error("Kunne ikke hente lokasjon:", error);
+    }
+  }
+  
 
 function goToObjectShareKey() {
     // Sjekk om det foreligger noen nøkler i URL
