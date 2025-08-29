@@ -208,40 +208,38 @@ function convertMultiResponseData(data) {
     return data.flatMap(samling => samling.map(item => item.fields));
 }
 
-// Lager body for søk der feltet {klientid} er en CSV-liste og vi vil finne en (eller flere) eksakte id-er i den listen.
-// Body for å finne en eksakt klientid inni tekstfeltet {klientid}
-// som kan se slik ut: "recow53F8WZHEh9lS, recCdECitGpKE2O1F"
-function airtableBodyMatchKlientidInText(targetId, extraFilters = {}, options = {}) {
-    if (!targetId) throw new Error("airtableBodyMatchKlientidInText: targetId mangler");
-  
+// Bygger Airtable-body som matcher en (eller flere) klientid-er som token(s)
+// inne i tekstfeltet {klientid}, f.eks. "recAAA, recBBB"
+function airtableBodyKlientidContainsFind(idOrArray, extraFilters = {}, options = {}) {
     const pageSize = options.pageSize ?? 50;
     const offset   = options.offset   ?? 0;
-    const esc = (s) => String(s).replace(/'/g, "\\'");
   
-    // 1) Kjernebetingelse: eksakt token-match mellom komma (og start/slutt)
-    //    Vi fjerner mellomrom i feltet, og matcher (^|,)ID(,|$)
-    const tokenRegex = `(^|,)${esc(targetId)}(,|$)`;
-    const core = `REGEX_MATCH(SUBSTITUTE({klientid}," ",""), '${tokenRegex}')`;
+    const esc = s => String(s).replace(/'/g, "\\'"); // escape '
   
-    // 2) Ekstra AND-betingelser (likhetssjekk på andre felter)
-    const andFilters = Object.entries(extraFilters).map(([key, val]) => {
-      if (typeof val === "string") return `{${key}} = '${esc(val)}'`;
-      return `{${key}} = ${val}`;
-    });
+    const ids = Array.isArray(idOrArray) ? idOrArray.filter(Boolean) : [idOrArray];
+    if (ids.length === 0) throw new Error("airtableBodyKlientidContainsFind: minst én id må oppgis");
   
-    const formula = andFilters.length ? `AND(${[core, ...andFilters].join(", ")})` : core;
+    // Normaliser feltet ved å fjerne mellomrom og pakke inn i komma i begge ender.
+    // Søk etter ",<ID>," for eksakt token-match (unngår del-treff).
+    const normalizedField = `"," & SUBSTITUTE({klientid}," ","") & ","`;
+    const containsParts = ids.map(id =>
+      `FIND("," & '${esc(id)}' & ",", ${normalizedField}) > 0`
+    );
+    const containsClause = containsParts.length === 1
+      ? containsParts[0]
+      : `OR(${containsParts.join(", ")})`;
   
-    return JSON.stringify({
-      formula,
-      pageSize,
-      offset,
-    });
+    // Eventuelle ekstra AND-filtre (likhetsjekk)
+    const andFilters = Object.entries(extraFilters).map(([key, val]) =>
+      typeof val === "string" ? `{${key}} = '${esc(val)}'` : `{${key}} = ${val}`
+    );
+  
+    const allConds = [containsClause, ...andFilters];
+    const formula = allConds.length === 1 ? containsClause : `AND(${allConds.join(", ")})`;
+  
+    return JSON.stringify({ formula, pageSize, offset });
   }
   
-  /*  Alternativ uten regex (om du vil): eksakt token med FIND
-      Matcher ",ID," inne i "," & SUBSTITUTE({klientid}," ","") & ","
-      const core = `FIND("," & '${esc(targetId)}' & ",", "," & SUBSTITUTE({klientid}," ","") & ",") > 0`;
-  */
   
   
 
