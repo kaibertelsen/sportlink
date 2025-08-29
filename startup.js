@@ -37,13 +37,13 @@ function startFirstFunctions() {
 
     }else{
         //starte med å hente lokal pososjon
-       //checkLocation();
+        checkLocation();
 
        //USA
        // checkLocation("8.8.8.8")
 
         //EU
-        checkLocation("91.198.174.192")
+        //checkLocation("91.198.174.192")
 
 
 
