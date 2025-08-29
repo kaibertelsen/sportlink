@@ -155,38 +155,60 @@ async function checkLocation(ipOverride) {
     const on = (el, ev, fn, opts) => el && el.addEventListener(ev, fn, opts);
   
     function ensureStyles() {
-      if ($("#__flag_dropdown_styles")) return;
-      const css = `
-        #__flag_dropdown {
-          position: absolute;
-          margin-top: 8px;
-          min-width: 200px;
-          background: #fff;
-          border: 1px solid #e5e7eb;
-          border-radius: 12px;
-          box-shadow: 0 10px 30px rgba(0,0,0,.08);
-          padding: 6px;
-          z-index: 2147483647;
-        }
-        .__flag_option {
-          display: flex; align-items: center; gap: 10px;
-          padding: 10px 12px; border-radius: 10px; cursor: pointer;
-        }
-        .__flag_option:hover, .__flag_option[aria-selected="true"] { background: #f3f4f6; }
-        .__flag_option img { width: 22px; height: 22px; border-radius: 50%; flex: 0 0 22px; }
-        .__flag_label { font-size: 14px; line-height: 1.2; }
-        #flagcountryicon {
-          cursor: pointer;
-          border-radius: 50%;
-          background-size: cover;
-          background-position: center;
-        }
-      `;
-      const style = document.createElement("style");
-      style.id = "__flag_dropdown_styles";
-      style.textContent = css;
-      document.head.appendChild(style);
-    }
+        if (document.getElementById("__flag_dropdown_styles")) return;
+      
+        const css = `
+          #__flag_dropdown {
+            position: absolute;
+            margin-top: 8px;
+            min-width: 200px;
+            background: #0f172a; /* mørk bakgrunn */
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.4);
+            padding: 6px;
+            z-index: 2147483647;
+            color: #fff; /* hvit tekst */
+            font-family: inherit;
+          }
+          .__flag_option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #fff;
+            transition: background 0.2s;
+          }
+          .__flag_option:hover,
+          .__flag_option[aria-selected="true"] {
+            background: #1e293b; /* litt lysere mørk */
+          }
+          .__flag_option img {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            flex: 0 0 22px;
+          }
+          .__flag_label {
+            font-size: 14px;
+            line-height: 1.2;
+            color: #fff;
+          }
+          #flagcountryicon {
+            cursor: pointer;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+          }
+        `;
+        const style = document.createElement("style");
+        style.id = "__flag_dropdown_styles";
+        style.textContent = css;
+        document.head.appendChild(style);
+      }
+      
   
     function createMenu() {
       const menu = document.createElement("div");
