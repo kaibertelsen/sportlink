@@ -251,12 +251,24 @@ async function checkLocation(ipOverride) {
     }
   
     function positionMenu(menu, trigger) {
-      const rect = trigger.getBoundingClientRect();
-      const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-      menu.style.left = `${rect.left + scrollX}px`;
-      menu.style.top  = `${rect.bottom + scrollY}px`;
-    }
+        const rect = trigger.getBoundingClientRect();
+        const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      
+        const menuWidth = menu.offsetWidth || 200; // fallback
+        const viewportWidth = window.innerWidth;
+      
+        // Standard: under til venstre kant av trigger
+        let left = rect.left + scrollX;
+      
+        // Hvis ikke plass til høyre → skyv til venstre
+        if (left + menuWidth > viewportWidth - 10) {
+          left = rect.right + scrollX - menuWidth;
+        }
+      
+        menu.style.left = `${left}px`;
+        menu.style.top = `${rect.bottom + scrollY}px`;
+      }
   
     function openMenu(trigger, menu) {
       buildMenu(menu, trigger);
