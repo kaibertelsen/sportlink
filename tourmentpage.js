@@ -4,6 +4,8 @@ var maxGoalDiff = 100; // Standardverdi for maks målforskjell
 
 function getTournament(klientid) {
     var body = airtablebodylistAND({klientid:klientid,archived:0,hidden:0});
+    let body_dummy = airtableBodyKlientidContains(klientid, { archived: 0, hidden: 0 });
+    console.log("Airtable body for getTournament:", body_dummy);
     Getlistairtable(baseId,"tblGhVlhWETNvhrWN",body,"getTournamentresponse",true);
 }
 

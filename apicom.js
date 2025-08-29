@@ -208,6 +208,47 @@ function convertMultiResponseData(data) {
     return data.flatMap(samling => samling.map(item => item.fields));
 }
 
+// Lager body for søk der feltet {klientid} er en CSV-liste og vi vil finne en (eller flere) eksakte id-er i den listen.
+function airtableBodyKlientidContains(klientidOrArray, extraFilters = {}, options = {}) {
+    const pageSize = options.pageSize ?? 50;
+    const offset   = options.offset   ?? 0;
+  
+    const esc = (s) => String(s).replace(/'/g, "\\'");
+  
+    // Normaliser input til array
+    const ids = Array.isArray(klientidOrArray) ? klientidOrArray : [klientidOrArray];
+  
+    // Bygg OR(...) med eksakt token-match i CSV:  FIND("," & 'ID' & ",", "," & SUBSTITUTE({klientid}," ","") & ",") > 0
+    const containsParts = ids
+      .filter(Boolean)
+      .map((id) => `FIND("," & '${esc(id)}' & ",", "," & SUBSTITUTE({klientid}," ","") & ",") > 0`);
+  
+    if (containsParts.length === 0) {
+      throw new Error("airtableBodyKlientidContains: minst én klientid må oppgis");
+    }
+  
+    const containsFormula = containsParts.length === 1
+      ? containsParts[0]
+      : `OR(${containsParts.join(", ")})`;
+  
+    // Ekstra AND-betingelser (likhetsjekk)
+    const andFilters = Object.entries(extraFilters).map(([key, val]) => {
+      if (typeof val === "string") return `{${key}} = '${esc(val)}'`;
+      // numbers/booleans/null
+      return `{${key}} = ${val}`;
+    });
+  
+    const allConds = [containsFormula, ...andFilters];
+    const formula = allConds.length === 1 ? containsFormula : `AND(${allConds.join(", ")})`;
+  
+    return JSON.stringify({
+      formula,
+      pageSize,
+      offset,
+    });
+  }
+  
+
 function apireturn(response){
     if(response.success){
      ruteresponse(response.data,response.id);
