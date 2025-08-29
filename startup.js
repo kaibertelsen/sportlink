@@ -36,7 +36,7 @@ function startFirstFunctions() {
         changeFlagg(standardCountry);
         
         getTournament(klientid);
-        clientID = klientid;
+        
 
 
     }else{

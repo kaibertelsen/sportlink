@@ -186,7 +186,7 @@ function onAppResume() {
   if(isInTurnament){
     updateThisTournament(null);
   }else{
-    getTournament(clientID);
+    startFirstFunctions()
   }
 }
 
