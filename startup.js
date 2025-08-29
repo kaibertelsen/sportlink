@@ -33,6 +33,7 @@ function startFirstFunctions() {
        // getTournament(klientid);
         changeFlagg(standardCountry);
         console.log("Har skal den gå videre", standardCountry);
+        getTournament(klientid);
 
 
     }else{

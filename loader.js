@@ -38,7 +38,7 @@ cdnScripts.reduce((promise, script) => {
 }, Promise.resolve()).then(() => {
     console.log("All scripts loaded");
     startFirstFunctions();
-    getTournament("recCdECitGpKE2O1F");
+    //getTournament("recCdECitGpKE2O1F");
     initDayFilterToggle();
     initMatchlistFilter()
 
