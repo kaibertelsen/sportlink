@@ -31,22 +31,42 @@ function startFirstFunctions() {
         }
 
        // getTournament(klientid);
-       console.log("Har skal den gå videre", standardCountry);
+        changeFlagg(standardCountry);
+        console.log("Har skal den gå videre", standardCountry);
+
 
     }else{
         //starte med å hente lokal pososjon
-       // checkLocation();
+       checkLocation();
 
        //USA
         //checkLocation("8.8.8.8")
 
         //EU
-        checkLocation("91.198.174.192")
+        //checkLocation("91.198.174.192")
 
 
 
     }
     
+}
+
+function changeFlagg(countryCode){
+    const flagElement = document.getElementById("flagcountryicon");
+    if(flagElement){
+
+        let urlFlag = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/68b03d127a60db315ee22298_round-flag-norway-.png";
+        //Norsk flagg url
+        if(countryCode === "NO"){
+            urlFlag = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/68b03d127a60db315ee22298_round-flag-norway-.png";
+        }else if(countryCode === "EU"){
+            urlFlag = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/68b19604a36f1122cb814a54_round-flag-eu-.png";
+        }
+
+        flagElement.src = urlFlag;
+        flagElement.alt = countryCode + " flag";
+
+    }
 }
 
 
