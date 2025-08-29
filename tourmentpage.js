@@ -6,7 +6,7 @@ function getTournament(klientid) {
     var body = airtablebodylistAND({klientid:klientid,archived:0,hidden:0});
     let body_dummy = airtableBodyKlientidContainsFind(klientid, { archived: 0, hidden: 0 });
     console.log("Airtable body for getTournament:", body_dummy);
-    Getlistairtable(baseId,"tblGhVlhWETNvhrWN",body_dummy,"getTournamentresponse",true);
+    Getlistairtable(baseId,"tblGhVlhWETNvhrWN",body,"getTournamentresponse",true);
 }
 
 function getTournamentresponse(data){
