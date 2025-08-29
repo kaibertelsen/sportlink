@@ -28,12 +28,15 @@ function startFirstFunctions() {
         if (UserCountry === "EU") {
             standardCountry = "EU";
             klientid = "recow53F8WZHEh9lS"; // Sett klientid for EU
+            
         }
 
-       // getTournament(klientid);
+       
+       
         changeFlagg(standardCountry);
-        console.log("Har skal den gå videre", standardCountry);
+        
         getTournament(klientid);
+        clientID = klientid;
 
 
     }else{
