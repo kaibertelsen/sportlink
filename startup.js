@@ -52,22 +52,26 @@ function startFirstFunctions() {
 }
 
 function changeFlagg(countryCode){
-    const flagElement = document.getElementById("flagcountryicon");
-    if(flagElement){
-
-        let urlFlag = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/68b03d127a60db315ee22298_round-flag-norway-.png";
-        //Norsk flagg url
-        if(countryCode === "NO"){
-            urlFlag = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/68b03d127a60db315ee22298_round-flag-norway-.png";
-        }else if(countryCode === "EU"){
-            urlFlag = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/68b19604a36f1122cb814a54_round-flag-eu-.png";
-        }
-
-        flagElement.src = urlFlag;
-        flagElement.alt = countryCode + " flag";
-
+    const el = document.getElementById("flagcountryicon");
+    if(!el) return;
+  
+    const code = (countryCode || "NO").toUpperCase().trim();
+    const urls = {
+      NO: "https://cdn.prod.website-files.com/66f547dd445606c275070efb/68b03d127a60db315ee22298_round-flag-norway-.png",
+      EU: "https://cdn.prod.website-files.com/66f547dd445606c275070efb/68b19604a36f1122cb814a54_round-flag-eu-.png"
+    };
+    const url = urls[code] || urls.NO;
+  
+    if (el.tagName === "IMG") {
+      el.src = url;
+      el.alt = code + " flag";
+    } else {
+      // div: bruk bakgrunnsbilde + a11y-attributter
+      el.style.backgroundImage = `url("${url}")`;
+      el.setAttribute("role", "img");
+      el.setAttribute("aria-label", code + " flag");
     }
-}
+  }
 
 
 function checkUserCountry(){
