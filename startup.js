@@ -27,7 +27,7 @@ function startFirstFunctions() {
         //Hvis den er EU
         if (UserCountry === "EU") {
             standardCountry = "EU";
-            klientid = "recCdECitGpKE2O1F"; // Sett klientid for EU
+            klientid = "recow53F8WZHEh9lS"; // Sett klientid for EU
         }
 
        // getTournament(klientid);
