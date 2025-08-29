@@ -208,20 +208,30 @@ function convertMultiResponseData(data) {
     return data.flatMap(samling => samling.map(item => item.fields));
 }
 
-// Bygger Airtable-body som matcher en (eller flere) klientid-er som token(s)
-// inne i tekstfeltet {klientid}, f.eks. "recAAA, recBBB"
-function airtableBodyKlientidContainsFind(idOrArray, extraFilters = {}, options = {}) {
+// Bygger Airtable-body som matcher én/flere eksakte ID-er inne i {klientid},
+// selv om feltet er lookup/linked (ARRAYJOIN) og inneholder komma + mellomrom.
+function airtableBodyKlientidFind(idOrArray, extraFilters = {}, options = {}) {
     const pageSize = options.pageSize ?? 50;
-    const offset   = options.offset   ?? 0;
-  
-    const esc = s => String(s).replace(/'/g, "\\'"); // escape '
-  
+    const offset   = options.offset ?? 0;
     const ids = Array.isArray(idOrArray) ? idOrArray.filter(Boolean) : [idOrArray];
-    if (ids.length === 0) throw new Error("airtableBodyKlientidContainsFind: minst én id må oppgis");
   
-    // Normaliser feltet ved å fjerne mellomrom og pakke inn i komma i begge ender.
-    // Søk etter ",<ID>," for eksakt token-match (unngår del-treff).
-    const normalizedField = `"," & SUBSTITUTE({klientid}," ","") & ","`;
+    if (ids.length === 0) throw new Error("airtableBodyKlientidFind: minst én id må oppgis");
+  
+    const esc = s => String(s).replace(/'/g, "\\'");
+  
+    // Normaliser felt: join -> fjern space, NBSP og linjeskift -> wrap i komma
+    // NBSP i strengen under er U+00A0 (ser ut som et blankt mellomrom).
+    const normalizedField =
+      `"," & ` +
+      `SUBSTITUTE(` +
+        `SUBSTITUTE(` +
+          `SUBSTITUTE(ARRAYJOIN({klientid}, ","), " ", ""),` +
+          `" ", ""` +                    // NBSP
+        `), ` +
+        `"\n", ""` +                    // line feed
+      `) & ","`;
+  
+    // Lag OR(...) over alle id-er
     const containsParts = ids.map(id =>
       `FIND("," & '${esc(id)}' & ",", ${normalizedField}) > 0`
     );
@@ -229,16 +239,18 @@ function airtableBodyKlientidContainsFind(idOrArray, extraFilters = {}, options 
       ? containsParts[0]
       : `OR(${containsParts.join(", ")})`;
   
-    // Eventuelle ekstra AND-filtre (likhetsjekk)
-    const andFilters = Object.entries(extraFilters).map(([key, val]) =>
-      typeof val === "string" ? `{${key}} = '${esc(val)}'` : `{${key}} = ${val}`
+    // Ekstra AND-filtre (likhet)
+    const andFilters = Object.entries(extraFilters).map(([k, v]) =>
+      typeof v === "string" ? `{${k}} = '${esc(v)}'` : `{${k}} = ${v}`
     );
   
-    const allConds = [containsClause, ...andFilters];
-    const formula = allConds.length === 1 ? containsClause : `AND(${allConds.join(", ")})`;
+    const formula = andFilters.length
+      ? `AND(${[containsClause, ...andFilters].join(", ")})`
+      : containsClause;
   
     return JSON.stringify({ formula, pageSize, offset });
   }
+  
   
   
   
