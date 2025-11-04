@@ -79,8 +79,8 @@ function startUpAdmin(){
 function responsUserdata(data) {
     
 
-    if (data.fields?.klientId) {
-        let klients = data.fields.klientId;
+    if (data.fields?.klientid) {
+        let klients = data.fields.klientid;
 
         // sjekk om klients er et array og har mer enn ett objekt
         if (Array.isArray(klients) && klients.length > 0) {
