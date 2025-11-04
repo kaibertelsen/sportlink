@@ -41,6 +41,8 @@ function ruteresponse(data,id){
         responseLogDelete(data);
     }else if(id == "newPlayerresponse"){
         newPlayerresponse(data);
+    }else if(id == "responsUserdata"){
+        responsUserdata(data);
     }
     
 

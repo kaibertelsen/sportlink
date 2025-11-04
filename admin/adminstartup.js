@@ -69,10 +69,39 @@ document.getElementById("tournamenttabbuttonHeader").addEventListener("click", f
 
 function startUpAdmin(){
 
+    //finne ut hvilke gruppe/ land brukeren er i
     if(isLoggedIn){
-    GETairtable(baseId,"tblbg3RRnKTDBaoeP","recCdECitGpKE2O1F","responsklient")
-    document.getElementById("tournamentinfopage").style.display = "none";
+        let userid = memberData.airtable;
+        GETairtable(baseId,"tbloP9XOP0eWMT9XH",userid,"responsUserdata")
     }
+}
+
+function responsUserdata(data) {
+    
+
+    if (data.fields?.klientId) {
+        let klients = data.fields.klientId;
+
+        // sjekk om klients er et array og har mer enn ett objekt
+        if (Array.isArray(klients) && klients.length > 0) {
+            klientId = klients[0]; // hent første objekt
+        } else {
+            klientId = klients; // hvis det ikke er et array, bruk verdien direkte
+        }
+    }
+
+    downloadKlient(klientId);
+  
+   
+}
+
+
+
+function downloadKlient(kid){
+
+    GETairtable(baseId,"tblbg3RRnKTDBaoeP",kid,"responsklient")
+    document.getElementById("tournamentinfopage").style.display = "none";
+
 }
 
 function responsklient(data){
