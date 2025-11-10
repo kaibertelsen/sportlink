@@ -320,8 +320,8 @@ function viewMatch(match) {
             if (t1p && t1p.textContent !== t1txt) t1p.textContent = t1txt;
             if (t2p && t2p.textContent !== t2txt) t2p.textContent = t2txt;
           } else {
-            const notEnd = resultrapp.querySelector(".notendplaymatch");
-            if (notEnd && notEnd.style.display !== "none") notEnd.style.display = "none";
+            const notEnd2 = resultrapp.querySelector(".notendplaymatch");
+            if (notEnd2 && notEnd2.style.display !== "none") notEnd2.style.display = "none";
           }
         } else {
           if (resultrapp.style.display !== "none") resultrapp.style.display = "none";
@@ -451,7 +451,7 @@ function createICSFile(icon, match) {
         const hours = String(date.getUTCHours()).padStart(2, '0');
         const minutes = String(date.getUTCMinutes()).padStart(2, '0');
         const seconds = String(date.getUTCSeconds()).padStart(2, '0');
-        return `${year}${month}${day}T${hours}${minutes}${seconds}Z";
+        return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
     };
 
     const start = formatDate(startDate);
@@ -460,26 +460,26 @@ function createICSFile(icon, match) {
     const location = match.location || "";
     const description = match.tournament || "Kamp";
 
-    const icsContent = \`
+    const icsContent = `
 BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Your App//NONSGML v1.0//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 BEGIN:VEVENT
-UID:\${Date.now()}@yourapp.com
-DTSTAMP:\${start}
-DTSTART:\${start}
-DTEND:\${end}
-SUMMARY:\${eventTitle}
-LOCATION:\${location}
-DESCRIPTION:\${description}
+UID:${Date.now()}@yourapp.com
+DTSTAMP:${start}
+DTSTART:${start}
+DTEND:${end}
+SUMMARY:${eventTitle}
+LOCATION:${location}
+DESCRIPTION:${description}
 STATUS:CONFIRMED
 SEQUENCE:0
 TRANSP:OPAQUE
 END:VEVENT
 END:VCALENDAR
-\`.trim();
+`.trim();
 
     const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
     const url = URL.createObjectURL(blob);
@@ -504,7 +504,7 @@ function adjustMatchContainer() {
         let paddingTop = headerHeight - safeAreaInsetTop;
         if (paddingTop < 150) paddingTop = 150;
 
-        swipeContainer.style.paddingTop = \`\${paddingTop}px\`;
+        swipeContainer.style.paddingTop = `${paddingTop}px`;
     }
 }
 
@@ -940,7 +940,6 @@ function loadDayfilter(data) {
     const dateSet = new Set();
     (data || []).forEach(match => {
         if (!match.time) return;
-        // unngå kostbar toISOString() → vi trenger kun YYYY-MM-DD
         const dateOnly = attx_isoDateKey(match.time);
         dateSet.add(dateOnly);
     });
@@ -1086,38 +1085,18 @@ function initDayFilterToggle() {
       }
     };
 
+    // Add passive for touchstart to avoid Chrome violation
     document.addEventListener('click', handleOutsideInteraction);
     document.addEventListener('mousedown', handleOutsideInteraction);
-    document.addEventListener('touchstart', handleOutsideInteraction);
+    document.addEventListener('touchstart', handleOutsideInteraction, { passive: true });
 }
 
-function initMatchlistFilter() {
-    const filterButtons = document.querySelectorAll('#matchlistFilter .matchlist-tab');
-
-    let isInitialSetup = true;
-
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-
-        if (!isInitialSetup) {
-          listmatch(matches);
-        }
-      });
-    });
-
-    setTimeout(() => {
-      isInitialSetup = false;
-    }, 0);
-}
-
-function resetMatchlistFilter() {
-    const filterButtons = document.querySelectorAll('#matchlistFilter .matchlist-tab');
-    const allButton = document.querySelector('#matchlistFilter .matchlist-tab[data-filter="all"]');
-
-    if (!allButton) return;
-
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    allButton.classList.add('active');
-}
+// Ensure these functions are globally visible for other scripts that call them
+window.loadDayfilter = loadDayfilter;
+window.initDayFilterToggle = initDayFilterToggle;
+window.listmatch = listmatch;
+window.viewMatch = viewMatch;
+window.getMatch = getMatch;
+window.getMatchresponse = getMatchresponse;
+window.resetMatchlistFilter = resetMatchlistFilter;
+window.initMatchlistFilter = initMatchlistFilter;
