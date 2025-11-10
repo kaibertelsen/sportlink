@@ -209,6 +209,7 @@ function listLogForMatch(match, rowelement,admin) {
   }
 */
 
+
 function listLogForMatch(match, rowelement, admin) {
   // Hent nødvendige noder (med guards)
   const list = rowelement?.querySelector('.matchloglist');
