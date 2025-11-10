@@ -216,7 +216,7 @@ function locationSelectorInMatchlistChange(matches, matchlist, matchholder, sele
     // Kall funksjonen makeMatchInMatchHolder med de filtrerte kampene
     makeMatchInMatchHolder(filteredMatches, matchlist, matchholder);
 }
-
+/*
 function viewMatch(match){
     activematch = match;
 
@@ -401,14 +401,7 @@ function viewMatch(match){
 
             streaming.querySelector(".streaminginfo").textContent = "Sendes "+formatdatetoDateAndTime(match.time);
             streaming.style.display = "block";
-            /*
-            const iframe = document.getElementById('youtube-iframe');
-            const url = new URL(shortURL);
-            const videoID = url.pathname.split('/')[1]; // Henter video-ID fra path
-            // Sett ny src for iframe med riktig embed URL
-            const embedURL = `https://www.youtube.com/embed/${videoID}`;
-            iframe.src = embedURL;
-            */
+
         } else {
 
             streaming.style.display = "none";
@@ -462,7 +455,304 @@ function viewMatch(match){
 
 
 }
+*/
 
+function viewMatch(match) {
+    activematch = match;
+  
+    // Kjør container-justering *etter* vi har malt første frame
+    setTimeout(adjustMatchContainer, 500);
+  
+    const header = document.getElementById("headerwrappermatch");
+    if (!header) return;
+  
+    // Cache ofte brukte elementer én gang
+    const $h = (sel) => header.querySelector(sel);
+    const headerTeam1 = $h(".team1");
+    const headerTeam2 = $h(".team2");
+    const headerLogo1 = $h(".logoteam1");
+    const headerLogo2 = $h(".logoteam2");
+    const resultLabel = $h(".resultlablemacth");
+    const divisionLabel = $h(".divisionlablematch");
+    const endplayLabel = $h(".endplaylablematch");
+    const team1button = $h(".team1button");
+    const team2button = $h(".team2button");
+    const tournamentNameEl = $h(".turnamentname");
+  
+    const emptyLogo = "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png";
+  
+    // Forbered verdier (minimer DOM-arbeid før vi skriver)
+    const team1Name = match.team1name || match.placeholderteam1 || "-";
+    const team2Name = match.team2name || match.placeholderteam2 || "-";
+  
+    let matchIsPlayed = false;
+    let resultText = "";
+    let resultWeight = "normal";
+    let resultColor = "white";
+  
+    if ((match.goalteam1 === "" || match.goalteam1 === null) ||
+        (match.goalteam2 === "" || match.goalteam2 === null)) {
+      if (match?.onlyday) {
+        resultText = "";
+      } else {
+        resultText = formatdatetoTime(match.time);
+      }
+    } else {
+      resultText = `${match.goalteam1} - ${match.goalteam2}`;
+      resultWeight = "bold";
+      resultColor = mapColors("main");
+      matchIsPlayed = true;
+    }
+  
+    const divisionText = `${match.divisionname || ""} ${match.groupname ? `- ${match.groupname}` : ""}`.trim();
+    const hasDivision = Boolean(match?.divisionname);
+  
+    const matchTypeMap = {
+      "round2":"Runde 2 kamper",
+      "placementfinale":"Plasserings kamp",
+      "eighthfinale": "8-delsfinale",
+      "quarterfinale": "Kvartfinale",
+      "semifinale": "Semifinale",
+      "bronzefinale": "Bronsefinale",
+      "finale": "Finale"
+    };
+    const hasEndplay = Boolean(match.typematch);
+    const endplayText = hasEndplay
+      ? `${match.endplay || ""}<br>${matchTypeMap[match.typematch] || "Ukjent sluttspill"}`
+      : "";
+  
+    const matchsettholder = document.getElementById("thismatchsett");
+    const setValues = [match.settaa, match.settab, match.settba, match.settbb, match.settca, match.settcb];
+    const setsAvailable = setValues.some(v => v != null && String(v).trim() !== "");
+  
+    const matchinfo = document.getElementById("thismatchinfo");
+    const resultrapp = matchinfo ? matchinfo.querySelector(".resultrapp") : null;
+  
+    const streaming = document.getElementById("streaminggroup");
+    const fieldmap = document.getElementById("fieldmapwrapper");
+  
+    // Batch DOM-skriving i én frame
+    requestAnimationFrame(() => {
+      // Header
+      if (headerTeam1 && headerTeam1.textContent !== team1Name) headerTeam1.textContent = team1Name;
+      if (headerTeam2 && headerTeam2.textContent !== team2Name) headerTeam2.textContent = team2Name;
+  
+      if (headerLogo1) headerLogo1.src = match.team1clublogo || emptyLogo;
+      if (headerLogo2) headerLogo2.src = match.team2clublogo || emptyLogo;
+  
+      if (resultLabel) {
+        if (resultLabel.textContent !== resultText) resultLabel.textContent = resultText;
+        if (resultLabel.style.fontWeight !== resultWeight) resultLabel.style.fontWeight = resultWeight;
+        if (resultLabel.style.color !== resultColor) resultLabel.style.color = resultColor;
+      }
+  
+      if (divisionLabel) {
+        const display = hasDivision ? "block" : "none";
+        if (divisionLabel.style.display !== display) divisionLabel.style.display = display;
+        const txt = hasDivision ? divisionText : "";
+        if (divisionLabel.textContent !== txt) divisionLabel.textContent = txt;
+      }
+  
+      if (endplayLabel) {
+        const display = hasEndplay ? "block" : "none";
+        if (endplayLabel.style.display !== display) endplayLabel.style.display = display;
+        if (hasEndplay && endplayLabel.innerHTML !== endplayText) {
+          endplayLabel.innerHTML = endplayText;
+        }
+      }
+  
+      // Team-knapper (rebind er billig, men vi gjør det når vi faktisk viser)
+      if (team1button) {
+        team1button.onclick = function () {
+          const team1 = teams.find(t => t.airtable === match.team1);
+          if (team1) { previouspage = "match"; viewteam(team1); }
+        };
+      }
+      if (team2button) {
+        team2button.onclick = function () {
+          const team2 = teams.find(t => t.airtable === match.team2);
+          if (team2) { previouspage = "match"; viewteam(team2); }
+        };
+      }
+  
+      if (tournamentNameEl && tournamentNameEl.textContent !== (match.tournamentname || "")) {
+        tournamentNameEl.textContent = match.tournamentname || "";
+      }
+  
+      // Sett (minimer DOM-arbeid)
+      if (matchsettholder) {
+        const set = (cls, val) => {
+          const el = matchsettholder.querySelector(cls);
+          if (el) { const v = val || "-"; if (el.textContent !== v) el.textContent = v; }
+        };
+        set(".settaa", match.settaa);
+        set(".settab", match.settab);
+        set(".settba", match.settba);
+        set(".settbb", match.settbb);
+        set(".settca", match.settca);
+        set(".settcb", match.settcb);
+  
+        const display = setsAvailable ? "block" : "none";
+        if (matchsettholder.style.display !== display) matchsettholder.style.display = display;
+      }
+  
+      // Result-app (kun når spilt)
+      if (resultrapp) {
+        if (matchIsPlayed) {
+          if (resultrapp.style.display !== "block") resultrapp.style.display = "block";
+          let description = "Kampen er ferdig";
+          if (match.overtime) description = "Kampen ble avgjort på overtid ⌛️";
+          else if (match.shootout) description = "Kampen ble avgjort på straffekonkuranse";
+  
+          const md = resultrapp.querySelector(".matchdescription");
+          if (md && md.textContent !== description) md.textContent = description;
+  
+          const notEnd = resultrapp.querySelector(".notendplaymatch");
+          if (!match.typematch) {
+            if (notEnd && notEnd.style.display !== "block") notEnd.style.display = "block";
+  
+            const logo1 = resultrapp.querySelector(".team1logo");
+            const logo2 = resultrapp.querySelector(".team2logo");
+            if (logo1) logo1.src = match.team1clublogo || emptyLogo;
+            if (logo2) logo2.src = match.team2clublogo || emptyLogo;
+  
+            const points = pointGenerator(match.goalteam1, match.goalteam2, match.overtime, match.shootout, activetournament.sport[0]) || {};
+            const t1p = resultrapp.querySelector(".team1points");
+            const t2p = resultrapp.querySelector(".team2points");
+            const t1txt = `${points?.team1point} poeng til ${match.team1name}`;
+            const t2txt = `${points?.team2point} poeng til ${match.team2name}`;
+            if (t1p && t1p.textContent !== t1txt) t1p.textContent = t1txt;
+            if (t2p && t2p.textContent !== t2txt) t2p.textContent = t2txt;
+          } else {
+            if (notEnd && notEnd.style.display !== "none") notEnd.style.display = "none";
+          }
+        } else {
+          if (resultrapp.style.display !== "none") resultrapp.style.display = "none";
+        }
+      }
+  
+      // Matchinfo
+      if (matchinfo) {
+        const updateTextContent = (selector, value) => {
+          const element = matchinfo.querySelector(selector);
+          if (!element) return;
+          const show = value != null && String(value).trim() !== "";
+          if (show) {
+            if (element.textContent !== value) element.textContent = value;
+            if (element.parentElement && element.parentElement.style.display !== "block") {
+              element.parentElement.style.display = "block";
+            }
+          } else if (element.parentElement && element.parentElement.style.display !== "none") {
+            element.parentElement.style.display = "none";
+          }
+        };
+  
+        updateTextContent(".field", "Bane: " + (match.fieldname || ""));
+        updateTextContent(".refereename", match.refereename || "");
+  
+        const timeelement = matchinfo.querySelector(".datetime");
+        if (timeelement) {
+          const timeText = match?.onlyday
+            ? formatdatetoOnlyDate(match.time)
+            : formatdatetoDateAndTime(match.time);
+          if (timeelement.textContent !== timeText) timeelement.textContent = timeText;
+        }
+  
+        const calendeicon = matchinfo.querySelector(".calendeicon");
+        if (calendeicon) createICSFile(calendeicon, match);
+  
+        const locationElement = matchinfo.querySelector(".location");
+        if (locationElement && locationElement.parentElement) {
+          if (match?.fieldlocation) {
+            if (locationElement.parentElement.style.display !== "block") locationElement.parentElement.style.display = "block";
+            const href = match.fieldlocation;
+            // Unngå innerHTML-parsing hver gang dersom mulig
+            const existingA = locationElement.querySelector("a");
+            const label = "Trykk her for veibeskrivelse";
+            if (existingA) {
+              if (existingA.getAttribute("href") !== href) existingA.setAttribute("href", href);
+              if (existingA.textContent !== label) existingA.textContent = label;
+              existingA.style.color = "white";
+              existingA.target = "_blank";
+              existingA.rel = "noopener noreferrer";
+            } else {
+              locationElement.innerHTML = `<a href="${href}" target="_blank" rel="noopener noreferrer" style="color: white;">${label}</a>`;
+            }
+          } else if (match?.location) {
+            if (locationElement.parentElement.style.display !== "block") locationElement.parentElement.style.display = "block";
+            if (locationElement.textContent !== match.location) locationElement.textContent = match.location;
+          } else {
+            if (locationElement.textContent !== "") locationElement.textContent = "";
+            if (locationElement.parentElement.style.display !== "none") locationElement.parentElement.style.display = "none";
+          }
+        }
+      }
+  
+      // Streaming
+      if (streaming) {
+        if (match?.streaminglink) {
+          const info = streaming.querySelector(".streaminginfo");
+          const txt = "Sendes " + formatdatetoDateAndTime(match.time);
+          if (info && info.textContent !== txt) info.textContent = txt;
+          if (streaming.style.display !== "block") streaming.style.display = "block";
+        } else {
+          if (streaming.style.display !== "none") streaming.style.display = "none";
+        }
+      }
+  
+      // Banekart
+      if (fieldmap) {
+        if (match?.fieldimage) {
+          if (fieldmap.style.display !== "block") fieldmap.style.display = "block";
+          const nameEl = fieldmap.querySelector(".fieldname");
+          const imgEl = fieldmap.querySelector(".fieldimage");
+          if (nameEl && nameEl.textContent !== (match.fieldname || "")) nameEl.textContent = match.fieldname || "";
+          if (imgEl) imgEl.src = match.fieldimage;
+        } else {
+          if (fieldmap.style.display !== "none") fieldmap.style.display = "none";
+        }
+      }
+  
+      // Bytt til match-tab NÅR første frame er klar (mindre jank)
+      const tabBtn = document.getElementById("thismatchtabbutton");
+      if (tabBtn) tabBtn.click();
+  
+      // --- UTSETT tunge ting til neste frame for å holde UI responsivt ---
+      requestAnimationFrame(() => {
+        const matchlogConteinerviewer = document.getElementById("matchlogConteinerviewer");
+        const infomaxGoalDiff = document.getElementById("infomaxGoalDiff");
+        if (infomaxGoalDiff) {
+          infomaxGoalDiff.style.display = "none";
+          infomaxGoalDiff.textContent = "";
+        }
+  
+        // Denne kan være tung – kjør etter første paint
+        const resultOfLog = listLogForMatch(match, matchlogConteinerviewer, false) || {
+          goalteam1: 0, goalteam2: 0
+        };
+  
+        // Måldiff-begrensning (billig, men vi gjør det sammen med loggen)
+        const g1raw = Number(resultOfLog.goalteam1) || 0;
+        const g2raw = Number(resultOfLog.goalteam2) || 0;
+        const diff = Math.abs(g1raw - g2raw);
+  
+        if (typeof maxGoalDiff === "number" && Number.isFinite(maxGoalDiff) && diff > maxGoalDiff) {
+          if (infomaxGoalDiff) {
+            infomaxGoalDiff.style.display = "block";
+            infomaxGoalDiff.textContent = `Resultatet for denne kampen er justert til maks ${maxGoalDiff} mål i forskjell!`;
+            infomaxGoalDiff.style.fontWeight = "bold";
+            infomaxGoalDiff.style.color = "red";
+          }
+          // Merk: selve visningen av score justeres i loggen via teksten (du beholdt original logikk)
+        } else if (infomaxGoalDiff) {
+          infomaxGoalDiff.style.display = "none";
+          infomaxGoalDiff.textContent = "";
+          infomaxGoalDiff.style.color = "";
+        }
+      });
+    });
+  }
+  
 function createICSFile(icon, match) {
     const startDate = new Date(match.time);
     const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 time varighet
