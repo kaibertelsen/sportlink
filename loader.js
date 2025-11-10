@@ -17,7 +17,7 @@ const cdnScripts = [
     "https://kaibertelsen.github.io/sportlink/apicom.js",
     "https://kaibertelsen.github.io/sportlink/listgenerator.js",
     "https://kaibertelsen.github.io/sportlink/globalfunctions.js",
-    "https://kaibertelsen.github.io/sportlink/listmatch-optimized.js",
+    "https://kaibertelsen.github.io/sportlink/listmatch.js",
     "https://kaibertelsen.github.io/sportlink/endplay.js",
     "https://kaibertelsen.github.io/sportlink/tourmentpage.js",
     "https://kaibertelsen.github.io/sportlink/ruteresponse.js",
