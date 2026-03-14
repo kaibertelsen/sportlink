@@ -167,6 +167,7 @@ function controllTeam(data) {
 function controllMatch(data1, data2) {
     const validMatchTypes = ["round2","placementfinale","eighthfinale", "quarterfinale", "semifinale","bronzefinale", "finale"];
     const validatedMatches = [];
+    const hiddenTimeCounters = {};
 
     
     // Sjekk om det er noen kamper med Dagvisning
@@ -174,9 +175,11 @@ function controllMatch(data1, data2) {
     // Kontroll for Kamper-arket (data1)
     data1.forEach((match, index) => {
         const lineNumber = index + 1; // Linjenummer for Kamper-arket
+        if (isEmptyImportRow(match)) return;
 
         const hasTime = Boolean(match.Klokkeslett && match.Klokkeslett.toString().trim());
-        const timeLabel = (match.Timelable || match.Tekst || "").trim();
+        const timeLabel = getImportedTimeLabel(match);
+        const importClock = getImportClock(match, hasTime, hiddenTimeCounters);
         let dayonly = !hasTime;
         if (match.Dagvisning) {
           const val = match.Dagvisning.toString().toUpperCase();
@@ -221,7 +224,7 @@ function controllMatch(data1, data2) {
 
         // Omdøp nøkler
         validatedMatches.push({
-            time:parseDateSmart(match.Dato, match.Klokkeslett),
+            time: match.Dato ? parseDateSmart(match.Dato, importClock) : null,
             divisionname: match.Divisjon || "",
             groupname: match.Gruppe || "",
             team1name: match.Lag1 || "",
@@ -238,9 +241,11 @@ function controllMatch(data1, data2) {
     // Kontroll for Finalekamper-arket (data2)
     data2.forEach((match, index) => {
         const lineNumber = index + 1; // Linjenummer for Finalekamper-arket
+        if (isEmptyImportRow(match)) return;
 
         const hasTime = Boolean(match.Klokkeslett && match.Klokkeslett.toString().trim());
-        const timeLabel = (match.Timelable || match.Tekst || "").trim();
+        const timeLabel = getImportedTimeLabel(match);
+        const importClock = getImportClock(match, hasTime, hiddenTimeCounters);
         let dayonly = !hasTime;
         if (match.Dagvisning) {
         const val = match.Dagvisning.toString().toUpperCase();
@@ -294,7 +299,7 @@ function controllMatch(data1, data2) {
         
         // Omdøp nøkler
         validatedMatches.push({
-            time:parseDateSmart(match.Dato, match.Klokkeslett),
+            time: match.Dato ? parseDateSmart(match.Dato, importClock) : null,
             divisionname: match.Divisjon || "",
             groupname: match.Gruppe || "",
             team1name: match.Lag1 || "",
@@ -313,6 +318,28 @@ function controllMatch(data1, data2) {
     });
 
     return validatedMatches;
+}
+
+function getImportedTimeLabel(match) {
+    return String(match.Timelable || match.Tekst || "").trim();
+}
+
+function isEmptyImportRow(row) {
+    return !Object.values(row).some(value => String(value || "").trim());
+}
+
+function getImportClock(match, hasTime, hiddenTimeCounters) {
+    if (hasTime) {
+        return match.Klokkeslett;
+    }
+
+    const dateKey = String(match.Dato || "").trim();
+    const nextMinute = hiddenTimeCounters[dateKey] || 0;
+    hiddenTimeCounters[dateKey] = nextMinute + 1;
+
+    const hours = String(Math.floor(nextMinute / 60)).padStart(2, "0");
+    const minutes = String(nextMinute % 60).padStart(2, "0");
+    return `${hours}:${minutes}`;
 }
 
 function parseDateSmart(dato, klokke) {
