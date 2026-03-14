@@ -1,4 +1,4 @@
-
+//importmodul.js
 function importedData(data){
     importMessage = [];
     iTurnament = controllTurnament(convertImportDataTurnament(data.Turnering));

@@ -175,14 +175,18 @@ function controllMatch(data1, data2) {
     data1.forEach((match, index) => {
         const lineNumber = index + 1; // Linjenummer for Kamper-arket
 
-        let dayonly = false;
+        const hasTime = Boolean(match.Klokkeslett && match.Klokkeslett.toString().trim());
+        let dayonly = !hasTime;
         if (match.Dagvisning) {
           const val = match.Dagvisning.toString().toUpperCase();
           dayonly = ["SANN", "TRUE", "JA", "1"].includes(val);
         }
+        if (!hasTime) {
+          dayonly = true;
+        }
         
         // Sjekk at nødvendige felter er fylt ut
-        if (!match.Dato || (!match.Klokkeslett && dayonly === false)) {
+        if (!match.Dato || (!hasTime && dayonly === false)) {
           importMessage.push(`Feil på linje ${lineNumber}: Kamper-arket mangler dato eller klokkeslett.`);
         }
 
@@ -231,14 +235,18 @@ function controllMatch(data1, data2) {
     data2.forEach((match, index) => {
         const lineNumber = index + 1; // Linjenummer for Finalekamper-arket
 
-        let dayonly = false;
+        const hasTime = Boolean(match.Klokkeslett && match.Klokkeslett.toString().trim());
+        let dayonly = !hasTime;
         if (match.Dagvisning) {
         const val = match.Dagvisning.toString().toUpperCase();
         dayonly = ["SANN", "TRUE", "JA", "1"].includes(val);
         }
+        if (!hasTime) {
+        dayonly = true;
+        }
 
         // Sjekk at nødvendige felter er fylt ut
-        if (!match.Dato || (!match.Klokkeslett && dayonly === false)) {
+        if (!match.Dato || (!hasTime && dayonly === false)) {
         importMessage.push(`Feil på linje ${lineNumber}: Kamper-arket mangler dato eller klokkeslett.`);
         }
 
