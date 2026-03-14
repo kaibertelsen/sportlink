@@ -176,12 +176,16 @@ function controllMatch(data1, data2) {
         const lineNumber = index + 1; // Linjenummer for Kamper-arket
 
         const hasTime = Boolean(match.Klokkeslett && match.Klokkeslett.toString().trim());
+        const timeLabel = (match.Timelable || match.Tekst || "").trim();
         let dayonly = !hasTime;
         if (match.Dagvisning) {
           const val = match.Dagvisning.toString().toUpperCase();
           dayonly = ["SANN", "TRUE", "JA", "1"].includes(val);
         }
         if (!hasTime) {
+          dayonly = true;
+        }
+        if (timeLabel) {
           dayonly = true;
         }
         
@@ -225,7 +229,7 @@ function controllMatch(data1, data2) {
             fieldname: match.Bane || "",
             location: match.Plassering || "",
             refereename: match.Dommer || "",
-            timelable:match.Tekst || "",
+            timelable: timeLabel,
             onlyday:dayonly
           });
           
@@ -236,12 +240,16 @@ function controllMatch(data1, data2) {
         const lineNumber = index + 1; // Linjenummer for Finalekamper-arket
 
         const hasTime = Boolean(match.Klokkeslett && match.Klokkeslett.toString().trim());
+        const timeLabel = (match.Timelable || match.Tekst || "").trim();
         let dayonly = !hasTime;
         if (match.Dagvisning) {
         const val = match.Dagvisning.toString().toUpperCase();
         dayonly = ["SANN", "TRUE", "JA", "1"].includes(val);
         }
         if (!hasTime) {
+        dayonly = true;
+        }
+        if (timeLabel) {
         dayonly = true;
         }
 
@@ -299,7 +307,7 @@ function controllMatch(data1, data2) {
             endplay: match.Sluttspill || "",
             placeholderteam1: match.Lag1tekst || "",
             placeholderteam2: match.Lag2tekst || "",
-            timelable:match.Tekst || "",
+            timelable: timeLabel,
             onlyday:dayonly
         });
     });
