@@ -98,15 +98,6 @@ function loadMatchLog(rowelement, match) {
       return;
     }
 
-    // Klon inputfeltene for å fjerne gamle event listeners
-    const newLogplayer = logplayer.cloneNode(true);
-    logplayer.parentElement.replaceChild(newLogplayer, logplayer);
-    logplayer = newLogplayer;
-
-    const newLogassistplayer = logassistplayer.cloneNode(true);
-    logassistplayer.parentElement.replaceChild(newLogassistplayer, logassistplayer);
-    logassistplayer = newLogassistplayer;
-
     logplayer.disabled = false;
     logassistplayer.disabled = false;
 
@@ -477,11 +468,19 @@ function findPlayersInMatch(match, teamid) {
   
 function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, onNewPlayerCallback) {
   inputField.dataset.airtable = "";
+  inputField.value = "";
+
+  // Avbryt tidligere listeners ved lagbytte
+  if (inputField._autocompleteController) {
+    inputField._autocompleteController.abort();
+  }
+  const controller = new AbortController();
+  const signal = controller.signal;
+  inputField._autocompleteController = controller;
 
   function renderDropdown(players) {
     dropdownContainer.innerHTML = "";
 
-    // Informasjonstekst øverst
     const infoText = document.createElement('div');
     infoText.textContent = "Velg en spiller fra listen. Om spilleren ikke finnes, skriv inn nummer eller navn i feltet så opprettes spilleren på laget. (Navn og detaljer kan oppdateres senere.)";
     infoText.style.padding = "8px 10px";
@@ -502,7 +501,7 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
         inputField.value = player.name;
         inputField.dataset.airtable = player.airtable || "";
         dropdownContainer.style.display = "none";
-      });
+      }, { signal });
 
       dropdownContainer.appendChild(option);
     });
@@ -513,9 +512,9 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
   }
 
   inputField.addEventListener('focus', () => {
-    const playersWithoutPlaceholder = allPlayers.filter(p => !p.isPlaceholder);
-    renderDropdown(playersWithoutPlaceholder);
-  });
+    const source = allPlayers.filter(p => !p.isPlaceholder);
+    renderDropdown(source);
+  }, { signal });
 
   inputField.addEventListener('input', () => {
     const searchTerm = inputField.value.toLowerCase().trim();
@@ -535,13 +534,16 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
     });
 
     renderDropdown(filtered);
-  });
+  }, { signal });
 
-  document.addEventListener('click', (e) => {
-    if (!dropdownContainer.contains(e.target) && e.target !== inputField) {
-      dropdownContainer.style.display = "none";
-    }
-  });
+  // Bruk setTimeout så klikket på lag-selector ikke lukker dropdown umiddelbart
+  setTimeout(() => {
+    document.addEventListener('click', (e) => {
+      if (!dropdownContainer.contains(e.target) && e.target !== inputField) {
+        dropdownContainer.style.display = "none";
+      }
+    }, { signal });
+  }, 0);
 }
 
 function deleteLog(match,log){
