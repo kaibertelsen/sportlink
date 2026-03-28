@@ -366,7 +366,10 @@ function listPlayerStats(data) {
     filteredDivision.forEach((item, i) => {
       const rowelement = nodeelement.cloneNode(true);
       rowelement.querySelector(".rangenr").textContent = item.rangenr + ".";
-      rowelement.querySelector(".playername").textContent = item.playername || "";
+      const displayName = item.playnumber
+        ? `(${item.playnumber}) ${item.playername || ""}`
+        : item.playername || "";
+      rowelement.querySelector(".playername").textContent = displayName;
       rowelement.querySelector(".goals").textContent = item.goals || 0;
       rowelement.querySelector(".assists").textContent = item.assists || 0;
       rowelement.querySelector(".teamlable").textContent = item.teamname || "";
@@ -400,6 +403,7 @@ function summarizePlayerStats(allMatchLogs) {
             playerStats[playerId] = {
                 playerId: playerId,
                 playername: log.playername || "",
+                playnumber: log.playernr || "",
                 teamname: log.teamname || "",
                 teamid: log.team || "",
                 club: log.club || "",
