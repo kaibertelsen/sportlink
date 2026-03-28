@@ -451,8 +451,15 @@ function findPlayersInMatch(match, teamid) {
 
   if (!selectedTeam || !Array.isArray(selectedTeam.player)) return [];
 
-  // Sorter spillerne alfabetisk
-  const sortedPlayers = selectedTeam.player.slice().sort((a, b) => a.name.localeCompare(b.name));
+  // Sorter etter nummer (numerisk) om begge har det, ellers navn
+  const sortedPlayers = selectedTeam.player.slice().sort((a, b) => {
+    const aNr = a.nr !== undefined && a.nr !== "" ? Number(a.nr) : null;
+    const bNr = b.nr !== undefined && b.nr !== "" ? Number(b.nr) : null;
+    if (aNr !== null && bNr !== null) return aNr - bNr;
+    if (aNr !== null) return -1;
+    if (bNr !== null) return 1;
+    return (a.name || "").localeCompare(b.name || "");
+  });
 
   // Legg til plassholder først
   const placeholder = {
