@@ -22,9 +22,9 @@ function loadMatchLog(rowelement, match) {
   const logperiod = newmatchloggrow.querySelector('.logperiod');
   const logteam = newmatchloggrow.querySelector('.logteam');
   const logeventtype = newmatchloggrow.querySelector('.logeventtype');
-  const logplayer = newmatchloggrow.querySelector('.logplayer');
+  let logplayer = newmatchloggrow.querySelector('.logplayer');
   const logplayerDropdown = newmatchloggrow.querySelector('.logplayer-dropdown');
-  const logassistplayer = newmatchloggrow.querySelector('.logassistplayer');
+  let logassistplayer = newmatchloggrow.querySelector('.logassistplayer');
   const logplayedminutes = newmatchloggrow.querySelector('.logplayedminutes');
   const logdescription = newmatchloggrow.querySelector('.logdescription');
 
@@ -98,11 +98,20 @@ function loadMatchLog(rowelement, match) {
       return;
     }
 
+    // Klon inputfeltene for å fjerne gamle event listeners
+    const newLogplayer = logplayer.cloneNode(true);
+    logplayer.parentElement.replaceChild(newLogplayer, logplayer);
+    logplayer = newLogplayer;
+
+    const newLogassistplayer = logassistplayer.cloneNode(true);
+    logassistplayer.parentElement.replaceChild(newLogassistplayer, logassistplayer);
+    logassistplayer = newLogassistplayer;
+
     logplayer.disabled = false;
     logassistplayer.disabled = false;
 
     const players = findPlayersInMatch(match, selectedTeamId);
-   
+
     initLogPlayerAutocomplete(logplayer, logplayerDropdown, players, handleNewPlayer("spiller"));
     initLogPlayerAutocomplete(logassistplayer, logassistDropdown, players, handleNewPlayer("assistspiller"));
   });
@@ -468,10 +477,6 @@ function findPlayersInMatch(match, teamid) {
   
 function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, onNewPlayerCallback) {
   inputField.dataset.airtable = "";
-
-  // 🔁 Fjern tidligere eventListener ved å bruke et flagg
-  if (inputField._autocompleteInitialized) return;
-  inputField._autocompleteInitialized = true;
 
   function renderDropdown(players) {
     dropdownContainer.innerHTML = "";
