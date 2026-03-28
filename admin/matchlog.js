@@ -37,6 +37,8 @@ function loadMatchLog(rowelement, match) {
     logassistDropdown.style.left = '0';
     logassistDropdown.style.right = '0';
     logassistDropdown.style.display = 'none';
+    logassistDropdown.style.maxHeight = '260px';
+    logassistDropdown.style.overflowY = 'auto';
     logassistplayer.parentElement.style.position = 'relative';
     logassistplayer.parentElement.appendChild(logassistDropdown);
   }
@@ -474,20 +476,16 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
   function renderDropdown(players) {
     dropdownContainer.innerHTML = "";
 
-    // "Opprett ny spiller" øverst
-    const createOption = document.createElement('div');
-    createOption.textContent = "+ Opprett ny spiller";
-    createOption.style.padding = "8px";
-    createOption.style.cursor = "pointer";
-    createOption.style.fontStyle = "italic";
-    createOption.addEventListener('click', () => {
-      const name = inputField.value.trim();
-      if (typeof onNewPlayerCallback === 'function' && name) {
-        onNewPlayerCallback(name, inputField);
-      }
-      dropdownContainer.style.display = "none";
-    });
-    dropdownContainer.appendChild(createOption);
+    // Informasjonstekst øverst
+    const infoText = document.createElement('div');
+    infoText.textContent = "Velg en spiller fra listen. Om spilleren ikke finnes, skriv inn nummer eller navn i feltet så opprettes spilleren på laget. (Navn og detaljer kan oppdateres senere.)";
+    infoText.style.padding = "8px 10px";
+    infoText.style.fontSize = "12px";
+    infoText.style.opacity = "0.7";
+    infoText.style.fontStyle = "italic";
+    infoText.style.borderBottom = "1px solid rgba(255,255,255,0.15)";
+    infoText.style.cursor = "default";
+    dropdownContainer.appendChild(infoText);
 
     players.forEach(player => {
       const option = document.createElement('div');
@@ -504,6 +502,8 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
       dropdownContainer.appendChild(option);
     });
 
+    dropdownContainer.style.maxHeight = "260px";
+    dropdownContainer.style.overflowY = "auto";
     dropdownContainer.style.display = "block";
   }
 
