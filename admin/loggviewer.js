@@ -1,3 +1,5 @@
+//loggviewer.js
+
 
 function listLogForMatch(match, rowelement,admin) {
     const list = rowelement.querySelector('.matchloglist');

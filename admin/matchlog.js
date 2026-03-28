@@ -1,3 +1,5 @@
+//matchlog.js
+
 var maxGoalDiff = 100;
 
 function loadMatchLog(rowelement, match) {
@@ -469,34 +471,30 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
   if (inputField._autocompleteInitialized) return;
   inputField._autocompleteInitialized = true;
 
-  inputField.addEventListener('input', () => {
-    const searchTerm = inputField.value.toLowerCase().trim();
+  function renderDropdown(players) {
     dropdownContainer.innerHTML = "";
-    inputField.dataset.airtable = ""; // Nullstill ID
 
-    if (!searchTerm) {
+    // "Opprett ny spiller" øverst
+    const createOption = document.createElement('div');
+    createOption.textContent = "+ Opprett ny spiller";
+    createOption.style.padding = "8px";
+    createOption.style.cursor = "pointer";
+    createOption.style.fontStyle = "italic";
+    createOption.addEventListener('click', () => {
+      const name = inputField.value.trim();
+      if (typeof onNewPlayerCallback === 'function' && name) {
+        onNewPlayerCallback(name, inputField);
+      }
       dropdownContainer.style.display = "none";
-      return;
-    }
-
-    const filtered = allPlayers.filter(player => {
-      const nameMatch = player.name?.toLowerCase().includes(searchTerm);
-      const numberMatch = player.nr?.toLowerCase().includes(searchTerm);
-      return nameMatch || numberMatch;
     });
+    dropdownContainer.appendChild(createOption);
 
-    if (filtered.length === 0) {
-      dropdownContainer.style.display = "none";
-      return;
-    }
-
-    filtered.forEach(player => {
+    players.forEach(player => {
       const option = document.createElement('div');
       option.textContent = `${player.nr ? player.nr + " - " : ""}${player.name}`;
       option.style.padding = "8px";
       option.style.cursor = "pointer";
 
-      
       option.addEventListener('click', () => {
         inputField.value = player.name;
         inputField.dataset.airtable = player.airtable || "";
@@ -507,33 +505,37 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
     });
 
     dropdownContainer.style.display = "block";
+  }
+
+  inputField.addEventListener('focus', () => {
+    const playersWithoutPlaceholder = allPlayers.filter(p => !p.isPlaceholder);
+    renderDropdown(playersWithoutPlaceholder);
+  });
+
+  inputField.addEventListener('input', () => {
+    const searchTerm = inputField.value.toLowerCase().trim();
+    inputField.dataset.airtable = "";
+
+    const source = allPlayers.filter(p => !p.isPlaceholder);
+
+    if (!searchTerm) {
+      renderDropdown(source);
+      return;
+    }
+
+    const filtered = source.filter(player => {
+      const nameMatch = player.name?.toLowerCase().includes(searchTerm);
+      const numberMatch = player.nr?.toLowerCase().includes(searchTerm);
+      return nameMatch || numberMatch;
+    });
+
+    renderDropdown(filtered);
   });
 
   document.addEventListener('click', (e) => {
     if (!dropdownContainer.contains(e.target) && e.target !== inputField) {
       dropdownContainer.style.display = "none";
     }
-  });
-
-  inputField.addEventListener('blur', () => {
-    setTimeout(() => {
-      const name = inputField.value.trim();
-      const id = inputField.dataset.airtable;
-
-      if (!name || id || typeof onNewPlayerCallback !== 'function') return;
-
-      if( name === "Plassholder spiller") {
-        return;
-      }
-
-      const confirmed = confirm(`Vil du opprette ny spiller "${name}"?`);
-      if (confirmed) {
-        onNewPlayerCallback(name, inputField);
-      } else {
-        inputField.value = "";
-        inputField.dataset.airtable = "";
-      }
-    }, 200);
   });
 }
 
