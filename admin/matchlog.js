@@ -63,23 +63,14 @@ function loadMatchLog(rowelement, match) {
   const saveButton = oldSaveButton.cloneNode(true);
   oldSaveButton.parentNode.replaceChild(saveButton, oldSaveButton);
 
-  const handleNewPlayer = (roleLabel) => (name, inputField) => {
-    const newPlayer = {
-      name,
-      team: [logteam.value],
-    };
-    inputField.id = newPlayer.name + "placeholder";
-
-    POSTairtable("appxPi2CoLTlsa3qL", "tbljVqkOQACs56QqI", JSON.stringify(newPlayer), "responsCreatNewPlayer");
-
-    //skul saveButton i 2 sekunder og så vis igjen
-    saveButton.style.display = "none";
-    setTimeout(() => {
-      saveButton.style.display = "inline-block";
-    }, 2000);
-
-    
-    
+  const handleNewPlayer = (roleLabel) => (inputField) => {
+    showNewPlayerModal((name, nr) => {
+      const newPlayer = { name, nr, team: [logteam.value] };
+      inputField.id = name + "placeholder";
+      inputField.value = name;
+      inputField.dataset.airtable = "";
+      POSTairtable("appxPi2CoLTlsa3qL", "tbljVqkOQACs56QqI", JSON.stringify(newPlayer), "responsCreatNewPlayer");
+    });
   };
 
   logteam.addEventListener('change', () => {
@@ -314,10 +305,17 @@ function responsCreatNewPlayer(data) {
   const teamId = data.fields.team?.[0];
   const newPlayer = JSON.parse(data.fields.json);
 
-  // 1. Finn inputfeltet og sett Airtable-id
+  // 1. Finn inputfeltet og sett Airtable-id og vis navn
   const inputField = document.getElementById(name + "placeholder");
   if (inputField) {
     inputField.dataset.airtable = data.id;
+    inputField.value = name;
+    inputField.removeAttribute('id');
+
+    // Legg ny spiller inn i autocomplete-listen så den dukker opp ved neste søk
+    if (Array.isArray(inputField._autocompleteAllPlayers)) {
+      inputField._autocompleteAllPlayers.push({ name, nr: data.fields.nr || "", airtable: data.id });
+    }
   }
 
   // 2. Legg til spiller i riktig lag i gTeam
@@ -469,6 +467,7 @@ function findPlayersInMatch(match, teamid) {
 function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, onNewPlayerCallback) {
   inputField.dataset.airtable = "";
   inputField.value = "";
+  inputField._autocompleteAllPlayers = allPlayers;
 
   // Avbryt tidligere listeners ved lagbytte
   if (inputField._autocompleteController) {
@@ -481,15 +480,20 @@ function initLogPlayerAutocomplete(inputField, dropdownContainer, allPlayers, on
   function renderDropdown(players) {
     dropdownContainer.innerHTML = "";
 
-    const infoText = document.createElement('div');
-    infoText.textContent = "Velg en spiller fra listen. Om spilleren ikke finnes, skriv inn nummer eller navn i feltet så opprettes spilleren på laget. (Navn og detaljer kan oppdateres senere.)";
-    infoText.style.padding = "8px 10px";
-    infoText.style.fontSize = "12px";
-    infoText.style.opacity = "0.7";
-    infoText.style.fontStyle = "italic";
-    infoText.style.borderBottom = "1px solid rgba(255,255,255,0.15)";
-    infoText.style.cursor = "default";
-    dropdownContainer.appendChild(infoText);
+    // "Opprett ny spiller" øverst
+    const createOption = document.createElement('div');
+    createOption.textContent = "+ Opprett ny spiller";
+    createOption.style.padding = "8px 10px";
+    createOption.style.cursor = "pointer";
+    createOption.style.fontWeight = "bold";
+    createOption.style.borderBottom = "1px solid rgba(255,255,255,0.15)";
+    createOption.addEventListener('click', () => {
+      dropdownContainer.style.display = "none";
+      if (typeof onNewPlayerCallback === 'function') {
+        onNewPlayerCallback(inputField);
+      }
+    }, { signal });
+    dropdownContainer.appendChild(createOption);
 
     players.forEach(player => {
       const option = document.createElement('div');
@@ -560,4 +564,68 @@ function deleteLog(match,log){
 
 function responseLogDelete(data){
   console.log(data);
+}
+
+function showNewPlayerModal(onConfirm) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;';
+
+  const modal = document.createElement('div');
+  modal.style.cssText = 'background:#1e2a3a;padding:24px;border-radius:8px;width:320px;display:flex;flex-direction:column;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5);';
+
+  const title = document.createElement('h3');
+  title.textContent = 'Opprett ny spiller';
+  title.style.cssText = 'margin:0;color:#fff;font-size:16px;';
+
+  const infoText = document.createElement('p');
+  infoText.textContent = 'Om du ikke har navnet på spilleren kan du sette inn nummeret, så kan admin oppdatere med navn senere.';
+  infoText.style.cssText = 'margin:0;font-size:12px;color:rgba(255,255,255,0.6);font-style:italic;';
+
+  const nameInput = document.createElement('input');
+  nameInput.placeholder = 'Navn *';
+  nameInput.style.cssText = 'padding:10px;border-radius:4px;border:1px solid #444;background:#2a3a4a;color:#fff;font-size:14px;width:100%;box-sizing:border-box;';
+
+  const nrInput = document.createElement('input');
+  nrInput.placeholder = 'Nummer';
+  nrInput.style.cssText = 'padding:10px;border-radius:4px;border:1px solid #444;background:#2a3a4a;color:#fff;font-size:14px;width:100%;box-sizing:border-box;';
+
+  const btnRow = document.createElement('div');
+  btnRow.style.cssText = 'display:flex;gap:8px;justify-content:flex-end;';
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.textContent = 'Avbryt';
+  cancelBtn.style.cssText = 'padding:8px 16px;border-radius:4px;border:1px solid #555;background:transparent;color:#fff;cursor:pointer;font-size:14px;';
+
+  const createBtn = document.createElement('button');
+  createBtn.textContent = 'Opprett spiller';
+  createBtn.style.cssText = 'padding:8px 16px;border-radius:4px;border:none;background:#2563eb;color:#fff;cursor:pointer;font-size:14px;font-weight:bold;';
+
+  cancelBtn.addEventListener('click', () => document.body.removeChild(overlay));
+
+  createBtn.addEventListener('click', () => {
+    const name = nameInput.value.trim();
+    const nr = nrInput.value.trim();
+    if (!name) {
+      nameInput.style.borderColor = '#e53e3e';
+      nameInput.focus();
+      return;
+    }
+    document.body.removeChild(overlay);
+    onConfirm(name, nr);
+  });
+
+  nrInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') createBtn.click();
+  });
+
+  btnRow.appendChild(cancelBtn);
+  btnRow.appendChild(createBtn);
+  modal.appendChild(title);
+  modal.appendChild(infoText);
+  modal.appendChild(nameInput);
+  modal.appendChild(nrInput);
+  modal.appendChild(btnRow);
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+  nameInput.focus();
 }
