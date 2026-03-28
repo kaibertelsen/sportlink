@@ -65,7 +65,8 @@ function loadMatchLog(rowelement, match) {
 
   const handleNewPlayer = (roleLabel) => (inputField) => {
     showNewPlayerModal((name, nr) => {
-      const newPlayer = { name, nr, team: [logteam.value] };
+      const newPlayer = { name, team: [logteam.value] };
+      if (nr !== undefined) newPlayer.nr = nr;
       inputField.id = name + "placeholder";
       inputField.value = name;
       inputField.dataset.airtable = "";
@@ -603,13 +604,18 @@ function showNewPlayerModal(onConfirm) {
   cancelBtn.addEventListener('click', () => document.body.removeChild(overlay));
 
   createBtn.addEventListener('click', () => {
-    const name = nameInput.value.trim();
-    const nr = nrInput.value.trim();
-    if (!name) {
+    const nameRaw = nameInput.value.trim();
+    const nrRaw = nrInput.value.trim();
+
+    if (!nameRaw && !nrRaw) {
       nameInput.style.borderColor = '#e53e3e';
+      nrInput.style.borderColor = '#e53e3e';
       nameInput.focus();
       return;
     }
+
+    const name = nameRaw || "Spiller #" + nrRaw;
+    const nr = nrRaw !== "" ? Number(nrRaw) : undefined;
     document.body.removeChild(overlay);
     onConfirm(name, nr);
   });
