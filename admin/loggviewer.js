@@ -10,9 +10,7 @@ function listLogForMatch(match, rowelement,admin) {
   
     const noderow = elementholder.querySelector('.loggrow');
   
-    const matchlogg = match.matchlogg || [];
-    //sortering etter omgang så minutter
-    matchlogg.sort((a, b) => {
+    const matchlogg = (match.matchlogg || []).slice().sort((a, b) => {
       const periodA = a.period === "OT" ? 100 : a.period === "SO" ? 200 : Number(a.period);
       const periodB = b.period === "OT" ? 100 : b.period === "SO" ? 200 : Number(b.period);
     
@@ -40,13 +38,13 @@ function listLogForMatch(match, rowelement,admin) {
     team1Element.textContent = team1name;
     team2Element.textContent = team2name;
   
-    list.appendChild(startRow);
-  
     const periodeConteinerMal = elementholder.querySelector('.periodconteiner');
-    
-  
+
     let activePeriode = matchlogg[0]?.period || 1;
-  
+
+    const fragment = document.createDocumentFragment();
+    fragment.appendChild(startRow);
+
     matchlogg.forEach(log => {
       const logRow = noderow.cloneNode(true);
   
@@ -73,7 +71,7 @@ function listLogForMatch(match, rowelement,admin) {
         periodeElement.textContent = periodename;
   
   
-        list.appendChild(newPeriodeRow);
+        fragment.appendChild(newPeriodeRow);
       }
   
       //finne ut om dette er loggen fra lag 1 eller lag 2
@@ -196,13 +194,16 @@ function listLogForMatch(match, rowelement,admin) {
       infoElement.innerHTML = htmlInfo;
       
   
-      list.appendChild(logRow);
+      fragment.appendChild(logRow);
     });
-  
+
     //legg inn slutt conteiner
     const endConteiner = elementholder.querySelector('.end');
     const endRow = endConteiner.cloneNode(true);
-    list.appendChild(endRow);
+    fragment.appendChild(endRow);
+
+    // Én enkelt DOM-insert for hele loggen
+    list.appendChild(fragment);
   
     return {goalteam1,goalteam2,penaltyminteam1,penaltyminteam2};
   

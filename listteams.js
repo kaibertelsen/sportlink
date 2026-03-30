@@ -171,17 +171,13 @@ function loadPointsToviewer(rowelement,team,range,solo){
 function viewteam(team) {
 
     activeteam = team;
-    // Oppdater header-informasjon
+
+    // -- Rask oppdatering: header vises umiddelbart --
     const teamheader = document.getElementById("headerwrapperteam");
     teamheader.querySelector(".teamnameheader").textContent = team.name || "Ukjent lag";
     teamheader.querySelector(".logoteam").src = team.clublogo || "https://cdn.prod.website-files.com/66f547dd445606c275070efb/675027cdbcf80b76571b1f8a_placeholder-teamlogo.png"
-    
+
     const thismatchinfo = document.getElementById("thisteamhinfo");
-    
-    /*
-    const clublogo = thismatchinfo.querySelector(".clublogo");
-    if (team.clublogo) clublogo.src = team.clublogo;
-    */
     thismatchinfo.querySelector(".divisjon").textContent = team.divisionname || "Ukjent divisjon";
     let grouplable = thismatchinfo.querySelector(".groupname");
     if(team.group){
@@ -191,48 +187,46 @@ function viewteam(team) {
         grouplable.textContent = "";
         grouplable.parentElement.style.display = "none";
     }
-
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
 
-//Ranking
-        // Bestem hvilket element som skal kopieres basert på sportstypen
-        let nodeelement = getPointElement();
+    // Naviger til lagsiden umiddelbart så brukeren ser siden
+    document.getElementById("thisteamtabbutton").click();
+
+    // -- Defer alt tungt arbeid til etter første paint --
+    requestAnimationFrame(() => {
+
+        // Ranking
+        const nodeelement = getPointElement();
         const thisteamrankinfo = document.getElementById("thisteamrankinfo");
         const rankview = thisteamrankinfo.querySelector(".rankview");
         rankview.innerHTML = "";
         const copyelement = nodeelement.cloneNode(true);
         copyelement.style.background = 'none';
+        rankview.appendChild(copyelement);
+        const teaminfo = findRankForTeam(team);
+        loadPointsToviewer(rankview, teaminfo.team, teaminfo.rank, true);
 
-        rankview.appendChild(copyelement);  
-        let teaminfo = findRankForTeam(team);
-        //laste inn verdiene
-        loadPointsToviewer(rankview,teaminfo.team,teaminfo.rank,true);
+        const groupDivisionText = team.divisionname + (teaminfo.group ? " i gruppe: " + teaminfo.group : "");
+        thisteamrankinfo.querySelector(".rankdescription").textContent =
+            team.name + " er på " + teaminfo.rank + " plass i divisjonen: " + groupDivisionText + ".";
 
-        let groupDivisionText = "divisjonen: "+team.divisionname;
-        if(teaminfo.group){groupDivisionText = groupDivisionText+" i gruppe: "+teaminfo.group};
-        let description = team.name+" er på "+teaminfo.rank+" plass i "+groupDivisionText+".";
-        thisteamrankinfo.querySelector(".rankdescription").textContent = description;
-
-//hente data på registrerte spillere
+        // Spillerstatistikk og kampliste
         const filteredMatches = matches.filter(
             match => match.team1 === team.airtable || match.team2 === team.airtable
         );
+
         viewPlayerStats(team, filteredMatches);
 
-////kampoversikten
         const thisteammatchlist = document.getElementById("thisteammatchlist");
         thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "Kamper";
 
-        //finne alle unike lokasjoner og last de inn i locationselector
         const locationselector = document.getElementById("locationSelector");
-        if(locationselector){
-        loadLocationSelector(filteredMatches,locationselector);
+        if (locationselector) {
+            loadLocationSelector(filteredMatches, locationselector);
         }
 
-        listMatchesInTeamView(filteredMatches,team);
-
-    // Vis lagsiden
-    document.getElementById("thisteamtabbutton").click();
+        listMatchesInTeamView(filteredMatches, team);
+    });
 }
 
 function locationSelectorinTeamChange(){
@@ -271,12 +265,11 @@ function listMatchesInTeamView(matchs,team){
     teammatchlist.innerHTML = "";
     const nodeelement = elementlibrary.querySelector('.groupholderlayoutgrid');
 
-   
+    const fragment = document.createDocumentFragment();
     for (let item of grouparray) {
-       
-        let rowelement = makeGroupMatchWrapper(item,team,nodeelement,"dato");
-        list.appendChild(rowelement);
+        fragment.appendChild(makeGroupMatchWrapper(item, team, nodeelement, "dato"));
     }
+    list.appendChild(fragment);
      
 }
 
