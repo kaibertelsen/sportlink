@@ -603,18 +603,28 @@ function pointGenerator(team1Score, team2Score,isOvertime,isShootout,sport) {
             
         }
     }else if(sport === "recSCesi2BGmCyivZ"){
+        // Volleyball: 2-1 gir 2/1 poeng, 2-0 gir 3/0 poeng
         if (team1Score > team2Score) {
-            team1point = 3; // 3 poeng for seier
-            team2point = 0;
+            if (team1Score === 2 && team2Score === 1) {
+                team1point = 2;
+                team2point = 1;
+            } else {
+                team1point = 3;
+                team2point = 0;
+            }
         } else if (team1Score < team2Score) {
-            team2point = 3; // 3 poeng for seier
-            team1point = 0;
+            if (team2Score === 2 && team1Score === 1) {
+                team2point = 2;
+                team1point = 1;
+            } else {
+                team2point = 3;
+                team1point = 0;
+            }
         } else {
-            // Hvis uavgjort, tildel 1 poeng til hvert lag
             team1point = 1;
             team2point = 1;
         }
- 
+
     }
 
     return { team1point, team2point };

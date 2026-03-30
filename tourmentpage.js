@@ -367,7 +367,7 @@ function listPlayerStats(data) {
       const rowelement = nodeelement.cloneNode(true);
       rowelement.querySelector(".rangenr").textContent = item.rangenr + ".";
       const displayName = item.playnumber
-        ? `(${item.playnumber}) ${item.playername || ""}`
+        ? `(${item.playnumber||item.nr}) ${item.playername || ""}`
         : item.playername || "";
       rowelement.querySelector(".playername").textContent = displayName;
       rowelement.querySelector(".goals").textContent = item.goals || 0;
