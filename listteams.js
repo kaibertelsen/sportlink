@@ -214,15 +214,14 @@ function viewteam(team) {
         thisteamrankinfo.querySelector(".rankdescription").textContent = description;
 
 //hente data på registrerte spillere
-        viewPlayerStats(team);
+        const filteredMatches = matches.filter(
+            match => match.team1 === team.airtable || match.team2 === team.airtable
+        );
+        viewPlayerStats(team, filteredMatches);
 
 ////kampoversikten
         const thisteammatchlist = document.getElementById("thisteammatchlist");
         thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "Kamper";
-        // Filtrer kampene for laget
-        const filteredMatches = matches.filter(
-            match => match.team1 === team.airtable || match.team2 === team.airtable
-        );
 
         //finne alle unike lokasjoner og last de inn i locationselector
         const locationselector = document.getElementById("locationSelector");
@@ -380,7 +379,7 @@ function findRankForTeam(team) {
     };
 }
 
-function viewPlayerStats(team) {
+function viewPlayerStats(team, teamMatches) {
     let rawPlayers = team.player || [];
   
     // Sammenslå spillere med samme navn og nummer
@@ -442,12 +441,48 @@ function viewPlayerStats(team) {
       return html;
     };
   
+    // Beregn keeperstatistikk fra matchlogg
+    let goalsAgainst = 0;
+    let shotsAgainst = 0;
+
+    if (teamMatches && teamMatches.length > 0) {
+      teamMatches.forEach(match => {
+        if (!Array.isArray(match.matchlogg)) return;
+        match.matchlogg.forEach(log => {
+          const logTeam = Array.isArray(log.team) ? log.team[0] : log.team;
+          if (logTeam && logTeam !== team.airtable) {
+            if (log.eventtypelable === "Mål") goalsAgainst++;
+            else if (log.eventtypelable === "Skudd på mål") shotsAgainst++;
+          }
+        });
+      });
+    }
+
+    const totalShotsAgainst = shotsAgainst + goalsAgainst;
+    const savePercentage = totalShotsAgainst > 0
+      ? Math.round((shotsAgainst / totalShotsAgainst) * 100)
+      : null;
+
+    // Vises kun om det finnes skudd på mål-logger
+    let keeperSection = "";
+    if (shotsAgainst > 0) {
+      keeperSection = `<div style="margin-bottom: 1em;">
+        <strong style="font-size: 1.1em;">Keeper</strong>
+        <ul style="margin: 0.5em 0; padding-left: 1em;">
+          <li>Mål imot: <strong>${goalsAgainst}</strong></li>
+          <li>Skudd på mål imot: <strong>${totalShotsAgainst}</strong></li>
+          <li>Redningsprosent: <strong>${savePercentage}%</strong></li>
+        </ul>
+      </div>`;
+    }
+
     const html = `
       ${createSection("Målscorere", goalScorers, "sumgoal", "mål")}
       ${createSection("Assist", assisters, "sumassist", "assist")}
       ${createSection("Utvisningsminutter", penalized, "sumpenaltyminutes", "min")}
+      ${keeperSection}
     `;
-  
+
     playerStatView.innerHTML = html;
   }
   
