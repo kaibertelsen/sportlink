@@ -417,15 +417,15 @@ function viewPlayerStats(team, teamMatches) {
   
     const goalScorers = [...players]
       .filter(p => p.sumgoal > 0)
-      .sort((a, b) => b.sumgoal - a.sumgoal);
-  
+      .sort((a, b) => (Number(a.nr) || 9999) - (Number(b.nr) || 9999));
+
     const assisters = [...players]
       .filter(p => p.sumassist > 0)
-      .sort((a, b) => b.sumassist - a.sumassist);
-  
+      .sort((a, b) => (Number(a.nr) || 9999) - (Number(b.nr) || 9999));
+
     const penalized = [...players]
       .filter(p => p.sumpenaltyminutes > 0)
-      .sort((a, b) => b.sumpenaltyminutes - a.sumpenaltyminutes);
+      .sort((a, b) => (Number(a.nr) || 9999) - (Number(b.nr) || 9999));
   
     const formatPlayerName = (player) => {
       return player.nr ? `<strong>${player.nr}. ${player.name}</strong>` : `<strong>${player.name}</strong>`;
