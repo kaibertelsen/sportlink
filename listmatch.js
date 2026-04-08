@@ -419,7 +419,7 @@ function viewMatch(match){
         }
         
 
-    document.getElementById("thismatchtabbutton").click();
+    fastSwitchTab("thismatchtabbutton");
 
     const matchlogConteinerviewer = document.getElementById("matchlogConteinerviewer");
     const infomaxGoalDiff = document.getElementById("infomaxGoalDiff");
@@ -714,9 +714,8 @@ function viewMatch(match) {
         }
       }
   
-      // Bytt til match-tab NÅR første frame er klar (mindre jank)
-      const tabBtn = document.getElementById("thismatchtabbutton");
-      if (tabBtn) tabBtn.click();
+      // Bytt til match-tab - bypass Webflow animasjon
+      fastSwitchTab("thismatchtabbutton");
   
       // --- UTSETT tunge ting til neste frame for å holde UI responsivt ---
       requestAnimationFrame(() => {

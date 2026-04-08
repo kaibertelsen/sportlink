@@ -100,6 +100,38 @@ function listteams(data) {
     console.timeEnd("listteams");
 }
 
+// Rask tab-bytte som unngår Webflow's tunge animasjon
+function fastSwitchTab(tabButtonId) {
+    var tabButton = document.getElementById(tabButtonId);
+    if (!tabButton) return;
+
+    var targetTab = tabButton.getAttribute("data-w-tab");
+    var tabMenu = tabButton.closest(".w-tab-menu");
+    var tabContent = tabMenu ? tabMenu.parentElement.querySelector(".w-tab-content") : null;
+    if (!tabContent) return;
+
+    // Fjern active fra alle tab-links
+    var links = tabMenu.querySelectorAll(".w-tab-link");
+    for (var i = 0; i < links.length; i++) {
+        links[i].classList.remove("w--current");
+    }
+    tabButton.classList.add("w--current");
+
+    // Fjern active fra alle tab-panes, vis riktig
+    var panes = tabContent.querySelectorAll(".w-tab-pane");
+    for (var j = 0; j < panes.length; j++) {
+        var pane = panes[j];
+        if (pane.getAttribute("data-w-tab") === targetTab) {
+            pane.classList.add("w--tab-active");
+            pane.style.display = "block";
+            pane.style.opacity = "1";
+        } else {
+            pane.classList.remove("w--tab-active");
+            pane.style.display = "none";
+        }
+    }
+}
+
 function getPointElement(){
     // Bestem hvilket element som skal kopieres basert på sportstypen
     const elementlibrary = document.getElementById("elementlibrary");
@@ -194,19 +226,9 @@ function viewteam(team) {
     }
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
 
-    // Naviger til lagsiden
+    // Naviger til lagsiden - bypass Webflow tab-animasjon
     console.time("viewteam-tabclick");
-    // Tøm tunge lister FØR tab-bytte for å redusere layout-arbeid
-    var matchlistholder = document.getElementById("matchlistholder");
-    var teamslistholder = document.getElementById("teamslistholder");
-    if (matchlistholder) matchlistholder.style.display = "none";
-    if (teamslistholder) teamslistholder.style.display = "none";
-
-    document.getElementById("thisteamtabbutton").click();
-
-    // Gjenopprett etter tab-bytte
-    if (matchlistholder) matchlistholder.style.display = "";
-    if (teamslistholder) teamslistholder.style.display = "";
+    fastSwitchTab("thisteamtabbutton");
     console.timeEnd("viewteam-tabclick");
 
     // -- Alt i én requestAnimationFrame for å unngå layout-splitting --
