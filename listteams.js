@@ -192,10 +192,9 @@ function viewteam(team) {
     // Naviger til lagsiden umiddelbart så brukeren ser siden
     document.getElementById("thisteamtabbutton").click();
 
-    // -- Defer alt tungt arbeid til etter første paint --
+    // -- Defer arbeid til etter første paint --
     requestAnimationFrame(() => {
-
-        // Ranking
+        // Ranking (rask - bruker allerede beregnede poeng)
         const nodeelement = getPointElement();
         const thisteamrankinfo = document.getElementById("thisteamrankinfo");
         const rankview = thisteamrankinfo.querySelector(".rankview");
@@ -210,22 +209,25 @@ function viewteam(team) {
         thisteamrankinfo.querySelector(".rankdescription").textContent =
             team.name + " er på " + teaminfo.rank + " plass i divisjonen: " + groupDivisionText + ".";
 
-        // Spillerstatistikk og kampliste
+        // Filtrer kamper én gang
         const filteredMatches = matches.filter(
             match => match.team1 === team.airtable || match.team2 === team.airtable
         );
 
-        viewPlayerStats(team, filteredMatches);
+        // Defer spillerstatistikk og kampliste til neste frame
+        requestAnimationFrame(() => {
+            viewPlayerStats(team, filteredMatches);
 
-        const thisteammatchlist = document.getElementById("thisteammatchlist");
-        thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "Kamper";
+            const thisteammatchlist = document.getElementById("thisteammatchlist");
+            thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "Kamper";
 
-        const locationselector = document.getElementById("locationSelector");
-        if (locationselector) {
-            loadLocationSelector(filteredMatches, locationselector);
-        }
+            const locationselector = document.getElementById("locationSelector");
+            if (locationselector) {
+                loadLocationSelector(filteredMatches, locationselector);
+            }
 
-        listMatchesInTeamView(filteredMatches, team);
+            listMatchesInTeamView(filteredMatches, team);
+        });
     });
 }
 
@@ -313,14 +315,11 @@ function findUnicLocations(data){
 
 
 function findRankForTeam(team) {
-    // Filtrer lagene basert på aktivt divisjonsfilter
+    // Filtrer lagene basert på divisjon (poeng er allerede beregnet av listteams)
     let filteredTeams = teams.filter(t => t.division === team.division);
 
-    // Generer og sorter teamslist basert på poeng, målforskjell og mål scoret
-    let teamslist = generatePointToTeams(filteredTeams);
-
-    // Gruppér lagene etter divisjon og gruppe
-    const teamsByDivisionAndGroup = teamslist.reduce((acc, t) => {
+    // Gruppér lagene etter divisjon og gruppe (bruker eksisterende points-data)
+    const teamsByDivisionAndGroup = filteredTeams.reduce((acc, t) => {
         const division = t.divisionname || "Ukjent divisjon"; // Standardnavn hvis divisjon mangler
         const group = t.groupname || false; // Hvis gruppe mangler, settes den til `false`
 
