@@ -199,10 +199,10 @@ function viewteam(team) {
     document.getElementById("thisteamtabbutton").click();
     console.timeEnd("viewteam-tabclick");
 
-    // -- Defer arbeid til etter første paint --
+    // -- Alt i én requestAnimationFrame for å unngå layout-splitting --
     requestAnimationFrame(function() {
         try {
-        console.log("viewteam: rAF1 startet");
+        console.log("viewteam: rAF startet");
 
         console.time("viewteam-rank");
         const nodeelement = getPointElement();
@@ -226,33 +226,26 @@ function viewteam(team) {
         );
         console.log("viewteam: antall kamper for lag:", filteredMatches.length, "totalt:", matches.length);
 
-        // Defer spillerstatistikk og kampliste til neste frame
-        requestAnimationFrame(function() {
-            try {
-            console.time("viewteam-playerStats");
-            viewPlayerStats(team, filteredMatches);
-            console.timeEnd("viewteam-playerStats");
+        console.time("viewteam-playerStats");
+        viewPlayerStats(team, filteredMatches);
+        console.timeEnd("viewteam-playerStats");
 
-            console.time("viewteam-matchlist");
-            const thisteammatchlist = document.getElementById("thisteammatchlist");
-            thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "Kamper";
+        console.time("viewteam-matchlist");
+        const thisteammatchlist = document.getElementById("thisteammatchlist");
+        thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "Kamper";
 
-            const locationselector = document.getElementById("locationSelector");
-            if (locationselector) {
-                loadLocationSelector(filteredMatches, locationselector);
-            }
+        const locationselector = document.getElementById("locationSelector");
+        if (locationselector) {
+            loadLocationSelector(filteredMatches, locationselector);
+        }
 
-            listMatchesInTeamView(filteredMatches, team);
-            console.timeEnd("viewteam-matchlist");
-            console.timeEnd("viewteam-total");
-            console.log("viewteam: FERDIG");
-            } catch(e) {
-                console.error("viewteam-frame2 FEIL: " + e.message + " stack: " + e.stack);
-            }
-        });
+        listMatchesInTeamView(filteredMatches, team);
+        console.timeEnd("viewteam-matchlist");
+        console.timeEnd("viewteam-total");
+        console.log("viewteam: FERDIG");
 
         } catch(e) {
-            console.error("viewteam-frame1 FEIL: " + e.message + " stack: " + e.stack);
+            console.error("viewteam FEIL: " + e.message + " stack: " + e.stack);
         }
     });
 }
