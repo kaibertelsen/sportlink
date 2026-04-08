@@ -408,21 +408,18 @@ function listPlayerStats(data) {
         ? `(${item.playnumber||item.nr}) ${item.playername || ""}`
         : item.playername || "";
       rowelement.querySelector(".playername").textContent = displayName;
-      rowelement.querySelector(".goals").textContent = item.goals || 0;
-      rowelement.querySelector(".assists").textContent = item.assists || 0;
-
-      // Legg til kort-kolonner når kort-filter er aktivt
       if (isCardFilter) {
         const pointHolder = rowelement.querySelector(".pointholder.playerstat");
         if (pointHolder) {
-          const yellowCol = document.createElement("div");
-          yellowCol.innerHTML = `<div class="text-block-36">🟨</div><div class="pointtext yellowcards">${item.yellowCards || 0}</div>`;
-          pointHolder.appendChild(yellowCol);
-
-          const redCol = document.createElement("div");
-          redCol.innerHTML = `<div class="text-block-36">🟥</div><div class="pointtext redcards">${item.redCards || 0}</div>`;
-          pointHolder.appendChild(redCol);
+          const headers = pointHolder.querySelectorAll(".text-block-36");
+          if (headers[0]) headers[0].textContent = "🟨";
+          if (headers[1]) headers[1].textContent = "🟥";
         }
+        rowelement.querySelector(".goals").textContent = item.yellowCards || 0;
+        rowelement.querySelector(".assists").textContent = item.redCards || 0;
+      } else {
+        rowelement.querySelector(".goals").textContent = item.goals || 0;
+        rowelement.querySelector(".assists").textContent = item.assists || 0;
       }
 
       rowelement.querySelector(".teamlable").textContent = item.teamname || "";
