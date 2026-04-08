@@ -279,7 +279,7 @@ function loadeLists(data){
         const yellowBtn = document.createElement("button");
         yellowBtn.id = "yellowcardfilterStats";
         yellowBtn.classList.add("statisticfilterbutton");
-        yellowBtn.textContent = "🟨 Gule kort";
+        yellowBtn.textContent = "🟨 Kort";
         yellowBtn.addEventListener("click", () => {
             statsFilterNode.querySelectorAll(".statisticfilterbutton").forEach(btn => btn.classList.remove("active"));
             yellowBtn.classList.add("active");
@@ -290,7 +290,7 @@ function loadeLists(data){
         const redBtn = document.createElement("button");
         redBtn.id = "redcardfilterStats";
         redBtn.classList.add("statisticfilterbutton");
-        redBtn.textContent = "🟥 Røde kort";
+        redBtn.textContent = "🟥 Kort";
         redBtn.addEventListener("click", () => {
             statsFilterNode.querySelectorAll(".statisticfilterbutton").forEach(btn => btn.classList.remove("active"));
             redBtn.classList.add("active");
