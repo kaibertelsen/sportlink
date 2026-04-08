@@ -193,7 +193,8 @@ function viewteam(team) {
     document.getElementById("thisteamtabbutton").click();
 
     // -- Defer arbeid til etter første paint --
-    requestAnimationFrame(() => {
+    requestAnimationFrame(function() {
+        try {
         console.time("viewteam-total");
 
         console.time("viewteam-rank");
@@ -219,7 +220,8 @@ function viewteam(team) {
         console.log("viewteam: antall kamper for lag:", filteredMatches.length, "totalt:", matches.length);
 
         // Defer spillerstatistikk og kampliste til neste frame
-        requestAnimationFrame(() => {
+        requestAnimationFrame(function() {
+            try {
             console.time("viewteam-playerStats");
             viewPlayerStats(team, filteredMatches);
             console.timeEnd("viewteam-playerStats");
@@ -236,7 +238,14 @@ function viewteam(team) {
             listMatchesInTeamView(filteredMatches, team);
             console.timeEnd("viewteam-matchlist");
             console.timeEnd("viewteam-total");
+            } catch(e) {
+                console.error("viewteam-frame2 FEIL: " + e.message + " stack: " + e.stack);
+            }
         });
+
+        } catch(e) {
+            console.error("viewteam-frame1 FEIL: " + e.message + " stack: " + e.stack);
+        }
     });
 }
 
