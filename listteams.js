@@ -194,9 +194,19 @@ function viewteam(team) {
     }
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
 
-    // Naviger til lagsiden umiddelbart så brukeren ser siden
+    // Naviger til lagsiden
     console.time("viewteam-tabclick");
+    // Tøm tunge lister FØR tab-bytte for å redusere layout-arbeid
+    var matchlistholder = document.getElementById("matchlistholder");
+    var teamslistholder = document.getElementById("teamslistholder");
+    if (matchlistholder) matchlistholder.style.display = "none";
+    if (teamslistholder) teamslistholder.style.display = "none";
+
     document.getElementById("thisteamtabbutton").click();
+
+    // Gjenopprett etter tab-bytte
+    if (matchlistholder) matchlistholder.style.display = "";
+    if (teamslistholder) teamslistholder.style.display = "";
     console.timeEnd("viewteam-tabclick");
 
     // -- Alt i én requestAnimationFrame for å unngå layout-splitting --

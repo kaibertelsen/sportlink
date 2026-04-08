@@ -1,0 +1,1485 @@
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Wed Apr 08 2026 10:56:32 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="6731c849508cc36b7528eda2" data-wf-site="66f547dd445606c275070efb">
+<head>
+  <meta charset="utf-8">
+  <title>XERCIZE SPORT</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/sportlinkapp.webflow.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic"]  }});</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="images/favicon.png" rel="shortcut icon" type="image/x-icon">
+  <link href="images/webclip.png" rel="apple-touch-icon">
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-B2H6JX9V52"></script>
+  <script type="text/javascript">window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('set', 'developer_id.dZGVlNj', true);gtag('js', new Date());gtag('config', 'G-B2H6JX9V52');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!--  For Android  -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <!--  Memberstack  -->
+  <script src="https://api.memberstack.io/static/memberstack.js?webflow" data-memberstack-id="5ad59f51b33722467d8f43d75c424975"> </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@v1/web/uc-file-uploader-regular.min.css">
+  <script type="module">
+  import * as UC from "https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@v1/web/uc-file-uploader-regular.min.js";
+  UC.defineComponents(UC);
+</script>
+</head>
+<body class="body">
+  <div id="elementlibrary" class="elementbibliotek">
+    <div class="turneringholder">
+      <div id="w-node-b409922b-f975-c53c-8227-17ed73e511c8-7528eda2" class="turnlogoholder"><img src="images/placeholder-teamlogo.png" loading="lazy" alt="" class="turnicon"></div>
+      <div id="w-node-b409922b-f975-c53c-8227-17ed73e511ca-7528eda2" class="turntextholder">
+        <div class="turnname">ROMJULS CAMP</div>
+        <div class="teventname">Event</div>
+      </div>
+      <div id="w-node-b409922b-f975-c53c-8227-17ed73e511cd-7528eda2" class="datename">1.jun -2024</div>
+      <div id="w-node-b409922b-f975-c53c-8227-17ed73e511cf-7528eda2" class="turnstatusholder">
+        <div class="sattuslable">SPILLES NÅ</div>
+      </div>
+      <div id="w-node-b409922b-f975-c53c-8227-17ed73e511d2-7528eda2" class="turnsporticonholder"><img src="images/volleyball-v1.png" loading="lazy" sizes="(max-width: 767px) 100vw, 511.9965515136719px" srcset="images/volleyball-v1-p-500.png 500w, images/volleyball-v1.png 512w" alt="" class="sporticon"></div>
+    </div>
+    <div id="creatturnamentholder" class="creatholder">
+      <div class="text-block-14">Opprett ny turnering</div>
+      <div class="div-block-24"><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" alt="" class="uploadedtrunamentimagepreview"></div>
+      <div class="w-embed"><!--  Input for turneringsnavn  -->
+        <div class="div-block-21">
+          <input class="text-field w-input inputname" placeholder="Navn på turnering" type="text">
+        </div>
+        <!--  Felter for dato og valg  -->
+        <div class="gridformholder">
+          <label>Startdato</label>
+          <label>Sluttdato</label>
+          <input class="text-field w-node-e9443513-877f-187e-ec13-79b3143bcdef-7528eda2 w-input startdate" placeholder="Startdato og tidspunkt" type="datetime-local">
+          <input class="text-field w-node-_897520f5-ba30-7188-d2e8-381c9751f463-7528eda2 w-input enddate" placeholder="Sluttdato og tidspunkt" type="datetime-local">
+          <input type="hidden" class="uploadedtrunamentinput">
+          <select id="organizerselector" class="selectorelement w-select organizerselector">
+            <option value="">Velg arrangement</option>
+          </select>
+          <select id="sportselector" class="selectorelement w-node-_9a5161c9-a94d-1e6b-2ad3-1cb0666c03a7-7528eda2 w-select sportselector">
+            <option value="">Velg sport</option>
+          </select>
+        </div>
+      </div>
+      <div class="text-block-15">Last opp et icon</div>
+      <div class="uploader w-embed"><uc-config ctx-name="my-uploader" pubkey="55d08fb7fb0f41a18522" img-only="true" multiple="false" use-cloud-image-editor="true" group-output="">
+        </uc-config>
+        <uc-file-uploader-regular ctx-name="my-uploader">
+          <uc-form-input ctx-name="my-uploader"></uc-form-input>
+        </uc-file-uploader-regular>
+        <uc-upload-ctx-provider ctx-name="my-uploader"></uc-upload-ctx-provider>
+      </div>
+      <div class="div-block-22">
+        <a data-w-id="f5165537-840f-c914-90a6-3c0f2c1e6445" href="#" class="opprettbutton w-button">Opprett turnering</a>
+      </div>
+    </div>
+    <div class="creatholder">
+      <div class="text-block-14">Opprett en ny turnering ved å fylle ut feltene under</div>
+      <div class="w-form">
+        <form id="email-form" name="email-form" data-name="Email Form" method="get" data-wf-page-id="6731c849508cc36b7528eda2" data-wf-element-id="237abb9a-c93a-f53e-db54-515eba70b8e4">
+          <div>
+            <div class="div-block-21"><input class="text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="Navn på turnering" type="text" id="name-2" required=""></div>
+            <div class="gridformholder">
+              <div>Startdato</div>
+              <div>Sluttdato</div><input class="text-field startdate w-node-_237abb9a-c93a-f53e-db54-515eba70b8e9-7528eda2 w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="startdato" type="text" id="startdate" required=""><input class="text-field enddate w-node-_237abb9a-c93a-f53e-db54-515eba70b8ea-7528eda2 w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="Sluttdato" type="text" id="enddate" required=""><select id="organizer" name="field" data-name="Field" class="selectorelement matchgroup w-node-_237abb9a-c93a-f53e-db54-515eba70b8eb-7528eda2 w-select">
+                <option value="">Velg arrangement</option>
+              </select><select id="sport" name="field-2" data-name="Field 2" class="selectorelement w-node-_237abb9a-c93a-f53e-db54-515eba70b8ec-7528eda2 w-select">
+                <option value="">Velg sport</option>
+              </select>
+            </div>
+            <div class="divisjoncreatwrapper">
+              <div class="text-block-15">Divisjoner</div>
+              <div class="divisjonlist">
+                <div class="divisjonelement">
+                  <div>J16</div>
+                  <a href="#" class="button-4 w-button"></a>
+                </div>
+              </div>
+              <div class="div-block-23"><input class="text-field w-node-_237abb9a-c93a-f53e-db54-515eba70b8f6-7528eda2 w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="Divisjons navn &quot;J16&quot;" type="text" id="startdate" required="">
+                <a href="#" class="opprettbutton w-button">Legg til divisjon</a>
+              </div>
+            </div>
+            <div class="div-block-22">
+              <a href="#" class="opprettbutton w-button">Opprett turnering</a>
+            </div>
+          </div>
+        </form>
+        <div class="w-form-done">
+          <div>Thank you! Your submission has been received!</div>
+        </div>
+        <div class="w-form-fail">
+          <div>Oops! Something went wrong while submitting the form.</div>
+        </div>
+      </div>
+    </div>
+    <div class="filterturn">
+      <div class="turnfilterbutton"><img src="images/padles-v1.png" loading="lazy" sizes="(max-width: 767px) 100vw, 511.9965515136719px" srcset="images/padles-v1-p-500.png 500w, images/padles-v1.png 512w" alt="" class="sporticon hide">
+        <div class="sportlable">Forball</div>
+      </div>
+    </div>
+    <div class="divisionholder">
+      <a href="#" class="divisionbutton w-button">Alle</a>
+    </div>
+    <div id="statisticfilterconteinerelement" class="statisticfilterconteiner">
+      <a id="totalStats" href="#" class="statisticfilterbutton active w-button">Total</a>
+      <a id="goalsfilterStats" href="#" class="statisticfilterbutton w-button">Mål</a>
+      <a id="assistfilterStats" href="#" class="statisticfilterbutton w-button">Assist</a>
+    </div>
+    <div class="groupholder groupholderlayoutgrid">
+      <div class="headerdiv splitt">
+        <div>
+          <div id="w-node-_2227120e-d86a-fe7f-3f0b-df94e5b48cf6-7528eda2" class="groupheadername ma">Søndag 31.mars 2024</div>
+          <div class="underlineheader">#</div>
+          <div class="text-block-29 countermatch ma">#</div>
+        </div>
+        <div id="w-node-_3314fe10-edaf-19a6-dfa8-f402277ca1f8-7528eda2" class="code-embed-12 w-embed"><select class="locationselector">
+            <option value="">Alle lokasjoner</option>
+          </select></div>
+        <a id="w-node-_2137e36b-4703-b7a2-bc4e-3ca8928b1d74-7528eda2" href="#" class="closeopengroupbutton w-button"></a>
+      </div>
+      <div class="matchlist">
+        <div class="matchholder new">
+          <div class="bordholder new">
+            <div id="w-node-_9e92be7f-6700-2c0d-33ff-2d57e5f33b35-7528eda2" class="timewrapper">
+              <div class="timelable">13:30</div>
+            </div>
+            <div id="w-node-_53ccc898-f5f9-9126-7354-6da8810702dd-7528eda2" class="resultwrapper">
+              <div id="w-node-bbc31bc9-0411-c0a0-dfdb-ea7ffd2ac026-7528eda2" class="resultlableteam1">2</div>
+              <div id="w-node-_4943364c-466d-cc39-b89c-cadb7167d926-7528eda2" class="mellomstrek"></div>
+              <div id="w-node-_73f379e9-e99c-2125-7bf1-158e4cdc7a39-7528eda2" class="resultlableteam2">2</div>
+            </div>
+            <div id="w-node-bd39e360-f25b-50ba-3556-04d7b914806b-7528eda2" class="teamwrapper">
+              <div id="w-node-_2227120e-d86a-fe7f-3f0b-df94e5b48cfa-7528eda2" class="teamwraperc1"><img id="w-node-_2227120e-d86a-fe7f-3f0b-df94e5b48cfd-7528eda2" loading="lazy" alt="" src="images/placeholder-teamlogo.png" class="logo logoteam1">
+                <div id="w-node-_2227120e-d86a-fe7f-3f0b-df94e5b48cfb-7528eda2" class="teamname team1 new">Lag 1</div>
+              </div>
+              <div id="w-node-_2227120e-d86a-fe7f-3f0b-df94e5b48d01-7528eda2" class="teamwraperc2"><img id="w-node-_2227120e-d86a-fe7f-3f0b-df94e5b48d02-7528eda2" loading="lazy" alt="" src="images/placeholder-teamlogo.png" class="logo logoteam2">
+                <div id="w-node-_2227120e-d86a-fe7f-3f0b-df94e5b48d03-7528eda2" class="teamname team2 new">Lag 2</div>
+              </div>
+            </div>
+            <div id="w-node-_2588664f-1141-d9f9-c4bf-8423c357da59-7528eda2" class="locationwrapper">
+              <div id="w-node-_26d79b66-7a3d-7bd4-5638-177e003ddb01-7528eda2" class="divisiongroupwrapper">
+                <div class="endplaylable new">#</div>
+                <div id="w-node-_265ec494-779c-a608-2423-d60ff7935d02-7528eda2" class="divisiontext">#</div>
+                <div class="grouptext">#</div>
+              </div>
+              <div id="w-node-_8cb48447-937a-c592-0338-a2a7c2696af7-7528eda2" class="locationtext">Location</div>
+              <div id="w-node-fc8be7ef-4abc-084d-ab31-f09a1a06e860-7528eda2" class="refereename">Dommer</div>
+            </div>
+          </div>
+          <div class="playicon new">
+            <div class="text-block-30">Spilles nå</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="groupholder">
+      <div class="headerdiv splitt">
+        <div>
+          <div id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab74b-7528eda2" class="groupheadername ma">Søndag 31.mars 2024</div>
+          <div class="text-block-29 countermatch ma">#</div>
+        </div>
+        <div id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab74f-7528eda2" class="code-embed-12 w-embed"><select class="locationselector">
+            <option value="">Alle lokasjoner</option>
+          </select></div>
+      </div>
+      <div class="matchlist">
+        <div class="matchholder n1">
+          <div class="bordholder">
+            <div id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab753-7528eda2" class="div-block-9">
+              <div id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab754-7528eda2" class="divisionlable">#</div>
+            </div>
+            <div class="div-block-2">
+              <div id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab757-7528eda2" class="blockleft">
+                <div id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab758-7528eda2" class="teamname team1">Lag 1</div><img id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab75a-7528eda2" loading="lazy" alt="" src="images/placeholder-teamlogo.png" class="logo logoteam1">
+              </div>
+              <div id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab75b-7528eda2" class="blockmiddle">
+                <div class="resultlable">13:30</div>
+              </div>
+              <div id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab75e-7528eda2" class="blockright"><img id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab75f-7528eda2" loading="lazy" alt="" src="images/placeholder-teamlogo.png" class="logo logoteam2">
+                <div id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab760-7528eda2" class="teamname team2">Lag 2</div>
+              </div>
+            </div>
+            <div class="endplaylable">#</div>
+            <div id="w-node-_42fac5ba-16a3-fbbc-3457-b11a147ab764-7528eda2" class="settlist hide">
+              <div class="settdiv">
+                <div class="settnr"></div>
+                <div class="setttextlable">0-0 </div>
+              </div>
+            </div>
+            <div class="loclabelholder">
+              <div class="locationlable">Arenaen</div>
+            </div>
+          </div>
+          <div class="playicon">
+            <div class="text-block-30">Spilles nå</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="matchholder n1 teampagematch">
+      <div class="bordholder teampage">
+        <div id="w-node-_7d1e99c5-73a7-b084-0c31-463483f85714-7528eda2" class="blocktime">
+          <div class="teamdatematch">12.des. </div>
+        </div>
+        <div id="w-node-_7d1e99c5-73a7-b084-0c31-463483f85722-7528eda2" class="fieldarea hide">
+          <div class="fieldname">Oslofjord B1</div>
+        </div>
+        <div class="div-block-2 teampage">
+          <div id="w-node-_7d1e99c5-73a7-b084-0c31-463483f85717-7528eda2" class="blockleft">
+            <div id="w-node-_7d1e99c5-73a7-b084-0c31-463483f85718-7528eda2" class="teamname team1">Lag 1</div><img id="w-node-_7d1e99c5-73a7-b084-0c31-463483f8571a-7528eda2" loading="lazy" alt="" src="images/placeholder-teamlogo.png" class="logo logoteam1">
+          </div>
+          <div id="w-node-_7d1e99c5-73a7-b084-0c31-463483f8571b-7528eda2" class="blockmiddle">
+            <div class="resultlable teampages">13:30</div>
+          </div>
+          <div id="w-node-_7d1e99c5-73a7-b084-0c31-463483f8571e-7528eda2" class="blockright"><img id="w-node-_7d1e99c5-73a7-b084-0c31-463483f8571f-7528eda2" loading="lazy" alt="" src="images/placeholder-teamlogo.png" class="logo logoteam2">
+            <div id="w-node-_7d1e99c5-73a7-b084-0c31-463483f85720-7528eda2" class="teamname team2">Lag 2</div>
+          </div>
+        </div>
+        <div class="endplaylable">#</div>
+        <div id="w-node-_7d1e99c5-73a7-b084-0c31-463483f85727-7528eda2" class="settlist hide">
+          <div class="settdiv">
+            <div class="settnr"></div>
+            <div class="setttextlable">0-0 </div>
+          </div>
+        </div>
+        <div class="loclabelholder">
+          <div class="locationlable">Arenaen</div>
+        </div>
+      </div>
+      <div class="playicon inteams">
+        <div class="text-block-30 inteams">Spilles nå</div>
+      </div>
+    </div>
+    <div class="tablegroupholder fotballview">
+      <div class="groupheadername">
+        <div class="groupheadername">Divisjonname - gruppe</div>
+      </div>
+      <div class="rowteamholder header">
+        <div id="w-node-_3c45c99a-96cc-ead0-2f1f-f9d88fe8f7b6-7528eda2" class="teaminfoholder">
+          <div id="w-node-_3c45c99a-96cc-ead0-2f1f-f9d88fe8f7b7-7528eda2">#</div>
+          <div id="w-node-_3c45c99a-96cc-ead0-2f1f-f9d88fe8f7b9-7528eda2">Lag</div>
+        </div>
+        <div id="w-node-_3c45c99a-96cc-ead0-2f1f-f9d88fe8f7bb-7528eda2" class="pointholder">
+          <div class="pointtext header">SP</div>
+          <div class="pointtext header">V</div>
+          <div class="pointtext header">U</div>
+          <div class="pointtext header">T</div>
+          <div class="pointtext header">+/-</div>
+          <div class="pointtext header">MF</div>
+          <div class="pointtext header point">P</div>
+        </div>
+      </div>
+      <div class="rowholder">
+        <div class="rowteamholder resultrow">
+          <div id="w-node-_3c45c99a-96cc-ead0-2f1f-f9d88fe8f7cc-7528eda2" class="teaminfoholder">
+            <div id="w-node-_3c45c99a-96cc-ead0-2f1f-f9d88fe8f7cd-7528eda2" class="rangenr">1.</div><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_3c45c99a-96cc-ead0-2f1f-f9d88fe8f7cf-7528eda2" alt="" class="clublogo">
+            <div id="w-node-_3c45c99a-96cc-ead0-2f1f-f9d88fe8f7d0-7528eda2" class="teamnamelable">Lagnavnet</div>
+          </div>
+          <div id="w-node-_3c45c99a-96cc-ead0-2f1f-f9d88fe8f7d2-7528eda2" class="pointholder">
+            <div class="pointtext played">0</div>
+            <div class="pointtext won">0</div>
+            <div class="pointtext drawn">0</div>
+            <div class="pointtext lost">0</div>
+            <div class="pointtext goalsfa">0-0</div>
+            <div class="pointtext goaldifference">0</div>
+            <div id="w-node-_3c45c99a-96cc-ead0-2f1f-f9d88fe8f7df-7528eda2" class="pointtext points">0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tablegroupholder icehockey">
+      <div class="groupheadername">
+        <div class="groupheadername">Divisjonname - gruppe</div>
+      </div>
+      <div class="rowteamholder header icehockey">
+        <div id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd186-7528eda2" class="teaminfoholder">
+          <div id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd187-7528eda2">#</div>
+          <div id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd189-7528eda2">Lag</div>
+        </div>
+        <div id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd18b-7528eda2" class="pointholder icehockey">
+          <div class="pointtext header">SP</div>
+          <div class="pointtext header">V</div>
+          <div id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd190-7528eda2" class="pointtext header">O V</div>
+          <div id="w-node-a5749133-12f4-a7ea-b978-d13a02135418-7528eda2" class="pointtext header">O T</div>
+          <div class="pointtext header">T</div>
+          <div class="pointtext header">+/-</div>
+          <div class="pointtext header">MF</div>
+          <div id="w-node-a7569829-8cfc-8bea-6526-a7b0a3a6c743-7528eda2" class="pointtext header">PIM</div>
+          <div class="pointtext header point">P</div>
+        </div>
+      </div>
+      <div class="rowholder">
+        <div class="rowteamholder resultrow icehockey">
+          <div id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd19c-7528eda2" class="teaminfoholder">
+            <div id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd19d-7528eda2" class="rangenr">1.</div><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd19f-7528eda2" alt="" class="clublogo">
+            <div id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd1a0-7528eda2" class="teamnamelable">Lagnavnet</div>
+          </div>
+          <div id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd1a2-7528eda2" class="pointholder icehockey">
+            <div class="pointtext played">0</div>
+            <div class="pointtext won">0</div>
+            <div class="pointtext ov">0</div>
+            <div class="pointtext ot">0</div>
+            <div id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd1a9-7528eda2" class="pointtext lost">0</div>
+            <div class="pointtext goalsfa">0-0</div>
+            <div class="pointtext goaldifference">0</div>
+            <div class="pointtext penaltymin">0</div>
+            <div id="w-node-_0ed294e3-dd38-fb82-6f15-f1bff29cd1af-7528eda2" class="pointtext points">0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tablegroupholder">
+      <div class="groupheadername">
+        <div class="groupheadername">Divisjonname - gruppe</div>
+      </div>
+      <div class="rowteamholder header">
+        <div id="w-node-a803293b-1f57-72bd-615c-a019b9ca7c5e-7528eda2" class="teaminfoholder">
+          <div id="w-node-a803293b-1f57-72bd-615c-a019b9ca7c5f-7528eda2">#</div>
+          <div id="w-node-a803293b-1f57-72bd-615c-a019b9ca7c61-7528eda2">Lag</div>
+        </div>
+        <div id="w-node-a803293b-1f57-72bd-615c-a019b9ca7c63-7528eda2" class="pointholder">
+          <div class="pointtext header">SP</div>
+          <div class="pointtext header">V</div>
+          <div class="pointtext header">U</div>
+          <div class="pointtext header">T</div>
+          <div class="pointtext header">+/-</div>
+          <div class="pointtext header">MF</div>
+          <div class="pointtext header point">P</div>
+        </div>
+      </div>
+      <div class="rowholder">
+        <div class="rowteamholder resultrow">
+          <div id="w-node-a803293b-1f57-72bd-615c-a019b9ca7c74-7528eda2" class="teaminfoholder">
+            <div id="w-node-a803293b-1f57-72bd-615c-a019b9ca7c75-7528eda2" class="rangenr">1.</div><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-a803293b-1f57-72bd-615c-a019b9ca7c77-7528eda2" alt="" class="clublogo">
+            <div id="w-node-a803293b-1f57-72bd-615c-a019b9ca7c78-7528eda2" class="teamnamelable">Lagnavnet</div>
+          </div>
+          <div id="w-node-a803293b-1f57-72bd-615c-a019b9ca7c7a-7528eda2" class="pointholder">
+            <div class="pointtext played">0</div>
+            <div class="pointtext won">0</div>
+            <div class="pointtext drawn">0</div>
+            <div class="pointtext lost">0</div>
+            <div class="pointtext goalsfa">0-0</div>
+            <div class="pointtext goaldifference">0</div>
+            <div id="w-node-a803293b-1f57-72bd-615c-a019b9ca7c87-7528eda2" class="pointtext points">0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tablegroupholder volleyballview">
+      <div class="groupheadername">
+        <div class="groupheadername">Divisjonname-gruppe</div>
+      </div>
+      <div class="rowteamholder header">
+        <div id="w-node-_61cb26ed-2639-3869-b929-e7b576cf9682-7528eda2" class="teaminfoholder">
+          <div id="w-node-_61cb26ed-2639-3869-b929-e7b576cf9683-7528eda2">#</div>
+          <div id="w-node-_61cb26ed-2639-3869-b929-e7b576cf9685-7528eda2">Lag</div>
+        </div>
+        <div id="w-node-_61cb26ed-2639-3869-b929-e7b576cf9687-7528eda2" class="pointholder vollyball">
+          <div class="pointtext header">SP</div>
+          <div class="pointtext header">V</div>
+          <div class="pointtext header">T</div>
+          <div class="pointtext header">+/-</div>
+          <div class="pointtext header point">P</div>
+        </div>
+      </div>
+      <div class="rowholder">
+        <div class="rowteamholder resultrow">
+          <div id="w-node-_61cb26ed-2639-3869-b929-e7b576cf9698-7528eda2" class="teaminfoholder">
+            <div id="w-node-_61cb26ed-2639-3869-b929-e7b576cf9699-7528eda2" class="rangenr">1.</div><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_61cb26ed-2639-3869-b929-e7b576cf969b-7528eda2" alt="" class="clublogo">
+            <div id="w-node-_61cb26ed-2639-3869-b929-e7b576cf969c-7528eda2" class="teamnamelable">Lagnavnet</div>
+          </div>
+          <div id="w-node-_61cb26ed-2639-3869-b929-e7b576cf969e-7528eda2" class="pointholder vollyball">
+            <div class="pointtext played">0</div>
+            <div class="pointtext won">0</div>
+            <div class="pointtext lost">0</div>
+            <div class="pointtext setsdifference">0-0</div>
+            <div id="w-node-_61cb26ed-2639-3869-b929-e7b576cf96ab-7528eda2" class="pointtext points">0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tablegroupholder playerstats"><img src="images/points.png" loading="lazy" alt="" class="image-6">
+      <div class="groupheadername">Divisjonname-gruppe</div>
+      <div class="countplayers">Stk.</div>
+      <div class="rowholder">
+        <div class="rowteamholder resultrow stats">
+          <div id="w-node-c85c4d99-423d-545d-ac86-ce3896cd4a78-7528eda2" class="teaminfoholder stat">
+            <div id="w-node-c85c4d99-423d-545d-ac86-ce3896cd4a79-7528eda2" class="rangenr stat">1.</div>
+            <div id="w-node-c85c4d99-423d-545d-ac86-ce3896cd4a7c-7528eda2" class="playername">Spiller</div>
+          </div>
+          <div id="w-node-c85c4d99-423d-545d-ac86-ce3896cd4a7e-7528eda2" class="pointholder playerstat">
+            <div>
+              <div class="text-block-36">Mål</div>
+              <div class="pointtext goals">#</div>
+            </div>
+            <div>
+              <div class="text-block-36">Assist</div>
+              <div class="pointtext assists">#</div>
+            </div>
+          </div>
+          <div id="w-node-b4a89c77-00f2-5a71-cce3-84ab25f0b77d-7528eda2" class="div-block-57">
+            <div class="div-block-56">
+              <div class="text-block-34">Lag:</div>
+              <div id="w-node-_2bcfb474-b3fc-c79d-61ea-11afe95be96d-7528eda2" class="teamlable">Lag</div>
+            </div>
+            <div class="div-block-56">
+              <div class="text-block-34">Divisjon:</div>
+              <div id="w-node-_2bc7b1c0-1291-d4bf-374c-1260a54a0101-7528eda2" class="divisjonlable">Divisjon</div>
+            </div>
+            <div class="div-block-56">
+              <div class="text-block-34">Klubb:</div>
+              <div id="w-node-_906750ed-997d-4a63-56ec-acf59fab3183-7528eda2" class="clubblable">Klubb</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="endplayelements">
+      <div class="divisionname">#</div>
+      <div class="endplayheaderendplay">
+        <div class="headerholder">
+          <div class="endplayname">#</div>
+          <div>SLUTTSPILL</div>
+        </div>
+        <div class="contentholder"></div>
+      </div>
+      <div class="endplaysection eighthfinalelement">
+        <div class="sub4">
+          <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2447-7528eda2" class="endplaymatchholder left">
+            <div class="endplaymatch left match1">
+              <div id="w-node-_1532fe06-0e7b-17a6-53c3-db8833916237-7528eda2" class="finalename">8-DELSFINALE</div>
+              <div class="finalenumberlabel">1</div><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2449-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a244a-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a244b-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a244d-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a244f-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2451-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2453-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-_05fe9b7d-0fe4-634c-3d6f-88b489f6f67b-7528eda2" class="datelable">13:00 12.jan</div>
+            </div>
+            <div class="wiresystem">
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2456-7528eda2" class="wierfotter1 left"></div>
+            </div>
+          </div>
+          <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2457-7528eda2" class="endplaymatchholder right">
+            <div class="endplaymatch right match2"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2459-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a245a-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a245b-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a245d-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a245f-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2461-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2463-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-_35f611d3-7336-a56b-1b19-c7559f4fbe9e-7528eda2" class="datelable">13:00 12.jan</div>
+              <div class="finalenumberlabel">2</div>
+              <div id="w-node-b418926a-239d-cccc-bb0c-01a45dc2c033-7528eda2" class="finalename">8-DELSFINALE</div>
+            </div>
+            <div class="wiresystem">
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2466-7528eda2" class="wierfotter1 right"></div>
+            </div>
+          </div>
+        </div>
+        <div class="sub4">
+          <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2468-7528eda2" class="endplaymatchholder left">
+            <div class="endplaymatch left match1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a246a-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a246b-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a246c-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a246e-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2470-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2472-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2474-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-a604b60f-8cef-3091-8693-731a30243314-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-c0e7a620-486a-6cb8-664b-4a6da09343cb-7528eda2" class="finalename">8-DELSFINALE</div>
+              <div class="finalenumberlabel">3</div>
+            </div>
+            <div class="wiresystem">
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2477-7528eda2" class="wierfotter1 left"></div>
+            </div>
+          </div>
+          <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2478-7528eda2" class="endplaymatchholder right">
+            <div class="endplaymatch right match2"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a247a-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a247b-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a247c-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a247e-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2480-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2482-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2484-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-_1054ed40-6c93-f4c2-36e1-bdcc5f70e767-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-_88a83aec-00af-bc51-6cb9-59dc53f198c3-7528eda2" class="finalename">8-DELSFINALE</div>
+              <div class="finalenumberlabel">4</div>
+            </div>
+            <div class="wiresystem">
+              <div id="w-node-_1fc43a6c-9852-bc6e-9e0a-5e86a96a2487-7528eda2" class="wierfotter1 right"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="endplaysection quarterfinalelement">
+        <div class="edgematchholder">
+          <div class="wiresystem topp">
+            <div id="w-node-_4b1576ad-6e24-18c6-c3a8-3cfbcb54273f-7528eda2" class="wierfotter1 senter"></div>
+          </div>
+          <div id="w-node-c69887fb-481f-a722-311a-1a5a674dd808-7528eda2" class="endplaymatchholder senter">
+            <div class="endplaymatch senter"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-c69887fb-481f-a722-311a-1a5a674dd80a-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-c69887fb-481f-a722-311a-1a5a674dd80b-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-c69887fb-481f-a722-311a-1a5a674dd80c-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-c69887fb-481f-a722-311a-1a5a674dd80e-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-c69887fb-481f-a722-311a-1a5a674dd810-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-c69887fb-481f-a722-311a-1a5a674dd812-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-c69887fb-481f-a722-311a-1a5a674dd814-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-cf98d937-508b-642c-3d84-443d89cda28c-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-b82aa002-f860-2944-bb8b-30fcbeb6322b-7528eda2" class="finalename">KVARTFINALE</div>
+              <div class="finalenumberlabel">1</div>
+            </div>
+          </div>
+          <div class="wiresystem">
+            <div id="w-node-c69887fb-481f-a722-311a-1a5a674dd817-7528eda2" class="wierfotter1 left"></div>
+          </div>
+        </div>
+        <div class="edgematchholder">
+          <div class="wiresystem topp">
+            <div id="w-node-_8806d0da-5f16-d8a7-5076-c47379617b3f-7528eda2" class="wierfotter1 senter"></div>
+          </div>
+          <div id="w-node-_8806d0da-5f16-d8a7-5076-c47379617b40-7528eda2" class="endplaymatchholder senter">
+            <div class="endplaymatch senter"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_8806d0da-5f16-d8a7-5076-c47379617b42-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_8806d0da-5f16-d8a7-5076-c47379617b43-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-_8806d0da-5f16-d8a7-5076-c47379617b44-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-_8806d0da-5f16-d8a7-5076-c47379617b46-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-_8806d0da-5f16-d8a7-5076-c47379617b48-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-_8806d0da-5f16-d8a7-5076-c47379617b4a-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-_8806d0da-5f16-d8a7-5076-c47379617b4c-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-_218a6dbf-80b7-c49d-9c73-a1bfb1482650-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-_30bf9b61-4fb7-7c75-77a6-d7e99a01112e-7528eda2" class="finalename">KVARTFINALE</div>
+              <div class="finalenumberlabel">2</div>
+            </div>
+          </div>
+          <div class="wiresystem">
+            <div id="w-node-_8806d0da-5f16-d8a7-5076-c47379617b4f-7528eda2" class="wierfotter1 right"></div>
+          </div>
+        </div>
+      </div>
+      <div class="endplaysection semi1">
+        <div class="edgematchholder">
+          <div class="wiresystem topp">
+            <div id="w-node-_1fe0bc1d-a63f-6023-397b-742535532885-7528eda2" class="wierfotter1 senter"></div>
+          </div>
+          <div id="w-node-_1fe0bc1d-a63f-6023-397b-742535532886-7528eda2" class="endplaymatchholder senter">
+            <div class="endplaymatch senter"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1fe0bc1d-a63f-6023-397b-742535532888-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1fe0bc1d-a63f-6023-397b-742535532889-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-_1fe0bc1d-a63f-6023-397b-74253553288a-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-_1fe0bc1d-a63f-6023-397b-74253553288c-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-_1fe0bc1d-a63f-6023-397b-74253553288e-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-_1fe0bc1d-a63f-6023-397b-742535532890-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-_1fe0bc1d-a63f-6023-397b-742535532892-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-_2a38e652-7cb8-a78b-ef65-1e0282da74a8-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-_0b9a9692-45c3-bf12-0ed1-3bd3886404c2-7528eda2" class="finalename">SEMIFINALE</div>
+              <div class="finalenumberlabel">1</div>
+            </div>
+          </div>
+          <div class="wiresystem smal">
+            <div id="w-node-_1be4d254-9af3-ea25-844d-e9b98c89de59-7528eda2" class="wierfotter1 senter"></div>
+          </div>
+        </div>
+      </div>
+      <div class="endplaysection finale">
+        <div id="w-node-_0d1dbe7a-5db5-eecc-4ce1-5cfaf45de407-7528eda2" class="edgematchholder">
+          <div class="wiresystem smal">
+            <div id="w-node-_0d1dbe7a-5db5-eecc-4ce1-5cfaf45de409-7528eda2" class="wierfotter1 senter"></div>
+          </div>
+          <div class="endplaymatchholder senter finalsystem">
+            <div class="div-block-16">
+              <div id="w-node-_36ff9717-e1dd-28e3-bc5f-752f9edfcae3-7528eda2" class="div-block-17">
+                <div class="div-block-18"></div>
+              </div>
+              <div id="w-node-_0d1dbe7a-5db5-eecc-4ce1-5cfaf45de40b-7528eda2" class="endplaymatch senter finale"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_0d1dbe7a-5db5-eecc-4ce1-5cfaf45de40c-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_0d1dbe7a-5db5-eecc-4ce1-5cfaf45de40d-7528eda2" alt="" class="teamlogoholder logo2">
+                <div id="w-node-_0d1dbe7a-5db5-eecc-4ce1-5cfaf45de40e-7528eda2" class="teaminisialer inis1">#</div>
+                <div id="w-node-_0d1dbe7a-5db5-eecc-4ce1-5cfaf45de410-7528eda2" class="teaminisialer inis2">#</div>
+                <div id="w-node-_0d1dbe7a-5db5-eecc-4ce1-5cfaf45de412-7528eda2" class="goalendplaylable goal1">#</div>
+                <div id="w-node-_0d1dbe7a-5db5-eecc-4ce1-5cfaf45de414-7528eda2" class="lablemidt">-</div>
+                <div id="w-node-_0d1dbe7a-5db5-eecc-4ce1-5cfaf45de416-7528eda2" class="goalendplaylable goal2">#</div>
+                <div id="w-node-d53db3f8-5205-ab56-5f59-d71ab0397c42-7528eda2" class="datelable">13:00 12.jan</div>
+                <div id="w-node-d556eb8f-4a62-49fb-71cd-70910b7178bb-7528eda2" class="finalename">FINALE</div>
+              </div>
+            </div>
+          </div>
+          <div class="wiresystem smal">
+            <div id="w-node-_0d1dbe7a-5db5-eecc-4ce1-5cfaf45de419-7528eda2" class="wierfotter1 senter"></div>
+          </div>
+        </div>
+        <div id="w-node-_7fcb1a76-287d-c36b-b4d8-1bc6c9a74593-7528eda2" class="winner"><img src="images/placeholder-teamlogo.png" loading="lazy" alt="" class="winnerlogo">
+          <div>
+            <div class="teamnamevinner">#</div>
+            <div class="text-block-12">Vinner</div>
+          </div>
+        </div>
+        <div id="w-node-_17421dda-b6b0-4fbf-4773-2adf6613b378-7528eda2" class="endplaymatchholder senter bronzeholder">
+          <div class="endplaymatch senter bronze"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_17421dda-b6b0-4fbf-4773-2adf6613b37a-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_17421dda-b6b0-4fbf-4773-2adf6613b37b-7528eda2" alt="" class="teamlogoholder logo2">
+            <div id="w-node-_17421dda-b6b0-4fbf-4773-2adf6613b37c-7528eda2" class="teaminisialer inis1">#</div>
+            <div id="w-node-_17421dda-b6b0-4fbf-4773-2adf6613b37e-7528eda2" class="teaminisialer inis2">#</div>
+            <div id="w-node-_17421dda-b6b0-4fbf-4773-2adf6613b380-7528eda2" class="goalendplaylable goal1">#</div>
+            <div id="w-node-_17421dda-b6b0-4fbf-4773-2adf6613b382-7528eda2" class="lablemidt">-</div>
+            <div id="w-node-_17421dda-b6b0-4fbf-4773-2adf6613b384-7528eda2" class="goalendplaylable goal2">#</div>
+            <div id="w-node-_17421dda-b6b0-4fbf-4773-2adf6613b386-7528eda2" class="datelable">13:00 12.jan</div>
+            <div id="w-node-_17421dda-b6b0-4fbf-4773-2adf6613b388-7528eda2" class="finalename">#</div>
+          </div>
+        </div>
+        <div id="w-node-_7afeae51-d9bb-4a3c-b850-9e4e70cb49f9-7528eda2" class="enplaytext">
+          <div class="div-block-20">
+            <div class="divisionnamemidle">#</div>
+            <div class="endplayname endplaynamemidle">#</div>
+            <div>SLUTTSPILL</div>
+          </div>
+        </div>
+      </div>
+      <div class="endplaysection semi1 bottom">
+        <div class="edgematchholder">
+          <div class="wiresystem smal">
+            <div id="w-node-_3770ca0f-2c63-1f1e-e800-0dba2e6ce969-7528eda2" class="wierfotter1 senter"></div>
+          </div>
+          <div id="w-node-_3770ca0f-2c63-1f1e-e800-0dba2e6ce96a-7528eda2" class="endplaymatchholder senter">
+            <div class="endplaymatch senter"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_3770ca0f-2c63-1f1e-e800-0dba2e6ce96c-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_3770ca0f-2c63-1f1e-e800-0dba2e6ce96d-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-_3770ca0f-2c63-1f1e-e800-0dba2e6ce96e-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-_3770ca0f-2c63-1f1e-e800-0dba2e6ce970-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-_3770ca0f-2c63-1f1e-e800-0dba2e6ce972-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-_3770ca0f-2c63-1f1e-e800-0dba2e6ce974-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-_3770ca0f-2c63-1f1e-e800-0dba2e6ce976-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-_3770ca0f-2c63-1f1e-e800-0dba2e6ce978-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-_09370ad8-e0bd-feee-b77e-546878644969-7528eda2" class="finalename">SEMIFINALE</div>
+              <div class="finalenumberlabel">2</div>
+            </div>
+          </div>
+          <div class="wiresystem bottom">
+            <div id="w-node-_3770ca0f-2c63-1f1e-e800-0dba2e6ce97b-7528eda2" class="wierfotter1 senter"></div>
+          </div>
+        </div>
+      </div>
+      <div class="endplaysection quarterfinalelement bottom">
+        <div class="edgematchholder">
+          <div class="wiresystem">
+            <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a63-7528eda2" class="wierfotter1 left botton"></div>
+          </div>
+          <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a54-7528eda2" class="endplaymatchholder senter">
+            <div class="endplaymatch senter"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a56-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a57-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a58-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a5a-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a5c-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a5e-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a60-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-b4da9218-f31b-86ac-9167-13f4d4d10a75-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-ad8192e7-b8d4-1431-7ad6-024f89245897-7528eda2" class="finalename">KVARTFINALE</div>
+              <div class="finalenumberlabel">3</div>
+            </div>
+          </div>
+          <div class="wiresystem bottom">
+            <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a53-7528eda2" class="wierfotter1 senter"></div>
+          </div>
+        </div>
+        <div class="edgematchholder">
+          <div class="wiresystem">
+            <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a76-7528eda2" class="wierfotter1 right botton"></div>
+          </div>
+          <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a67-7528eda2" class="endplaymatchholder senter">
+            <div class="endplaymatch senter"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a69-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a6a-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a6b-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a6d-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a6f-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a71-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a73-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-_623bc05c-71a7-9213-09aa-f2da28e49b07-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-_7b37036c-6f63-6a44-a69c-b55a1a799e20-7528eda2" class="finalename">KVARTFINALE</div>
+              <div class="finalenumberlabel">4</div>
+            </div>
+          </div>
+          <div class="wiresystem bottom">
+            <div id="w-node-af9fcde4-37f9-dd7a-0a76-6c8fd7f96a66-7528eda2" class="wierfotter1 senter"></div>
+          </div>
+        </div>
+      </div>
+      <div class="endplaysection eighthfinalelement bottom">
+        <div class="sub4">
+          <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b47-7528eda2" class="endplaymatchholder left">
+            <div class="wiresystem">
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b56-7528eda2" class="wierfotter1 left botton"></div>
+            </div>
+            <div class="endplaymatch left match1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b49-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b4a-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b4b-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b4d-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b4f-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b51-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b53-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-_4334bf8b-989c-3000-94c8-f00096302675-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-fe808856-370c-2809-2118-6d6ea4195a77-7528eda2" class="finalename">8-DELSFINALE</div>
+              <div class="finalenumberlabel">5</div>
+            </div>
+          </div>
+          <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b57-7528eda2" class="endplaymatchholder right">
+            <div class="wiresystem">
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b66-7528eda2" class="wierfotter1 right botton"></div>
+            </div>
+            <div class="endplaymatch right match2"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b59-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b5a-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b5b-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b5d-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b5f-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b61-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b63-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-_70225e15-33da-10a9-2173-74f1948e2149-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-_7178c1a8-27ef-4773-b1e5-63d9ab2e8670-7528eda2" class="finalename">8-DELSFINALE</div>
+              <div class="finalenumberlabel">6</div>
+            </div>
+          </div>
+        </div>
+        <div class="sub4">
+          <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b68-7528eda2" class="endplaymatchholder left">
+            <div class="wiresystem">
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b77-7528eda2" class="wierfotter1 left botton"></div>
+            </div>
+            <div class="endplaymatch left match1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b6a-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b6b-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b6c-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b6e-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b70-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b72-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b74-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-_223b8e90-afac-4c6d-3b7e-7ada69397769-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-_09ced140-977d-c375-4cb0-20052b764c5f-7528eda2" class="finalename">8-DELSFINALE</div>
+              <div class="finalenumberlabel">7</div>
+            </div>
+          </div>
+          <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b78-7528eda2" class="endplaymatchholder right">
+            <div class="wiresystem">
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b87-7528eda2" class="wierfotter1 right botton"></div>
+            </div>
+            <div class="endplaymatch right match2"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b7a-7528eda2" alt="" class="teamlogoholder logo1"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b7b-7528eda2" alt="" class="teamlogoholder logo2">
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b7c-7528eda2" class="teaminisialer inis1">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b7e-7528eda2" class="teaminisialer inis2">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b80-7528eda2" class="goalendplaylable goal1">#</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b82-7528eda2" class="lablemidt">-</div>
+              <div id="w-node-_1c498bb0-f9e4-d17c-02a5-d722c7ef4b84-7528eda2" class="goalendplaylable goal2">#</div>
+              <div id="w-node-_31bf19f6-38ad-60e6-0f17-5d9e62b33d3f-7528eda2" class="datelable">13:00 12.jan</div>
+              <div id="w-node-c40c3b7c-d9b0-a501-4e12-9191586c435b-7528eda2" class="finalename">8-DELSFINALE</div>
+              <div class="finalenumberlabel">8</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="loadingholder">
+      <div><img src="images/unnamed.gif" loading="lazy" width="30" alt=""></div>
+    </div>
+  </div>
+  <div class="hidelibrary w-embed w-script">
+    <script>
+document.getElementById("elementlibrary").style.display = "none";
+</script>
+  </div>
+  <div data-current="turnering" data-easing="ease" data-duration-in="300" data-duration-out="300" class="maintabs w-tabs">
+    <div class="w-tab-content">
+      <div data-w-tab="news" class="w-tab-pane"></div>
+      <div data-w-tab="turnering" class="w-tab-pane w--tab-active">
+        <section>
+          <div data-current="alle" data-easing="ease" data-duration-in="300" data-duration-out="100" class="turnering w-tabs">
+            <div class="tabs-menu-2 w-tab-menu">
+              <a data-w-tab="alle" id="taballturnering" class="w-inline-block w-tab-link w--current">
+                <div>Alle</div>
+              </a>
+              <a data-w-tab="turnering" id="tabtoturnering" class="w-inline-block w-tab-link">
+                <div>turnering</div>
+              </a>
+              <a data-w-tab="Macth" id="thismatchtabbutton" class="w-inline-block w-tab-link">
+                <div>Tab</div>
+              </a>
+              <a data-w-tab="Team" id="thisteamtabbutton" class="w-inline-block w-tab-link">
+                <div>Tab 2</div>
+              </a>
+            </div>
+            <div class="turneringtabs w-tab-content">
+              <div data-w-tab="alle" class="w-tab-pane w--tab-active">
+                <section class="header">
+                  <div class="w-layout-blockcontainer container-list w-container">
+                    <div id="headermaillogo" class="headerprofil"><img style="opacity:0" data-w-id="0e9f92ad-491c-ca1f-5976-e915ee711ab6" alt="" src="images/Xercizesport.svg" loading="lazy" class="image"></div>
+                  </div>
+                  <div id="flagcountryicon" class="flaggiicon"></div>
+                </section>
+                <div class="w-layout-blockcontainer container-list w-container">
+                  <div id="creatturnamentlist"></div>
+                  <div class="contentlistholder topp">
+                    <div class="text-block">Arrangementer</div>
+                    <div id="organizerlist" class="filterturn"></div>
+                  </div>
+                  <div class="contentlistholder">
+                    <div class="text-block">Turneringer</div>
+                    <div id="sportlist" class="filterturn"></div>
+                    <div id="maintournamentlist" class="listturnering botton">
+                      <div class="loadingholder">
+                        <div data-w-id="8fffbddc-2e9c-9327-ac1c-d0f9d0e84afe" class="loading-animation">
+                          <div class="circle c1"></div>
+                          <div class="circle c2"></div>
+                          <div class="circle c3"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div data-w-tab="turnering" class="tab-pane-turnering w-tab-pane">
+                <div id="headerwrapper" class="headerwrapper">
+                  <a id="sharetornamentbutton" href="#" class="sharebutton w-button"></a>
+                  <a id="buttontoallturnering" data-w-id="43628761-2884-00dc-2c84-98c1c54e5dc7" href="#" class="backbutton w-button"></a>
+                  <div id="tourmentheader" class="headerfix"><img id="updatetournamentlogobutton" loading="lazy" alt="" src="images/placeholder-teamlogo.png" class="tourmenticon">
+                    <div class="tourmentlable">OSLOFJORDLIGAEN</div>
+                    <div class="datename hide">FOTBALL - 2024</div>
+                  </div>
+                  <div class="smalheader">
+                    <div id="divisionholder" class="divisionholder">
+                      <a href="#" class="divisionbutton w-button">Alle</a>
+                    </div>
+                    <div class="tabholder">
+                      <div class="buttonholder">
+                        <a id="tabeltabbutton" href="#" class="tabbutton w-button">Tabell</a>
+                        <a id="matchtabbutton" href="#" class="tabbutton w-button">Kamper</a>
+                        <a id="endplaytabbutton" href="#" class="tabbutton w-button">Sluttspill</a>
+                        <a id="statisticstabbutton" href="#" class="tabbutton w-button">Statistikk</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="div-block-52">
+                    <div class="code-embed-13 w-embed"><select id="matchMainListSelector" onchange="matchMainListSelectorChange()" class="matchStatusselector">
+                        <option value="">Alle</option>
+                        <option value="upcoming">Kommende</option>
+                        <option value="ongoing">Pågår</option>
+                        <option value="played">Spilte</option>
+                      </select></div>
+                  </div>
+                  <div id="dayfilterwrapper" class="div-block-51">
+                    <div class="code-embed-15 w-embed">
+                      <div class="day-scroll-wrapper">
+                        <div class="day-scroll-outer">
+                          <div id="dayScrollContainer" class="day-scroll-container"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="statusfilterMatchLable" class="text-block-31">-</div>
+                    <div id="matchstatuswrapperfilter" class="matchstatuswrapperfilter w-embed">
+                      <div class="matchlist-filter" id="matchlistFilter">
+                        <button class="matchlist-tab active" data-filter="all">Alle</button>
+                        <button class="matchlist-tab" data-filter="upcoming">Kommende</button>
+                        <button class="matchlist-tab" data-filter="ongoing">Pågår</button>
+                        <button class="matchlist-tab" data-filter="played">Spilt</button>
+                      </div>
+                    </div>
+                  </div>
+                  <a id="filterstartbutton" href="#" class="filterstartbutton w-button"></a>
+                </div>
+                <div id="htmlkamper" class="htmlkamper w-embed">
+                  <div id="swipe-container">
+                    <div class="swipe-wrapper">
+                      <!--  Side 1: Teams List  -->
+                      <div class="swipe-slide">
+                        <div class="swipe-container-list">
+                          <div id="teamslistholder" class="swipe-listholder">
+                            <h2>Teams List</h2>
+                            <p>Her vises listen over lag.</p>
+                          </div>
+                        </div>
+                      </div>
+                      <!--  Side 2: Match List  -->
+                      <div class="swipe-slide">
+                        <div class="swipe-container-list">
+                          <div id="matchlistholder" class="swipe-listholder">
+                            <h2>Match List</h2>
+                            <p>Her vises listen over kamper.</p>
+                          </div>
+                        </div>
+                      </div>
+                      <!--  Side 3: End Play List  -->
+                      <div class="swipe-slide">
+                        <div class="swipe-container-list">
+                          <div id="endplaylist" class="swipe-listholder">
+                            <h2>End Play List</h2>
+                            <p>Her vises listen over sluttspill.</p>
+                          </div>
+                        </div>
+                      </div>
+                      <!--  Side 4: Statistics List  -->
+                      <div class="swipe-slide">
+                        <div class="swipe-container-list">
+                          <div id="statisticslist" class="swipe-listholder">
+                            <!--  Søkefelt  -->
+                            <div class="search-container">
+                              <svg class="search-icon" viewbox="0 0 24 24">
+                                <path fill="white" d="M9.5 3a6.5 6.5 0 0 1 5.2 10.4l4.15 4.15a1 1 0 1 1-1.4 1.4l-4.15-4.15A6.5 6.5 0 1 1 9.5 3m0 2a4.5 4.5 0 1 0 0 9a4.5 4.5 0 0 0 0-9z"></path>
+                              </svg>
+                              <input type="text" id="playerSearch" placeholder="Søk etter spiller...">
+                            </div>
+                            <!--  Innhold  -->
+                            <div id="statisticslistcontent">
+                              <h2>Statistics</h2>
+                              <p>Her vises listen over statistikk.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div data-w-tab="Macth" class="tab-pane-macth w-tab-pane">
+                <div id="headerwrappermatch" class="headerwrapper thismatch">
+                  <a id="shareMatchButton" href="#" class="sharebutton w-button"></a>
+                  <a id="buttontoturnament" data-w-id="b22c832c-9489-8f95-805b-293e26b2adeb" href="#" class="backbutton w-button"></a>
+                  <div class="inforow tirnament turnamentinfo">
+                    <div class="textlablematch turnamentname"># </div>
+                  </div>
+                  <div class="div-block-3">
+                    <div class="div-block-4 matchview">
+                      <div id="w-node-_904e8c45-ba35-c29e-9e90-a3951d3b2c70-7528eda2" class="teamdiv-match team1button left"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_88141e8a-d97a-0e68-2609-888f4d7a57ea-7528eda2" alt="" class="teamicon logoteam1">
+                        <div id="w-node-_5cb8ee48-4874-bdc3-80df-a3f20e942c84-7528eda2" class="text-block-6 team1">#</div>
+                      </div>
+                      <div id="w-node-_93d852cd-a4b3-0e73-0fb8-b5be4f774fa9-7528eda2">
+                        <div class="divisionlablematch">#</div>
+                        <div class="resultlablemacth resultlable"># - #</div>
+                        <div class="endplaylablematch">#</div>
+                      </div>
+                      <div id="w-node-_116b0a7f-9a7a-17c1-3a3b-706186ea5807-7528eda2" class="teamdiv-match team2button right"><img src="images/placeholder-teamlogo.png" loading="lazy" id="w-node-_116b0a7f-9a7a-17c1-3a3b-706186ea5808-7528eda2" alt="" class="teamicon logoteam2">
+                        <div id="w-node-_116b0a7f-9a7a-17c1-3a3b-706186ea5809-7528eda2" class="text-block-6 team2">#</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <section id="matchcontentholder" class="section-3 match matchsection">
+                  <div class="w-layout-blockcontainer container-3 w-container">
+                    <div id="thismatchsett" class="tablegroupholder matchresults">
+                      <div class="text-block-11">Sett resultater</div>
+                      <div class="volleyballresults">
+                        <div id="w-node-d802ce58-de0d-cce0-6767-23067dd3041e-7528eda2" class="cellholder settholder">
+                          <div class="headerlable senter">Sett1:</div>
+                          <div class="div-block-44">
+                            <div>
+                              <div id="w-node-d802ce58-de0d-cce0-6767-23067dd30423-7528eda2" class="lable settlable settaa">-</div>
+                            </div>
+                            <div id="w-node-d802ce58-de0d-cce0-6767-23067dd30425-7528eda2" class="lable distanse">-</div>
+                            <div>
+                              <div id="w-node-d802ce58-de0d-cce0-6767-23067dd30428-7528eda2" class="lable settlable settab">-</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="cellholder settholder">
+                          <div class="headerlable senter">Sett2:</div>
+                          <div class="div-block-44">
+                            <div>
+                              <div id="w-node-d802ce58-de0d-cce0-6767-23067dd3042f-7528eda2" class="lable settlable settba">-</div>
+                            </div>
+                            <div id="w-node-d802ce58-de0d-cce0-6767-23067dd30431-7528eda2" class="lable distanse">-</div>
+                            <div>
+                              <div id="w-node-d802ce58-de0d-cce0-6767-23067dd30434-7528eda2" class="lable settlable settbb">-</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="cellholder settholder">
+                          <div class="headerlable senter">Sett3:</div>
+                          <div class="div-block-44">
+                            <div>
+                              <div id="w-node-d802ce58-de0d-cce0-6767-23067dd3043b-7528eda2" class="lable settlable settca">-</div>
+                            </div>
+                            <div id="w-node-d802ce58-de0d-cce0-6767-23067dd3043d-7528eda2" class="lable distanse">-</div>
+                            <div>
+                              <div id="w-node-d802ce58-de0d-cce0-6767-23067dd30440-7528eda2" class="lable settlable settcb">-</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="thismatchinfo" class="tablegroupholder matchinfo">
+                      <div class="resultrapp">
+                        <div class="matchdescription">Kampen ble vunnet på overtid/ Traffekonkuranse</div>
+                        <div class="div-block-27 notendplaymatch">
+                          <div class="div-block-26">
+                            <div class="inforow team"><img src="images/placeholder-teamlogo.png" loading="lazy" alt="" class="icon clublogo team1logo">
+                              <div class="textlable team1points">Team 1 : 3poeng.</div>
+                            </div>
+                            <div class="inforow team"><img src="images/placeholder-teamlogo.png" loading="lazy" alt="" class="icon clublogo team2logo">
+                              <div class="textlable team2points">Team 1 : 3poeng.</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="div-block-5">
+                        <div class="inforow">
+                          <a href="#" class="calendeicon w-inline-block"><img src="images/date-and-tim.svg" loading="lazy" alt="" class="icon"></a>
+                          <div class="textlablematch datetime">Lørdag 12 september kl. 17:00 </div>
+                        </div>
+                        <div class="inforow"><img src="images/field-v1.svg" loading="lazy" alt="" class="icon">
+                          <div class="textlablematch field">Bane </div>
+                        </div>
+                        <div class="inforow"><img src="images/location.svg" loading="lazy" alt="" class="icon">
+                          <div class="textlablematch location">Få veibeskrivelse  </div>
+                        </div>
+                        <div class="inforow"><img src="images/dommerfloyte.png" loading="lazy" alt="" class="icon">
+                          <div class="textlablematch refereename">Dommer </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="streaminggroup" class="tablegroupholder matchinfo streamin">
+                      <div class="inforow tirnament"><img src="images/stream.png" loading="lazy" sizes="100vw" srcset="images/stream-p-500.png 500w, images/stream.png 512w" alt="" class="icon">
+                        <div class="textlablematch streaminginfo">Sendes </div>
+                        <div data-w-id="f7bfdfa4-fc54-5f26-2267-b50aab5a2eed" class="div-block-8 hide"></div>
+                      </div>
+                      <div class="code-embed-3 w-embed w-iframe">
+                        <div class="video-wrapper">
+                          <iframe id="youtube-iframe" src="https://www.youtube.com/embed/PQrekQOY-VY?si=r9awukxGC6-9emNA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="">
+                          </iframe>
+                        </div>
+                      </div>
+                      <div class="w-embed">
+                        <style>
+.video-wrapper {
+    position: relative;
+    width: 100%; /* Fyller parent-elementets bredde */
+    padding-bottom: 56.25%; /* Setter høyden til 16:9 forhold (9/16 = 0.5625 = 56.25%) */
+    height: 0; /* Høyden settes til 0 for å unngå konflikter */
+    overflow: hidden;
+}
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+                      </div>
+                    </div>
+                    <div id="fieldmapwrapper" class="tablegroupholder matchinfo field">
+                      <div class="inforow tirnament"><img src="images/field-v1.svg" loading="lazy" alt="" class="icon">
+                        <div class="textlablematch fieldname">Banekart  </div>
+                      </div>
+                      <div><img src="https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg" loading="lazy" alt="" class="fieldimage"></div>
+                    </div>
+                    <div id="matchlogConteinerviewer" class="tablegroupholder matchlogg">
+                      <div class="text-block-11">Kamplogg</div>
+                      <div id="infomaxGoalDiff" class="infomaxgoaldiff">-</div>
+                      <div class="matchloglist"></div>
+                      <div class="loggelementholder">
+                        <div class="matchstatusconteiner start">
+                          <div id="w-node-a11fc8f8-d732-a691-dfb3-b83ef202c24c-7528eda2" class="team1lable">Lag1</div>
+                          <div class="matchstartlable">Start</div>
+                          <div id="w-node-a11fc8f8-d732-a691-dfb3-b83ef202c250-7528eda2" class="team2lable">Lag2</div>
+                          <div class="div-block-53"></div>
+                        </div>
+                        <div class="loggrow">
+                          <div class="middelstreak"></div>
+                          <div class="loggconteiner rowteam1">
+                            <div class="logdescription">
+                              <div class="logglable eventname">Event</div>
+                              <div class="logglable info">Mål :Navn<br>Assitst:Navn</div>
+                            </div>
+                            <div class="teamconteiner">
+                              <div class="logglable teamname">Lag 1</div>
+                            </div><img src="images/standard.png" loading="lazy" id="w-node-a11fc8f8-d732-a691-dfb3-b83ef202c260-7528eda2" alt="" class="eventicon">
+                            <div id="w-node-a11fc8f8-d732-a691-dfb3-b83ef202c261-7528eda2" class="logglable logminutes">17 &quot;</div>
+                            <a href="#" class="deletebuttonlogg left w-button"></a>
+                          </div>
+                          <div class="loggconteiner rowteam2">
+                            <div id="w-node-a11fc8f8-d732-a691-dfb3-b83ef202c265-7528eda2" class="logglable logminutes">18 </div>
+                            <div class="teamconteiner">
+                              <div class="logglable teamname">Lag 2</div>
+                            </div><img src="images/standard.png" loading="lazy" id="w-node-a11fc8f8-d732-a691-dfb3-b83ef202c26a-7528eda2" alt="" class="eventicon">
+                            <div class="logdescription right">
+                              <div class="logglable eventname right">Event</div>
+                              <div class="logglable info">Mål :Navn<br>Assitst:Navn</div>
+                            </div>
+                            <a href="#" class="deletebuttonlogg right w-button"></a>
+                          </div>
+                        </div>
+                        <div class="periodconteiner">
+                          <div class="periodelable">2.omgang</div>
+                        </div>
+                        <div class="matchstatusconteiner end">
+                          <div class="div-block-53 end">
+                            <div class="middelstreak"></div>
+                          </div>
+                          <div class="matchstartlable">Slutt</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div data-w-tab="Team" class="w-tab-pane">
+                <div id="headerwrapperteam" class="headerwrapper thismatch">
+                  <a id="shareTeamButton" href="#" class="sharebutton w-button"></a>
+                  <a id="buttonthisteam" data-w-id="2693ff34-1ab8-7441-2d63-52fa395c230e" href="#" class="backbutton w-button"></a>
+                  <div class="div-block-3">
+                    <div class="div-block-25 team">
+                      <div id="w-node-_2693ff34-1ab8-7441-2d63-52fa395c2314-7528eda2" class="teamdiv-match"><img src="images/placeholder-teamlogo.png" loading="lazy" alt="" class="teamicon logoteam"></div>
+                      <div id="w-node-c0950ee8-d49e-c46b-695e-ab5cf9f0b4e0-7528eda2" class="teamnameheader">Navn</div>
+                    </div>
+                  </div>
+                </div>
+                <section class="section-3 team">
+                  <div class="w-layout-blockcontainer container-3 w-container">
+                    <div id="thisteamhinfo" class="tablegroupholder matchinfo">
+                      <div class="div-block-5 grid">
+                        <div class="inforow topp">
+                          <div class="text-block-19">Divisjon:</div>
+                          <div class="lableteam divisjon"># </div>
+                        </div>
+                        <div id="w-node-_67c091c6-3117-859d-c5f8-6be49ca10f95-7528eda2" class="inforow topp">
+                          <div class="text-block-19">Gruppe:</div>
+                          <div class="lableteam groupname"># </div>
+                        </div>
+                        <div id="w-node-f919c63d-6b7c-184e-10e9-4ea5cc730e68-7528eda2" class="inforow team topp">
+                          <div class="text-block-19">Klubb:</div>
+                          <div class="lableteam clublable"># </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="thisteamrankinfo" class="tablegroupholder matchinfo rank">
+                      <div class="div-block-28"><img src="images/points.png" loading="lazy" alt="" class="image-4"></div>
+                      <div class="rankdescription">#</div>
+                      <div class="rankview"></div>
+                      <div class="teameventconteiner">
+                        <div id="playerStratview" class="playerstatview"></div>
+                      </div>
+                    </div>
+                    <div id="thisteammatchlist" class="tablegroupholder matchonteampage">
+                      <div class="div-block-50">
+                        <div>
+                          <div id="countermatches" class="text-block-16 counter">#</div>
+                          <div class="text-block-16 matchinactiveturnament senter">Kamper</div>
+                        </div>
+                      </div>
+                      <div id="teammatchlist"></div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div data-w-tab="følger" class="w-tab-pane"></div>
+    </div>
+    <div class="tabsmenu hide w-tab-menu">
+      <a data-w-tab="news" class="fotterbt news w-inline-block w-tab-link">
+        <div class="fottertext">Nyheter</div>
+      </a>
+      <a data-w-tab="turnering" id="turnamenttabbutton" class="fotterbt trunering w-inline-block w-tab-link w--current">
+        <div class="fottertext">Turnering</div>
+      </a>
+      <a data-w-tab="følger" class="fotterbt favo w-inline-block w-tab-link">
+        <div class="fottertext">Følger</div>
+      </a>
+    </div>
+  </div>
+  <div class="css-navigasjon-kamper w-embed">
+    <style>
+#swipe-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh; /* Fyller hele skjermhøyden */
+}
+.swipe-wrapper {
+    display: flex;
+    transition: transform 0.3s ease;
+    height: 100%;
+}
+.swipe-slide {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.swipe-container-list {
+    width: 100%;
+    height: 100%; /* Tar høyde for margin-top og margin-bottom */
+    margin-top: 0px;
+    margin-bottom: 65px;
+    overflow-y: auto; /* Aktiver vertikal scrolling */
+    box-sizing: border-box;
+}
+.swipe-listholder {
+    max-width: 500px;
+    padding: 10px 10px 50px 10px; /* Topp: 10px, Høyre: 10px, Bunn: 50px, Venstre: 10px */
+    margin: 0 auto;
+    box-sizing: border-box; /* Sørger for at padding ikke påvirker elementets bredde */
+}
+#matchlistholder{
+padding: 50px 10px 0px 10px; /* top, right, bottom, left */
+}
+#swipe-endplay-list {
+}
+.matchStatusselector {
+    background-color: black; /* Sort bakgrunn */
+    color: white; /* Hvit tekst */
+    border-radius: 16px; /* Runde hjørner */
+    border: none; /* Fjern standardkant */
+    padding: 10px 5px; /* 10px topp/bunn, 5px venstre/høyre */
+    font-size: 16px; /* Tekststørrelse */
+    cursor: pointer; /* Peker */
+    height: auto;
+    box-sizing: border-box;
+    max-width: 100px; /* Maks bredde */
+    width: 100%; /* Gjør at den tilpasser seg innenfor maks */
+}
+/* For å justere pilen (valgfritt) */
+.matchStatusselector::-ms-expand {
+    display: none; /* Fjern standard pil på Windows */
+}
+.locationselector {
+		background-color: transparent; /* Sort bakgrunn */
+    color: white; /* Hvit tekst */
+    border-radius: 16px; /* Runde hjørner */
+    border: none; /* Fjern standardkant */
+    padding: 10px; /* Avstand */
+    font-size: 14px; /* Tekststørrelse */
+    cursor: pointer; /* Peker */
+    height: 100%;
+    box-sizing: border-box;
+}
+/* For å justere pilen (valgfritt) */
+.locationselector::-ms-expand {
+    display: none; /* Fjern standard pil på Windows */
+}
+.empty-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* eller 100%, avhengig av hva som passer din layout */
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #888; /* valgfritt: en nøytral farge */
+}
+</style>
+  </div>
+  <div class="githubstartuppages w-embed w-script">
+    <script src="https://kaibertelsen.github.io/sportlink/loader.js"></script>
+  </div>
+  <div class="code-embed-2 w-embed w-script">
+    <style>
+#headerwrapper {
+   padding-top: env(safe-area-inset-top);
+}
+#headerwrappermatch {
+    padding-top: env(safe-area-inset-top);
+}
+#headerwrapperteam {
+    padding-top: env(safe-area-inset-top);
+}
+#htmlkamper{
+margin-top: calc(-1 * env(safe-area-inset-top));
+}
+/*
+.headerfix {
+    transition: opacity 0.2s ease-out;
+    width: 100%;
+    text-align: center;
+}
+.smalheader {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+.maintabs {
+    padding-top: env(safe-area-inset-top); 
+    align-items: center;
+    justify-content: center;
+}
+*/
+html {
+    --safe-area-inset-top: env(safe-area-inset-top, 0px); /* Bruk env() hvis tilgjengelig, ellers 0px */
+}
+.sharebutton{
+margin-top: env(safe-area-inset-top); 
+}
+.backbutton {
+    margin-top: env(safe-area-inset-top); 
+}
+.icon-upload-holder {
+    margin-top: 20px;
+}
+.upload-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+</style>
+    <script>
+</script>
+  </div>
+  <div class="css-filterknapp w-embed">
+    <style>
+  .match-toggle-container {
+    display: inline-flex;
+    background-color: #000; /* Mørk bakgrunn */
+    border-radius: 9999px;
+    padding: 4px;
+    font-family: sans-serif;
+  }
+  .match-toggle-button {
+    border: 2px solid transparent;
+    background: transparent;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border 0.3s ease, background-color 0.3s ease;
+  }
+  .match-toggle-button:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  .match-toggle-active {
+    border-color: #00e3f9; /* Turkis kant */
+  }
+  /*Søkefelt spillere*/
+.search-container {
+  position: relative;
+  margin: 1rem auto;
+  width: 100%;
+  max-width: 400px;
+}
+.search-container input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.8rem; /* Nok plass til ikonet */
+  background-color: #1d2b40;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+}
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  width: 1.2rem;
+  height: 1.2rem;
+  pointer-events: none;
+}
+</style>
+  </div>
+  <div class="css-til-dayscrolleren w-embed">
+    <style>
+/* Ytre wrapper som holder scrollbaren */
+.day-scroll-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+/* Scrollbar med overflow, som holder knappene */
+.day-scroll-outer {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  width: 100%;
+  max-width: 100%;
+}
+/* Knappene inni scrollbaren – disse blir midtstilt visuelt */
+.day-scroll-container {
+  display: flex;
+  gap: 8px;
+  padding: 8px 0;
+  border-radius: 12px;
+  scroll-snap-align: start;
+  justify-content: center;      /* ← Nå funker dette siden ingen overflow her */
+  margin: 0 auto;
+  width: fit-content;           /* ← Viktig for sentrering */
+}
+/* Dag-knappene */
+.day-button {
+  min-width: 75px;
+  height: 38px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  background-color: #222;
+  color: #fff;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border 0.3s ease, background-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.2;
+}
+.day-button:hover {
+  background-color: #111;
+}
+.day-button .day-label {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.day-button .date-label {
+  font-weight: 400;
+  font-size: 12px;
+}
+.day-button.active {
+  border-color: #00e3f9;
+  background-color: #222;
+}
+.closeopengroupbutton {
+  transition: transform 300ms ease;
+}
+</style>
+  </div>
+  <div class="w-embed">
+    <style>
+.matchlist-filter {
+  display: flex;
+  gap: 8px;
+  margin: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.matchlist-tab {
+  background-color: #1a1a1a; /* mørk bakgrunn */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.matchlist-tab.active {
+  border: 2px solid #5EEBFF; /* lys blå kant for aktiv knapp */
+}
+</style>
+  </div>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=66f547dd445606c275070efb" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+  <style>
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+}
+body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+.content {
+    padding-top: 20px; /* Juster avstand for innholdet om nødvendig */
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+}
+</style>
+</body>
+</html>
