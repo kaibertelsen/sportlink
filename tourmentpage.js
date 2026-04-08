@@ -401,12 +401,6 @@ function listPlayerStats(data) {
         : null;
     const isCardFilter = activeFilter && (activeFilter.id === "yellowcardfilterStats" || activeFilter.id === "redcardfilterStats");
 
-    // Oppdater header-labels i malen
-    const goalsHeader = groupHoldercopy.querySelector('.goals');
-    const assistsHeader = groupHoldercopy.querySelector('.assists');
-    if (goalsHeader) goalsHeader.textContent = isCardFilter ? "🟨" : "Mål";
-    if (assistsHeader) assistsHeader.textContent = isCardFilter ? "🟥" : "Assist";
-
     filteredDivision.forEach((item, i) => {
       const rowelement = nodeelement.cloneNode(true);
       rowelement.querySelector(".rangenr").textContent = item.rangenr + ".";
@@ -414,13 +408,21 @@ function listPlayerStats(data) {
         ? `(${item.playnumber||item.nr}) ${item.playername || ""}`
         : item.playername || "";
       rowelement.querySelector(".playername").textContent = displayName;
+      rowelement.querySelector(".goals").textContent = item.goals || 0;
+      rowelement.querySelector(".assists").textContent = item.assists || 0;
 
+      // Legg til kort-kolonner når kort-filter er aktivt
       if (isCardFilter) {
-        rowelement.querySelector(".goals").textContent = item.yellowCards || 0;
-        rowelement.querySelector(".assists").textContent = item.redCards || 0;
-      } else {
-        rowelement.querySelector(".goals").textContent = item.goals || 0;
-        rowelement.querySelector(".assists").textContent = item.assists || 0;
+        const pointHolder = rowelement.querySelector(".pointholder.playerstat");
+        if (pointHolder) {
+          const yellowCol = document.createElement("div");
+          yellowCol.innerHTML = `<div class="text-block-36">🟨</div><div class="pointtext yellowcards">${item.yellowCards || 0}</div>`;
+          pointHolder.appendChild(yellowCol);
+
+          const redCol = document.createElement("div");
+          redCol.innerHTML = `<div class="text-block-36">🟥</div><div class="pointtext redcards">${item.redCards || 0}</div>`;
+          pointHolder.appendChild(redCol);
+        }
       }
 
       rowelement.querySelector(".teamlable").textContent = item.teamname || "";
