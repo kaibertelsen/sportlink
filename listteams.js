@@ -226,15 +226,30 @@ function viewteam(team) {
     }
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
 
-    // Naviger til lagsiden - bypass Webflow tab-animasjon
-    console.time("viewteam-tabclick");
-    fastSwitchTab("thisteamtabbutton");
-    console.timeEnd("viewteam-tabclick");
+    // Naviger til lagsiden
+    var viewteamStartTime = performance.now();
+    console.log("viewteam: PRE tab-click");
+    document.getElementById("thisteamtabbutton").click();
+    console.log("viewteam: POST tab-click " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
 
-    // -- Alt i én requestAnimationFrame for å unngå layout-splitting --
+    // Mål visuell rendering med rAF-kjede
+    requestAnimationFrame(function() {
+        console.log("viewteam: rAF-1 (layout) " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
+        requestAnimationFrame(function() {
+            console.log("viewteam: rAF-2 (paint) " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
+            requestAnimationFrame(function() {
+                console.log("viewteam: rAF-3 (synlig) " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
+            });
+        });
+    });
+
+    // -- Alt i én requestAnimationFrame --
     requestAnimationFrame(function() {
         try {
-        console.log("viewteam: rAF startet");
+        console.log("viewteam: rAF startet " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
+        // Logg DOM-størrelse
+        var totalNodes = document.querySelectorAll("*").length;
+        console.log("viewteam: DOM noder totalt: " + totalNodes);
 
         console.time("viewteam-rank");
         const nodeelement = getPointElement();
@@ -274,7 +289,14 @@ function viewteam(team) {
         listMatchesInTeamView(filteredMatches, team);
         console.timeEnd("viewteam-matchlist");
         console.timeEnd("viewteam-total");
-        console.log("viewteam: FERDIG");
+        console.log("viewteam: JS FERDIG " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
+        // Mål når rendering faktisk er ferdig
+        requestAnimationFrame(function() {
+            console.log("viewteam: POST-render rAF " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
+            requestAnimationFrame(function() {
+                console.log("viewteam: SYNLIG på skjerm " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
+            });
+        });
 
         } catch(e) {
             console.error("viewteam FEIL: " + e.message + " stack: " + e.stack);
