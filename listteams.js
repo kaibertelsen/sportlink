@@ -194,7 +194,9 @@ function viewteam(team) {
 
     // -- Defer arbeid til etter første paint --
     requestAnimationFrame(() => {
-        // Ranking (rask - bruker allerede beregnede poeng)
+        console.time("viewteam-total");
+
+        console.time("viewteam-rank");
         const nodeelement = getPointElement();
         const thisteamrankinfo = document.getElementById("thisteamrankinfo");
         const rankview = thisteamrankinfo.querySelector(".rankview");
@@ -208,16 +210,21 @@ function viewteam(team) {
         const groupDivisionText = team.divisionname + (teaminfo.group ? " i gruppe: " + teaminfo.group : "");
         thisteamrankinfo.querySelector(".rankdescription").textContent =
             team.name + " er på " + teaminfo.rank + " plass i divisjonen: " + groupDivisionText + ".";
+        console.timeEnd("viewteam-rank");
 
         // Filtrer kamper én gang
         const filteredMatches = matches.filter(
             match => match.team1 === team.airtable || match.team2 === team.airtable
         );
+        console.log("viewteam: antall kamper for lag:", filteredMatches.length, "totalt:", matches.length);
 
         // Defer spillerstatistikk og kampliste til neste frame
         requestAnimationFrame(() => {
+            console.time("viewteam-playerStats");
             viewPlayerStats(team, filteredMatches);
+            console.timeEnd("viewteam-playerStats");
 
+            console.time("viewteam-matchlist");
             const thisteammatchlist = document.getElementById("thisteammatchlist");
             thisteammatchlist.querySelector(".matchinactiveturnament").textContent = "Kamper";
 
@@ -227,6 +234,8 @@ function viewteam(team) {
             }
 
             listMatchesInTeamView(filteredMatches, team);
+            console.timeEnd("viewteam-matchlist");
+            console.timeEnd("viewteam-total");
         });
     });
 }
