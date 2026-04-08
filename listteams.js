@@ -226,38 +226,19 @@ function viewteam(team) {
     }
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
 
-    // Fjern tunge lister fra DOM for å redusere 20000+ noder
     var viewteamStartTime = performance.now();
-    var matchlistholder = document.getElementById("matchlistholder");
-    var teamslistholder = document.getElementById("teamslistholder");
-    var endplaylist = document.getElementById("endplaylist");
-    var statisticslistcontent = document.getElementById("statisticslistcontent");
 
-    // Lagre innholdet og tøm DOM
-    var savedMatchHTML = matchlistholder ? matchlistholder.innerHTML : "";
-    var savedTeamsHTML = teamslistholder ? teamslistholder.innerHTML : "";
-    var savedEndplayHTML = endplaylist ? endplaylist.innerHTML : "";
-    var savedStatsHTML = statisticslistcontent ? statisticslistcontent.innerHTML : "";
-
-    if (matchlistholder) matchlistholder.innerHTML = "";
-    if (teamslistholder) teamslistholder.innerHTML = "";
-    if (endplaylist) endplaylist.innerHTML = "";
-    if (statisticslistcontent) statisticslistcontent.innerHTML = "";
-
-    var nodesAfterClear = document.querySelectorAll("*").length;
-    console.log("viewteam: DOM etter tømming: " + nodesAfterClear);
+    // Skjul turneringsinnholdet for å redusere layout-arbeid under tab-bytte
+    var turneringPane = document.querySelector('[data-w-tab="turnering"].w-tab-pane');
+    if (turneringPane) turneringPane.style.contentVisibility = "hidden";
 
     // Naviger til lagsiden
     document.getElementById("thisteamtabbutton").click();
 
-    // Gjenopprett innhold etter at tab er byttet (innholdet er nå i skjult tab)
-    requestAnimationFrame(function() {
-        if (matchlistholder) matchlistholder.innerHTML = savedMatchHTML;
-        if (teamslistholder) teamslistholder.innerHTML = savedTeamsHTML;
-        if (endplaylist) endplaylist.innerHTML = savedEndplayHTML;
-        if (statisticslistcontent) statisticslistcontent.innerHTML = savedStatsHTML;
-        console.log("viewteam: DOM gjenopprettet " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
-    });
+    // Gjenopprett når tab-bytte er ferdig
+    setTimeout(function() {
+        if (turneringPane) turneringPane.style.contentVisibility = "";
+    }, 500);
 
     // -- Alt i én requestAnimationFrame --
     requestAnimationFrame(function() {
