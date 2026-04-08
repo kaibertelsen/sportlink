@@ -120,6 +120,7 @@ function emtyTurnamentLists(){
 }
 
 function updateThisTournament(list){
+    console.log("viewteam: updateThisTournament TRIGGET");
     //trigges fra oppdatering internt i listene
     GETairtable(baseId,"tblGhVlhWETNvhrWN",activetournament.airtable,"responseThisTournament",true);
     //kopier loading holder i toppen av listen

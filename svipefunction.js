@@ -181,8 +181,16 @@ function handleAppVisibility() {
   }
 }
 
+var lastAppResumeTime = 0;
 function onAppResume() {
-  console.log("Oppdaterer innhold ved gjenåpning...");
+  var now = Date.now();
+  // Unngå oppdatering oftere enn hvert 30. sekund
+  if (now - lastAppResumeTime < 30000) {
+    console.log("viewteam: onAppResume SKIP (for kort tid siden forrige)");
+    return;
+  }
+  lastAppResumeTime = now;
+  console.log("viewteam: onAppResume trigget, isInTurnament:", isInTurnament);
   if(isInTurnament){
     updateThisTournament(null);
   }else{
