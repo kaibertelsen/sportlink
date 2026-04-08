@@ -161,10 +161,11 @@ function filterMatchesByStatus(matchs) {
 
 // listmatch function adjusted to avoid scroll conflicts
 function listmatch(data, grouptype, scroll) {
-
+    console.time("listmatch");
+    console.log("viewteam: listmatch kallt med", data.length, "kamper");
     //teste ut ny layout
     listmatchLayoutGrid(data, grouptype);
-
+    console.timeEnd("listmatch");
 }
 
 function removeAllExceptSpecific(listElement, keepElement) {

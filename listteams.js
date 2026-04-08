@@ -9,6 +9,8 @@ function getTeamresponse(data){
 }
 
 function listteams(data) {
+    console.time("listteams");
+    console.log("viewteam: listteams kallt med", data.length, "lag");
     const activeDivision = getActiveDivisionFilter();
 
     // Filtrer lagene basert på aktivt divisjonsfilter
@@ -95,6 +97,7 @@ function listteams(data) {
             list.appendChild(copyelement);
         }
     }
+    console.timeEnd("listteams");
 }
 
 function getPointElement(){
@@ -169,6 +172,8 @@ function loadPointsToviewer(rowelement,team,range,solo){
 }
 
 function viewteam(team) {
+    console.time("viewteam-total");
+    console.log("viewteam: START klikk på:", team.name);
 
     activeteam = team;
 
@@ -190,12 +195,14 @@ function viewteam(team) {
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
 
     // Naviger til lagsiden umiddelbart så brukeren ser siden
+    console.time("viewteam-tabclick");
     document.getElementById("thisteamtabbutton").click();
+    console.timeEnd("viewteam-tabclick");
 
     // -- Defer arbeid til etter første paint --
     requestAnimationFrame(function() {
         try {
-        console.time("viewteam-total");
+        console.log("viewteam: rAF1 startet");
 
         console.time("viewteam-rank");
         const nodeelement = getPointElement();
@@ -238,6 +245,7 @@ function viewteam(team) {
             listMatchesInTeamView(filteredMatches, team);
             console.timeEnd("viewteam-matchlist");
             console.timeEnd("viewteam-total");
+            console.log("viewteam: FERDIG");
             } catch(e) {
                 console.error("viewteam-frame2 FEIL: " + e.message + " stack: " + e.stack);
             }
