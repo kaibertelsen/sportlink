@@ -61,9 +61,6 @@
         addLog("PROMISE: " + (e.reason?.message || e.reason || "unknown"));
     });
 
-    // Logg sideinnlasting
-    addLog("--- Side lastet ---");
-
     function addLog(msg) {
         const now = new Date();
         const ts = now.toLocaleTimeString("nb-NO", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) + "." + String(now.getMilliseconds()).padStart(3, "0");
@@ -133,4 +130,7 @@
 
     document.body.appendChild(panel);
     document.body.appendChild(btn);
+
+    // Logg sideinnlasting
+    addLog("--- Side lastet ---");
 })();
