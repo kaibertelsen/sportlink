@@ -267,6 +267,38 @@ function loadeLists(data){
     if (data.statistics) {
         // Slå på statistikk-fanen
        statisticstabbutton.style.display = "inline-block";
+
+    // Legg til / fjern Gule kort og Røde kort knapper basert på turnering
+    const statsFilterNode = document.getElementById("statisticfilterconteinerelement");
+    const existingYellow = document.getElementById("yellowcardfilterStats");
+    const existingRed = document.getElementById("redcardfilterStats");
+    if (existingYellow) existingYellow.remove();
+    if (existingRed) existingRed.remove();
+
+    if (statsFilterNode && data.airtable === "recwAmFjj0LamCbZB") {
+        const yellowBtn = document.createElement("button");
+        yellowBtn.id = "yellowcardfilterStats";
+        yellowBtn.classList.add("statisticfilterbutton");
+        yellowBtn.textContent = "🟨 Gule kort";
+        yellowBtn.addEventListener("click", () => {
+            statsFilterNode.querySelectorAll(".statisticfilterbutton").forEach(btn => btn.classList.remove("active"));
+            yellowBtn.classList.add("active");
+            listPlayerStats(PlayerStats);
+        });
+        statsFilterNode.appendChild(yellowBtn);
+
+        const redBtn = document.createElement("button");
+        redBtn.id = "redcardfilterStats";
+        redBtn.classList.add("statisticfilterbutton");
+        redBtn.textContent = "🟥 Røde kort";
+        redBtn.addEventListener("click", () => {
+            statsFilterNode.querySelectorAll(".statisticfilterbutton").forEach(btn => btn.classList.remove("active"));
+            redBtn.classList.add("active");
+            listPlayerStats(PlayerStats);
+        });
+        statsFilterNode.appendChild(redBtn);
+    }
+
     // Samle alle matchlogg-data i én liste
         let allMatchLogs = [];
     
@@ -591,33 +623,12 @@ function initStatisticsFilter() {
         // Legg den inn som første barn i containeren
         statisticFilterContainer.prepend(statisticsFilterContainerNode);
 
-        // Legg til Gule kort og Røde kort knapper (kun for Oslofjordligaen)
-        // Fjern evt. eksisterende kort-knapper først
-        const existingYellow = document.getElementById("yellowcardfilterStats");
-        const existingRed = document.getElementById("redcardfilterStats");
-        if (existingYellow) existingYellow.remove();
-        if (existingRed) existingRed.remove();
-
-        if (activetournament.airtable === "recwAmFjj0LamCbZB") {
-            const yellowBtn = document.createElement("button");
-            yellowBtn.id = "yellowcardfilterStats";
-            yellowBtn.classList.add("statisticfilterbutton");
-            yellowBtn.textContent = "🟨 Gule kort";
-            statisticsFilterContainerNode.appendChild(yellowBtn);
-
-            const redBtn = document.createElement("button");
-            redBtn.id = "redcardfilterStats";
-            redBtn.classList.add("statisticfilterbutton");
-            redBtn.textContent = "🟥 Røde kort";
-            statisticsFilterContainerNode.appendChild(redBtn);
-        }
-
         //lag en klikkhendelse for filterknappene
         const filterButtons = statisticsFilterContainerNode.querySelectorAll(".statisticfilterbutton");
         filterButtons.forEach(button => {
             button.addEventListener("click", () => {
-                // Fjern "active" klasse fra alle knapper
-                filterButtons.forEach(btn => btn.classList.remove("active"));
+                // Fjern "active" klasse fra alle knapper (inkl. dynamiske kort-knapper)
+                statisticsFilterContainerNode.querySelectorAll(".statisticfilterbutton").forEach(btn => btn.classList.remove("active"));
 
                 // Legg til "active" klasse på den trykte knappen
                 button.classList.add("active");
