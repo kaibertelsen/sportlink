@@ -363,6 +363,19 @@ function listPlayerStats(data) {
   
     const nodeelement = groupHoldercopy.querySelector('.resultrow');
   
+    // Finn aktivt filter for å bestemme kolonnevisning
+    const statisticsFilterContainerNode = document.getElementById("statisticfilterconteinerelement");
+    const activeFilter = statisticsFilterContainerNode
+        ? Array.from(statisticsFilterContainerNode.children).find(child => child.classList.contains("active"))
+        : null;
+    const isCardFilter = activeFilter && (activeFilter.id === "yellowcardfilterStats" || activeFilter.id === "redcardfilterStats");
+
+    // Oppdater header-labels i malen
+    const goalsHeader = groupHoldercopy.querySelector('.goals');
+    const assistsHeader = groupHoldercopy.querySelector('.assists');
+    if (goalsHeader) goalsHeader.textContent = isCardFilter ? "🟨" : "Mål";
+    if (assistsHeader) assistsHeader.textContent = isCardFilter ? "🟥" : "Assist";
+
     filteredDivision.forEach((item, i) => {
       const rowelement = nodeelement.cloneNode(true);
       rowelement.querySelector(".rangenr").textContent = item.rangenr + ".";
@@ -370,8 +383,15 @@ function listPlayerStats(data) {
         ? `(${item.playnumber||item.nr}) ${item.playername || ""}`
         : item.playername || "";
       rowelement.querySelector(".playername").textContent = displayName;
-      rowelement.querySelector(".goals").textContent = item.goals || 0;
-      rowelement.querySelector(".assists").textContent = item.assists || 0;
+
+      if (isCardFilter) {
+        rowelement.querySelector(".goals").textContent = item.yellowCards || 0;
+        rowelement.querySelector(".assists").textContent = item.redCards || 0;
+      } else {
+        rowelement.querySelector(".goals").textContent = item.goals || 0;
+        rowelement.querySelector(".assists").textContent = item.assists || 0;
+      }
+
       rowelement.querySelector(".teamlable").textContent = item.teamname || "";
       rowelement.querySelector(".divisjonlable").textContent = item.divisionname || "";
       rowelement.querySelector(".clubblable").textContent = item.club || "";
@@ -411,6 +431,8 @@ function summarizePlayerStats(allMatchLogs) {
                 divisionname: log.divisionname || "",
                 goals: 0,
                 assists: 0,
+                yellowCards: 0,
+                redCards: 0,
                 penaltyMinutes: 0,
                 events: 0
             };
@@ -433,11 +455,13 @@ function summarizePlayerStats(allMatchLogs) {
                     playername: log.assistplayername || "",
                     club: log.assistclub || "",          // Hvis du har assistklubb
                     divisionid: log.divisionid || "",
-                    divisionname: log.divisionname || "", 
+                    divisionname: log.divisionname || "",
                     teamname: log.teamname || "",       // Antatt samme divisjon
                     teamid: log.team || "",
                     goals: 0,
                     assists: 0,
+                    yellowCards: 0,
+                    redCards: 0,
                     penaltyMinutes: 0,
                     events: 0
                 };
@@ -449,6 +473,16 @@ function summarizePlayerStats(allMatchLogs) {
         // Utvisningsminutter
         if (log.penaltyminutes && !isNaN(Number(log.penaltyminutes))) {
             playerStats[playerId].penaltyMinutes += Number(log.penaltyminutes);
+        }
+
+        // Gule kort
+        if (log.eventtypelable === "Gult kort") {
+            playerStats[playerId].yellowCards += 1;
+        }
+
+        // Røde kort
+        if (log.eventtypelable === "Rødt kort") {
+            playerStats[playerId].redCards += 1;
         }
     });
 
@@ -558,7 +592,18 @@ function initStatisticsFilter() {
         // Legg den inn som første barn i containeren
         statisticFilterContainer.prepend(statisticsFilterContainerNode);
 
+        // Legg til Gule kort og Røde kort knapper
+        const yellowBtn = document.createElement("button");
+        yellowBtn.id = "yellowcardfilterStats";
+        yellowBtn.classList.add("statisticfilterbutton");
+        yellowBtn.textContent = "🟨 Gule kort";
+        statisticsFilterContainerNode.appendChild(yellowBtn);
 
+        const redBtn = document.createElement("button");
+        redBtn.id = "redcardfilterStats";
+        redBtn.classList.add("statisticfilterbutton");
+        redBtn.textContent = "🟥 Røde kort";
+        statisticsFilterContainerNode.appendChild(redBtn);
 
         //lag en klikkhendelse for filterknappene
         const filterButtons = statisticsFilterContainerNode.querySelectorAll(".statisticfilterbutton");
@@ -566,16 +611,14 @@ function initStatisticsFilter() {
             button.addEventListener("click", () => {
                 // Fjern "active" klasse fra alle knapper
                 filterButtons.forEach(btn => btn.classList.remove("active"));
-                
+
                 // Legg til "active" klasse på den trykte knappen
                 button.classList.add("active");
-                
+
                 // Oppdater spillerstatistikk basert på valgt filter
                 listPlayerStats(PlayerStats);
             });
         });
-
-
 
     }
 }
@@ -627,6 +670,32 @@ function filteredTypeStats(players) {
             return a.playername.localeCompare(b.playername);
         };
         isSameFunction = (a, b) => a.assists === b.assists && a.goals === b.goals;
+    } else if (activeFilter.id === "yellowcardfilterStats") {
+        filteredPlayers = players
+            .filter(player => player.yellowCards > 0)
+            .sort((a, b) => {
+                if (b.yellowCards !== a.yellowCards) return b.yellowCards - a.yellowCards;
+                return a.playername.localeCompare(b.playername);
+            });
+
+        sortFunction = (a, b) => {
+            if (b.yellowCards !== a.yellowCards) return b.yellowCards - a.yellowCards;
+            return a.playername.localeCompare(b.playername);
+        };
+        isSameFunction = (a, b) => a.yellowCards === b.yellowCards;
+    } else if (activeFilter.id === "redcardfilterStats") {
+        filteredPlayers = players
+            .filter(player => player.redCards > 0)
+            .sort((a, b) => {
+                if (b.redCards !== a.redCards) return b.redCards - a.redCards;
+                return a.playername.localeCompare(b.playername);
+            });
+
+        sortFunction = (a, b) => {
+            if (b.redCards !== a.redCards) return b.redCards - a.redCards;
+            return a.playername.localeCompare(b.playername);
+        };
+        isSameFunction = (a, b) => a.redCards === b.redCards;
     } else {
         return [];
     }
