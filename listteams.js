@@ -226,30 +226,43 @@ function viewteam(team) {
     }
     thismatchinfo.querySelector(".clublable").textContent = team.clubname || "Ukjent klubb";
 
-    // Naviger til lagsiden
+    // Fjern tunge lister fra DOM for å redusere 20000+ noder
     var viewteamStartTime = performance.now();
-    console.log("viewteam: PRE tab-click");
-    document.getElementById("thisteamtabbutton").click();
-    console.log("viewteam: POST tab-click " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
+    var matchlistholder = document.getElementById("matchlistholder");
+    var teamslistholder = document.getElementById("teamslistholder");
+    var endplaylist = document.getElementById("endplaylist");
+    var statisticslistcontent = document.getElementById("statisticslistcontent");
 
-    // Mål visuell rendering med rAF-kjede
+    // Lagre innholdet og tøm DOM
+    var savedMatchHTML = matchlistholder ? matchlistholder.innerHTML : "";
+    var savedTeamsHTML = teamslistholder ? teamslistholder.innerHTML : "";
+    var savedEndplayHTML = endplaylist ? endplaylist.innerHTML : "";
+    var savedStatsHTML = statisticslistcontent ? statisticslistcontent.innerHTML : "";
+
+    if (matchlistholder) matchlistholder.innerHTML = "";
+    if (teamslistholder) teamslistholder.innerHTML = "";
+    if (endplaylist) endplaylist.innerHTML = "";
+    if (statisticslistcontent) statisticslistcontent.innerHTML = "";
+
+    var nodesAfterClear = document.querySelectorAll("*").length;
+    console.log("viewteam: DOM etter tømming: " + nodesAfterClear);
+
+    // Naviger til lagsiden
+    document.getElementById("thisteamtabbutton").click();
+
+    // Gjenopprett innhold etter at tab er byttet (innholdet er nå i skjult tab)
     requestAnimationFrame(function() {
-        console.log("viewteam: rAF-1 (layout) " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
-        requestAnimationFrame(function() {
-            console.log("viewteam: rAF-2 (paint) " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
-            requestAnimationFrame(function() {
-                console.log("viewteam: rAF-3 (synlig) " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
-            });
-        });
+        if (matchlistholder) matchlistholder.innerHTML = savedMatchHTML;
+        if (teamslistholder) teamslistholder.innerHTML = savedTeamsHTML;
+        if (endplaylist) endplaylist.innerHTML = savedEndplayHTML;
+        if (statisticslistcontent) statisticslistcontent.innerHTML = savedStatsHTML;
+        console.log("viewteam: DOM gjenopprettet " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
     });
 
     // -- Alt i én requestAnimationFrame --
     requestAnimationFrame(function() {
         try {
         console.log("viewteam: rAF startet " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
-        // Logg DOM-størrelse
-        var totalNodes = document.querySelectorAll("*").length;
-        console.log("viewteam: DOM noder totalt: " + totalNodes);
 
         console.time("viewteam-rank");
         const nodeelement = getPointElement();
@@ -289,14 +302,7 @@ function viewteam(team) {
         listMatchesInTeamView(filteredMatches, team);
         console.timeEnd("viewteam-matchlist");
         console.timeEnd("viewteam-total");
-        console.log("viewteam: JS FERDIG " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
-        // Mål når rendering faktisk er ferdig
-        requestAnimationFrame(function() {
-            console.log("viewteam: POST-render rAF " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
-            requestAnimationFrame(function() {
-                console.log("viewteam: SYNLIG på skjerm " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
-            });
-        });
+        console.log("viewteam: FERDIG " + (performance.now() - viewteamStartTime).toFixed(0) + "ms");
 
         } catch(e) {
             console.error("viewteam FEIL: " + e.message + " stack: " + e.stack);
