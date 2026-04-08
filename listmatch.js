@@ -1406,7 +1406,7 @@ function loadDayfilter(data) {
         dayScrollContainer.appendChild(button);
     });
 
-    // 👉 Scroll og aktiver riktig knapp (men IKKE kjør listmatch ennå)
+    // 👉 Aktiver riktig knapp synkront (men IKKE kjør listmatch ennå)
     // Prioritet: dagens dato > neste dag med kamper > alle dager
     let buttonToClick, selectedDate;
     if (todayButton) {
@@ -1420,11 +1420,13 @@ function loadDayfilter(data) {
         selectedDate = "";
     }
     if (buttonToClick) {
+        // Sett filter synkront slik at listmatch bruker riktig filter
+        setActiveButton(buttonToClick, selectedDate);
+        firstLoad = false;
+        // Scroll til knappen etter DOM er oppdatert
         setTimeout(() => {
-            setActiveButton(buttonToClick, selectedDate);
             buttonToClick.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-            firstLoad = false; // ✅ Etter første gang
-        }, 0);
+        }, 100);
     }
 }
 
