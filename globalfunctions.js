@@ -13,7 +13,6 @@ function sortArrayABC(Array,key) {
   function makeObjectFromAirtableJSON(data, key) {
     if (data[key]) {
         let jsonArray = data[key];
-        console.log(jsonArray);
 
         try {
             let parsedObjects = jsonArray.map(item => {
@@ -26,11 +25,9 @@ function sortArrayABC(Array,key) {
                     }
                 });
 
-                console.log("Parsed and cleaned object:", obj);
                 return obj;
             });
 
-            console.log(parsedObjects);
             return parsedObjects;
         } catch (error) {
             console.error("Feil ved parsing av JSON-strenger:", error);

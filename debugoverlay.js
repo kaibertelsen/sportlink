@@ -106,20 +106,21 @@
 
     console.log = function () {
         origLog.apply(console, arguments);
-        var msg = Array.prototype.slice.call(arguments).map(function (a) {
-            return typeof a === "object" ? JSON.stringify(a) : String(a);
-        }).join(" ");
-        if (msg.indexOf("viewteam") === 0) {
+        // Sjekk raskt om første argument er relevant før vi prosesserer
+        var first = arguments[0];
+        if (typeof first === "string" && first.indexOf("viewteam") === 0) {
+            var msg = Array.prototype.slice.call(arguments).map(function (a) {
+                return typeof a === "object" ? JSON.stringify(a) : String(a);
+            }).join(" ");
             addLog(msg);
         }
     };
 
     console.error = function () {
         origError.apply(console, arguments);
-        var msg = Array.prototype.slice.call(arguments).map(function (a) {
-            return typeof a === "object" ? JSON.stringify(a) : String(a);
-        }).join(" ");
-        addLog("ERROR: " + msg);
+        var first = arguments[0];
+        var msg = typeof first === "string" ? first : String(first);
+        addLog("ERROR: " + msg.substring(0, 200));
     };
 
     window.addEventListener("error", function (e) {
