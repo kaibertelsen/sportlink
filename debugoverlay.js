@@ -6,11 +6,11 @@
 
     function loadLogs() {
         try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-        catch { return []; }
+        catch (e) { return []; }
     }
     function saveLogs(logs) {
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(logs)); }
-        catch { /* full storage */ }
+        catch (e) { /* full storage */ }
     }
 
     const logs = loadLogs();
@@ -65,7 +65,8 @@
     addLog("--- Side lastet ---");
 
     function addLog(msg) {
-        const ts = new Date().toLocaleTimeString("nb-NO", { hour: "2-digit", minute: "2-digit", second: "2-digit", fractionalSecondDigits: 3 });
+        const now = new Date();
+        const ts = now.toLocaleTimeString("nb-NO", { hour: "2-digit", minute: "2-digit", second: "2-digit" }) + "." + String(now.getMilliseconds()).padStart(3, "0");
         logs.push(`[${ts}] ${msg}`);
         while (logs.length > maxLogs) logs.shift();
         saveLogs(logs);
