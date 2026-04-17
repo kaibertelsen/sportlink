@@ -669,7 +669,28 @@ function makeDivisionRow(nodeelement,division){
     const numberOfPeriods = rowelement.querySelector(".numberofperiods");
     numberOfPeriods.textContent = division.numberofperiods || "Ukjent";
     numberOfPeriods.addEventListener("click", () => triggerEditInput(numberOfPeriods, division, "numberofperiods", "number", tabelid));
-    
+
+    // Maks 5 måls forskjell – konverter Webflow-tekstfelt til ekte checkbox
+    const maxDiffEl = rowelement.querySelector(".maxgoaldiffcheckbox");
+    if (maxDiffEl) {
+        maxDiffEl.textContent = "";
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.style.cursor = "pointer";
+
+        const currentVal = Array.isArray(division.maxgoaldiff) ? division.maxgoaldiff[0] : division.maxgoaldiff;
+        checkbox.checked = Number(currentVal) > 0;
+
+        checkbox.addEventListener("change", () => {
+            const newValue = checkbox.checked ? "5" : null;
+            division.maxgoaldiff = newValue;
+            updateRowData(division.airtable, { maxgoaldiff: newValue }, tabelid);
+        });
+
+        maxDiffEl.appendChild(checkbox);
+    }
+
     return rowelement;
 
 }
