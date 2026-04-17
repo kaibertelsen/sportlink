@@ -193,6 +193,13 @@ function loadTourment(tournamentid){
     // Oppdater maxGoalDiff med tallverdi, eller bruk 100 som fallback
     maxGoalDiff = Number(data?.maxgoaldiff) || 100;
 
+    // DEBUG: sjekk hva som kommer fra databasen
+    console.log("[maxgoaldiff DEBUG] tournament.maxgoaldiff =", data?.maxgoaldiff, "→ tolket som:", maxGoalDiff);
+    const _divisionsDbg = makeObjectFromAirtableJSON(data, "divisjonjson") || [];
+    console.log("[maxgoaldiff DEBUG] divisions:", _divisionsDbg.map(d => ({ name: d.name, airtable: d.airtable, maxgoaldiff: d.maxgoaldiff })));
+    const _matchesDbg = makeObjectFromAirtableJSON(data, "matchjson") || [];
+    console.log("[maxgoaldiff DEBUG] første kamp:", _matchesDbg[0]);
+
 
     //for å gå videre i tab systemet
     document.getElementById('tabtoturnering').click();

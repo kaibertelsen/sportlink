@@ -139,6 +139,13 @@ function responsGetTournament(data) {
     // Oppdater maxGoalDiff (Airtable-feltet er tekst – konverter til tall)
     maxGoalDiff = Number(tournament?.maxgoaldiff) || 100;
 
+    // DEBUG: sjekk hva som kommer fra databasen
+    console.log("[maxgoaldiff DEBUG] tournament.maxgoaldiff =", tournament?.maxgoaldiff, "→ tolket som:", maxGoalDiff);
+    const _divisionsDbg = convertJSONrow(tournament.divisjonjson) || [];
+    console.log("[maxgoaldiff DEBUG] divisions:", _divisionsDbg.map(d => ({ name: d.name, airtable: d.airtable, maxgoaldiff: d.maxgoaldiff })));
+    const _matchesDbg = convertJSONrow(tournament.matchjson) || [];
+    console.log("[maxgoaldiff DEBUG] første kamp:", _matchesDbg[0]);
+
     // Konverter divisjoner og liste dem opp
     const divisions = convertJSONrow(tournament.divisjonjson);
     gDivision = divisions;
