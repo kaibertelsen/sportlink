@@ -670,15 +670,64 @@ function makeDivisionRow(nodeelement,division){
     numberOfPeriods.textContent = division.numberofperiods || "Ukjent";
     numberOfPeriods.addEventListener("click", () => triggerEditInput(numberOfPeriods, division, "numberofperiods", "number", tabelid));
 
-    // Maks målforskjell – klikkbart tallfelt (samme mønster som numberofperiods)
+    // Maks målforskjell – klikkbart tallfelt. Airtable-feltet er TEKST, så vi lagrer som string.
     const maxDiffEl = rowelement.querySelector(".maxgoaldiffcheckbox");
     if (maxDiffEl) {
         const rawVal = Array.isArray(division.maxgoaldiff) ? division.maxgoaldiff[0] : division.maxgoaldiff;
-        const hasVal = rawVal !== undefined && rawVal !== null && String(rawVal).trim() !== "";
-        maxDiffEl.textContent = hasVal ? String(rawVal) : "-";
+        const initial = (rawVal === undefined || rawVal === null || String(rawVal).trim() === "") ? "" : String(rawVal).trim();
+        maxDiffEl.textContent = initial === "" ? "-" : initial;
         maxDiffEl.style.textAlign = "right";
         maxDiffEl.style.cursor = "pointer";
-        maxDiffEl.addEventListener("click", () => triggerEditInput(maxDiffEl, division, "maxgoaldiff", "number", tabelid));
+
+        maxDiffEl.addEventListener("click", () => {
+            if (maxDiffEl.querySelector("input")) return;
+
+            const currentText = maxDiffEl.textContent.trim();
+            const startVal = (currentText === "-" || currentText === "") ? "" : currentText;
+
+            const input = document.createElement("input");
+            input.type = "number";
+            input.min = "1";
+            input.value = startVal;
+            input.style.maxWidth = "60px";
+            input.style.position = "relative";
+            input.style.zIndex = "15";
+            input.classList.add("standardinputfield");
+
+            const originalDisplay = getComputedStyle(maxDiffEl).display;
+            maxDiffEl.style.display = "none";
+            maxDiffEl.parentElement.style.zIndex = "10";
+            maxDiffEl.parentElement.appendChild(input);
+            input.focus();
+
+            const restore = () => {
+                if (input.parentElement) input.remove();
+                maxDiffEl.style.display = (originalDisplay === "none" || originalDisplay === "") ? "block" : originalDisplay;
+                maxDiffEl.parentElement.style.zIndex = "5";
+            };
+
+            input.addEventListener("blur", () => {
+                const raw = input.value.trim();
+                // Airtable-feltet er tekst – lagre som string eller null for tomt
+                let saveVal = null;
+                if (raw !== "") {
+                    const n = parseInt(raw, 10);
+                    if (!isNaN(n) && n > 0) saveVal = String(n);
+                }
+
+                if ((saveVal === null ? "" : saveVal) !== startVal) {
+                    division.maxgoaldiff = saveVal;
+                    maxDiffEl.textContent = saveVal === null ? "-" : saveVal;
+                    updateRowData(division.airtable, { maxgoaldiff: saveVal }, tabelid);
+                }
+                restore();
+            });
+
+            input.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") input.blur();
+                else if (e.key === "Escape") restore();
+            });
+        });
     }
 
     return rowelement;
