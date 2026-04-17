@@ -215,18 +215,19 @@ function loadMatchLog(rowelement, match) {
 
     console.log(activetournament);
   
+    const cap = (typeof getMatchMaxGoalDiff === "function") ? getMatchMaxGoalDiff(match) : maxGoalDiff;
     const diff = Math.abs(g1 - g2);
-    if (diff > maxGoalDiff) {
-      // Juster målene slik at forskjellen ikke overstiger 'maxGoalDiff'
+    if (Number.isFinite(cap) && diff > cap) {
+      // Juster målene slik at forskjellen ikke overstiger kampens cap
       infomaxGoalDiff.style.display = "block";
-      infomaxGoalDiff.textContent = `Resultatet for denne kampen er justert til maks ${maxGoalDiff} mål i forskjell!`;
+      infomaxGoalDiff.textContent = `Resultatet for denne kampen er justert til maks ${cap} mål i forskjell!`;
       infomaxGoalDiff.style.fontWeight = "bold";
       infomaxGoalDiff.style.color = "red";
 
       if (g1 > g2) {
-        g1 = g2 + maxGoalDiff;
+        g1 = g2 + cap;
       } else {
-        g2 = g1 + maxGoalDiff;
+        g2 = g1 + cap;
       }
     }else{
       infomaxGoalDiff.style.display = "none";

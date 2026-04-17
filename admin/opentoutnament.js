@@ -81,6 +81,37 @@ function openTournament(Tournamentid){
     document.getElementById("groupSelector").style.display = "none";
 }
 
+// Henter cap-verdi fra match.maxgoaldiff (kan være tall, string eller array fra Airtable lookup).
+// Returnerer Infinity hvis ingen gyldig verdi (= ingen cap).
+function getMatchMaxGoalDiff(match) {
+    let v = match?.maxgoaldiff;
+    if (Array.isArray(v)) v = v[0];
+    const n = Number(v);
+    if (Number.isFinite(n) && n > 0) return n;
+    if (typeof maxGoalDiff === "number" && Number.isFinite(maxGoalDiff)) return maxGoalDiff;
+    return Infinity;
+}
+
+// Knytter maxgoaldiff fra hver divisjon til alle kamper i den divisjonen.
+function attachMaxGoalDiffToMatches(matches, divisions) {
+    if (!Array.isArray(matches) || !Array.isArray(divisions)) return matches;
+    const divMap = {};
+    for (const d of divisions) {
+        let v = d?.maxgoaldiff;
+        if (Array.isArray(v)) v = v[0];
+        const n = Number(v);
+        if (Number.isFinite(n) && n > 0) {
+            divMap[d.airtable] = n;
+        }
+    }
+    for (const m of matches) {
+        if (m && m.division && divMap[m.division] !== undefined) {
+            m.maxgoaldiff = divMap[m.division];
+        }
+    }
+    return matches;
+}
+
 function calculateMatchResultByLog(matchs) {
     matchs.forEach(match => {
         if (!match.matchlogg || match.matchlogg.length === 0) return;
@@ -108,11 +139,12 @@ function calculateMatchResultByLog(matchs) {
             }
         });
 
-        // Juster målforskjellen hvis den overstiger maxGoalDiff
+        // Juster målforskjellen hvis den overstiger kampens maxgoaldiff (per divisjon)
+        const cap = getMatchMaxGoalDiff(match);
         const diff = Math.abs(goalteam1 - goalteam2);
-        if (diff > maxGoalDiff) {
-            if (goalteam1 > goalteam2) goalteam1 = goalteam2 + maxGoalDiff;
-            else goalteam2 = goalteam1 + maxGoalDiff;
+        if (diff > cap) {
+            if (goalteam1 > goalteam2) goalteam1 = goalteam2 + cap;
+            else goalteam2 = goalteam1 + cap;
         }
 
         match.goalteam1 = goalteam1;
@@ -139,12 +171,9 @@ function responsGetTournament(data) {
     // Oppdater maxGoalDiff (Airtable-feltet er tekst – konverter til tall)
     maxGoalDiff = Number(tournament?.maxgoaldiff) || 100;
 
-    // DEBUG: sjekk hva som kommer fra databasen
-    console.log("[maxgoaldiff DEBUG] tournament.maxgoaldiff =", tournament?.maxgoaldiff, "→ tolket som:", maxGoalDiff);
+    // DEBUG: vis divisjoner med deres maxgoaldiff (fjern når verifisert)
     const _divisionsDbg = convertJSONrow(tournament.divisjonjson) || [];
     console.log("[maxgoaldiff DEBUG] divisions:", _divisionsDbg.map(d => ({ name: d.name, airtable: d.airtable, maxgoaldiff: d.maxgoaldiff })));
-    const _matchesDbg = convertJSONrow(tournament.matchjson) || [];
-    console.log("[maxgoaldiff DEBUG] første kamp:", _matchesDbg[0]);
 
     // Konverter divisjoner og liste dem opp
     const divisions = convertJSONrow(tournament.divisjonjson);
@@ -162,6 +191,12 @@ function responsGetTournament(data) {
     listPlayers(gPlayers);
 
     const matchs = convertJSONrow(tournament.matchjson);
+    attachMaxGoalDiffToMatches(matchs, divisions);
+
+    // DEBUG: vis hvilke kamper som fikk en cap satt (fjern når verifisert)
+    const _capped = matchs.filter(m => m.maxgoaldiff !== undefined);
+    console.log(`[maxgoaldiff DEBUG] ${_capped.length} av ${matchs.length} kamper fikk cap satt. Eksempel:`, _capped[0] && { team1: _capped[0].team1name, team2: _capped[0].team2name, division: _capped[0].divisionname, maxgoaldiff: _capped[0].maxgoaldiff });
+
     calculateMatchResultByLog(matchs);
     gMatchs = matchs;
     listMatch(matchs);

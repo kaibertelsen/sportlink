@@ -146,13 +146,14 @@ function listLogForMatch(match, rowelement,admin) {
     //lage texten
       let eventnametext = eventName;
       if (eventPointer > 0) {
-        // Begrens løpende stilling til maxGoalDiff (samme regel som i resultatvisningen)
+        // Begrens løpende stilling til kampens maxgoaldiff (per divisjon)
         let displayG1 = goalteam1;
         let displayG2 = goalteam2;
+        const cap = (typeof getMatchMaxGoalDiff === "function") ? getMatchMaxGoalDiff(match) : maxGoalDiff;
         const diff = Math.abs(displayG1 - displayG2);
-        if (typeof maxGoalDiff === "number" && Number.isFinite(maxGoalDiff) && diff > maxGoalDiff) {
-          if (displayG1 > displayG2) displayG1 = displayG2 + maxGoalDiff;
-          else displayG2 = displayG1 + maxGoalDiff;
+        if (Number.isFinite(cap) && diff > cap) {
+          if (displayG1 > displayG2) displayG1 = displayG2 + cap;
+          else displayG2 = displayG1 + cap;
         }
         //vise målene kun vis dette eventet er poengivende
         eventnametext = `${eventName} (${displayG1}-${displayG2})`;

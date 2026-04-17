@@ -737,10 +737,11 @@ function viewMatch(match) {
         const g2raw = Number(resultOfLog.goalteam2) || 0;
         const diff = Math.abs(g1raw - g2raw);
   
-        if (typeof maxGoalDiff === "number" && Number.isFinite(maxGoalDiff) && diff > maxGoalDiff) {
+        const cap = getMatchMaxGoalDiff(match);
+        if (Number.isFinite(cap) && diff > cap) {
           if (infomaxGoalDiff) {
             infomaxGoalDiff.style.display = "block";
-            infomaxGoalDiff.textContent = `Resultatet for denne kampen er justert til maks ${maxGoalDiff} mål i forskjell!`;
+            infomaxGoalDiff.textContent = `Resultatet for denne kampen er justert til maks ${cap} mål i forskjell!`;
             infomaxGoalDiff.style.fontWeight = "bold";
             infomaxGoalDiff.style.color = "red";
           }
@@ -864,19 +865,51 @@ function calculateMatchResultBySett(matchs) {
     return matchs;
 }
 
+// Henter cap-verdi fra match.maxgoaldiff (kan være tall, string eller array fra Airtable lookup).
+// Returnerer Infinity hvis ingen gyldig verdi (= ingen cap).
+function getMatchMaxGoalDiff(match) {
+    let v = match?.maxgoaldiff;
+    if (Array.isArray(v)) v = v[0];
+    const n = Number(v);
+    if (Number.isFinite(n) && n > 0) return n;
+    // Fallback til global maxGoalDiff hvis satt til noe < 100
+    if (typeof maxGoalDiff === "number" && Number.isFinite(maxGoalDiff)) return maxGoalDiff;
+    return Infinity;
+}
+
+// Knytter maxgoaldiff fra hver divisjon til alle kamper i den divisjonen.
+function attachMaxGoalDiffToMatches(matches, divisions) {
+    if (!Array.isArray(matches) || !Array.isArray(divisions)) return matches;
+    const divMap = {};
+    for (const d of divisions) {
+        let v = d?.maxgoaldiff;
+        if (Array.isArray(v)) v = v[0];
+        const n = Number(v);
+        if (Number.isFinite(n) && n > 0) {
+            divMap[d.airtable] = n;
+        }
+    }
+    for (const m of matches) {
+        if (m && m.division && divMap[m.division] !== undefined) {
+            m.maxgoaldiff = divMap[m.division];
+        }
+    }
+    return matches;
+}
+
 function calculateMatchResultByLog(matchs) {
     matchs.forEach(match => {
       if (!match.matchlogg || match.matchlogg.length === 0) return;
-  
+
       const team1 = match.team1;
       let goalteam1 = 0;
       let goalteam2 = 0;
       let penaltyminteam1 = 0;
       let penaltyminteam2 = 0;
-  
+
       match.matchlogg.forEach(log => {
         const team = log.team;
-  
+
         const eventPointer = Number(log.eventpoint);
         if (!isNaN(eventPointer) && eventPointer >= 0) {
           if (team === team1) {
@@ -885,7 +918,7 @@ function calculateMatchResultByLog(matchs) {
             goalteam2 += eventPointer;
           }
         }
-  
+
         const isPenalty = log.eventtype === "recfYDgKdjfiDSO4g" || log.eventtype === "reclsQ8SpocBhDlsy";
         if (isPenalty) {
           const minutes = Number(log.penaltyminutes);
@@ -898,23 +931,24 @@ function calculateMatchResultByLog(matchs) {
           }
         }
       });
-  
-      // 🔁 Juster målforskjellen hvis den overstiger maxGoalDiff
+
+      // 🔁 Juster målforskjellen hvis den overstiger kampens maxgoaldiff (per divisjon)
+      const cap = getMatchMaxGoalDiff(match);
       const diff = Math.abs(goalteam1 - goalteam2);
-      if (diff > maxGoalDiff) {
+      if (diff > cap) {
         if (goalteam1 > goalteam2) {
-          goalteam1 = goalteam2 + maxGoalDiff;
+          goalteam1 = goalteam2 + cap;
         } else {
-          goalteam2 = goalteam1 + maxGoalDiff;
+          goalteam2 = goalteam1 + cap;
         }
       }
-  
+
       match.goalteam1 = goalteam1;
       match.goalteam2 = goalteam2;
       match.penaltyminteam1 = penaltyminteam1;
       match.penaltyminteam2 = penaltyminteam2;
     });
-  
+
     return matchs;
 }
   

@@ -193,12 +193,9 @@ function loadTourment(tournamentid){
     // Oppdater maxGoalDiff med tallverdi, eller bruk 100 som fallback
     maxGoalDiff = Number(data?.maxgoaldiff) || 100;
 
-    // DEBUG: sjekk hva som kommer fra databasen
-    console.log("[maxgoaldiff DEBUG] tournament.maxgoaldiff =", data?.maxgoaldiff, "→ tolket som:", maxGoalDiff);
+    // DEBUG: sjekk hva som kommer fra databasen og per-kamp cap (fjern når verifisert)
     const _divisionsDbg = makeObjectFromAirtableJSON(data, "divisjonjson") || [];
     console.log("[maxgoaldiff DEBUG] divisions:", _divisionsDbg.map(d => ({ name: d.name, airtable: d.airtable, maxgoaldiff: d.maxgoaldiff })));
-    const _matchesDbg = makeObjectFromAirtableJSON(data, "matchjson") || [];
-    console.log("[maxgoaldiff DEBUG] første kamp:", _matchesDbg[0]);
 
 
     //for å gå videre i tab systemet
@@ -245,6 +242,14 @@ function loadeLists(data){
     let matCh = makeObjectFromAirtableJSON(data, "matchjson");
     //regne ut verdier om det er settverdier
     matCh = calculateMatchResultBySett(matCh);
+
+    //knytt maxgoaldiff fra divisjonen til hver kamp (cap er per divisjon, ikke per turnering)
+    const _divs = makeObjectFromAirtableJSON(data, "divisjonjson") || [];
+    attachMaxGoalDiffToMatches(matCh, _divs);
+
+    // DEBUG: vis hvilke kamper som fikk en cap satt (fjern når verifisert)
+    const _capped = matCh.filter(m => m.maxgoaldiff !== undefined);
+    console.log(`[maxgoaldiff DEBUG] ${_capped.length} av ${matCh.length} kamper fikk cap satt. Eksempel:`, _capped[0] && { team1: _capped[0].team1name, team2: _capped[0].team2name, division: _capped[0].divisionname, maxgoaldiff: _capped[0].maxgoaldiff });
 
     //regne ut resultat og utvisningsminutter fra loggen
     matCh = calculateMatchResultByLog(matCh);
