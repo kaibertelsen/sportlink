@@ -143,11 +143,19 @@ function listLogForMatch(match, rowelement,admin) {
         }
       }
   
-    //lage texten 
+    //lage texten
       let eventnametext = eventName;
       if (eventPointer > 0) {
+        // Begrens løpende stilling til maxGoalDiff (samme regel som i resultatvisningen)
+        let displayG1 = goalteam1;
+        let displayG2 = goalteam2;
+        const diff = Math.abs(displayG1 - displayG2);
+        if (typeof maxGoalDiff === "number" && Number.isFinite(maxGoalDiff) && diff > maxGoalDiff) {
+          if (displayG1 > displayG2) displayG1 = displayG2 + maxGoalDiff;
+          else displayG2 = displayG1 + maxGoalDiff;
+        }
         //vise målene kun vis dette eventet er poengivende
-        eventnametext = `${eventName} (${goalteam1}-${goalteam2})`;
+        eventnametext = `${eventName} (${displayG1}-${displayG2})`;
       }else {
         //vise målene kun vis dette eventet er poengivende
         eventnametext = `${eventName}`;

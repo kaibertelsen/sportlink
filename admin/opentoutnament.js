@@ -81,6 +81,48 @@ function openTournament(Tournamentid){
     document.getElementById("groupSelector").style.display = "none";
 }
 
+function calculateMatchResultByLog(matchs) {
+    matchs.forEach(match => {
+        if (!match.matchlogg || match.matchlogg.length === 0) return;
+
+        const team1 = match.team1;
+        let goalteam1 = 0;
+        let goalteam2 = 0;
+        let penaltyminteam1 = 0;
+        let penaltyminteam2 = 0;
+
+        match.matchlogg.forEach(log => {
+            const team = log.team;
+            const eventPointer = Number(log.eventpoint);
+            if (!isNaN(eventPointer) && eventPointer >= 0) {
+                if (team === team1) goalteam1 += eventPointer;
+                else goalteam2 += eventPointer;
+            }
+            const isPenalty = log.eventtype === "recfYDgKdjfiDSO4g" || log.eventtype === "reclsQ8SpocBhDlsy";
+            if (isPenalty) {
+                const minutes = Number(log.penaltyminutes);
+                if (!isNaN(minutes)) {
+                    if (team === team1) penaltyminteam1 += minutes;
+                    else penaltyminteam2 += minutes;
+                }
+            }
+        });
+
+        // Juster målforskjellen hvis den overstiger maxGoalDiff
+        const diff = Math.abs(goalteam1 - goalteam2);
+        if (diff > maxGoalDiff) {
+            if (goalteam1 > goalteam2) goalteam1 = goalteam2 + maxGoalDiff;
+            else goalteam2 = goalteam1 + maxGoalDiff;
+        }
+
+        match.goalteam1 = goalteam1;
+        match.goalteam2 = goalteam2;
+        match.penaltyminteam1 = penaltyminteam1;
+        match.penaltyminteam2 = penaltyminteam2;
+    });
+    return matchs;
+}
+
 function responsGetTournament(data) {
     console.log(data.fields);
     //skul loader
@@ -94,8 +136,8 @@ function responsGetTournament(data) {
     // Oppdater turneringsinformasjon
     updateTournamentInfo(tournament);
 
-    // Oppdater maxGoalDiff
-    maxGoalDiff = tournament?.maxgoaldiff || 100;
+    // Oppdater maxGoalDiff (Airtable-feltet er tekst – konverter til tall)
+    maxGoalDiff = Number(tournament?.maxgoaldiff) || 100;
 
     // Konverter divisjoner og liste dem opp
     const divisions = convertJSONrow(tournament.divisjonjson);
@@ -113,6 +155,7 @@ function responsGetTournament(data) {
     listPlayers(gPlayers);
 
     const matchs = convertJSONrow(tournament.matchjson);
+    calculateMatchResultByLog(matchs);
     gMatchs = matchs;
     listMatch(matchs);
 

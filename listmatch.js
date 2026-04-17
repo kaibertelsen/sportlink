@@ -744,7 +744,7 @@ function viewMatch(match) {
             infomaxGoalDiff.style.fontWeight = "bold";
             infomaxGoalDiff.style.color = "red";
           }
-          // Merk: selve visningen av score justeres i loggen via teksten (du beholdt original logikk)
+          // Selve score-tallene i loggen cappes nå i listLogForMatch (loggviewer.js)
         } else if (infomaxGoalDiff) {
           infomaxGoalDiff.style.display = "none";
           infomaxGoalDiff.textContent = "";
