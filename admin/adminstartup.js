@@ -198,6 +198,37 @@ const ctx = document.querySelector('uc-upload-ctx-provider')
     importXlsFile(urlToXlsFile);
 });
 
+// Filer laget med openpyxl skriver absolutte stier i relasjonene (Target="/xl/comments/comment1.xml").
+// ExcelJS slår opp kommentarer med relativ sti og krasjer med "Cannot read properties of undefined (reading 'comments')".
+// Vi fjerner derfor kommentar-/vmlDrawing-relasjonene fra arkene før vi leser filen. Kommentarer brukes ikke i importen.
+async function stripCommentRelations(arrayBuffer) {
+    const zip = await JSZip.loadAsync(arrayBuffer);
+    const relFiles = Object.keys(zip.files).filter(name => /^xl\/worksheets\/_rels\/.*\.rels$/.test(name));
+
+    for (const name of relFiles) {
+        const xml = await zip.file(name).async("string");
+        const cleaned = xml.replace(/<Relationship\b[^>]*Type="[^"]*\/(?:comments|vmlDrawing)"[^>]*\/>/g, "");
+        if (cleaned !== xml) {
+            zip.file(name, cleaned);
+        }
+    }
+
+    return zip.generateAsync({ type: "arraybuffer" });
+}
+
+async function loadWorkbook(arrayBuffer) {
+    try {
+        const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.load(arrayBuffer);
+        return workbook;
+    } catch (error) {
+        console.warn("Kunne ikke lese filen direkte, prøver uten kommentarer:", error);
+        const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.load(await stripCommentRelations(arrayBuffer));
+        return workbook;
+    }
+}
+
 async function importXlsFile(urlToXlsFile) {
         // Last ned filen
         const response = await fetch(urlToXlsFile);
@@ -207,8 +238,7 @@ async function importXlsFile(urlToXlsFile) {
         const arrayBuffer = await response.arrayBuffer();
 
         // Initialiser ExcelJS workbook
-        const workbook = new ExcelJS.Workbook();
-        await workbook.xlsx.load(arrayBuffer);
+        const workbook = await loadWorkbook(arrayBuffer);
 
         // Arknavn vi ønsker å lese
         const sheetNames = ["Turnering","Divisjoner", "Lag", "Kamper","Finalekamper"];
