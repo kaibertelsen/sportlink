@@ -278,8 +278,8 @@ function loadeLists(data){
     const statisticstabbutton = document.getElementById("statisticstabbutton");
     statisticstabbutton.style.display = "none";
     if (data.statistics) {
-        // Slå på statistikk-fanen
-       statisticstabbutton.style.display = "inline-block";
+        // Slå på statistikk-fanen (skjules igjen om aktiv divisjon er U13)
+       updateStatisticsTabVisibility();
 
     // Legg til / fjern Gule kort og Røde kort knapper basert på turnering
     const statsFilterNode = document.getElementById("statisticfilterconteinerelement");
@@ -362,11 +362,16 @@ document.getElementById("playerSearch").addEventListener("input", function () {
 
 function listPlayerStats(data) {
     const activeDivision = getActiveDivisionFilter();
-  
+
+    // U13 skal ikke vises i statistikken, heller ikke under "Alle"
+    const statsData = (data || []).filter(player =>
+        !isU13DivisionName(player.divisionname) && !isU13DivisionId(player.divisionid)
+    );
+
     // Filtrer basert på aktiv divisjon
     let filteredDivision = activeDivision === ""
-      ? data
-      : data.filter(player => player.divisionid === activeDivision);
+      ? statsData
+      : statsData.filter(player => player.divisionid === activeDivision);
   
 
     // Sorter på mål, assist eller samlet
@@ -619,11 +624,45 @@ function handleDivisionButtonClick(item) {
     listteams(teams);
     listendplay(matches,endplay);
     listPlayerStats(PlayerStats);
+    updateStatisticsTabVisibility();
 }
 
 // Funksjon for å hente ID-en til aktivt filter
 function getActiveDivisionFilter() {
     return lastClickedDivisionButton || ""; // Returner aktivt filter eller tom streng hvis ingen knapp er trykket
+}
+
+// U13 (13-årsklasser, f.eks. G13/J13) skal ikke ha offentlig spillerstatistikk
+function isU13DivisionName(name) {
+    return /(^|\D)13(\D|$)/.test(String(name || ""));
+}
+
+function isU13DivisionId(divisionId) {
+    if (!divisionId) return false;
+    const divisions = activetournament?.division;
+    const divisionNames = activetournament?.divisionname;
+    if (!Array.isArray(divisions) || !Array.isArray(divisionNames)) return false;
+    const index = divisions.indexOf(divisionId);
+    if (index < 0) return false;
+    return isU13DivisionName(divisionNames[index]);
+}
+
+// Skjul statistikk-fanen for U13, ellers følg turneringens statistics-flagg
+function updateStatisticsTabVisibility() {
+    const statisticstabbutton = document.getElementById("statisticstabbutton");
+    if (!statisticstabbutton) return;
+
+    const showStatistics = !!activetournament?.statistics && !isU13DivisionId(getActiveDivisionFilter());
+
+    if (showStatistics) {
+        statisticstabbutton.style.display = "inline-block";
+    } else {
+        statisticstabbutton.style.display = "none";
+        // Står vi på statistikk-fanen når den skjules, gå tilbake til tabellen
+        if (typeof currentIndex !== "undefined" && currentIndex === 3) {
+            document.getElementById("tabeltabbutton").click();
+        }
+    }
 }
 
 function initStatisticsFilter() {

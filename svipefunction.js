@@ -16,8 +16,15 @@ function updateSlidePosition() {
     swipeWrapper.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
 }
 
+// Statistikk-fanen kan være skjult (f.eks. U13) - da skal den heller ikke kunne svipes frem
+function isStatisticsSlideAvailable() {
+    const statisticstabbutton = document.getElementById('statisticstabbutton');
+    return !!statisticstabbutton && statisticstabbutton.style.display !== "none";
+}
+
 function goToSlide(index) {
   slides = document.querySelectorAll('.swipe-slide');
+    if (index === 3 && !isStatisticsSlideAvailable()) return;
     if (index >= 0 && index < slides.length) {
         // Save scroll position of the current slide
         scrollPositions[currentIndex] = slides[currentIndex].scrollTop;
@@ -133,6 +140,8 @@ function handleTouchEnd() {
 
         if (deltaX < -threshold && currentIndex < slides.length - 1) {
             currentIndex++;
+            // Hopp over statistikk-fanen når den er skjult
+            if (currentIndex === 3 && !isStatisticsSlideAvailable()) currentIndex--;
         } else if (deltaX > threshold && currentIndex > 0) {
             currentIndex--;
         }
