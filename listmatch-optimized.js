@@ -79,8 +79,10 @@ function groupArraybyDate(matchs) {
 }
 
 function groupArrayByLocation(matchs) {
+    // Vis bare "Ukjent lokasjon" når noen av kampene faktisk har lokasjon
+    const fallbackLocation = matchs.some(match => match.location && match.location.trim() !== "") ? "Ukjent lokasjon" : "";
     const groupedByLocation = (matchs || []).reduce((groups, match) => {
-      const location = match.location && match.location.trim() !== "" ? match.location : "Ukjent lokasjon";
+      const location = match.location && match.location.trim() !== "" ? match.location : fallbackLocation;
       (groups[location] ||= []).push(match);
       return groups;
     }, {});
@@ -672,6 +674,7 @@ function makeGroupMatchWrapper(item,team,nodeelement,grouptype){
         locationSelector.style.display = "block";
     } else {
         groupheadername.textContent = item.location;
+        groupheadername.style.display = item.location ? "" : "none";
         locationSelector.style.display = "none";
 
         const date = (item.matches[0].time || "").split("T")[0];

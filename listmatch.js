@@ -83,13 +83,15 @@ function groupArraybyDate(matchs) {
  }
   
 function groupArrayByLocation(matchs) {
+    // Vis bare "Ukjent lokasjon" når noen av kampene faktisk har lokasjon
+    const fallbackLocation = matchs.some(match => match.location && match.location.trim() !== "") ? "Ukjent lokasjon" : "";
     // Initialiser en ny array for grupperte kamper
     let grouparray = [];
   
     // Bruk reduce for å gruppere kampene etter location
     let groupedByLocation = matchs.reduce((groups, match) => {
       // Hent lokasjon eller bruk standardtekst hvis mangler
-      let location = match.location && match.location.trim() !== "" ? match.location : "Ukjent lokasjon";
+      let location = match.location && match.location.trim() !== "" ? match.location : fallbackLocation;
   
       // Hvis lokasjonen ikke finnes i grupperingsobjektet, opprett ny array
       if (!groups[location]) {
@@ -1061,6 +1063,7 @@ function makeGroupMatchWrapper(item,team,nodeelement,grouptype){
       } else {
           //viser lokasjonsnavn
           groupheadername.textContent = item.location;
+          groupheadername.style.display = item.location ? "" : "none";
           locationSelector.style.display = "none";
 
           //kan dato vises på underline
